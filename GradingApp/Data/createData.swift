@@ -141,21 +141,3 @@ id,firstName,lastName,23.03.2021,03.05.2021,25.06.2021,05.07.2021
 71,Oke,Tuitjer,3,3,3,3
 72,Katharina,Willms,2,1-,1-,1-
 """
-
-//func CreateNoten(csvData: String) -> [Student]{
-//    let csv = try! CSVReader(string: csvData, hasHeaderRow: true)
-//    while csv.next() != nil {
-//
-//    }
-//
-//
-//
-//
-//
-//    var students: [Student] = []
-//    let csv = try! CSVReader(string: csvData, hasHeaderRow: true)
-//    while csv.next() != nil {
-//        students.append(Student(id: csv["id"]!, firstName: csv["firstName"]!, lastName: csv["lastName"]!, email: csv["email"]!, course: csv["course"]!))
-//    }
-//    return students
-//}
