@@ -1,2 +1,5 @@
 # GradingApp
-This is the README FILE
+
+* Ins MVVM Prinzip übertragen
+
+* iCould als Datenspeicher mit eigenem App-Ordner
