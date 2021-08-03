@@ -34,8 +34,8 @@ struct CourseTabView: View {
     }
 }
 
-/*struct CourseTabView_Previews: PreviewProvider {
+struct CourseTabView_Previews: PreviewProvider {
     static var previews: some View {
-        CourseTabView(course: studentsMathe7F)
+        CourseTabView(course: CourseViewModel().courses[0])
     }
-}*/
+}
