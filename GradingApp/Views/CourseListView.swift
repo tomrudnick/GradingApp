@@ -8,23 +8,27 @@
 import SwiftUI
 
 struct CourseListView: View {
+    
+    @EnvironmentObject var courseViewModel: CourseViewModel
+    
+    
     var body: some View {
         NavigationView{
-            List(courses){ currentCourse in
-                NavigationLink( destination: CourseTabView(course: currentCourse.students )
-                                    .navigationTitle(currentCourse.name)
-                                    .navigationBarItems(trailing:
-                                                            Button(action:{}){
-                                                                VStack{
-                                                                Image(systemName: "plus.circle" )
-                                                                    Text("Note")
-                                                                    
-                                                                }
-                                                            }
+            List(courseViewModel.courses){ course in
+                NavigationLink( destination: CourseTabView(course: course)
+                    .navigationTitle(course.name)
+                    .navigationBarItems(trailing:
+                                        Button(action:{}){
+                                            VStack{
+                                            Image(systemName: "plus.circle" )
+                                                Text("Note")
+                                                
+                                            }
+                                        }
                                     )
-                )
+                            )
                 {
-                    Text(currentCourse.name)
+                    Text(course.name)
                         .font(.title2)
                 }
                 .padding(.top)

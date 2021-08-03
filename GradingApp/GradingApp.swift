@@ -8,10 +8,11 @@
 import SwiftUI
 
 @main
-struct GradingAppApp: App {
+struct GradingApp: App {
+    @StateObject var courseViewModel = CourseViewModel()
     var body: some Scene {
         WindowGroup {
-            CourseListView()
+            CourseListView().environmentObject(courseViewModel)
         }
     }
 }

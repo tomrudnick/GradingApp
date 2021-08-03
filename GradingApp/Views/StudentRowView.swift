@@ -24,11 +24,11 @@ struct StudentRowView: View {
         }
     }
 }
-struct StudentRowView_Previews: PreviewProvider {
+/*struct StudentRowView_Previews: PreviewProvider {
     static var previews: some View {
         StudentRowView(student: studentsMathe6C[2])
             .previewLayout(.fixed(width: 300, height: 50))
     }
-}
+}*/
 
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Student: ObservableObject, Identifiable {
+/*class Student: ObservableObject, Identifiable {
     var id: String
     var firstName: String
     var lastName: String
@@ -30,11 +30,6 @@ class Student: ObservableObject, Identifiable {
         let numberOfNoten = muendlicheNoten.count
         return Double(sum)/Double(numberOfNoten).rounded(digits: 3)
     }
-}
+}*/
 
-extension Double {
-    func rounded(digits: Int) -> Double {
-        let multiplier = pow(10.0, Double(digits))
-        return (self * multiplier).rounded() / multiplier
-    }
-}
+
