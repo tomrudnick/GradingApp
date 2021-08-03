@@ -23,9 +23,9 @@ struct StudentListView: View {
 }
 
 
-/*struct StudentListView_Previews: PreviewProvider {
+struct StudentListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentListView(course: studentsMathe10FLS)
+        StudentListView(courseTabViewModel: CourseTabViewModel(course: CourseViewModel().courses[0]))
     }
-}*/
+}
 
