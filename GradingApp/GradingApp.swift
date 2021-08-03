@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct GradingApp: App {
-    @StateObject var courseViewModel = CourseViewModel()
+    @StateObject var courseViewModel = CourseListViewModel()
     var body: some Scene {
         WindowGroup {
             CourseListView().environmentObject(courseViewModel)

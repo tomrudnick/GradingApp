@@ -10,26 +10,20 @@ import SwiftUI
 struct EditCoursesView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var courseViewModel: CourseViewModel
+    @EnvironmentObject var courseListViewModel: CourseListViewModel
     
     
     @State var courseTitle: String = ""
+ 
     
     var body: some View {
         
         NavigationView{
             Form {
-                Section {
-                    List(courseViewModel.courses){ course in
-                        TextField(course.name, text: $courseTitle)
-                            .font(.title2)
-                            .padding(.bottom)
-                            .padding(.top)
-                    }
-                }
+                
                 
                 Section {
-                    Text("Hallo 2")
+                    TextField("Neuer Kurs", text: $courseTitle)
                 }
                 
             }
@@ -39,7 +33,7 @@ struct EditCoursesView: View {
                     .font(.title2)
 
             }, trailing: Button(action: {
-                
+                saveCourse()
             })
                 {
                 Text("Speichern")
@@ -52,18 +46,26 @@ struct EditCoursesView: View {
     }
     
     func saveCourse() {
-        courseViewModel.addCourse(courseTitle: courseTitle)
+        courseListViewModel.addCourse(courseTitle: courseTitle)
         presentationMode.wrappedValue.dismiss()
-        
+    }
+}
+
+struct EditDetailView: View {
+    
+    @ObservedObject var courseViewModel: CourseViewModel
+    
+    var body: some View {
+        TextField("tmp", text: $courseViewModel.course.name)
+            .font(.title2)
+            .padding(.bottom)
+            .padding(.top)
     }
 }
 
 struct EditCoursesView_Previews: PreviewProvider {
     static var previews: some View {
-        EditCoursesView().environmentObject(CourseViewModel())
+        EditCoursesView().environmentObject(CourseListViewModel())
     }
 }
 
-//Button(action: saveCourse) {
-//    Text("Save Course")
-//}

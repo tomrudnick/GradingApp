@@ -10,12 +10,12 @@ import SwiftUI
 
 struct StudentListView: View {
     
-    @ObservedObject var courseTabViewModel: CourseTabViewModel
+    @ObservedObject var courseViewModel: CourseViewModel
     
     
     var body: some View {
         List{
-            ForEach(courseTabViewModel.course.students) { currentStudent in
+            ForEach(courseViewModel.course.students) { currentStudent in
                 StudentRowView(student: currentStudent)
             }
         }
@@ -23,9 +23,9 @@ struct StudentListView: View {
 }
 
 
-struct StudentListView_Previews: PreviewProvider {
+/*struct StudentListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentListView(courseTabViewModel: CourseTabViewModel(course: CourseViewModel().courses[0]))
+        StudentListView(courseTabViewModel: CourseViewModel(course: CourseListViewModel().courses[0]))
     }
-}
+}*/
 

@@ -9,15 +9,18 @@ import SwiftUI
 
 struct CourseListView: View {
     
-    @EnvironmentObject var courseViewModel: CourseViewModel
+    @EnvironmentObject var courseListViewModel: CourseListViewModel
     @State var showEditCourses = false
     
     
     var body: some View {
-        NavigationView{
-            List(courseViewModel.courses){ course in
-                NavigationLink( destination: CourseTabView(course: course)
-                    .navigationTitle(course.name)
+        NavigationView {
+            Text(courseListViewModel.courseViewModels[0].course.name)
+        }
+        /*NavigationView{
+            List(courseListViewModel.courseViewModels){ courseViewModel in
+                NavigationLink( destination: CourseTabView(courseViewModel: courseViewModel)
+                                    .navigationTitle(courseViewModel.course.name)
                     .navigationBarItems(trailing:
                                         Button(action:{}){
                                             VStack{
@@ -29,7 +32,7 @@ struct CourseListView: View {
                                     )
                             )
                 {
-                    Text(course.name)
+                    Text(courseViewModel.course.name)
                         .font(.title2)
                 }
                 .padding(.top)
@@ -44,18 +47,18 @@ struct CourseListView: View {
                                         showEditCourses = true
                                     }){
                                         Image(systemName: "pencil.circle" )
-                                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                            .font(.title)
                                     }
                 .sheet(isPresented: $showEditCourses) {
                     EditCoursesView()
                 })
             
-        }
+        }*/
     }
 }
 struct CourseListView_Previews: PreviewProvider {
     static var previews: some View {
-        CourseListView().environmentObject(CourseViewModel())
+        CourseListView().environmentObject(CourseListViewModel())
     }
 }
 

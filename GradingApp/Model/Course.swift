@@ -10,7 +10,7 @@ import Foundation
 
 class Course: Identifiable {
     let id: String
-    let name: String
+    var name: String
     var students: [Student]
     
     init(id : String = UUID().uuidString, name: String) {

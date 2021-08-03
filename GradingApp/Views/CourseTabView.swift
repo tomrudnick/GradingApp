@@ -9,15 +9,11 @@ import SwiftUI
 
 struct CourseTabView: View {
     
-    @StateObject var courseTabViewModel: CourseTabViewModel
-    
-    init(course: Course) {
-        _courseTabViewModel = StateObject(wrappedValue: CourseTabViewModel(course: course))
-    }
+    @ObservedObject var courseViewModel: CourseViewModel
     
     var body: some View {
         TabView{
-            StudentListView(courseTabViewModel: courseTabViewModel)
+            StudentListView(courseViewModel: courseViewModel)
                 .tabItem {
                     Image(systemName:"person.3.fill")
                     Text("Kurs")
@@ -34,8 +30,9 @@ struct CourseTabView: View {
     }
 }
 
-struct CourseTabView_Previews: PreviewProvider {
+/*struct CourseTabView_Previews: PreviewProvider {
     static var previews: some View {
-        CourseTabView(course: CourseViewModel().courses[0])
+        CourseTabView(course: CourseListViewModel().courses[0])
     }
 }
+*/
