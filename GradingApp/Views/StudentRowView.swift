@@ -24,11 +24,12 @@ struct StudentRowView: View {
         }
     }
 }
-/*struct StudentRowView_Previews: PreviewProvider {
+struct StudentRowView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentRowView(student: studentsMathe6C[2])
+
+        StudentRowView(student: Student(firstName: "Matthias", lastName: "Rudnick", email: "matthias@rudnick.ch", course: nil))
             .previewLayout(.fixed(width: 300, height: 50))
     }
-}*/
+}
 
 
