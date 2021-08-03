@@ -10,6 +10,7 @@ import SwiftUI
 struct CourseListView: View {
     
     @EnvironmentObject var courseViewModel: CourseViewModel
+    @State var showAddCourse = false
     
     
     var body: some View {
@@ -37,9 +38,18 @@ struct CourseListView: View {
             }
             .padding(.top)
             .navigationTitle(Text("Kurse"))
+            .listStyle(PlainListStyle())
             .navigationBarItems(trailing:
-                                    NavigationLink("Add", destination: AddCourseView())
-                        )
+                                    Button(action:{
+                                        showAddCourse = true
+                                    }){
+                                        Image(systemName: "plus.circle" )
+                                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                                    }
+                .sheet(isPresented: $showAddCourse) {
+                    AddCourseView()
+                })
+            
         }
     }
 }
