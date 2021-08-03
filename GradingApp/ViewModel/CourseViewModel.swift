@@ -72,7 +72,7 @@ class CourseViewModel : ObservableObject {
     
 
     func addCourse(courseTitle: String) {
-        //TODO add newCourse
+        courses.append(Course(name: courseTitle))
     }
     
     func removeCourse(_ course: Course) {

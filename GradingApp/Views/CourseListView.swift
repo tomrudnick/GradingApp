@@ -37,7 +37,9 @@ struct CourseListView: View {
             }
             .padding(.top)
             .navigationTitle(Text("Kurse"))
-            
+            .navigationBarItems(trailing:
+                                    NavigationLink("Add", destination: AddCourseView())
+                        )
         }
     }
 }

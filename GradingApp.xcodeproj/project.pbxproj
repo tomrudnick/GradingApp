@@ -25,6 +25,7 @@
 		E2A3AE0526B8314600EA4FA6 /* round.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3AE0426B8314600EA4FA6 /* round.swift */; };
 		E2A3AE0826B833C000EA4FA6 /* CourseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3AE0726B833C000EA4FA6 /* CourseViewModel.swift */; };
 		E2A3AE0A26B8528000EA4FA6 /* CourseTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3AE0926B8528000EA4FA6 /* CourseTabViewModel.swift */; };
+		E2F96CE826B9377E003824EA /* AddCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F96CE726B9377E003824EA /* AddCourseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		E2A3AE0426B8314600EA4FA6 /* round.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = round.swift; sourceTree = "<group>"; };
 		E2A3AE0726B833C000EA4FA6 /* CourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseViewModel.swift; sourceTree = "<group>"; };
 		E2A3AE0926B8528000EA4FA6 /* CourseTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTabViewModel.swift; sourceTree = "<group>"; };
+		E2F96CE726B9377E003824EA /* AddCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				395139FB26A4D8D8009769AC /* CourseListView.swift */,
 				395CD9B526A5FF1100169BDB /* CourseTabView.swift */,
 				395FDCA926A2251400BB489C /* TestView.swift */,
+				E2F96CE726B9377E003824EA /* AddCourseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				395139F826A4D684009769AC /* Course.swift in Sources */,
 				393D71AB26A7200A0028F660 /* StudentView.swift in Sources */,
 				395CD9B626A5FF1100169BDB /* CourseTabView.swift in Sources */,
+				E2F96CE826B9377E003824EA /* AddCourseView.swift in Sources */,
 				395FDC9626A219E900BB489C /* StudentListView.swift in Sources */,
 				395139FC26A4D8D8009769AC /* CourseListView.swift in Sources */,
 				39282B3B26A36453003A8DA7 /* Grade.swift in Sources */,
