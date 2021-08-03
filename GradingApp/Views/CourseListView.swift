@@ -10,7 +10,7 @@ import SwiftUI
 struct CourseListView: View {
     
     @EnvironmentObject var courseViewModel: CourseViewModel
-    @State var showAddCourse = false
+    @State var showEditCourses = false
     
     
     var body: some View {
@@ -41,13 +41,13 @@ struct CourseListView: View {
             .listStyle(PlainListStyle())
             .navigationBarItems(trailing:
                                     Button(action:{
-                                        showAddCourse = true
+                                        showEditCourses = true
                                     }){
-                                        Image(systemName: "plus.circle" )
+                                        Image(systemName: "pencil.circle" )
                                             .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                                     }
-                .sheet(isPresented: $showAddCourse) {
-                    AddCourseView()
+                .sheet(isPresented: $showEditCourses) {
+                    EditCoursesView()
                 })
             
         }
