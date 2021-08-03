@@ -45,7 +45,7 @@ struct CourseListView: View {
 }
 struct CourseListView_Previews: PreviewProvider {
     static var previews: some View {
-        CourseListView()
+        CourseListView().environmentObject(CourseViewModel())
     }
 }
 
