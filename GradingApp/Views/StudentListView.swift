@@ -1,31 +1,33 @@
 //
 //  StudentListView.swift
-//  GradingApp
+//  CoreDataTest
 //
-//  Created by Matthias Rudnick on 16.07.21.
+//  Created by Tom Rudnick on 04.08.21.
 //
 
 import SwiftUI
 
-
 struct StudentListView: View {
     
-    @ObservedObject var courseViewModel: CourseViewModel
+    @ObservedObject var course: Course
     
-    
+
     var body: some View {
-        List{
-            ForEach(courseViewModel.course.students) { currentStudent in
-                StudentRowView(student: currentStudent)
+        List {
+            ForEach(course.studentsArr) { student in
+                NavigationLink(destination: StudentView()) {
+                    HStack {
+                        Text(student.firstName!).frame(alignment: .leading)
+                        Text(student.lastName!).frame(alignment: .leading)
+                    }
+                }
             }
         }
     }
 }
 
-
 /*struct StudentListView_Previews: PreviewProvider {
     static var previews: some View {
-        StudentListView(courseTabViewModel: CourseViewModel(course: CourseListViewModel().courses[0]))
+        StudentListView()
     }
 }*/
-

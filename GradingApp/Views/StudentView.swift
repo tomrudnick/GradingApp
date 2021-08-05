@@ -1,15 +1,15 @@
 //
 //  StudentView.swift
-//  GradingApp
+//  CoreDataTest
 //
-//  Created by Matthias Rudnick on 20.07.21.
+//  Created by Tom Rudnick on 04.08.21.
 //
 
 import SwiftUI
 
 struct StudentView: View {
     var body: some View {
-        Text("Hier erscheinen später die Schülerdaten")
+        Text("Data of Student").navigationTitle(Text("Title of Student"))
     }
 }
 

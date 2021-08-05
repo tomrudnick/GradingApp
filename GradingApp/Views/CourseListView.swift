@@ -1,66 +1,69 @@
 //
-//  CourseListView.swift
-//  GradingApp
+//  ContentView.swift
+//  CoreDataTest
 //
-//  Created by Matthias Rudnick on 18.07.21.
+//  Created by Tom Rudnick on 04.08.21.
 //
 
 import SwiftUI
+import CoreData
+
 
 struct CourseListView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(fetchRequest: Course.fetchAllNonHidden(), animation: .default )
+    private var courses: FetchedResults<Course>
     
-    @EnvironmentObject var courseListViewModel: CourseListViewModel
     @State var showEditCourses = false
-    
+    @State var showAddCourse = false
     
     var body: some View {
         NavigationView {
-            Text(courseListViewModel.courseViewModels[0].course.name)
-        }
-        /*NavigationView{
-            List(courseListViewModel.courseViewModels){ courseViewModel in
-                NavigationLink( destination: CourseTabView(courseViewModel: courseViewModel)
-                                    .navigationTitle(courseViewModel.course.name)
-                    .navigationBarItems(trailing:
-                                        Button(action:{}){
-                                            VStack{
-                                            Image(systemName: "plus.circle" )
-                                                Text("Note")
-                                                
-                                            }
-                                        }
-                                    )
-                            )
-                {
-                    Text(courseViewModel.course.name)
-                        .font(.title2)
-                }
-                .padding(.top)
-                .padding(.bottom)
-                
+            List(courses) { course in
+                NavigationLink(
+                    destination: CourseTabView(course: course),
+                    label: {
+                        Text(course.name).font(.title2)
+                    })
             }
             .padding(.top)
             .navigationTitle(Text("Kurse"))
             .listStyle(PlainListStyle())
-            .navigationBarItems(trailing:
-                                    Button(action:{
-                                        showEditCourses = true
-                                    }){
-                                        Image(systemName: "pencil.circle" )
-                                            .font(.title)
-                                    }
-                .sheet(isPresented: $showEditCourses) {
-                    EditCoursesView()
-                })
-            
-        }*/
+            .navigationBarItems(leading: addButton, trailing: editButton)
+        }
+    }
+    
+    var addButton : some View {
+        Button {
+            showAddCourse = true
+        } label: {
+            Text("Add")
+        }.sheet(isPresented: $showAddCourse) {
+            AddCourse().environment(\.managedObjectContext, viewContext)
+        }
+    }
+    
+    var editButton : some View {
+        Button {
+            showEditCourses = true
+        } label: {
+            Text("Edit")
+        }.sheet(isPresented: $showEditCourses) {
+            EditCourseView().environment(\.managedObjectContext, viewContext)
+        }
     }
 }
-struct CourseListView_Previews: PreviewProvider {
+
+private let itemFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    formatter.timeStyle = .medium
+    return formatter
+}()
+
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        CourseListView().environmentObject(CourseListViewModel())
+        CourseListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
-
-
-

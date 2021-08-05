@@ -1,38 +1,39 @@
 //
 //  CourseTabView.swift
-//  GradingApp
+//  CoreDataTest
 //
-//  Created by Matthias Rudnick on 19.07.21.
+//  Created by Tom Rudnick on 04.08.21.
 //
 
 import SwiftUI
 
 struct CourseTabView: View {
     
-    @ObservedObject var courseViewModel: CourseViewModel
-    
+    @ObservedObject var course: Course
+    @State var showAddStudent = false
     var body: some View {
-        TabView{
-            StudentListView(courseViewModel: courseViewModel)
+        TabView {
+            StudentListView(course: course)
                 .tabItem {
                     Image(systemName:"person.3.fill")
                     Text("Kurs")
                 }
-            NavigationView{
-                
-            }
-            .tabItem {
-                Image(systemName:"graduationcap.fill")
-                Text("Notenübersicht")
-            }
-        }
-        
+        }.navigationTitle(Text(course.name))
+        .navigationBarTitleDisplayMode(.large)
+        .navigationBarItems(trailing: Button(action: {
+            showAddStudent = true
+        }) {
+            Image(systemName: "plus.circle")
+        }).sheet(isPresented: $showAddStudent, content: {
+            AddStudent(course: course)
+        })
     }
+    
+    
 }
 
 /*struct CourseTabView_Previews: PreviewProvider {
     static var previews: some View {
-        CourseTabView(course: CourseListViewModel().courses[0])
+        CourseTabView()
     }
-}
-*/
+}*/

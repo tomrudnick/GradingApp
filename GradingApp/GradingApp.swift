@@ -1,18 +1,20 @@
 //
-//  GradingAppApp.swift
-//  GradingApp
+//  GradingApp.swift
+//  CoreDataTest
 //
-//  Created by Matthias Rudnick on 16.07.21.
+//  Created by Tom Rudnick on 04.08.21.
 //
 
 import SwiftUI
 
 @main
 struct GradingApp: App {
-    @StateObject var courseViewModel = CourseListViewModel()
+    let persistenceController = PersistenceController.shared
+
     var body: some Scene {
         WindowGroup {
-            CourseListView().environmentObject(courseViewModel)
+            CourseListView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
