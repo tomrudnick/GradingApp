@@ -18,7 +18,7 @@ extension Grade {
 
     @NSManaged public var date: Date?
     @NSManaged public var type: GradeType
-    @NSManaged public var value: Double
+    @NSManaged public var value: Int32
     @NSManaged public var half: HalfType
     @NSManaged public var student: Student?
 

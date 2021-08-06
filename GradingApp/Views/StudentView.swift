@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct StudentView: View {
+    
+    @ObservedObject var student: Student
+    
     var body: some View {
-        Text("Data of Student").navigationTitle(Text("Title of Student"))
+        Text("Data of Student").navigationTitle(Text(student.firstName))
     }
 }
 
-struct StudentView_Previews: PreviewProvider {
+/*struct StudentView_Previews: PreviewProvider {
     static var previews: some View {
         StudentView()
     }
-}
+}*/

@@ -15,7 +15,7 @@ struct StudentListView: View {
     var body: some View {
         List {
             ForEach(course.studentsArr) { student in
-                NavigationLink(destination: StudentView()) {
+                NavigationLink(destination: StudentView(student: student)) {
                     HStack {
                         Text(student.firstName).frame(alignment: .leading)
                         Text(student.lastName).frame(alignment: .leading)
