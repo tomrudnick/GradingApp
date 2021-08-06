@@ -10,4 +10,6 @@ import Foundation
 
 extension Grade {
     //setter and getter for Grade
+    
+    private(set) static var lowerSchoolGrades = ["1+", "1", "1-", "2+", "2", "2-"]
 }
