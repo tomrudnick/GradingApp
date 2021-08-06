@@ -17,8 +17,8 @@ struct StudentListView: View {
             ForEach(course.studentsArr) { student in
                 NavigationLink(destination: StudentView()) {
                     HStack {
-                        Text(student.firstName!).frame(alignment: .leading)
-                        Text(student.lastName!).frame(alignment: .leading)
+                        Text(student.firstName).frame(alignment: .leading)
+                        Text(student.lastName).frame(alignment: .leading)
                     }
                 }
             }
