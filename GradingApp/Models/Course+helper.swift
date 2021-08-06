@@ -34,7 +34,7 @@ extension Course {
             try context.save()
         } catch {
             let error = error as NSError
-            fatalError("Uresolved Problem when creating a Course: \(error)")
+            fatalError("Unresolved Problem when creating a Course: \(error)")
         }
     }
     

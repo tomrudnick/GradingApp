@@ -70,8 +70,8 @@ struct EditDetailView: View {
     }
 }
 
-/*struct EditCourseView_Previews: PreviewProvider {
+struct EditCourseView_Previews: PreviewProvider {
     static var previews: some View {
-        EditCourseView()
+        EditCourseView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
-}*/
+}

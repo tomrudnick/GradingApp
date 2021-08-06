@@ -11,6 +11,8 @@ struct CourseTabView: View {
     
     @ObservedObject var course: Course
     @State var showAddStudent = false
+    
+    
     var body: some View {
         TabView {
             StudentListView(course: course)
@@ -32,8 +34,17 @@ struct CourseTabView: View {
     
 }
 
-/*struct CourseTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        CourseTabView()
+struct CourseTabView_Previews: PreviewProvider {
+    static var previewCourse : Course {
+        let course = Course(context: PersistenceController.preview.container.viewContext)
+        course.name = "Mathe 10F"
+        return course
     }
-}*/
+
+    static var previews: some View {
+        NavigationView {
+            CourseTabView(course: previewCourse)
+        }
+    }
+}
+

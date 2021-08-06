@@ -46,10 +46,18 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for i in 0..<10 {
+        let previewCourses = ["Mathe 6C", "Mathe 8F", "Mathe 11D", "Physik 8F", "Physik 11E"]
+        var previewCourse : Course?
+        for course in previewCourses {
             let newCourse = Course(context: viewContext)
-            newCourse.name = "Kurs \(i)"
+            newCourse.name = course
+            previewCourse = newCourse
         }
+        let newStudent = Student(context: viewContext)
+        newStudent.course = previewCourse!
+        newStudent.firstName = "Marit"
+        newStudent.lastName = "Abken"
+        newStudent.email = "marit.abken@nige.de"
         do {
             try viewContext.save()
         } catch {

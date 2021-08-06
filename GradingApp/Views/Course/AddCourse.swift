@@ -22,14 +22,15 @@ struct AddCourse: View {
                 .frame(height: 55)
                 .background(Color(UIColor.secondarySystemBackground))
                 .cornerRadius(10)
+                .padding(.horizontal)
             Button(action: saveButtonPressed, label: {
                 Text("SAVE")
                     .foregroundColor(.white)
                     .font(.headline)
                     .frame(height: 55)
                     .frame(maxWidth: .infinity)
-                    .cornerRadius(10)
                     .background(Color.accentColor)
+                    .cornerRadius(10)
             })
             .padding()
             Spacer()
@@ -43,8 +44,8 @@ struct AddCourse: View {
    
 }
 
-/*struct EditCourseView_Previews: PreviewProvider {
+struct AddCourseView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCourse()
+        AddCourse().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
-}*/
+}

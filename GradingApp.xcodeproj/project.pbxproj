@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 394D7C4F26BDC7DB00892BD4 /* CSV */; };
 		E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCA326BADAC6000BDD65 /* GradingApp.swift */; };
 		E25FBCA626BADAC6000BDD65 /* CourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCA526BADAC6000BDD65 /* CourseListView.swift */; };
 		E25FBCA826BADAC8000BDD65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25FBCA726BADAC8000BDD65 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +188,9 @@
 			dependencies = (
 			);
 			name = GradingApp;
+			packageProductDependencies = (
+				394D7C4F26BDC7DB00892BD4 /* CSV */,
+			);
 			productName = CoreDataTest;
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
 			productType = "com.apple.product-type.application";
@@ -213,6 +218,9 @@
 				Base,
 			);
 			mainGroup = E25FBC9726BADAC6000BDD65;
+			packageReferences = (
+				394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */,
+			);
 			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -444,6 +452,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		394D7C4F26BDC7DB00892BD4 /* CSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */;
+			productName = CSV;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
