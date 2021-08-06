@@ -5,9 +5,10 @@
         <attribute name="name_" optional="YES" attributeType="String"/>
         <relationship name="students_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
     </entity>
-    <entity name="Grade" representedClassName="Grade" syncable="YES" codeGenerationType="class">
+    <entity name="Grade" representedClassName="Grade" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="half" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="grades" inverseEntity="Student"/>
     </entity>
@@ -20,7 +21,7 @@
     </entity>
     <elements>
         <element name="Course" positionX="-336.328125" positionY="-116.09375" width="128" height="74"/>
-        <element name="Grade" positionX="52.24609375" positionY="-131.0859375" width="128" height="103"/>
+        <element name="Grade" positionX="52.24609375" positionY="-131.0859375" width="128" height="104"/>
         <element name="Student" positionX="-134.28125" positionY="-146.15625" width="128" height="104"/>
     </elements>
 </model>
