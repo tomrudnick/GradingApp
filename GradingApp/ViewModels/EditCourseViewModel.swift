@@ -4,6 +4,15 @@
 //
 //  Created by Tom Rudnick on 05.08.21.
 //
+//Diese Klasse ist eine Kopie unserer Kurse und ist nur für den EditCourseView da.
+//Die nexted Classe CourseVM bildet unseres Courses Klasse nach. Es gibt in CourseVM aber
+//keine Studenten.
+//Mit der fetchCourses Funktion werden vorhandenen Kurse aus der Datenbank geholt und
+//von diesen Kursen wird eine Kopie angelegt und in das Array courses geschrieben.
+//
+//Es wird über alle aus der Datenbank geladenen Funktionen iteriert und mit den Kopien
+//verglichen. Ist eine Kopie mit der id vorhanden, wird sie einfach in die Datenbank
+//geschrieben. Ist die Kopie nicht vorhanden, wird der Kurs aus der Datenbank gelöscht.
 
 import Foundation
 
@@ -26,7 +35,7 @@ class CourseEditViewModel: ObservableObject {
     
     func save() {
         for (id, course) in fetchedCourses {
-            if let courseVM = courses.first(where: {$0.id == id}) {
+            if let courseVM = courses.first(where: {$0.id == id}) {  // where: {course: Course in course.id == id}
                 course.name = courseVM.name
                 course.hidden = courseVM.hidden
             } else {
