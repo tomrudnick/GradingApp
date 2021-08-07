@@ -22,14 +22,21 @@ struct AddStudent: View {
     
     var body: some View {
         VStack {
-            Text("Add a new Student").font(.headline).padding()
-            TextField("Student first name", text: $studentFirstName)
+            HStack{
+                Text("Neuer Schüler").font(.headline)
+            Spacer()
+            cancelButton
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
+            .padding(.top)
+            TextField("Vorname", text: $studentFirstName)
                 .padding(.horizontal)
                 .frame(height: 55)
                 .background(Color(UIColor.secondarySystemBackground))
                 .cornerRadius(10)
                 .padding(.horizontal)
-            TextField("Student last name", text: $studentLastName)
+            TextField("Nachname", text: $studentLastName)
                 .padding(.horizontal)
                 .frame(height: 55)
                 .background(Color(UIColor.secondarySystemBackground))
@@ -43,9 +50,8 @@ struct AddStudent: View {
                 .padding(.horizontal)
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
-            
             Button(action: saveButtonPressed, label: {
-                Text("Add")
+                Text("Hinzufügen")
                     .foregroundColor(.white)
                     .font(.headline)
                     .frame(height: 55)
@@ -53,6 +59,7 @@ struct AddStudent: View {
                     .background(Color.accentColor)
                     .cornerRadius(10)
             })
+            .disabled(studentFirstName.isEmpty || studentLastName.isEmpty)
             .padding(.horizontal)
             Divider()
             Button(action: { openFile.toggle() }, label: {
@@ -82,6 +89,13 @@ struct AddStudent: View {
             catch {
                 print("Error")
             }
+        }
+    }
+    var cancelButton: some View{
+        Button {
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("Abbrechen")
         }
     }
 
