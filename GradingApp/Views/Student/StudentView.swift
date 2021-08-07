@@ -53,7 +53,7 @@ struct StudentView: View {
                             Text(student.getLowerSchoolGradeAverage(.written))
                         }
                     }).padding()
-                  
+                    
                 }
                 Spacer()
             }

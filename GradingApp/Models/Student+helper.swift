@@ -35,6 +35,9 @@ extension Student {
     
     func gradeAverage(type: GradeType) -> Double {
         let filteredGrades = grades.filter { $0.type == type }
+        if filteredGrades.count == 0 {
+            return 0.0
+        }
         let sum = filteredGrades.reduce(0) { result, grade in
             result + grade.value
         }
