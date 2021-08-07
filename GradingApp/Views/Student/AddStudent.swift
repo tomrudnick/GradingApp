@@ -50,6 +50,7 @@ struct AddStudent: View {
                 .padding(.horizontal)
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
+                .padding(.bottom)
             Button(action: saveButtonPressed, label: {
                 Text("Hinzufügen")
                     .foregroundColor(.white)

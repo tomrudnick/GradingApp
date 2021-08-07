@@ -16,15 +16,24 @@ struct AddCourse: View {
     
     var body: some View {
         VStack {
-            Text("Add a new Course").font(.headline).padding()
-            TextField("Add a new Course...", text: $courseName)
+            VStack {
+                HStack{
+                    Text("Kurs hinzufügen").font(.headline)
+                Spacer()
+                cancelButton
+                }
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
+            .padding(.top)
+            TextField("Kursname", text: $courseName)
                 .padding(.horizontal)
                 .frame(height: 55)
                 .background(Color(UIColor.secondarySystemBackground))
                 .cornerRadius(10)
                 .padding(.horizontal)
             Button(action: saveButtonPressed, label: {
-                Text("SAVE")
+                Text("Speichern")
                     .foregroundColor(.white)
                     .font(.headline)
                     .frame(height: 55)
@@ -32,11 +41,19 @@ struct AddCourse: View {
                     .background(Color.accentColor)
                     .cornerRadius(10)
             })
+            .disabled(courseName.isEmpty)
             .padding()
             Spacer()
         }
     }
-    
+    var cancelButton: some View{
+            Button {
+                presentationMode.wrappedValue.dismiss()
+            } label: {
+                Text("Abbrechen")
+            }
+        }
+        
     func saveButtonPressed() {
         Course.addCourse(courseName: courseName, context: viewContext)
         presentationMode.wrappedValue.dismiss()
