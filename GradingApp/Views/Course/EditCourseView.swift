@@ -30,7 +30,6 @@ struct EditCourseView: View {
                         }
                         .onDelete(
                             perform: editVM.deleteCoursesEdit
-                            
                         )
                     }
                 }

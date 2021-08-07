@@ -15,10 +15,18 @@ struct EditCourseDetailView: View {
             Image(systemName: course.hidden ? "eye.slash" : "eye").onTapGesture {
                 course.hidden.toggle()
             }
-            TextField("", text: $course.name)
-                .font(.title2)
-                .padding(.bottom)
-                .padding(.top)
+            if course.deleted {
+                Text(course.name).strikethrough()
+                    .font(.title2)
+                    .padding(.bottom)
+                    .padding(.top)
+            }
+            else{
+                TextField("", text: $course.name)
+                    .font(.title2)
+                    .padding(.bottom)
+                    .padding(.top)
+            }
         }
         
     }
