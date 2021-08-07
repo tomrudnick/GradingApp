@@ -38,9 +38,20 @@ extension Grade {
     
     private(set) static var gradeMultiplier = [0.5, 0.75, 1.0, 1.25, 1.5]
     
+
     static func gradeValueToLowerSchool(value: Int) -> String {
         return lowerSchoolGradesTranslate.first(where: {$1 == value})!.key
     }
+    
+    static func roundPoints(points: Double) -> Int {
+        return Int(round(points))
+    }
+    
+    static func convertToLowerSchoolGrade(points: Double) -> Double {
+        return (17.0 - points) / 3.0
+    }
+    
+    
     
     static func addGrade(value: Int, date: Date, half: HalfType, type: GradeType, comment: String, multiplier: Double, student: Student, context: NSManagedObjectContext) {
         let grade = Grade(context: context)

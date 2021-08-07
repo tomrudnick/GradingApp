@@ -15,33 +15,53 @@ struct StudentView: View {
     
     var body: some View {
         VStack {
-            Text("Data of Student")
             HStack {
                 VStack {
-                    Text("Oral Grades:")
-                    List {
-                        ForEach(student.gradesArr) { grade in
-                            if grade.type == .oral {
-                                Text(Grade.gradeValueToLowerSchool(value: Int(grade.value)))
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                            }
-                        }
-                    }
+                    Text("Gesamt: ")
+                        .font(.title)
+                        .padding()
+                    Text("Mündlich: ")
+                        .font(.title)
+                        .padding()
+                    Text("Schriftlich: ")
+                        .font(.title)
+                        .padding()
                 }
-                Divider()
+                
                 VStack {
-                    Text("Written Grades:")
-                    List {
-                        ForEach(student.gradesArr) { grade in
-                            if grade.type == .written {
-                                Text(Grade.gradeValueToLowerSchool(value: Int(grade.value)))
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                            }
+                    Button(action: {
+                        
+                    }, label: {
+                        VStack {
+                            Text(student.getLowerSchoolRoundedGradeAverage()).font(.title3)
+                            Text(student.getLowerSchoolGradeAverage())
                         }
-                    }
+                    }).padding()
+                   
+                    Button(action: {}, label: {
+                        VStack {
+                            Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title3)
+                            Text(student.getLowerSchoolGradeAverage(.oral))
+                        }
+                    }).padding()
+                    
+                    Button(action: {
+                        
+                    }, label: {
+                        VStack {
+                            Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title3)
+                            Text(student.getLowerSchoolGradeAverage(.written))
+                        }
+                    }).padding()
+                  
                 }
+                Spacer()
             }
-        }.navigationTitle(Text("\(student.firstName) \(student.lastName)"))
+            Spacer()
+        }
+        .padding()
+        .padding(.trailing, 5.0)
+        .navigationTitle(Text("\(student.firstName) \(student.lastName)"))
         .navigationBarItems(trailing: addGradeButton)
     }
     
@@ -54,6 +74,7 @@ struct StudentView: View {
             AddSingleGradeView(student: student)
         })
     }
+    
     
 }
 
