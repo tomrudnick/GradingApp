@@ -26,7 +26,7 @@ struct AddSingleGradeView: View {
             
             VStack {
                 HStack {
-                    ButtonCancelView()
+                    CancelButtonView(label: "Abbrechen")
                     Text("Add Grade for:\n\(student.firstName) \(student.lastName)")
                         .font(.headline)
                         .padding()
