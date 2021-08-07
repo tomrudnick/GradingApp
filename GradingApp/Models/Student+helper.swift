@@ -33,6 +33,36 @@ extension Student {
         get { grades.sorted {$0.date! < $1.date! } }
     }
     
+    func gradeAverage(type: GradeType) -> Double {
+        let filteredGrades = grades.filter { $0.type == type }
+        let sum = filteredGrades.reduce(0) { result, grade in
+            result + grade.value
+        }
+        return Double(sum) / Double(filteredGrades.count)
+    }
+    
+    func gradeAverage() -> Double {
+        return (gradeAverage(type: .oral) + gradeAverage(type: .written)) / 2.0
+    }
+    
+    func getLowerSchoolRoundedGradeAverage(_ type: GradeType) -> String {
+        return Grade.gradeValueToLowerSchool(value: Grade.roundPoints(points: gradeAverage(type: type)))
+    }
+    
+    func getLowerSchoolRoundedGradeAverage() -> String {
+        return Grade.gradeValueToLowerSchool(value: Grade.roundPoints(points: gradeAverage()))
+    }
+    
+    func getLowerSchoolGradeAverage(_ type: GradeType) -> String {
+        return String(format: "%.2f", Grade.convertToLowerSchoolGrade(points: gradeAverage(type: type)))
+    }
+    
+    func getLowerSchoolGradeAverage() -> String {
+        return String(format: "%.2f", Grade.convertToLowerSchoolGrade(points: gradeAverage()))
+    }
+    
+    
+    
 }
 
 extension Student {
