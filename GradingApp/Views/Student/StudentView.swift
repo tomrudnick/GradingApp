@@ -29,31 +29,29 @@ struct StudentView: View {
                 }
                 
                 VStack {
-                    Button(action: {
-                        
-                    }, label: {
+                    Button(action: {}, label: {
                         VStack {
                             Text(student.getLowerSchoolRoundedGradeAverage()).font(.title3)
                             Text(student.getLowerSchoolGradeAverage())
                         }
                     }).padding()
-                   
-                    Button(action: {}, label: {
-                        VStack {
-                            Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title3)
-                            Text(student.getLowerSchoolGradeAverage(.oral))
-                        }
-                    }).padding()
                     
-                    Button(action: {
-                        
-                    }, label: {
-                        VStack {
-                            Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title3)
-                            Text(student.getLowerSchoolGradeAverage(.written))
-                        }
-                    }).padding()
-                    
+                    NavigationLink(
+                        destination: GradeDetailView(student: student, gradeType: .oral),
+                        label: {
+                            VStack {
+                                Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title3)
+                                Text(student.getLowerSchoolGradeAverage(.oral))
+                            }
+                        }).padding()
+                    NavigationLink(
+                        destination: GradeDetailView(student: student, gradeType: .written),
+                        label: {
+                            VStack {
+                                Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title3)
+                                Text(student.getLowerSchoolGradeAverage(.written))
+                            }
+                        }).padding()
                 }
                 Spacer()
             }

@@ -39,7 +39,7 @@ struct CourseListView: View {
             showAddCourse = true
         } label: {
             Image(systemName: "plus.app")
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                .font(.title)
             
         }.sheet(isPresented: $showAddCourse) {
             AddCourse().environment(\.managedObjectContext, viewContext)
@@ -51,19 +51,12 @@ struct CourseListView: View {
             showEditCourses = true
         } label: {
             Image(systemName: "pencil.circle")
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                .font(.title)
         }.sheet(isPresented: $showEditCourses) {
             EditCourseView().environment(\.managedObjectContext, viewContext)
         }
     }
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 //----------------------------Preview-------------------------------
 
