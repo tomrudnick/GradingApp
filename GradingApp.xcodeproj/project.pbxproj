@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 394D7C4F26BDC7DB00892BD4 /* CSV */; };
+		E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */; };
 		E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCA326BADAC6000BDD65 /* GradingApp.swift */; };
 		E25FBCA626BADAC6000BDD65 /* CourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCA526BADAC6000BDD65 /* CourseListView.swift */; };
 		E25FBCA826BADAC8000BDD65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25FBCA726BADAC8000BDD65 /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomsheetView.swift; sourceTree = "<group>"; };
 		E25FBCA026BADAC6000BDD65 /* GradingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E25FBCA326BADAC6000BDD65 /* GradingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingApp.swift; sourceTree = "<group>"; };
 		E25FBCA526BADAC6000BDD65 /* CourseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListView.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				E25FBCB926BAE1EC000BDD65 /* StudentListView.swift */,
 				E25FBCC026BAF24D000BDD65 /* StudentView.swift */,
 				E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */,
+				E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */,
 			);
 			path = Student;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				E25FBCAD26BADAC8000BDD65 /* Persistence.swift in Sources */,
 				E25FBCA626BADAC6000BDD65 /* CourseListView.swift in Sources */,
 				E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */,
+				E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */,
 				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
 				E2B055DE26BD4F76004F0087 /* Grade+CoreDataProperties.swift in Sources */,
 				E25FBCC126BAF24D000BDD65 /* StudentView.swift in Sources */,
