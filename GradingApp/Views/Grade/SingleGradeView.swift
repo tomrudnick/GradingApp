@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SingleGradeView: View {
-    @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var student: Student
@@ -27,7 +26,7 @@ struct SingleGradeView: View {
     init(student: Student,
          gradeDate: Date = Date(),
          selectedGradeType: GradeType = .oral,
-         currentGrade: Int32 = 0,
+         currentGrade: Int32 = -1,
          gradeMultiplier: Double = 1.0,
          comment: String  = "",
          showSaveCancelButtons: Bool = true,
@@ -52,18 +51,26 @@ struct SingleGradeView: View {
                 if showSaveCancelButtons {
                     HStack {
                         CancelButtonView(label: "Abbrechen")
-                        Text("Add Grade for:\n\(student.firstName) \(student.lastName)")
-                            .font(.headline)
-                            .padding()
-                       
+                        Spacer()
                         Button(action: {
                             save()
                         }, label: {
                             Text("Save")
                         })
+                        .disabled(currentGrade == "-")
                     }
+                    .padding(.top)
+                    .padding(.horizontal)
+                    VStack{
+                    Text("Neue Note")
+                        .font(.title)
+                    }
+                    .padding(.top)
                 }
+                Text("\(student.firstName) \(student.lastName)")
+                    .font(.headline)
                 Form {
+                    
                     Section {
                         HStack {
                             DatePicker("Datum", selection: $gradeDate, displayedComponents: [.date])
@@ -94,7 +101,6 @@ struct SingleGradeView: View {
                             Text(String(Grade.gradeMultiplier[1])).tag(1)
                             Text(String(Grade.gradeMultiplier[2])).tag(2)
                             Text(String(Grade.gradeMultiplier[3])).tag(3)
-                            Text(String(Grade.gradeMultiplier[4])).tag(4)
                         }).pickerStyle(SegmentedPickerStyle())
                     }
                     
@@ -140,8 +146,8 @@ struct SingleGradeView: View {
     }
 }
 
-/*struct SingleGradeView_Previews: PreviewProvider {
-    static var previews: some View {
-        SingleGradeView()
-    }
-}*/
+//struct SingleGradeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SingleGradeView()
+//    }
+//}
