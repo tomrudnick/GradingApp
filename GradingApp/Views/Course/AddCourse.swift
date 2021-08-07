@@ -20,39 +20,16 @@ struct AddCourse: View {
                 HStack{
                     Text("Kurs hinzufügen").font(.headline)
                 Spacer()
-                cancelButton
+                    ButtonCancelView()
                 }
             }
-            .padding(.horizontal)
-            .padding(.bottom)
-            .padding(.top)
-            TextField("Kursname", text: $courseName)
-                .padding(.horizontal)
-                .frame(height: 55)
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(10)
-                .padding(.horizontal)
-            Button(action: saveButtonPressed, label: {
-                Text("Speichern")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.accentColor)
-                    .cornerRadius(10)
-            })
-            .disabled(courseName.isEmpty)
             .padding()
+            CustomTextfieldView(label: "Kursname", input: $courseName)
+            CustomButtonView(label: "Speichern", action: saveButtonPressed, buttonColor: .accentColor)
+            .disabled(courseName.isEmpty)
             Spacer()
         }
     }
-    var cancelButton: some View{
-            Button {
-                presentationMode.wrappedValue.dismiss()
-            } label: {
-                Text("Abbrechen")
-            }
-        }
         
     func saveButtonPressed() {
         Course.addCourse(courseName: courseName, context: viewContext)
@@ -60,6 +37,8 @@ struct AddCourse: View {
     }
    
 }
+
+//----------------------------Preview-------------------------------
 
 struct AddCourseView_Previews: PreviewProvider {
     static var previews: some View {

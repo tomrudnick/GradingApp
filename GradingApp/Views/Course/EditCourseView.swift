@@ -53,6 +53,8 @@ struct EditCourseView: View {
     }
 }
 
+
+
 struct EditCourseView_Previews: PreviewProvider {
     static var previews: some View {
         EditCourseView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

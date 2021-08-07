@@ -25,39 +25,18 @@ struct AddStudent: View {
             HStack{
                 Text("Neuer Schüler").font(.headline)
             Spacer()
-            cancelButton
+                ButtonCancelView()
             }
-            .padding(.horizontal)
-            .padding(.bottom)
-            .padding(.top)
-            StudentTextfieldView(label: "Vorname", input: $studentFirstName)
-            StudentTextfieldView(label: "Nachname", input: $studentLastName)
-            StudentTextfieldView(label: "Email", input: $email)
+            .padding()
+            CustomTextfieldView(label: "Vorname", input: $studentFirstName)
+            CustomTextfieldView(label: "Nachname", input: $studentLastName)
+            CustomTextfieldView(label: "Email", input: $email)
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
-                .padding(.bottom)
-            Button(action: saveButtonPressed, label: {
-                Text("Hinzufügen")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.accentColor)
-                    .cornerRadius(10)
-            })
-            .disabled(studentFirstName.isEmpty || studentLastName.isEmpty)
-            .padding(.horizontal)
-            Divider()
-            Button(action: { openFile.toggle() }, label: {
-                Text("csv-Import")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.red)
-                    .cornerRadius(10)
-            })
-            .padding()
+            CustomButtonView(label: "Hinzufügen", action: self.saveButtonPressed, buttonColor: .accentColor)
+                .disabled(studentFirstName.isEmpty || studentLastName.isEmpty)
+                Divider()
+            CustomButtonView(label: "csv-Import", action: {openFile.toggle()}, buttonColor: .red)
             Spacer()
         }
         .fileImporter(isPresented: $openFile, allowedContentTypes: [.plainText]) { res in
@@ -77,20 +56,14 @@ struct AddStudent: View {
             }
         }
     }
-    var cancelButton: some View{
-        Button {
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("Abbrechen")
-        }
-    }
-
+ 
     func saveButtonPressed() {
         Student.addStudent(firstName: studentFirstName, lastName: studentLastName, email: email, course: course, context: viewContext)
         presentationMode.wrappedValue.dismiss()
     }
 }
 
+//----------------------------Preview-------------------------------
 
 struct AddStudent_Previews: PreviewProvider {
     static var previewCourse : Course {

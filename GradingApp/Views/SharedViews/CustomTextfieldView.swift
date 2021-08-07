@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StudentTextfieldView: View {
+struct CustomTextfieldView: View {
     
     var label: String
     var input: Binding<String>
@@ -23,8 +23,11 @@ struct StudentTextfieldView: View {
     }
 }
 
-//struct StudentTextfieldView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StudentTextfieldView()
-//    }
-//}
+struct CustomTextfieldView_Previews: PreviewProvider {
+    
+    @State static var testBinding = ""
+    
+    static var previews: some View {
+        CustomTextfieldView(label: "Vorname", input: $testBinding)
+    }
+}

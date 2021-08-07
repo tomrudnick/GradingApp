@@ -62,6 +62,8 @@ private let itemFormatter: DateFormatter = {
     return formatter
 }()
 
+//----------------------------Preview-------------------------------
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         CourseListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
