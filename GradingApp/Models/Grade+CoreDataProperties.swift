@@ -2,7 +2,7 @@
 //  Grade+CoreDataProperties.swift
 //  GradingApp
 //
-//  Created by Tom Rudnick on 06.08.21.
+//  Created by Tom Rudnick on 07.08.21.
 //
 //
 
@@ -17,9 +17,11 @@ extension Grade {
     }
 
     @NSManaged public var date: Date?
+    @NSManaged public var half: HalfType
     @NSManaged public var type: GradeType
     @NSManaged public var value: Int32
-    @NSManaged public var half: HalfType
+    @NSManaged public var comment: String?
+    @NSManaged public var multiplier: Double
     @NSManaged public var student: Student?
 
 }
@@ -39,3 +41,4 @@ public enum HalfType: Int16 {
     case firstHalf
     case secondHalf
 }
+
