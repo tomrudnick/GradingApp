@@ -11,7 +11,7 @@ import CoreData
 
 struct CourseListView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(fetchRequest: Course.fetchAllNonHidden(), animation: .default )
     private var courses: FetchedResults<Course>
     
@@ -38,7 +38,9 @@ struct CourseListView: View {
         Button {
             showAddCourse = true
         } label: {
-            Text("Add")
+            Image(systemName: "plus.app")
+                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+            
         }.sheet(isPresented: $showAddCourse) {
             AddCourse().environment(\.managedObjectContext, viewContext)
         }
@@ -48,7 +50,8 @@ struct CourseListView: View {
         Button {
             showEditCourses = true
         } label: {
-            Text("Edit")
+            Image(systemName: "pencil.circle")
+                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
         }.sheet(isPresented: $showEditCourses) {
             EditCourseView().environment(\.managedObjectContext, viewContext)
         }

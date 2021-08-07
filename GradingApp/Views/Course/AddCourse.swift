@@ -20,7 +20,7 @@ struct AddCourse: View {
                 HStack{
                     Text("Kurs hinzufügen").font(.headline)
                 Spacer()
-                    ButtonCancelView()
+                    CancelButtonView(label: "Abbrechen")
                 }
             }
             .padding()

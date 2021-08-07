@@ -1,5 +1,5 @@
 //
-//  ButtonCancelView.swift
+//  CancelButtonView.swift
 //  GradingApp
 //
 //  Created by Matthias Rudnick on 07.08.21.
@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-struct ButtonCancelView: View {
+struct  CancelButtonView: View {
     
     @Environment(\.presentationMode) var presentationMode
+    var label: String
 
     
     var body: some View {
         Button {
             presentationMode.wrappedValue.dismiss()
         } label: {
-            Text("Abbrechen")
+            Text(label)
         }
     }
 }
-
-struct ButtonCancelView_Previews: PreviewProvider {
+struct CancelButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        ButtonCancelView()
+        CancelButtonView(label: "Abbrechen")
     }
 }
