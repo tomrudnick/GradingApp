@@ -38,6 +38,10 @@ extension Grade {
     
     private(set) static var gradeMultiplier = [0.5, 0.75, 1.0, 1.25, 1.5]
     
+    static func gradeValueToLowerSchool(value: Int) -> String {
+        return lowerSchoolGradesTranslate.first(where: {$1 == value})!.key
+    }
+    
     static func addGrade(value: Int, date: Date, half: HalfType, type: GradeType, comment: String, multiplier: Double, student: Student, context: NSManagedObjectContext) {
         let grade = Grade(context: context)
         grade.value = Int32(value)
@@ -46,7 +50,8 @@ extension Grade {
         grade.comment = comment
         grade.half = half
         grade.multiplier = multiplier
-        
+        grade.student = student
+        print("Add Grade with Value:  \(grade.value)")
         do {
             try context.save()
         } catch {

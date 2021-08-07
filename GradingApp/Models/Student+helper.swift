@@ -24,6 +24,15 @@ extension Student {
         set { email_ = newValue}
     }
     
+    var grades : Set<Grade> {
+        get { grades_ as? Set<Grade> ?? [] }
+        set { grades_ = newValue as NSSet }
+    }
+    
+    var gradesArr : Array<Grade> {
+        get { grades.sorted {$0.date! < $1.date! } }
+    }
+    
 }
 
 extension Student {

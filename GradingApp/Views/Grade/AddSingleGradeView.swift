@@ -32,7 +32,7 @@ struct AddSingleGradeView: View {
                         .padding()
                    
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss()
+                        addGrade()
                     }, label: {
                         Text("Save")
                     })
