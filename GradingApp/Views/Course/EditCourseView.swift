@@ -25,7 +25,7 @@ struct EditCourseView: View {
                 Section {
                     List {
                         ForEach(editVM.courses) { course in
-                            EditDetailView(course: course)
+                            EditCourseDetailView(course: course)
                         }
                         .onDelete(perform: editVM.deleteCoursesEdit)
                     }
@@ -50,23 +50,6 @@ struct EditCourseView: View {
             Text("Save")
         }
 
-    }
-}
-
-struct EditDetailView: View {
-    @ObservedObject var course: CourseEditViewModel.CourseVM
-    
-    var body: some View {
-        HStack {
-            Image(systemName: course.hidden ? "eye.slash" : "eye").onTapGesture {
-                course.hidden.toggle()
-            }
-            TextField("", text: $course.name)
-                .font(.title2)
-                .padding(.bottom)
-                .padding(.top)
-        }
-        
     }
 }
 

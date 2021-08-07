@@ -22,7 +22,7 @@ class CourseEditViewModel: ObservableObject {
     private var container = PersistenceController.shared.container
     
     init() {
-        fetchCourses()
+       fetchCourses()
     }
     
     private func fetchCourses() {
@@ -60,5 +60,7 @@ class CourseEditViewModel: ObservableObject {
             self.hidden = hidden
         }
     }
+//  Code for Previews
+    
     
 }

@@ -26,6 +26,8 @@ struct StudentListView: View {
     }
 }
 
+
+//----------------------------Preview-------------------------------
 struct StudentListView_Previews: PreviewProvider {
     static var previewCourse : Course {
         let course = Course(context: PersistenceController.preview.container.viewContext)
