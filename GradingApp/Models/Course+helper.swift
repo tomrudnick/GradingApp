@@ -27,9 +27,14 @@ extension Course {
 
 
 extension Course {
+    
+    convenience init(name: String, context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.name = name
+    }
+    
     static func addCourse(courseName: String, context: NSManagedObjectContext) {
-        let newCourse = Course(context: context)
-        newCourse.name = courseName
+        _ = Course(name: courseName, context: context)
         do {
             try context.save()
         } catch {

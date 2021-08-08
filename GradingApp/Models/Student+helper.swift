@@ -69,12 +69,16 @@ extension Student {
 }
 
 extension Student {
+    convenience init(firstName: String, lastName: String, email: String, course: Course, context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
+        self.course = course
+    }
+    
     static func addStudent(firstName: String, lastName: String, email: String, course: Course, context: NSManagedObjectContext) {
-        let newStudent = Student(context: context)
-        newStudent.course = course
-        newStudent.firstName = firstName
-        newStudent.lastName = lastName
-        newStudent.email = email
+        _ = Student(firstName: firstName, lastName: lastName, email: email, course: course, context: context)
         do {
             try context.save()
         } catch {

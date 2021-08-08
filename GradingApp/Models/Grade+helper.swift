@@ -51,19 +51,24 @@ extension Grade {
     static func convertToLowerSchoolGrade(points: Double) -> Double {
         return (17.0 - points) / 3.0
     }
-    
-    
+}
+
+
+extension Grade {
+    convenience init(value: Int, date: Date, half: HalfType, type: GradeType, comment: String, multiplier: Double, student: Student,
+                     context: NSManagedObjectContext) {
+        self.init(context: context)
+        self.value = Int32(value)
+        self.date = date
+        self.type = type
+        self.comment = comment
+        self.half = half
+        self.multiplier = multiplier
+        self.student = student
+    }
     
     static func addGrade(value: Int, date: Date, half: HalfType, type: GradeType, comment: String, multiplier: Double, student: Student, context: NSManagedObjectContext) {
-        let grade = Grade(context: context)
-        grade.value = Int32(value)
-        grade.date = date
-        grade.type = type
-        grade.comment = comment
-        grade.half = half
-        grade.multiplier = multiplier
-        grade.student = student
-        print("Add Grade with Value:  \(grade.value)")
+        _ = Grade(value: value, date: date, half: half, type: type, comment: comment, multiplier: multiplier, student: student, context: context)
         do {
             try context.save()
         } catch {
