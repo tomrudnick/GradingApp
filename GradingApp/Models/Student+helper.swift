@@ -79,12 +79,7 @@ extension Student {
     
     static func addStudent(firstName: String, lastName: String, email: String, course: Course, context: NSManagedObjectContext) {
         _ = Student(firstName: firstName, lastName: lastName, email: email, course: course, context: context)
-        do {
-            try context.save()
-        } catch {
-            let error = error as NSError
-            fatalError("Uresolved Problem when creating a Student: \(error)")
-        }
+        context.saveCustom()
     }
 }
 

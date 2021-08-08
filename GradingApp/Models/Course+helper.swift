@@ -35,12 +35,7 @@ extension Course {
     
     static func addCourse(courseName: String, context: NSManagedObjectContext) {
         _ = Course(name: courseName, context: context)
-        do {
-            try context.save()
-        } catch {
-            let error = error as NSError
-            fatalError("Unresolved Problem when creating a Course: \(error)")
-        }
+        context.saveCustom()
     }
     
     
