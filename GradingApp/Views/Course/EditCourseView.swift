@@ -6,14 +6,20 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct EditCourseView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.managedObjectContext) private var viewContext
+    private var viewContext: NSManagedObjectContext
     
-    @StateObject var editVM = CourseEditViewModel()
+    @StateObject var editVM: CourseEditViewModel
     @State private var showAlert = false
+    
+    init(context: NSManagedObjectContext) {
+        _editVM = StateObject(wrappedValue: CourseEditViewModel(context: context))
+        self.viewContext = context
+    }
     
     var body: some View {
         VStack {
@@ -48,6 +54,6 @@ struct EditCourseView: View {
 }
 struct EditCourseView_Previews: PreviewProvider {
     static var previews: some View {
-        EditCourseView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        EditCourseView(context: PersistenceController.preview.container.viewContext)
     }
 }

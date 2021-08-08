@@ -32,9 +32,12 @@ struct EditCourseDetailView: View {
     }
 }
 
-//struct EditCourseDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        
-//        EditCourseDetailView(course: <#CourseEditViewModel.CourseVM#>).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-//    }
-//}
+struct EditCourseDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            EditCourseDetailView(course: CourseEditViewModel.CourseVM(id: UUID(), name: "Mathe 10b", hidden: false, deleted: false))
+            EditCourseDetailView(course: CourseEditViewModel.CourseVM(id: UUID(), name: "Mathe 10b", hidden: false, deleted: true))
+        }.previewLayout(.sizeThatFits)
+        
+    }
+}

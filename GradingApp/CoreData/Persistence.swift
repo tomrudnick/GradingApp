@@ -24,8 +24,7 @@ struct PersistenceController {
         })
     }
     
-    static func fetchData<T>(fetchRequest: NSFetchRequest<T>) -> [T] {
-        let context = PersistenceController.shared.container.viewContext
+    static func fetchData<T>(context: NSManagedObjectContext, fetchRequest: NSFetchRequest<T>) -> [T] {
         do {
             return try context.fetch(fetchRequest)
         } catch {
