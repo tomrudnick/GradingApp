@@ -31,15 +31,27 @@
 		E25FBCC326BAF6E6000BDD65 /* AddStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */; };
 		E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC426BAF781000BDD65 /* Student+helper.swift */; };
 		E25FBCC726BB0216000BDD65 /* EditCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC626BB0216000BDD65 /* EditCourseView.swift */; };
+		E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */; };
 		E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055DF26BD5029004F0087 /* Grade+helper.swift */; };
 		E2B055E226BD5842004F0087 /* AddSingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */; };
 		E2B7451526BFDFC9002D0B4C /* BottomsheetGradePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451426BFDFC9002D0B4C /* BottomsheetGradePickerView.swift */; };
 		E2B7451726C00E09002D0B4C /* ViewContext+SaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451626C00E09002D0B4C /* ViewContext+SaveHelper.swift */; };
+		E2B7451F26C01C4F002D0B4C /* GradingAppDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */; };
 		E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */; };
 		E2EA7AA226BEF23C0036048E /* GradeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */; };
 		E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA326BEF6260036048E /* SingleGradeView.swift */; };
 		E2EA7AA626BEF9E50036048E /* EditSingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E2B7452126C01C4F002D0B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E25FBC9826BADAC6000BDD65 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E25FBC9F26BADAC6000BDD65;
+			remoteInfo = GradingApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseDetailView.swift; sourceTree = "<group>"; };
@@ -67,10 +79,14 @@
 		E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudent.swift; sourceTree = "<group>"; };
 		E25FBCC426BAF781000BDD65 /* Student+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+helper.swift"; sourceTree = "<group>"; };
 		E25FBCC626BB0216000BDD65 /* EditCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseView.swift; sourceTree = "<group>"; };
+		E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelTest.swift; sourceTree = "<group>"; };
 		E2B055DF26BD5029004F0087 /* Grade+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+helper.swift"; sourceTree = "<group>"; };
 		E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSingleGradeView.swift; sourceTree = "<group>"; };
 		E2B7451426BFDFC9002D0B4C /* BottomsheetGradePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomsheetGradePickerView.swift; sourceTree = "<group>"; };
 		E2B7451626C00E09002D0B4C /* ViewContext+SaveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewContext+SaveHelper.swift"; sourceTree = "<group>"; };
+		E2B7451C26C01C4F002D0B4C /* GradingAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradingAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingAppDatabaseTests.swift; sourceTree = "<group>"; };
+		E2B7452026C01C4F002D0B4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseViewModel.swift; sourceTree = "<group>"; };
 		E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeDetailView.swift; sourceTree = "<group>"; };
 		E2EA7AA326BEF6260036048E /* SingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGradeView.swift; sourceTree = "<group>"; };
@@ -83,6 +99,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B7451926C01C4F002D0B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				E25FBCA226BADAC6000BDD65 /* GradingApp */,
+				E2B7451D26C01C4F002D0B4C /* GradingAppTests */,
 				E25FBCA126BADAC6000BDD65 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				E25FBCA026BADAC6000BDD65 /* GradingApp.app */,
+				E2B7451C26C01C4F002D0B4C /* GradingAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +211,16 @@
 			path = Grade;
 			sourceTree = "<group>";
 		};
+		E2B7451D26C01C4F002D0B4C /* GradingAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */,
+				E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */,
+				E2B7452026C01C4F002D0B4C /* Info.plist */,
+			);
+			path = GradingAppTests;
+			sourceTree = "<group>";
+		};
 		E2C5138426BBD3EB0069D340 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +274,24 @@
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E2B7451B26C01C4F002D0B4C /* GradingAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2B7452326C01C4F002D0B4C /* Build configuration list for PBXNativeTarget "GradingAppTests" */;
+			buildPhases = (
+				E2B7451826C01C4F002D0B4C /* Sources */,
+				E2B7451926C01C4F002D0B4C /* Frameworks */,
+				E2B7451A26C01C4F002D0B4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2B7452226C01C4F002D0B4C /* PBXTargetDependency */,
+			);
+			name = GradingAppTests;
+			productName = GradingAppTests;
+			productReference = E2B7451C26C01C4F002D0B4C /* GradingAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -250,6 +303,10 @@
 				TargetAttributes = {
 					E25FBC9F26BADAC6000BDD65 = {
 						CreatedOnToolsVersion = 12.5.1;
+					};
+					E2B7451B26C01C4F002D0B4C = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = E25FBC9F26BADAC6000BDD65;
 					};
 				};
 			};
@@ -270,6 +327,7 @@
 			projectRoot = "";
 			targets = (
 				E25FBC9F26BADAC6000BDD65 /* GradingApp */,
+				E2B7451B26C01C4F002D0B4C /* GradingAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -281,6 +339,13 @@
 			files = (
 				E25FBCAB26BADAC8000BDD65 /* Preview Assets.xcassets in Resources */,
 				E25FBCA826BADAC8000BDD65 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B7451A26C01C4F002D0B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,7 +388,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E2B7451826C01C4F002D0B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */,
+				E2B7451F26C01C4F002D0B4C /* GradingAppDatabaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E2B7452226C01C4F002D0B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E25FBC9F26BADAC6000BDD65 /* GradingApp */;
+			targetProxy = E2B7452126C01C4F002D0B4C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E25FBCB226BADAC8000BDD65 /* Debug */ = {
@@ -486,6 +568,46 @@
 			};
 			name = Release;
 		};
+		E2B7452426C01C4F002D0B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				INFOPLIST_FILE = GradingAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudnick.GradingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GradingApp.app/GradingApp";
+			};
+			name = Debug;
+		};
+		E2B7452526C01C4F002D0B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				INFOPLIST_FILE = GradingAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudnick.GradingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GradingApp.app/GradingApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -503,6 +625,15 @@
 			buildConfigurations = (
 				E25FBCB526BADAC8000BDD65 /* Debug */,
 				E25FBCB626BADAC8000BDD65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2B7452326C01C4F002D0B4C /* Build configuration list for PBXNativeTarget "GradingAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2B7452426C01C4F002D0B4C /* Debug */,
+				E2B7452526C01C4F002D0B4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

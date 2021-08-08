@@ -28,13 +28,15 @@ extension Course {
 
 extension Course {
     
-    convenience init(name: String, context: NSManagedObjectContext) {
+    convenience init(name: String, hidden: Bool = false, context: NSManagedObjectContext) {
         self.init(context: context)
         self.name = name
+        self.hidden = hidden
     }
     
-    static func addCourse(courseName: String, context: NSManagedObjectContext) {
-        _ = Course(name: courseName, context: context)
+    
+    static func addCourse(courseName: String, hidden: Bool = false, context: NSManagedObjectContext) {
+        _ = Course(name: courseName, hidden: hidden, context: context)
         context.saveCustom()
     }
     
