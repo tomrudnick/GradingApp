@@ -31,14 +31,18 @@ struct GradeDetailView: View {
                     }
                 }
             }
-        }.navigationTitle(Text(gradeType == .oral ? "Mündliche Noten \(student.firstName) \(student.lastName)": "Schriftliche Noten \(student.firstName) \(student.lastName)"))
+        }
+        .navigationTitle(Text(gradeType == .oral ? "Mündliche Noten \(student.firstName) \(student.lastName)": "Schriftliche Noten \(student.firstName) \(student.lastName)"))
         .navigationBarTitleDisplayMode(.inline)
-        
+
     }
 }
 
-//struct GradeDetailView_Previews: PreviewProvider {   
-//    static var previews: some View {
-//        GradeDetailView()
-//    }
-//}
+struct GradeDetailView_Previews: PreviewProvider {
+    
+    static let context = PersistenceController.preview.container.viewContext
+    
+    static var previews: some View {
+        GradeDetailView(student: Student.exampleStudent(context: context),gradeType: Grade.previewGrad(context: context).type)
+    }
+}
