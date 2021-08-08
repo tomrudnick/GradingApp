@@ -24,9 +24,10 @@ struct GradeDetailView: View {
                                     Text(Grade.gradeValueToLowerSchool(value: Int(grade.value)))
                                     Text(String(grade.multiplier)).font(.footnote)
                                 }
-                                //TODO: HIER FEHLT NOCH DAS DATUM
-                                Spacer()
+                            
+                                Text(grade.dateAsString())
                                 Text(grade.comment ?? "")
+                                Spacer()
                             }
                         }
                     }

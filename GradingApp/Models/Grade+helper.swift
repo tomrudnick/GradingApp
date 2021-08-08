@@ -71,4 +71,10 @@ extension Grade {
         _ = Grade(value: value, date: date, half: half, type: type, comment: comment, multiplier: multiplier, student: student, context: context)
         context.saveCustom()
     }
+    
+    func dateAsString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM"
+        return formatter.string(from: self.date!)
+    }
 }

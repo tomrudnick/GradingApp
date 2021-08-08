@@ -87,7 +87,10 @@ Mathe 10FLS,Fenja,Theesfeld,fenja.theesfeld@nige.de,4,3+,3,3-,3,_S_,4,3
 Mathe 10FLS,Oke,Tuitjer,oke.tuitjer@nige.de,3,3+,3+,3+,_S_,4,2
 Mathe 10FLS,Katharina,Willms,katharina.willms@nige.de,4,3+,3,3-,3,_S_,3,3
 """
-
+func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
+    }
 
 func previewData (context: NSManagedObjectContext) -> [Course] {
     
@@ -116,7 +119,7 @@ func previewData (context: NSManagedObjectContext) -> [Course] {
             if grade == "_S_"{
                 gradeType = GradeType.written
             } else {
-                _ = Grade(value: Grade.lowerSchoolGradesTranslate[grade]!, date: Date(), half: .firstHalf, type: gradeType, comment: "", multiplier: 1.0, student: student, context: context)
+                _ = Grade(value: Grade.lowerSchoolGradesTranslate[grade]!, date: Date(), half: .firstHalf, type: gradeType, comment: randomString(length: Int.random(in: 3..<20)), multiplier: 1.0, student: student, context: context)
             }
         }
     }
