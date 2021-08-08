@@ -127,8 +127,6 @@ struct SingleGradeView: View {
             }
             
         }
-       
-    
     }
     
     func save() {
@@ -138,6 +136,8 @@ struct SingleGradeView: View {
         saveHandler(points, type, multiplier, gradeDate, comment)
         presentationMode.wrappedValue.dismiss()
     }
+    
+    
 }
 
 /*struct SingleGradeView_Previews: PreviewProvider {

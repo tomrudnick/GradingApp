@@ -39,7 +39,7 @@ extension Student {
             return 0.0
         }
         let sum = filteredGrades.reduce(0) { result, grade in
-            result + grade.value
+            result + Double(grade.value) * grade.multiplier
         }
         return Double(sum) / Double(filteredGrades.count)
     }
