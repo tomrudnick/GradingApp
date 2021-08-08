@@ -30,20 +30,12 @@ struct CourseTabView: View {
             AddStudent(course: course)
         })
     }
-    
-    
 }
 
 struct CourseTabView_Previews: PreviewProvider {
-    static var previewCourse : Course {
-        let course = Course(context: PersistenceController.preview.container.viewContext)
-        course.name = "Mathe 10F"
-        return course
-    }
-
     static var previews: some View {
         NavigationView {
-            CourseTabView(course: previewCourse)
+            CourseTabView(course: Course.previewCourses(context: PersistenceController.preview.container.viewContext).first!)
         }
     }
 }

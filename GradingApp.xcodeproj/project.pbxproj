@@ -14,6 +14,8 @@
 		3936EA8B26BED09B00A37B95 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8A26BED09B00A37B95 /* TestView.swift */; };
 		394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 394D7C4F26BDC7DB00892BD4 /* CSV */; };
 		395CD6D726BFE71900ECA4DD /* Student+preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6D626BFE71900ECA4DD /* Student+preview.swift */; };
+		395CD6D926BFEB2300ECA4DD /* Courses+preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6D826BFEB2300ECA4DD /* Courses+preview.swift */; };
+		395CD6DB26C0097900ECA4DD /* grade+preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6DA26C0097900ECA4DD /* grade+preview.swift */; };
 		E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */; };
 		E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */; };
 		E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */; };
@@ -60,6 +62,8 @@
 		3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		3936EA8A26BED09B00A37B95 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		395CD6D626BFE71900ECA4DD /* Student+preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+preview.swift"; sourceTree = "<group>"; };
+		395CD6D826BFEB2300ECA4DD /* Courses+preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Courses+preview.swift"; sourceTree = "<group>"; };
+		395CD6DA26C0097900ECA4DD /* grade+preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "grade+preview.swift"; sourceTree = "<group>"; };
 		E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomsheetView.swift; sourceTree = "<group>"; };
 		E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -244,9 +248,11 @@
 				E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */,
 				E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */,
 				E25FBCBE26BAE976000BDD65 /* Course+helper.swift */,
+				E2B055DF26BD5029004F0087 /* Grade+helper.swift */,
 				E25FBCC426BAF781000BDD65 /* Student+helper.swift */,
 				395CD6D626BFE71900ECA4DD /* Student+preview.swift */,
-				E2B055DF26BD5029004F0087 /* Grade+helper.swift */,
+				395CD6D826BFEB2300ECA4DD /* Courses+preview.swift */,
+				395CD6DA26C0097900ECA4DD /* grade+preview.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -356,12 +362,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				395CD6DB26C0097900ECA4DD /* grade+preview.swift in Sources */,
 				E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */,
 				E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */,
 				E25FBCBF26BAE976000BDD65 /* Course+helper.swift in Sources */,
 				E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */,
 				E25FBCC726BB0216000BDD65 /* EditCourseView.swift in Sources */,
 				3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */,
+				395CD6D926BFEB2300ECA4DD /* Courses+preview.swift in Sources */,
 				E25FBCB026BADAC8000BDD65 /* GradingAppData.xcdatamodeld in Sources */,
 				E25FBCB826BAE1AB000BDD65 /* CourseTabView.swift in Sources */,
 				E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */,

@@ -25,15 +25,10 @@ struct AddSingleGradeView: View {
 
 struct AddSingleGradeView_Previews: PreviewProvider {
     
-    static var previewStudent : Student {
-        let student = Student(context: PersistenceController.preview.container.viewContext)
-        student.firstName = "Marit"
-        student.lastName = "Abken"
-        return student
-    }
+    static let student = Student.exampleStudent(context: PersistenceController.preview.container.viewContext)
     
     static var previews: some View {
-        AddSingleGradeView(student: previewStudent)
+        AddSingleGradeView(student: student)
     }
 }
 
