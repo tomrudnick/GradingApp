@@ -28,7 +28,7 @@ class CourseEditViewModel: ObservableObject {
     }
     
     private func fetchCourses() {
-        let fetchedData = PersistenceController.fetchData(fetchRequest: Course.fetchAll())
+        let fetchedData = PersistenceController.fetchData(context: context, fetchRequest: Course.fetchAll())
         self.fetchedCourses = Dictionary(uniqueKeysWithValues: fetchedData.map {(UUID(), $0)})
         self.courses = fetchedCourses.map({ (key: UUID, value: Course) in
             CourseVM(id: key, name: value.name, hidden: value.hidden, deleted: false)
