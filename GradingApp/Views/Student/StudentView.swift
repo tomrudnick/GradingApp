@@ -15,47 +15,56 @@ struct StudentView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                VStack {
+            VStack(alignment: .leading) {
+                HStack{
                     Text("Gesamt: ")
                         .font(.title)
                         .padding()
+                    Spacer()
+                    Button(action: {}, label: {
+                        VStack {
+                            Text(student.getLowerSchoolRoundedGradeAverage()).font(.title)
+                            Text(student.getLowerSchoolGradeAverage())
+                                .font(.footnote)
+                                .foregroundColor(.gray)
+                        }
+                    }).padding()
+                }
+                HStack{
                     Text("Mündlich: ")
                         .font(.title)
                         .padding()
-                    Text("Schriftlich: ")
-                        .font(.title)
-                        .padding()
-                }
-                
-                VStack {
-                    Button(action: {}, label: {
-                        VStack {
-                            Text(student.getLowerSchoolRoundedGradeAverage()).font(.title3)
-                            Text(student.getLowerSchoolGradeAverage())
-                        }
-                    }).padding()
-                    
+                    Spacer()
                     NavigationLink(
                         destination: GradeDetailView(student: student, gradeType: .oral),
                         label: {
                             VStack {
-                                Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title3)
+                                Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title)
                                 Text(student.getLowerSchoolGradeAverage(.oral))
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
                             }
                         }).padding()
+                }
+                HStack{
+                    Text("Schriftlich: ")
+                        .font(.title)
+                        .padding()
+                    Spacer()
                     NavigationLink(
                         destination: GradeDetailView(student: student, gradeType: .written),
                         label: {
                             VStack {
-                                Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title3)
+                                Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title)
                                 Text(student.getLowerSchoolGradeAverage(.written))
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
                             }
                         }).padding()
                 }
                 Spacer()
             }
-            Spacer()
+            .padding(.trailing, 80)
         }
         .padding()
         .padding(.trailing, 5.0)

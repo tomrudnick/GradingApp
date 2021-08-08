@@ -26,7 +26,8 @@ extension Grade {
                                                           "5+" : 3,
                                                           "5" : 2,
                                                           "5-" : 1,
-                                                          "6" : 0
+                                                          "6" : 0,
+                                                          "-" : -1
                                                           ]
     
     private(set) static var lowerSchoolGrades = ["1+", "1", "1-",
@@ -36,7 +37,7 @@ extension Grade {
                                                  "5+", "5", "5-",
                                                  "6"]
     
-    private(set) static var gradeMultiplier = [0.5, 0.75, 1.0, 1.25, 1.5]
+    private(set) static var gradeMultiplier = [0.5, 1.0, 1.5, 2]
     
 
     static func gradeValueToLowerSchool(value: Int) -> String {
