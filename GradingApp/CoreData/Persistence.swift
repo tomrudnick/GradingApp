@@ -42,6 +42,10 @@ struct PersistenceController {
         }
     }
     
+    static let empty: PersistenceController = {
+        return PersistenceController(inMemory: true)
+    }()
+    
 // Code for Previews
     
     static var preview: PersistenceController = {
