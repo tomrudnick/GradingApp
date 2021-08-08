@@ -46,7 +46,7 @@ class CourseEditViewModel: ObservableObject {
                 container.viewContext.delete(course)
             }
         }
-        PersistenceController.saveData()
+        PersistenceController.shared.saveData()
     }
     
     func deleteCoursesEdit(atOffsets indexSet: IndexSet) {
