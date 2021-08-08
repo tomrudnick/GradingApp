@@ -12,6 +12,7 @@ struct GradeDetailView: View {
     @ObservedObject var student: Student
     var gradeType: GradeType
     
+    
     var body: some View {
         VStack {
             List {
@@ -31,6 +32,7 @@ struct GradeDetailView: View {
                     }
                 }
             }
+            //Text("\(student.firstName) \(student.lastName)")
         }
         .navigationTitle(Text(gradeType == .oral ? "Mündliche Noten \(student.firstName) \(student.lastName)": "Schriftliche Noten \(student.firstName) \(student.lastName)"))
         .navigationBarTitleDisplayMode(.inline)
@@ -40,9 +42,12 @@ struct GradeDetailView: View {
 
 struct GradeDetailView_Previews: PreviewProvider {
     
-    static let context = PersistenceController.preview.container.viewContext
-    
+
     static var previews: some View {
-        GradeDetailView(student: Student.exampleStudent(context: context),gradeType: Grade.previewGrad(context: context).type)
+        let student = (previewData(context: PersistenceController.preview.container.viewContext).first(where: {$0.name == "Mathe 10FLS"})?.studentsArr.first!)!
+        
+        NavigationView {
+            GradeDetailView(student: student , gradeType: .oral)
+        }
     }
 }

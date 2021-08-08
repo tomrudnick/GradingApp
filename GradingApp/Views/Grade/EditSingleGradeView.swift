@@ -17,6 +17,7 @@ struct EditSingleGradeView: View {
     @ObservedObject var grade: Grade
     
     var body: some View {
+        
         SingleGradeView(student: student, gradeDate: grade.date!, selectedGradeType: grade.type, currentGrade: grade.value, gradeMultiplier: grade.multiplier, comment: grade.comment!, showSaveCancelButtons: false) { points, type, multiplier, date, comment in
             self.grade.value = Int32(points)
             self.grade.type = type
@@ -36,12 +37,16 @@ struct EditSingleGradeView: View {
 
 //----------------------------Preview-------------------------------
 
-//struct EditSingleGradeView_Previews: PreviewProvider {
-//    
-//    
-//    static var previews: some View {
-//        EditSingleGradeView()
-//            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-//    }
-//}
-
+struct EditSingleGradeView_Previews: PreviewProvider {
+    
+    
+    static var previews: some View {
+        
+        let student = (previewData(context: PersistenceController.preview.container.viewContext).first(where: {$0.name == "Mathe 10FLS"})?.studentsArr.first!)!
+        
+        let grade = student.gradesArr.first!
+        
+        EditSingleGradeView(student: student, grade: grade)
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
+}
