@@ -37,8 +37,8 @@ struct GradeDetailView: View {
     }
 }
 
-/*struct GradeDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        GradeDetailView()
-    }
-}*/
+//struct GradeDetailView_Previews: PreviewProvider {   
+//    static var previews: some View {
+//        GradeDetailView()
+//    }
+//}

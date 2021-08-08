@@ -82,6 +82,5 @@ extension Student {
             fatalError("Uresolved Problem when creating a Student: \(error)")
         }
     }
-    
-    
 }
+

@@ -64,7 +64,7 @@ struct StudentView: View {
                 }
                 Spacer()
             }
-            .padding(.trailing, 80)
+            .frame(maxWidth: 230)
         }
         .padding()
         .padding(.trailing, 5.0)
@@ -88,13 +88,13 @@ struct StudentView: View {
 
 
 struct StudentView_Previews: PreviewProvider {
-    static var previewStudent : Student {
-        let student = Student(context: PersistenceController.preview.container.viewContext)
-        student.firstName = "Marit"
-        student.lastName = "Abken"
-        return student
-    }
+//    static var previewStudent : Student {
+//        let student = Student(context: PersistenceController.preview.container.viewContext)
+//        student.firstName = "Marit"
+//        student.lastName = "Abken"
+//        return student
+//    }
     static var previews: some View {
-        StudentView(student: previewStudent)
+        StudentView(student: Student.exampleStudent(context: PersistenceController.preview.container.viewContext))
     }
 }
