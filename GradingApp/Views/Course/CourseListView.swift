@@ -53,7 +53,7 @@ struct CourseListView: View {
             Image(systemName: "pencil.circle")
                 .font(.title)
         }.sheet(isPresented: $showEditCourses) {
-            EditCourseView().environment(\.managedObjectContext, viewContext)
+            EditCourseView(context: viewContext).environment(\.managedObjectContext, viewContext)
         }
     }
 }

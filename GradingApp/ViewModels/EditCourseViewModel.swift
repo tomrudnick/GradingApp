@@ -15,14 +15,16 @@
 //geschrieben. Ist die Kopie nicht vorhanden, wird der Kurs aus der Datenbank gelöscht.
 
 import Foundation
+import CoreData
 
 class CourseEditViewModel: ObservableObject {
     @Published var courses: [CourseVM] = []
     private var fetchedCourses: [UUID : Course] = [:]
-    private var container = PersistenceController.shared.container
+    private var context: NSManagedObjectContext
     
-    init() {
-       fetchCourses()
+    init(context: NSManagedObjectContext) {
+        self.context = context
+        fetchCourses()
     }
     
     private func fetchCourses() {
@@ -37,16 +39,16 @@ class CourseEditViewModel: ObservableObject {
         for (id, course) in fetchedCourses {
             if let courseVM = courses.first(where: {$0.id == id}) {  // where: {course: Course in course.id == id}
                 if courseVM.deleted {
-                    container.viewContext.delete(course)
+                    context.delete(course)
                 } else {
                     course.name = courseVM.name
                     course.hidden = courseVM.hidden
                 }
             } else {
-                container.viewContext.delete(course)
+                context.delete(course)
             }
         }
-        PersistenceController.shared.saveData()
+        context.saveCustom()
     }
     
     func deleteCoursesEdit(atOffsets indexSet: IndexSet) {
