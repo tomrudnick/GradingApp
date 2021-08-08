@@ -15,56 +15,60 @@ struct StudentView: View {
     
     var body: some View {
         VStack {
-            VStack(alignment: .leading) {
-                HStack{
-                    Text("Gesamt: ")
-                        .font(.title)
-                        .padding()
-                    Spacer()
-                    Button(action: {}, label: {
-                        VStack {
-                            Text(student.getLowerSchoolRoundedGradeAverage()).font(.title)
-                            Text(student.getLowerSchoolGradeAverage())
-                                .font(.footnote)
-                                .foregroundColor(.gray)
-                        }
-                    }).padding()
-                }
-                HStack{
-                    Text("Mündlich: ")
-                        .font(.title)
-                        .padding()
-                    Spacer()
-                    NavigationLink(
-                        destination: GradeDetailView(student: student, gradeType: .oral),
-                        label: {
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack{
+                        Text("Gesamt: ")
+                            .font(.title)
+                            .padding()
+                        Spacer()
+                        Button(action: {}, label: {
                             VStack {
-                                Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title)
-                                Text(student.getLowerSchoolGradeAverage(.oral))
+                                Text(student.getLowerSchoolRoundedGradeAverage()).font(.title)
+                                Text(student.getLowerSchoolGradeAverage())
                                     .font(.footnote)
                                     .foregroundColor(.gray)
                             }
                         }).padding()
-                }
-                HStack{
-                    Text("Schriftlich: ")
-                        .font(.title)
-                        .padding()
+                    }
+                    HStack{
+                        Text("Mündlich: ")
+                            .font(.title)
+                            .padding()
+                        Spacer()
+                        NavigationLink(
+                            destination: GradeDetailView(student: student, gradeType: .oral),
+                            label: {
+                                VStack {
+                                    Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title)
+                                    Text(student.getLowerSchoolGradeAverage(.oral))
+                                        .font(.footnote)
+                                        .foregroundColor(.gray)
+                                }
+                            }).padding()
+                    }
+                    HStack{
+                        Text("Schriftlich: ")
+                            .font(.title)
+                            .padding()
+                        Spacer()
+                        NavigationLink(
+                            destination: GradeDetailView(student: student, gradeType: .written),
+                            label: {
+                                VStack {
+                                    Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title)
+                                    Text(student.getLowerSchoolGradeAverage(.written))
+                                        .font(.footnote)
+                                        .foregroundColor(.gray)
+                                }
+                            }).padding()
+                    }
                     Spacer()
-                    NavigationLink(
-                        destination: GradeDetailView(student: student, gradeType: .written),
-                        label: {
-                            VStack {
-                                Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title)
-                                Text(student.getLowerSchoolGradeAverage(.written))
-                                    .font(.footnote)
-                                    .foregroundColor(.gray)
-                            }
-                        }).padding()
                 }
+                .frame(maxWidth: 230)
                 Spacer()
             }
-            .frame(maxWidth: 230)
+            
         }
         .padding()
         .padding(.trailing, 5.0)
@@ -88,7 +92,12 @@ struct StudentView: View {
 
 
 struct StudentView_Previews: PreviewProvider {
+    
+    static let student = previewData(context: PersistenceController.preview.container.viewContext).first!.studentsArr.first!
+    
     static var previews: some View {
-        StudentView(student: Student.exampleStudent(context: PersistenceController.preview.container.viewContext))
+        NavigationView{
+            StudentView(student: student)
+        }
     }
 }

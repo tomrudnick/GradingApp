@@ -51,11 +51,7 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        let previewCourses = Course.previewCourses(context: viewContext)
-        for student in Student.expampleStudents(context: viewContext) {
-            Student.addStudent(firstName: student.firstName, lastName: student.lastName, email: student.email, course: previewCourses.first!, context: viewContext)
-        }
-    
+        let courses = previewData(context: viewContext)
         do {
             try viewContext.save()
         } catch {

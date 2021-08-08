@@ -110,8 +110,7 @@ struct SingleGradeView: View {
                 }
             }
             .navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }))
-            //.navigationBarBack
-
+          
             BottomsheetGradePickerView(showAddGradeSheet: $showAddGradeSheet, currentGrade: $currentGrade, geometry: geometry)
         }
     }

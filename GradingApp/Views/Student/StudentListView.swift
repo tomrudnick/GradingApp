@@ -29,19 +29,12 @@ struct StudentListView: View {
 
 //----------------------------Preview-------------------------------
 struct StudentListView_Previews: PreviewProvider {
-    static var previewCourse : Course {
-        let course = Course(context: PersistenceController.preview.container.viewContext)
-        course.name = "Mathe 10F"
-        let student = Student(context: PersistenceController.preview.container.viewContext)
-        student.lastName = "Rudnick"
-        student.firstName = "Tom"
-        course.students = [student]
-        return course
-    }
-
+    
+    static let course = previewData(context: PersistenceController.preview.container.viewContext).first!
+    
     static var previews: some View {
-        NavigationView {
-            StudentListView(course: previewCourse)
-        }
+        
+            StudentListView(course: course)
+        
     }
 }
