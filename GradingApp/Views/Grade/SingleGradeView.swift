@@ -108,30 +108,11 @@ struct SingleGradeView: View {
                         TextField("Comment...", text: $comment)
                     }
                 }
-            }.navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }))
-
-            
-            BottomSheetView(isOpen: $showAddGradeSheet,
-                            maxHeight: geometry.size.height * 0.5) {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], content: {
-                    ForEach(Grade.lowerSchoolGrades, id: \.self) { grade in
-                        Button(action: {
-                            self.currentGrade = grade
-                            self.showAddGradeSheet = false
-                        }, label: {
-                            Text(grade)
-                                .foregroundColor(.white)
-                                .font(.headline)
-                                .frame(height: 40)
-                                .frame(maxWidth: .infinity)
-                                .background(Color.accentColor)
-                                .cornerRadius(10)
-                        })
-                        .padding(.all, 2.0)
-                    }
-                })
             }
-            
+            .navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }))
+            //.navigationBarBack
+
+            BottomsheetGradePickerView(showAddGradeSheet: $showAddGradeSheet, currentGrade: $currentGrade, geometry: geometry)
         }
     }
     
