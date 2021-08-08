@@ -34,9 +34,9 @@ struct PersistenceController {
         }
     }
     
-    static func saveData() {
+    func saveData() {
         do {
-            try PersistenceController.shared.container.viewContext.save()
+            try container.viewContext.save()
         } catch let error {
             print("ERROR while saving Data: \(error)")
         }
