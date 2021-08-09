@@ -30,7 +30,20 @@ struct CourseListView: View {
             .padding(.top)
             .navigationTitle(Text("Kurse"))
             .listStyle(PlainListStyle())
-            .navigationBarItems(leading: addButton, trailing: editButton)
+            .sheet(isPresented: $showEditCourses) {
+                EditCourseView(context: viewContext).environment(\.managedObjectContext, viewContext)
+            }
+            .sheet(isPresented: $showAddCourse) {
+                AddCourse().environment(\.managedObjectContext, viewContext)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    addButton
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    editButton
+                }
+            }
         }
     }
     
@@ -40,9 +53,6 @@ struct CourseListView: View {
         } label: {
             Image(systemName: "plus.app")
                 .font(.title)
-            
-        }.sheet(isPresented: $showAddCourse) {
-            AddCourse().environment(\.managedObjectContext, viewContext)
         }
     }
     
@@ -52,16 +62,15 @@ struct CourseListView: View {
         } label: {
             Image(systemName: "pencil.circle")
                 .font(.title)
-        }.sheet(isPresented: $showEditCourses) {
-            EditCourseView(context: viewContext).environment(\.managedObjectContext, viewContext)
         }
     }
 }
-
-//----------------------------Preview-------------------------------
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        CourseListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    
+    //----------------------------Preview-------------------------------
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            CourseListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        }
     }
-}
+

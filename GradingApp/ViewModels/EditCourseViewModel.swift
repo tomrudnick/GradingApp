@@ -70,7 +70,4 @@ class CourseEditViewModel: ObservableObject {
             self.deleted = deleted
         }
     }
-//  Code for Previews
-    
-    
 }
