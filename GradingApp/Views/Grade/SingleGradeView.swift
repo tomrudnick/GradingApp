@@ -68,7 +68,8 @@ struct SingleGradeView: View {
                     .padding(.top)
                 }
                 Text("\(student.firstName) \(student.lastName)")
-                    .font(.headline)
+                    .font(.title)
+                    .padding(.top)
                 Form {
                     
                     Section {

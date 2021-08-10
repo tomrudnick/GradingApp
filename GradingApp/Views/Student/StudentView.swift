@@ -72,15 +72,16 @@ struct StudentView: View {
         }
         .padding()
         .padding(.trailing, 5.0)
+        .navigationBarBackButtonHidden(true)
         .navigationTitle(Text("\(student.firstName) \(student.lastName)"))
-        .navigationBarItems(trailing: addGradeButton)
+        .navigationBarItems(leading: CustomBackButton(),trailing: addGradeButton)
     }
     
     var addGradeButton: some View {
         Button(action: {
             showAddGradeSheet = true
         }, label: {
-            Text("Add Grade")
+            Text("Neue Note")
         }).sheet(isPresented: $showAddGradeSheet, content: {
             AddSingleGradeView(student: student)
         })
