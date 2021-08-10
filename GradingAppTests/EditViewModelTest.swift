@@ -22,7 +22,7 @@ class EditViewModelTest: XCTestCase {
     
     override func setUpWithError() throws {
         try super.setUpWithError()
-        editVM = CourseEditViewModel()
+        //editVM = CourseEditViewModel()
         controller = PersistenceController(inMemory: true)
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }

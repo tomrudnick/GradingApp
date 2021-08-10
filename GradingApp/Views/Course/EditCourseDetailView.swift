@@ -22,7 +22,7 @@ struct EditCourseDetailView: View {
                     .padding(.top)
             }
             else{
-                TextField("", text: $course.name)
+                Text(course.name)
                     .font(.title2)
                     .padding(.bottom)
                     .padding(.top)

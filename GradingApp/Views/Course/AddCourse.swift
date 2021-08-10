@@ -12,30 +12,13 @@ struct AddCourse: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
-    @State var courseName = ""
+    @State var courseName: String = ""
     
     var body: some View {
-        VStack {
-            VStack {
-                HStack{
-                    Text("Kurs hinzufügen").font(.headline)
-                Spacer()
-                    CancelButtonView(label: "Abbrechen")
-                }
-            }
-            .padding()
-            CustomTextfieldView(label: "Kursname", input: $courseName)
-            CustomButtonView(label: "Speichern", action: saveButtonPressed, buttonColor: .accentColor)
-            .disabled(courseName.isEmpty)
-            Spacer()
+        SingleCourse(viewTitle: "Neuer Kurs", courseName: $courseName) {
+            Course.addCourse(courseName: courseName, context: viewContext)
         }
     }
-        
-    func saveButtonPressed() {
-        Course.addCourse(courseName: courseName, context: viewContext)
-        presentationMode.wrappedValue.dismiss()
-    }
-   
 }
 
 //----------------------------Preview-------------------------------

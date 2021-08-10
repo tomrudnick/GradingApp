@@ -15,6 +15,7 @@ struct EditCourseView: View {
     
     @StateObject var editVM: CourseEditViewModel
     @State private var showAlert = false
+    @State private var showEditCourseSheet = false
     
     init(context: NSManagedObjectContext) {
         _editVM = StateObject(wrappedValue: CourseEditViewModel(context: context))
@@ -33,10 +34,25 @@ struct EditCourseView: View {
                     List {
                         ForEach(editVM.courses) { course in
                             EditCourseDetailView(course: course)
+                                .contextMenu(menuItems: {
+                                    Button(action: {
+                                        showEditCourseSheet = true
+                                        print("Show Edit Course")
+                                    }, label: {
+                                        HStack {
+                                            Image(systemName: "pencil")
+                                            Text("Edit")
+                                        }
+                                    })
+                                })
+                                .sheet(isPresented: $showEditCourseSheet, content: {
+                                        EditCourse(course: course)
+                                })
                         }
                         .onDelete(
                             perform: editVM.deleteCoursesEdit
                         )
+                        
                     }
                 }
             }
