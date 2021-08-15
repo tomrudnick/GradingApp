@@ -72,9 +72,19 @@ struct StudentView: View {
         }
         .padding()
         .padding(.trailing, 5.0)
-        .navigationBarBackButtonHidden(true)
         .navigationTitle(Text("\(student.firstName) \(student.lastName)"))
-        .navigationBarItems(leading: CustomBackButton(),trailing: addGradeButton)
+        .toolbar(content: {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                Text("")
+            }
+            ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
+                addGradeButton
+            }
+        })
+        .sheet(isPresented: $showAddGradeSheet, content: {
+            AddSingleGradeView(student: student)
+        })
+        //.navigationBarItems(trailing: addGradeButton)
     }
     
     var addGradeButton: some View {
@@ -82,8 +92,6 @@ struct StudentView: View {
             showAddGradeSheet = true
         }, label: {
             Text("Neue Note")
-        }).sheet(isPresented: $showAddGradeSheet, content: {
-            AddSingleGradeView(student: student)
         })
     }
     

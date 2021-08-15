@@ -34,9 +34,7 @@ struct GradeDetailView: View {
                 }
             }
         }
-       .navigationBarItems(leading: CustomBackButton())
         .navigationTitle(Text(gradeType == .oral ? "Mündliche Noten \(student.firstName) \(student.lastName)": "Schriftliche Noten \(student.firstName) \(student.lastName)"))
-        .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
