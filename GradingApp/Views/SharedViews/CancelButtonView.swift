@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct  CancelButtonView: View {
+struct CancelButtonView: View {
     
     @Environment(\.presentationMode) var presentationMode
     var label: String
@@ -15,6 +15,7 @@ struct  CancelButtonView: View {
     
     var body: some View {
         Button {
+            print("Dismiss!!")
             presentationMode.wrappedValue.dismiss()
         } label: {
             Text(label)

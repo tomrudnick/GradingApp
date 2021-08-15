@@ -24,39 +24,42 @@ struct EditCourseView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                CancelButtonView(label: "Abbrechen")
-                Spacer()
-                saveButton
-            }.padding()
-            Form {
-                Section {
-                    List {
-                        ForEach(editVM.courses) { course in
+            List {
+                ForEach(editVM.courses) { course in
+                    NavigationLink(
+                        destination: Text("Destination"),
+                        label: {
                             EditCourseDetailView(course: course)
-                                .contextMenu(menuItems: {
-                                    Button(action: {
-                                        showEditCourseSheet = true
-                                        print("Show Edit Course")
-                                    }, label: {
-                                        HStack {
-                                            Image(systemName: "pencil")
-                                            Text("Edit")
-                                        }
-                                    })
-                                })
-                                .sheet(isPresented: $showEditCourseSheet, content: {
-                                        EditCourse(course: course)
-                                })
-                        }
-                        .onDelete(
-                            perform: editVM.deleteCoursesEdit
-                        )
-                        
-                    }
+                        })
+                        .contextMenu(menuItems: {
+                            Button(action: {
+                                showEditCourseSheet = true
+                                print("Show Edit Course")
+                            }, label: {
+                                HStack {
+                                    Image(systemName: "pencil")
+                                    Text("Edit")
+                                }
+                            })
+                        })
+                        .sheet(isPresented: $showEditCourseSheet, content: {
+                            EditCourse(course: course)
+                        })
                 }
+                .onDelete(
+                    perform: editVM.deleteCoursesEdit
+                )
+                
             }
-        }
+        }.navigationBarTitle(Text("Edit Courses"), displayMode: .inline)
+        .toolbar(content: {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                saveButton
+            }
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                cancelButton
+            }
+        })
     }
     var saveButton: some View {
         Button {
@@ -65,8 +68,16 @@ struct EditCourseView: View {
         } label: {
             Text("Speichern")
         }
-
     }
+    
+    var cancelButton: some View {
+        Button {
+            presentationMode.wrappedValue.dismiss()
+        } label: {
+            Text("Abbrechen")
+        }
+    }
+    
 }
 struct EditCourseView_Previews: PreviewProvider {
     static var previews: some View {

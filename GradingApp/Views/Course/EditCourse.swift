@@ -16,7 +16,7 @@ struct EditCourse: View {
     
     var body: some View {
         SingleCourse(viewTitle: "Kurs bearbeiten", courseName: $course.name) {
-            print("test")
+            print("Editted Courese")
         }
     }
 }

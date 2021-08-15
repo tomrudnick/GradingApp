@@ -31,7 +31,10 @@ class CourseEditViewModel: ObservableObject {
         let fetchedData = PersistenceController.fetchData(context: context, fetchRequest: Course.fetchAll())
         self.fetchedCourses = Dictionary(uniqueKeysWithValues: fetchedData.map {(UUID(), $0)})
         self.courses = fetchedCourses.map({ (key: UUID, value: Course) in
-            CourseVM(id: key, name: value.name, hidden: value.hidden, deleted: false)
+            CourseVM(id: key, name: value.name, hidden: value.hidden, deleted: false,
+                     students: value.students.map({ student in
+                        StudentVM(firstName: student.firstName, lastName: student.lastName, email: student.email)
+            }))
         }).sorted(by: { $0.name < $1.name })
     }
     
@@ -63,11 +66,27 @@ class CourseEditViewModel: ObservableObject {
         @Published var name: String
         @Published var hidden: Bool
         @Published var deleted: Bool
-        init(id: UUID = UUID(), name: String, hidden: Bool, deleted: Bool) {
+        var students: [StudentVM]
+        init(id: UUID = UUID(), name: String, hidden: Bool, deleted: Bool, students: [StudentVM]) {
             self.id = id
             self.name = name
             self.hidden = hidden
             self.deleted = deleted
+            self.students = students
+        }
+    }
+    
+    class StudentVM : ObservableObject, Identifiable {
+        var id: UUID
+        @Published var firstName: String
+        @Published var lastName: String
+        @Published var email: String
+        
+        init(id: UUID = UUID(), firstName: String, lastName: String, email: String) {
+            self.id = id
+            self.firstName = firstName
+            self.lastName = lastName
+            self.email = email
         }
     }
 }
