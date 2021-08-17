@@ -11,15 +11,15 @@ struct SingleCourse: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
-    @Binding var courseName: String
+    @State var courseName: String
     
     let viewTitle: String
-    let saveHandler: () -> ()
+    let saveHandler: (_ name: String) -> ()
     
-    init(viewTitle: String, courseName: Binding<String>, saveHandler : @escaping () -> ()) {
+    init(viewTitle: String, courseName: String = "", saveHandler : @escaping (_ name: String) -> ()) {
         self.viewTitle = viewTitle
-        self._courseName = courseName
         self.saveHandler = saveHandler
+        self._courseName = State(initialValue: courseName)
     }
     var body: some View {
         VStack {
@@ -39,8 +39,7 @@ struct SingleCourse: View {
     }
         
     func saveButtonPressed() {
-        saveHandler()
-        //Course.addCourse(courseName: courseName, context: viewContext)
+        saveHandler(courseName)
         presentationMode.wrappedValue.dismiss()
     }
 }
@@ -48,6 +47,6 @@ struct SingleCourse: View {
 struct SingleCourse_Previews: PreviewProvider {
     @State static var kursName = ""
     static var previews: some View {
-        SingleCourse(viewTitle: "Neuer Kurs", courseName: $kursName) { }
+        SingleCourse(viewTitle: "Neuer Kurs") { _ in }
     }
 }

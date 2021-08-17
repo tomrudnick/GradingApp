@@ -1,86 +1,29 @@
 //
 //  EditCourseView.swift
-//  CoreDataTest
+//  GradingApp
 //
-//  Created by Tom Rudnick on 04.08.21.
+//  Created by Tom Rudnick on 09.08.21.
 //
 
 import SwiftUI
-import CoreData
 
 struct EditCourseView: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
-    private var viewContext: NSManagedObjectContext
     
-    @StateObject var editVM: CourseEditViewModel
-    @State private var showAlert = false
-    @State private var showEditCourseSheet = false
-    
-    init(context: NSManagedObjectContext) {
-        _editVM = StateObject(wrappedValue: CourseEditViewModel(context: context))
-        self.viewContext = context
-    }
+    @ObservedObject var course: CourseEditViewModel.CourseVM
     
     var body: some View {
-        VStack {
-            List {
-                ForEach(editVM.courses) { course in
-                    NavigationLink(
-                        destination: Text("Destination"),
-                        label: {
-                            EditCourseDetailView(course: course)
-                        })
-                        .contextMenu(menuItems: {
-                            Button(action: {
-                                showEditCourseSheet = true
-                                print("Show Edit Course")
-                            }, label: {
-                                HStack {
-                                    Image(systemName: "pencil")
-                                    Text("Edit")
-                                }
-                            })
-                        })
-                        .sheet(isPresented: $showEditCourseSheet, content: {
-                            EditCourse(course: course)
-                        })
-                }
-                .onDelete(
-                    perform: editVM.deleteCoursesEdit
-                )
-                
-            }
-        }.navigationBarTitle(Text("Edit Courses"), displayMode: .inline)
-        .toolbar(content: {
-            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                saveButton
-            }
-            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-                cancelButton
-            }
-        })
-    }
-    var saveButton: some View {
-        Button {
-            editVM.save()
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("Speichern")
+        SingleCourse(viewTitle: "Kurs bearbeiten", courseName: course.name) { name in
+            course.name = name
         }
     }
-    
-    var cancelButton: some View {
-        Button {
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("Abbrechen")
-        }
-    }
-    
 }
-struct EditCourseView_Previews: PreviewProvider {
+
+/*struct EditCourse_Previews: PreviewProvider {
     static var previews: some View {
-        EditCourseView(context: PersistenceController.preview.container.viewContext)
+        EditCourseView()
     }
 }
+*/

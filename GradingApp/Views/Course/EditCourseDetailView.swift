@@ -32,12 +32,12 @@ struct EditCourseDetailView: View {
     }
 }
 
-struct EditCourseDetailView_Previews: PreviewProvider {
+/*struct EditCourseDetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            EditCourseDetailView(course: CourseEditViewModel.CourseVM(id: UUID(), name: "Mathe 10b", hidden: false, deleted: false, students: [CourseEditViewModel.StudentVM(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch")]))
+            EditCourseDetailView(course: CourseEditViewModel.CourseVM(id: UUID(), name: "Mathe 10b", hidden: false, deleted: false, students: [CourseEditViewModel.StudentData(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch")]))
             EditCourseDetailView(course: CourseEditViewModel.CourseVM(id: UUID(), name: "Mathe 10b", hidden: false, deleted: true, students: [CourseEditViewModel.StudentVM(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch")]))
         }.previewLayout(.sizeThatFits)
         
     }
-}
+}*/

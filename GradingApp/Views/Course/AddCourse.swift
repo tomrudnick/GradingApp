@@ -12,11 +12,9 @@ struct AddCourse: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
-    @State var courseName: String = ""
-    
     var body: some View {
-        SingleCourse(viewTitle: "Neuer Kurs", courseName: $courseName) {
-            Course.addCourse(courseName: courseName, context: viewContext)
+        SingleCourse(viewTitle: "Neuer Kurs") { name in
+            Course.addCourse(courseName: name, context: viewContext)
         }
     }
 }

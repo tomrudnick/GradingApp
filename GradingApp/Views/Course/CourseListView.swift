@@ -30,9 +30,9 @@ struct CourseListView: View {
             .padding(.top)
             .navigationTitle(Text("Kurse"))
             .listStyle(PlainListStyle())
-            .sheet(isPresented: $showEditCourses) {
+            .fullScreenCover(isPresented: $showEditCourses) {
                 NavigationView {
-                    EditCourseView(context: viewContext).environment(\.managedObjectContext, viewContext)
+                    EditCoursesView(context: viewContext).environment(\.managedObjectContext, viewContext)
                 }
             }
             .sheet(isPresented: $showAddCourse) {
