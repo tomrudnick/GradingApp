@@ -139,6 +139,34 @@
 			path = SharedViews;
 			sourceTree = "<group>";
 		};
+		39FFC8A726CC1C8500CE433A /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */,
+				E25A7CDB26CA9D0A00508EEE /* EditStudentDetailView.swift */,
+				E25A7CDD26CAA04700508EEE /* EditStudentView.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		39FFC8A826CC1CB000CE433A /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				E210AEEA26C11C1300DF2D85 /* EditCourseView.swift */,
+				E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */,
+				3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		39FFC8A926CC1CC400CE433A /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
 		E25FBC9726BADAC6000BDD65 = {
 			isa = PBXGroup;
 			children = (
@@ -196,15 +224,11 @@
 		E2B055E326BD585D004F0087 /* Course */ = {
 			isa = PBXGroup;
 			children = (
+				39FFC8A826CC1CB000CE433A /* Edit */,
 				E25FBCB726BAE1AB000BDD65 /* CourseTabView.swift */,
-				E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */,
-				3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */,
 				E25FBCA526BADAC6000BDD65 /* CourseListView.swift */,
 				E25FBCBB26BAE7FF000BDD65 /* AddCourse.swift */,
 				E210AEE826C1190C00DF2D85 /* SingleCourse.swift */,
-				E210AEEA26C11C1300DF2D85 /* EditCourseView.swift */,
-				E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */,
-				E25A7CDB26CA9D0A00508EEE /* EditStudentDetailView.swift */,
 			);
 			path = Course;
 			sourceTree = "<group>";
@@ -212,10 +236,10 @@
 		E2B055E426BD5864004F0087 /* Student */ = {
 			isa = PBXGroup;
 			children = (
+				39FFC8A726CC1C8500CE433A /* Edit */,
 				E25FBCB926BAE1EC000BDD65 /* StudentListView.swift */,
 				E25FBCC026BAF24D000BDD65 /* StudentView.swift */,
 				E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */,
-				E25A7CDD26CAA04700508EEE /* EditStudentView.swift */,
 			);
 			path = Student;
 			sourceTree = "<group>";
@@ -223,10 +247,10 @@
 		E2B055E526BD5897004F0087 /* Grade */ = {
 			isa = PBXGroup;
 			children = (
+				39FFC8A926CC1CC400CE433A /* Edit */,
 				E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */,
 				E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */,
 				E2EA7AA326BEF6260036048E /* SingleGradeView.swift */,
-				E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */,
 			);
 			path = Grade;
 			sourceTree = "<group>";
