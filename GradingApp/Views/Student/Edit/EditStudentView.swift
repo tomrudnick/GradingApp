@@ -9,18 +9,14 @@ import SwiftUI
 
 struct EditStudentView: View {
     
-    @Binding var firstName: String
-    @Binding var lastName: String
-    @Binding var email: String
+    @Binding var student: Student.DataModel
     
     var body: some View {
         VStack {
-            CustomTextfieldView(label: "Vorname", input: $firstName)
-            CustomTextfieldView(label: "Nachname", input: $lastName)
-            CustomTextfieldView(label: "Email", input: $email)
-                .keyboardType(.emailAddress)
-                .autocapitalization(.none)
-            Spacer()
+            SingleStudent(viewTitle: "Schüler bearbeiten", student: student) {
+                student in
+                self.student.update(for: student)
+            }
         }
     }
 }
@@ -30,3 +26,6 @@ struct EditStudentView: View {
         EditStudentView()
     }
 }*/
+
+
+
