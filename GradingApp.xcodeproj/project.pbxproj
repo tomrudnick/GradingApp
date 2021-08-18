@@ -40,6 +40,7 @@
 		E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */; };
 		E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */; };
 		E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */; };
+		E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */; };
 		E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055DF26BD5029004F0087 /* Grade+helper.swift */; };
 		E2B055E226BD5842004F0087 /* AddSingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */; };
 		E2B7451526BFDFC9002D0B4C /* BottomsheetGradePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451426BFDFC9002D0B4C /* BottomsheetGradePickerView.swift */; };
@@ -96,6 +97,7 @@
 		E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoursesView.swift; sourceTree = "<group>"; };
 		E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelTest.swift; sourceTree = "<group>"; };
 		E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+DataModel.swift"; sourceTree = "<group>"; };
+		E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMultipleGradesView.swift; sourceTree = "<group>"; };
 		E2B055DF26BD5029004F0087 /* Grade+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+helper.swift"; sourceTree = "<group>"; };
 		E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSingleGradeView.swift; sourceTree = "<group>"; };
 		E2B7451426BFDFC9002D0B4C /* BottomsheetGradePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomsheetGradePickerView.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */,
 				E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */,
 				E2EA7AA326BEF6260036048E /* SingleGradeView.swift */,
+				E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */,
 			);
 			path = Grade;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */,
 				3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */,
 				E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */,
+				E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */,
 				396D81AE26C06DF90093668A /* CustomBackButton.swift in Sources */,
 				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
 				E25FBCC126BAF24D000BDD65 /* StudentView.swift in Sources */,
