@@ -30,17 +30,30 @@ struct EditCoursesView: View {
                         destination: EditStudentsView(course: course),
                         label: {
                             EditCourseDetailView(course: course)
-                        })
-                        .contextMenu(menuItems: {
-                            Button(action: {
-                                showEditCourseSheet = true
-                                print("Show Edit Course")
-                            }, label: {
-                                HStack {
-                                    Image(systemName: "pencil")
-                                    Text("Edit")
-                                }
-                            })
+                                .contextMenu(menuItems: {
+                                    Button(action: {
+                                        showEditCourseSheet = true
+                                    }, label: {
+                                        HStack {
+                                            Image(systemName: "pencil")
+                                            Text("Edit")
+                                        }
+                                    })
+                                    Button(action: {
+                                        course.deleted = true
+                                        editVM.objectWillChange.send()
+                                    }, label: {
+                                        HStack {
+                                            if course.deleted {
+                                                Image(systemName: "arrow.uturn.backward")
+                                                Text("Restore")
+                                            } else {
+                                                Image(systemName: "trash")
+                                                Text("Delete")
+                                            }
+                                        }
+                                    })
+                                })
                         })
                         .sheet(isPresented: $showEditCourseSheet, content: {
                             EditCourseView(course: course)
