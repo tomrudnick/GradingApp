@@ -11,6 +11,7 @@ struct CourseTabView: View {
     
     @ObservedObject var course: Course
     @State var showAddStudent = false
+    @State var showAddMultipleGrades = false
     
     
     var body: some View {
@@ -22,12 +23,30 @@ struct CourseTabView: View {
                 }
         }.navigationTitle(Text(course.name))
         .navigationBarTitleDisplayMode(.large)
-        .navigationBarItems(trailing: Button(action: {
-            showAddStudent = true
-        }) {
-            Image(systemName: "plus.circle")
-        }).sheet(isPresented: $showAddStudent, content: {
+        .toolbar(content: {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                Text("")
+            }
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                Button(action: {
+                    showAddStudent = true
+                }, label: {
+                    Image(systemName: "plus.circle")
+                })
+            }
+            ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
+                Button(action: {
+                    showAddMultipleGrades = true
+                }, label: {
+                    Text("Note")
+                })
+            }
+        })
+        .sheet(isPresented: $showAddStudent, content: {
             AddStudent(course: course)
+        })
+        .fullScreenCover(isPresented: $showAddMultipleGrades, content: {
+            AddMultipleGradesView(course: course)
         })
     }
 }
