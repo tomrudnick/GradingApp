@@ -75,10 +75,12 @@ struct AddMultipleGradesView: View {
                                         Spacer()
                                         Text(Grade.gradeValueToLowerSchool(value: student.value))
                                             .padding()
+                                            .frame(minWidth: 55)
                                             .foregroundColor(.white)
                                             .font(.headline)
                                             .background(Color.accentColor)
                                             .cornerRadius(10)
+                                        
                                         
                                     }.if(student.key == selectedStudent, transform: { view in
                                         view.border(Color.red)

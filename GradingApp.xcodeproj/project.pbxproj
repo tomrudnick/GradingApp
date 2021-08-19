@@ -202,8 +202,8 @@
 		E25FBCA226BADAC6000BDD65 /* GradingApp */ = {
 			isa = PBXGroup;
 			children = (
-				E20C5E3626CD4B2B00F860C6 /* Extensions */,
 				E25FBCA326BADAC6000BDD65 /* GradingApp.swift */,
+				E20C5E3626CD4B2B00F860C6 /* Extensions */,
 				E2C5138826BBE10D0069D340 /* Models */,
 				E2C5138726BBE0FA0069D340 /* CoreData */,
 				E25FBCBD26BAE951000BDD65 /* Views */,
