@@ -14,11 +14,16 @@ struct EditCourseView: View {
     
     @ObservedObject var course: CourseEditViewModel.CourseVM
     
+    
     var body: some View {
-        SingleCourse(viewTitle: "Kurs bearbeiten", courseName: course.name) { name in
+        SingleCourse(viewTitle: "Kurs bearbeiten", courseName: course.name, courseAgeGroup: course.ageGroup, courseOralWeight: course.oralWeight ) {  (name, weight, ageGroup) in
             course.name = name
+            course.ageGroup = ageGroup
+            course.oralWeight = weight
+            course.ageGroup = ageGroup
         }
     }
+   
 }
 
 /*struct EditCourse_Previews: PreviewProvider {
@@ -27,3 +32,4 @@ struct EditCourseView: View {
     }
 }
 */
+

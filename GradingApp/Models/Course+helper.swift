@@ -15,8 +15,8 @@ extension Course {
         set { name_ = newValue}
     }
     
-    var oralWeight: Int {
-        get { Int(weight_) }
+    var oralWeight: Float {
+        get { Float(weight_) }
         set { weight_ = Int32(newValue)}
     }
     
@@ -50,15 +50,15 @@ extension Course {
         self.hidden = hidden
     }
     
-    convenience init(name: String, hidden: Bool = false, ageGroup: AgeGroup, oralWeight: Int, context: NSManagedObjectContext) {
+    convenience init(name: String, hidden: Bool = false, ageGroup: AgeGroup, oralWeight: Float, context: NSManagedObjectContext) {
         self.init(name: name, hidden: hidden, context: context)
         self.ageGroup = ageGroup
         self.oralWeight = oralWeight
     }
     
     
-    static func addCourse(courseName: String, hidden: Bool = false, context: NSManagedObjectContext) {
-        _ = Course(name: courseName, hidden: hidden, context: context)
+    static func addCourse(courseName: String, oralWeight: Float, ageGroup: AgeGroup, hidden: Bool = false, context: NSManagedObjectContext) {
+        _ = Course(name: courseName, hidden: hidden, ageGroup: ageGroup, oralWeight: oralWeight, context: context)
         context.saveCustom()
     }
     
