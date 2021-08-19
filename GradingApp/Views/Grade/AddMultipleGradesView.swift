@@ -101,56 +101,25 @@ struct AddMultipleGradesView: View {
                         ForEach(Grade.lowerSchoolGrades, id: \.self) { grade in
                             Button(action: {
                                 studentGrade[selectedStudent!] = Grade.lowerSchoolGradesTranslate[grade]!
-                                selectedStudent = nextStudent(after: selectedStudent!)
-                                if selectedStudent == nil {
-                                    self.showAddGradeSheet = false
-                                } else {
-                                    proxy.scrollTo(selectedStudent?.id, anchor: .top)
-                                }
-                                
+                                selectedStudent = course.nextStudent(after: selectedStudent!)
+                                scrollToNext(proxy: proxy)
                             }, label: {
-                                Text(grade)
-                                    .foregroundColor(.white)
-                                    .font(.headline)
-                                    .frame(height: 40)
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.accentColor)
-                                    .cornerRadius(10)
+                                BottomSheetViewButtonLabel(labelView: Text(grade))
                             })
                             .padding(.all, 2.0)
                         }
                         Button {
-                            selectedStudent = previousStudent(before: selectedStudent!)
-                            if selectedStudent == nil {
-                                self.showAddGradeSheet = false
-                            } else {
-                                proxy.scrollTo(selectedStudent?.id, anchor: .top)
-                            }
+                            selectedStudent = course.previousStudent(before: selectedStudent!)
+                            scrollToNext(proxy: proxy)
                         } label: {
-                            Image(systemName: "arrow.up")
-                                .foregroundColor(.white)
-                                .font(.headline)
-                                .frame(height: 40)
-                                .frame(maxWidth: .infinity)
-                                .background(Color.accentColor)
-                                .cornerRadius(10)
+                            BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.up"))
                         }
                         
                         Button {
-                            selectedStudent = nextStudent(after: selectedStudent!)
-                            if selectedStudent == nil {
-                                self.showAddGradeSheet = false
-                            } else {
-                                proxy.scrollTo(selectedStudent?.id, anchor: .top)
-                            }
+                            selectedStudent = course.nextStudent(after: selectedStudent!)
+                            scrollToNext(proxy: proxy)
                         } label: {
-                            Image(systemName: "arrow.down")
-                                .foregroundColor(.white)
-                                .font(.headline)
-                                .frame(height: 40)
-                                .frame(maxWidth: .infinity)
-                                .background(Color.accentColor)
-                                .cornerRadius(10)
+                            BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.down"))
                         }
 
                     })
@@ -159,6 +128,15 @@ struct AddMultipleGradesView: View {
         })
     }
     
+    
+    
+    func scrollToNext(proxy: ScrollViewProxy) {
+        if selectedStudent == nil {
+            self.showAddGradeSheet = false
+        } else {
+            proxy.scrollTo(selectedStudent?.id, anchor: .top)
+        }
+    }
     
     
     func save() {
@@ -171,28 +149,6 @@ struct AddMultipleGradesView: View {
             }
         }
         presentationMode.wrappedValue.dismiss()
-    }
-    
-    func nextStudent(after student: Student) -> Student?{
-        guard let currentStudentIndex = course.studentsArr.firstIndex(where: {$0 == student}) else {
-            return nil
-        }
-        if currentStudentIndex < course.studentsArr.count - 1{
-            return course.studentsArr[currentStudentIndex + 1]
-        } else {
-            return nil
-        }
-    }
-    
-    func previousStudent(before student: Student) -> Student? {
-        guard let currentStudentIndex = course.studentsArr.firstIndex(where: {$0 == student}) else {
-            return nil
-        }
-        if currentStudentIndex > 0 {
-            return course.studentsArr[currentStudentIndex - 1]
-        } else {
-            return nil
-        }
     }
 }
 
