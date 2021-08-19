@@ -88,6 +88,7 @@ struct AddMultipleGradesView: View {
                                     .onTapGesture {
                                         selectedStudent = student.key
                                         showAddGradeSheet = true
+                                        proxy.scrollTo(selectedStudent?.id, anchor: .top)
                                     }.id(student.key.id)
                                 }
                             }
