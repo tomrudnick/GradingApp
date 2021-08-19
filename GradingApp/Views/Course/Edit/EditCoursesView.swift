@@ -34,23 +34,17 @@ struct EditCoursesView: View {
                                     Button(action: {
                                         showEditCourseSheet = true
                                     }, label: {
-                                        HStack {
-                                            Image(systemName: "pencil")
-                                            Text("Edit")
-                                        }
+                                        Label("Edit", systemImage: "pencil")
                                     })
                                     Button(action: {
-                                        course.deleted = true
-                                        editVM.objectWillChange.send()
+                                        editVM.deleteCoursesEdit(for: course)
+//                                        alternative: course.deleteCoursesEdit(for: course, editVM: editVM)
+//                                        Dann muss die Funktion aber innerhalb der Klasse CourseVM stehen
                                     }, label: {
-                                        HStack {
-                                            if course.deleted {
-                                                Image(systemName: "arrow.uturn.backward")
-                                                Text("Restore")
-                                            } else {
-                                                Image(systemName: "trash")
-                                                Text("Delete")
-                                            }
+                                        if course.deleted {
+                                            Label("Restore", systemImage: "arrow.uturn.backward")
+                                        } else {
+                                            Label("Delete", systemImage: "trash")
                                         }
                                     })
                                 })

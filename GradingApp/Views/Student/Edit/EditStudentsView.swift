@@ -21,24 +21,15 @@ struct EditStudentsView: View {
                             Button(action: {
                                 showEditStudentSheet = true
                             }, label: {
-                                HStack {
-                                    Image(systemName: "pencil")
-                                    Text("Edit")
-                                }
-                                
+                                Label("Edit", systemImage: "pencil")
                             })
                             Button(action: {
                                 course.deleteStudentCoursesEdit(id: student.id)
                             }, label: {
-                                HStack {
                                     if student.deleted {
-                                        Image(systemName: "arrow.uturn.backward")
-                                        Text("Restore")
+                                        Label("Restore", systemImage: "arrow.uturn.backward")
                                     } else {
-                                        Image(systemName: "trash")
-                                        Text("Delete")
-                                    }
-                                    
+                                        Label("Delete", systemImage: "trash")
                                 }
                             })
                         }))
@@ -61,7 +52,6 @@ struct EditStudentsView: View {
         return $course.students[studentIndex]
     }
 }
-
 /*struct EditStudentView_Previews: PreviewProvider {
  static var previews: some View {
  EditStudentView()

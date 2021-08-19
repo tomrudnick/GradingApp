@@ -69,8 +69,12 @@ class CourseEditViewModel: ObservableObject {
     func deleteCoursesEdit(atOffsets indexSet: IndexSet) {
         let coursesToDelete = indexSet.map { self.courses[$0] }
         for course in coursesToDelete {
-            course.deleted = true
+            course.deleted.toggle()
         }
+    }
+    func deleteCoursesEdit (for course: CourseEditViewModel.CourseVM) {
+    course.deleted.toggle()
+    self.objectWillChange.send()
     }
     
     class CourseVM : ObservableObject, Identifiable{
