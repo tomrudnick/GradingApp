@@ -9,13 +9,13 @@ import SwiftUI
 
 struct EditStudentView: View {
     
-    @Binding var student: Student.DataModel
+    @Binding var oldStudent: Student.DataModel
     
     var body: some View {
         VStack {
-            SingleStudent(viewTitle: "Schüler bearbeiten", student: student) {
-                student in
-                self.student.update(for: student)
+            SingleStudent(viewTitle: "Schüler bearbeiten", student: oldStudent) {
+                newStudent in
+                self.oldStudent = newStudent
             }
         }
     }

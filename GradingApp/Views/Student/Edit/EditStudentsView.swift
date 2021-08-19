@@ -43,7 +43,7 @@ struct EditStudentsView: View {
                             })
                         }))
                         .sheet(isPresented: $showEditStudentSheet, content: {
-                            EditStudentView(student: binding(for: student))
+                            EditStudentView(oldStudent: binding(for: student))
                         })
                 }
                 .onDelete(perform: { indexSet in
