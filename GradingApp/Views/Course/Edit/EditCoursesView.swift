@@ -38,8 +38,6 @@ struct EditCoursesView: View {
                                     })
                                     Button(action: {
                                         editVM.deleteCoursesEdit(for: course)
-//                                        alternative: course.deleteCoursesEdit(for: course, editVM: editVM)
-//                                        Dann muss die Funktion aber innerhalb der Klasse CourseVM stehen
                                     }, label: {
                                         if course.deleted {
                                             Label("Restore", systemImage: "arrow.uturn.backward")

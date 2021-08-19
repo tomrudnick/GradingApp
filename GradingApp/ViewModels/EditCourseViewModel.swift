@@ -72,6 +72,7 @@ class CourseEditViewModel: ObservableObject {
             course.deleted.toggle()
         }
     }
+    
     func deleteCoursesEdit (for course: CourseEditViewModel.CourseVM) {
     course.deleted.toggle()
     self.objectWillChange.send()
