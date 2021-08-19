@@ -9,6 +9,8 @@ import SwiftUI
 
 struct StudentView: View {
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject var student: Student
     
     @State var showAddGradeSheet = false
@@ -84,6 +86,7 @@ struct StudentView: View {
         .sheet(isPresented: $showAddGradeSheet, content: {
             AddSingleGradeView(student: student)
         })
+        
         //.navigationBarItems(trailing: addGradeButton)
     }
     
