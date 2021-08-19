@@ -72,3 +72,17 @@ struct BottomSheetView<Content: View>: View {
     }
 }
 
+struct BottomSheetViewButtonLabel<T : View> : View {
+    let labelView: T
+    var body: some View {
+        labelView
+            .foregroundColor(.white)
+            .font(.headline)
+            .frame(height: 40)
+            .frame(maxWidth: .infinity)
+            .background(Color.accentColor)
+            .cornerRadius(10)
+        
+    }
+}
+

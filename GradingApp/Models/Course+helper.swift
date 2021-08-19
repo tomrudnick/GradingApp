@@ -21,7 +21,7 @@ extension Course {
     }
     
     var studentsArr: Array<Student> {
-        get { students.sorted { $0.lastName < $1.lastName } }
+        get { students.sorted { $0.firstName < $1.firstName }.sorted{ $0.lastName < $1.lastName } }
     }
 }
 
