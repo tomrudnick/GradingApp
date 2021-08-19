@@ -15,9 +15,19 @@ extension Course {
         set { name_ = newValue}
     }
     
+    var oralWeight: Int {
+        get { Int(weight_) }
+        set { weight_ = Int32(newValue)}
+    }
+    
     var students: Set<Student> {
         get { students_ as? Set<Student> ?? [] }
         set { students_ = newValue as NSSet}
+    }
+    
+    var ageGroup: AgeGroup {
+        get { AgeGroup(rawValue: ageGroup_)!}
+        set { ageGroup_ = newValue.rawValue }
     }
     
     var studentsArr: Array<Student> {
@@ -26,12 +36,24 @@ extension Course {
 }
 
 
+@objc
+public enum AgeGroup : Int16 {
+    case lower = 0
+    case upper = 1
+}
+
+
 extension Course {
-    
     convenience init(name: String, hidden: Bool = false, context: NSManagedObjectContext) {
         self.init(context: context)
         self.name = name
         self.hidden = hidden
+    }
+    
+    convenience init(name: String, hidden: Bool = false, ageGroup: AgeGroup, oralWeight: Int, context: NSManagedObjectContext) {
+        self.init(name: name, hidden: hidden, context: context)
+        self.ageGroup = ageGroup
+        self.oralWeight = oralWeight
     }
     
     
@@ -53,3 +75,4 @@ extension Course {
         return request
     }
 }
+
