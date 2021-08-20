@@ -25,12 +25,8 @@ struct StudentView: View {
                             .padding()
                         Spacer()
                         Button(action: {}, label: {
-                            VStack {
-                                Text(student.getLowerSchoolRoundedGradeAverage()).font(.title)
-                                Text(student.getLowerSchoolGradeAverage())
-                                    .font(.footnote)
-                                    .foregroundColor(.gray)
-                            }
+                                CostumGradeView(roundedGrade: student.getLowerSchoolRoundedGradeAverage(),
+                                                grade: student.getLowerSchoolGradeAverage())
                         }).padding()
                     }
                     HStack{
@@ -41,12 +37,8 @@ struct StudentView: View {
                         NavigationLink(
                             destination: GradeDetailView(student: student, gradeType: .oral),
                             label: {
-                                VStack {
-                                    Text(student.getLowerSchoolRoundedGradeAverage(.oral)).font(.title)
-                                    Text(student.getLowerSchoolGradeAverage(.oral))
-                                        .font(.footnote)
-                                        .foregroundColor(.gray)
-                                }
+                                CostumGradeView(roundedGrade: student.getLowerSchoolRoundedGradeAverage(.oral),
+                                                grade: student.getLowerSchoolGradeAverage(.oral))
                             }).padding()
                     }
                     HStack{
@@ -57,12 +49,7 @@ struct StudentView: View {
                         NavigationLink(
                             destination: GradeDetailView(student: student, gradeType: .written),
                             label: {
-                                VStack {
-                                    Text(student.getLowerSchoolRoundedGradeAverage(.written)).font(.title)
-                                    Text(student.getLowerSchoolGradeAverage(.written))
-                                        .font(.footnote)
-                                        .foregroundColor(.gray)
-                                }
+                                CostumGradeView(roundedGrade: student.getLowerSchoolRoundedGradeAverage(.written), grade: student.getLowerSchoolGradeAverage(.written))
                             }).padding()
                     }
                     Spacer()

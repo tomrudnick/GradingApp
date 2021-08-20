@@ -40,7 +40,7 @@ extension Grade {
     private(set) static var gradeMultiplier = [0.5, 1.0, 1.5, 2]
     
 
-    static func gradeValueToLowerSchool(value: Int) -> String {
+    static func convertGradePointsToGrades(value: Int) -> String {
         return lowerSchoolGradesTranslate.first(where: {$1 == value})!.key
     }
     
@@ -48,7 +48,7 @@ extension Grade {
         return Int(round(points))
     }
     
-    static func convertToLowerSchoolGrade(points: Double) -> Double {
+    static func convertDecimalGradesToGradePoints(points: Double) -> Double {
         return (17.0 - points) / 3.0
     }
 }

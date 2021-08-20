@@ -37,7 +37,7 @@ struct SingleGradeView: View {
         self.student = student
         self._gradeDate = State(initialValue: gradeDate)
         self._selectedGradeType = State(initialValue: selectedGradeType == .oral ? 0 : 1)
-        self._currentGrade = State(initialValue: Grade.gradeValueToLowerSchool(value: Int(currentGrade)))
+        self._currentGrade = State(initialValue: Grade.convertGradePointsToGrades(value: Int(currentGrade)))
         let selectedGradeMultiplier = Grade.gradeMultiplier.firstIndex(where: { $0 == gradeMultiplier })!
         self._selectedGradeMultiplier = State(initialValue: selectedGradeMultiplier)
         self._comment = State(initialValue: comment)

@@ -73,7 +73,7 @@ struct AddMultipleGradesView: View {
                                     HStack {
                                         Text("\(student.key.firstName) \(student.key.lastName)")
                                         Spacer()
-                                        Text(Grade.gradeValueToLowerSchool(value: student.value))
+                                        Text(Grade.convertGradePointsToGrades(value: student.value))
                                             .padding()
                                             .frame(minWidth: 55)
                                             .foregroundColor(.white)

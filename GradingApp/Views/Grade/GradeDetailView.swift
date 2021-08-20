@@ -21,7 +21,7 @@ struct GradeDetailView: View {
                         NavigationLink(destination: EditSingleGradeView(student: student, grade: grade)) {
                             HStack {
                                 VStack {
-                                    Text(Grade.gradeValueToLowerSchool(value: Int(grade.value)))
+                                    Text(Grade.convertGradePointsToGrades(value: Int(grade.value)))
                                     Text(String(grade.multiplier)).font(.footnote)
                                 }
                             

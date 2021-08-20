@@ -16,6 +16,7 @@
 		395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */; };
 		39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39607B5026CD0A9D007DFD63 /* SingleStudent.swift */; };
 		396D81AE26C06DF90093668A /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D81AD26C06DF90093668A /* CustomBackButton.swift */; };
+		39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F09BB426D00801007B6E8A /* CostumGradeView.swift */; };
 		E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */; };
 		E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */; };
 		E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */; };
@@ -73,6 +74,7 @@
 		395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerator.swift; sourceTree = "<group>"; };
 		39607B5026CD0A9D007DFD63 /* SingleStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStudent.swift; sourceTree = "<group>"; };
 		396D81AD26C06DF90093668A /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
+		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
 		E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomsheetView.swift; sourceTree = "<group>"; };
 		E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */,
 				E2EA7AA326BEF6260036048E /* SingleGradeView.swift */,
 				E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */,
+				39F09BB426D00801007B6E8A /* CostumGradeView.swift */,
 			);
 			path = Grade;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				E20C5E3826CD4B3F00F860C6 /* View+IfModifier.swift in Sources */,
 				396D81AE26C06DF90093668A /* CustomBackButton.swift in Sources */,
 				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
+				39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */,
 				E25FBCC126BAF24D000BDD65 /* StudentView.swift in Sources */,
 				395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */,
 				E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */,

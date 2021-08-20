@@ -33,10 +33,30 @@ extension Student {
         get { grades.sorted {$0.date! < $1.date! } }
     }
     
+    func gradesExist (_ type: GradeType) -> Bool {
+        let filteredGrades = grades.filter { $0.type == type }
+        if filteredGrades.count == 0 {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    func gradesExist () -> Bool {
+        if grades.count == 0 {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    
     func gradeAverage(type: GradeType) -> Double {
         let filteredGrades = grades.filter { $0.type == type }
         if filteredGrades.count == 0 {
-            return 0.0
+            return -1
         }
         let sum = filteredGrades.reduce(0) { result, grade in
             result + Double(grade.value) * grade.multiplier
@@ -44,24 +64,50 @@ extension Student {
         return Double(sum) / Double(filteredGrades.count)
     }
     
-    func gradeAverage() -> Double {
-        return (gradeAverage(type: .oral) + gradeAverage(type: .written)) / 2.0
+    
+    
+    func totalGradeAverage() -> Double {
+        if gradesExist(.oral) && gradesExist(.written) {
+            return (gradeAverage(type: .oral) + gradeAverage(type: .written)) / 2.0
+        } else if gradesExist(.oral) && !gradesExist(.written) {
+            return gradeAverage(type: .oral)
+        } else if !gradesExist(.oral) && gradesExist(.written) {
+            return gradeAverage(type: .written)
+        } else {
+            return -1
+        }
     }
     
     func getLowerSchoolRoundedGradeAverage(_ type: GradeType) -> String {
-        return Grade.gradeValueToLowerSchool(value: Grade.roundPoints(points: gradeAverage(type: type)))
+        if gradesExist(type) {
+            return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: gradeAverage(type: type)))
+        } else {
+            return "-"
+        }
     }
     
     func getLowerSchoolRoundedGradeAverage() -> String {
-        return Grade.gradeValueToLowerSchool(value: Grade.roundPoints(points: gradeAverage()))
+        if gradesExist() {
+            return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: totalGradeAverage()))
+        } else {
+            return "-"
+        }
     }
     
     func getLowerSchoolGradeAverage(_ type: GradeType) -> String {
-        return String(format: "%.2f", Grade.convertToLowerSchoolGrade(points: gradeAverage(type: type)))
+        if gradesExist(type) {
+            return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: gradeAverage(type: type)))
+        } else {
+            return "-"
+        }
     }
     
     func getLowerSchoolGradeAverage() -> String {
-        return String(format: "%.2f", Grade.convertToLowerSchoolGrade(points: gradeAverage()))
+        if gradesExist() {
+            return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: totalGradeAverage()))
+        } else {
+            return "-"
+        }
     }
     
     
