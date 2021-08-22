@@ -68,7 +68,9 @@ extension Student {
     
     func totalGradeAverage() -> Double {
         if gradesExist(.oral) && gradesExist(.written) {
-            return (gradeAverage(type: .oral) + gradeAverage(type: .written)) / 2.0
+            let oralWeight = Double(self.course!.oralWeight)/100
+            let writtenWeight = 1 - oralWeight
+            return oralWeight * gradeAverage(type: .oral) + writtenWeight * gradeAverage(type: .written)
         } else if gradesExist(.oral) && !gradesExist(.written) {
             return gradeAverage(type: .oral)
         } else if !gradesExist(.oral) && gradesExist(.written) {
