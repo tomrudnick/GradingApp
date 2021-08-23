@@ -80,42 +80,58 @@ extension Student {
         }
     }
     
-    func getLowerSchoolRoundedGradeAverage(_ type: GradeType) -> String {
+    func getRoundedGradeAverage(_ type: GradeType) -> String {
         if gradesExist(type) {
-            return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: gradeAverage(type: type)))
+            switch self.course!.ageGroup {
+            case .lower:
+                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: gradeAverage(type: type)))
+            case .upper:
+                return String(Grade.roundPoints(points: gradeAverage(type: type)))
+            }
         } else {
             return "-"
         }
     }
     
-    func getLowerSchoolRoundedGradeAverage() -> String {
+    func getRoundedGradeAverage() -> String {
         if gradesExist() {
-            return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: totalGradeAverage()))
+            switch self.course!.ageGroup {
+            case .lower:
+                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: totalGradeAverage()))
+            case .upper:
+                return String(Grade.roundPoints(points: totalGradeAverage()))
+            }
         } else {
             return "-"
         }
     }
     
-    func getLowerSchoolGradeAverage(_ type: GradeType) -> String {
+    func getGradeAverage(_ type: GradeType) -> String {
         if gradesExist(type) {
-            return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: gradeAverage(type: type)))
+            switch self.course!.ageGroup {
+            case .lower:
+                return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: gradeAverage(type: type)))
+            case .upper:
+                return String(format: "%.1f", self.gradeAverage(type: type))
+            }
         } else {
             return "-"
         }
     }
     
-    func getLowerSchoolGradeAverage() -> String {
+    func getGradeAverage() -> String {
         if gradesExist() {
-            return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: totalGradeAverage()))
+            switch self.course!.ageGroup {
+            case .lower:
+                return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: totalGradeAverage()))
+            case .upper:
+                return String(format: "%.1f", self.totalGradeAverage())
+            }
         } else {
             return "-"
         }
     }
-    
-    
-    
 }
-
 extension Student {
     convenience init(firstName: String, lastName: String, email: String, course: Course, context: NSManagedObjectContext) {
         self.init(context: context)

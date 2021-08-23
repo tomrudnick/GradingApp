@@ -13,7 +13,7 @@ import SwiftUI
 let expampleCourseNames = ["Mathe 6C", "Mathe 7F", "Mathe 10FLS"]
 let csvStudents = """
 Vorname, Nachname, Email
-Mathe 6C,Marit,Abken,marit-theresa.abken@nige.de
+Mathe 6C,Marit,Abken,marit-theresa.abken@nige.de,3,3,2,2,2-,_S_,4,3
 Mathe 6C,Lana,Bents,lana.bents@nige.de
 Mathe 6C,Jule,Eisenhauer,jule.eisenhauer@nige.de
 Mathe 6C,Kilian,Günther,kilian.guenther@nige.de

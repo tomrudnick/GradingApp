@@ -25,8 +25,8 @@ struct StudentView: View {
                             .padding()
                         Spacer()
                         Button(action: {}, label: {
-                                CostumGradeView(roundedGrade: student.getLowerSchoolRoundedGradeAverage(),
-                                                grade: student.getLowerSchoolGradeAverage())
+                                CostumGradeView(roundedGrade: student.getRoundedGradeAverage(),
+                                                grade: student.getGradeAverage())
                         }).padding()
                     }
                     HStack{
@@ -37,8 +37,8 @@ struct StudentView: View {
                         NavigationLink(
                             destination: GradeDetailView(student: student, gradeType: .oral),
                             label: {
-                                CostumGradeView(roundedGrade: student.getLowerSchoolRoundedGradeAverage(.oral),
-                                                grade: student.getLowerSchoolGradeAverage(.oral))
+                                CostumGradeView(roundedGrade: student.getRoundedGradeAverage(.oral),
+                                                grade: student.getGradeAverage(.oral))
                             }).padding()
                     }
                     HStack{
@@ -49,12 +49,12 @@ struct StudentView: View {
                         NavigationLink(
                             destination: GradeDetailView(student: student, gradeType: .written),
                             label: {
-                                CostumGradeView(roundedGrade: student.getLowerSchoolRoundedGradeAverage(.written), grade: student.getLowerSchoolGradeAverage(.written))
+                                CostumGradeView(roundedGrade: student.getRoundedGradeAverage(.written), grade: student.getGradeAverage(.written))
                             }).padding()
                     }
                     Spacer()
                 }
-                .frame(maxWidth: 230)
+                .frame(maxWidth: 235)
                 Spacer()
             }
             
