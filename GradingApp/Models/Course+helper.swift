@@ -76,3 +76,40 @@ extension Course {
     }
 }
 
+extension Course {
+    
+    func getNumberOfGrades(for range: ClosedRange<Int>) -> Int{
+        var counter = 0
+        for student in self.students {
+            if range.contains(Int(student.totalGradeAverage())) {
+                counter += 1
+            }
+        }
+        return counter
+    }
+    
+    func getChartData() -> [(String,Int)] {
+        print("Getting Chart Data")
+        var data: [(String,Int)] = []
+        data.append(("Sehr gut", getNumberOfGrades(for: 13...15)))
+        data.append(("Gut", getNumberOfGrades(for: 10...12)))
+        data.append(("Befriedigend", getNumberOfGrades(for: 7...9)))
+        data.append(("Ausreichend", getNumberOfGrades(for: 4...6)))
+        data.append(("Mangelhaft", getNumberOfGrades(for: 1...3)))
+        data.append(("Ungenügend", getNumberOfGrades(for: 0...0)))
+        print(data)
+        return data
+    }
+    
+    func getChartDataNumbers() -> [Double] {
+        var data: [Double] = []
+        data.append(Double(getNumberOfGrades(for: 13...15)))
+        data.append(Double(getNumberOfGrades(for: 10...12)))
+        data.append(Double(getNumberOfGrades(for: 7...9)))
+        data.append(Double(getNumberOfGrades(for: 4...6)))
+        data.append(Double(getNumberOfGrades(for: 1...3)))
+        data.append(Double(getNumberOfGrades(for: 0...0)))
+        return data
+    }
+}
+
