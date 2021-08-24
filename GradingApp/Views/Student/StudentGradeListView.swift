@@ -11,7 +11,6 @@ import SwiftUICharts
 struct StudentGradeListView: View {
     @ObservedObject var course: Course
     @State private var action: Student? = nil
-    @State var data2: [Double] = (0..<16).map { _ in .random(in: 9.0...100.0) }
     let mixedColorStyle = ChartStyle(backgroundColor: .white, foregroundColor: [
             ColorGradient(Color(red: 0.173, green: 0.894, blue: 0.455), Color(red: 0.173, green: 0.894, blue: 0.455)),
             ColorGradient(Color(red: 0.803, green: 0.941, blue: 0.229), Color(red: 0.803, green: 0.941, blue: 0.229)),

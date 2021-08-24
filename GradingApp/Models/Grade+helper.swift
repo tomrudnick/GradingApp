@@ -91,6 +91,12 @@ extension Grade {
         context.saveCustom()
     }
     
+    static func delete(at offset: IndexSet, for grades: [Grade]) {
+        if let first = grades.first, let viewContext = first.managedObjectContext {
+            offset.map{ grades[$0] }.forEach(viewContext.delete)
+        }
+    }
+    
     func dateAsString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM"

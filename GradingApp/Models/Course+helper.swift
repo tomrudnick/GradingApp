@@ -89,7 +89,6 @@ extension Course {
     }
     
     func getChartData() -> [(String,Int)] {
-        print("Getting Chart Data")
         var data: [(String,Int)] = []
         data.append(("Sehr gut", getNumberOfGrades(for: 13...15)))
         data.append(("Gut", getNumberOfGrades(for: 10...12)))

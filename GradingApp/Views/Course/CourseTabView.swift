@@ -27,6 +27,11 @@ struct CourseTabView: View {
                     Text("Noten")
                 }
             
+            GradeAtDatesView(course: course)
+                .tabItem{
+                    Image(systemName:"person.3.fill")
+                    Text("Irgendwas")
+                }
             
         }
         //.edgesIgnoringSafeArea(.top)
