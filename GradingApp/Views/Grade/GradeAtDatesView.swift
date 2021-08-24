@@ -52,64 +52,6 @@ struct GradeAtDatesView: View {
     
 }
 
-struct StudentGradesAtDate : View{
-    
-    @ObservedObject var course: Course
-    var date: Date
-    var gradeType: GradeType
-    
-    var body: some View {
-        List {
-            ForEach(getGradesAtOneDate(for: date, gradeType: gradeType)) { studentGrade in
-                HStack {
-                    Text("\(studentGrade.student.firstName) \(studentGrade.student.lastName)")
-                    Spacer()
-                    Text(Grade.convertGradePointsToGrades(value: Int(studentGrade.grade?.value ?? -1)))
-                        .foregroundColor(Grade.getColor(points: Double(studentGrade.grade?.value ?? -1)))
-                        .padding()
-                        .frame(minWidth: 55)
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .background(Color.accentColor)
-                        .cornerRadius(10)
-                        
-                }
-            }
-        }
-        .toolbar(content: {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Text("")
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Text("Edit")
-            }
-        })
-        .navigationTitle(Text(date.dateAsString()))
-        
-    }
-    
-    func getGradesAtOneDate(for date: Date, gradeType: GradeType) -> [StudentGradesAtDate] {
-        var studentGrades: [StudentGradesAtDate] = []
-        for student in course.students {
-            var appendedStudent: Bool = false
-            for grade in student.grades.filter({$0.date == date && $0.type == gradeType}) {
-                appendedStudent = true
-                studentGrades.append(StudentGradesAtDate(student: student, grade: grade))
-            }
-            if !appendedStudent {
-                studentGrades.append(StudentGradesAtDate(student: student, grade: nil))
-            }
-        }
-        
-        return studentGrades.sorted(by: {$0.student.firstName < $1.student.firstName}).sorted(by: {$0.student.lastName < $1.student.lastName})
-    }
-    
-    struct StudentGradesAtDate : Identifiable {
-        let id: UUID = UUID()
-        var student: Student
-        var grade: Grade?
-    }
-}
 
 extension Date {
     func dateAsString() -> String {
