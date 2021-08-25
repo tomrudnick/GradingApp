@@ -37,6 +37,13 @@ extension Grade {
                                                  "5+", "5", "5-",
                                                  "6"]
     
+    private(set) static var uppperSchoolGrades = ["15", "14", "13",
+                                                 "12", "11", "10",
+                                                 "9", "8", "7",
+                                                 "6", "5", "5",
+                                                 "3", "2", "1",
+                                                 "0"]
+    
     private(set) static var gradeMultiplier = [0.5, 1.0, 1.5, 2]
     
 
