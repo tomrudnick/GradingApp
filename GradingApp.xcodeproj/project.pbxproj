@@ -41,6 +41,8 @@
 		E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC426BAF781000BDD65 /* Student+helper.swift */; };
 		E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */; };
 		E26ACC9926CE70F2004468AB /* Course+StudentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */; };
+		E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A20B0526D41910005FA240 /* StudentGradeListView.swift */; };
+		E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E2A20B0826D43777005FA240 /* SwiftUICharts */; };
 		E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */; };
 		E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */; };
 		E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */; };
@@ -50,6 +52,8 @@
 		E2B7451726C00E09002D0B4C /* ViewContext+SaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451626C00E09002D0B4C /* ViewContext+SaveHelper.swift */; };
 		E2B7451F26C01C4F002D0B4C /* GradingAppDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */; };
 		E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */; };
+		E2E2D0E026D4EC5B00C62887 /* GradeAtDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesView.swift */; };
+		E2E2D0E226D5453400C62887 /* GradeAtDatesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */; };
 		E2EA7AA226BEF23C0036048E /* GradeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */; };
 		E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA326BEF6260036048E /* SingleGradeView.swift */; };
 		E2EA7AA626BEF9E50036048E /* EditSingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */; };
@@ -101,6 +105,7 @@
 		E25FBCC426BAF781000BDD65 /* Student+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+helper.swift"; sourceTree = "<group>"; };
 		E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoursesView.swift; sourceTree = "<group>"; };
 		E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+StudentHelper.swift"; sourceTree = "<group>"; };
+		E2A20B0526D41910005FA240 /* StudentGradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeListView.swift; sourceTree = "<group>"; };
 		E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelTest.swift; sourceTree = "<group>"; };
 		E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+DataModel.swift"; sourceTree = "<group>"; };
 		E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMultipleGradesView.swift; sourceTree = "<group>"; };
@@ -112,6 +117,8 @@
 		E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingAppDatabaseTests.swift; sourceTree = "<group>"; };
 		E2B7452026C01C4F002D0B4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseViewModel.swift; sourceTree = "<group>"; };
+		E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesView.swift; sourceTree = "<group>"; };
+		E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesEditView.swift; sourceTree = "<group>"; };
 		E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeDetailView.swift; sourceTree = "<group>"; };
 		E2EA7AA326BEF6260036048E /* SingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGradeView.swift; sourceTree = "<group>"; };
 		E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSingleGradeView.swift; sourceTree = "<group>"; };
@@ -123,6 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
+				E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +265,7 @@
 			children = (
 				39FFC8A726CC1C8500CE433A /* Edit */,
 				E25FBCB926BAE1EC000BDD65 /* StudentListView.swift */,
+				E2A20B0526D41910005FA240 /* StudentGradeListView.swift */,
 				E25FBCC026BAF24D000BDD65 /* StudentView.swift */,
 				E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */,
 				39607B5026CD0A9D007DFD63 /* SingleStudent.swift */,
@@ -273,6 +282,8 @@
 				E2EA7AA326BEF6260036048E /* SingleGradeView.swift */,
 				E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */,
 				39F09BB426D00801007B6E8A /* CostumGradeView.swift */,
+				E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesView.swift */,
+				E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */,
 			);
 			path = Grade;
 			sourceTree = "<group>";
@@ -337,6 +348,7 @@
 			name = GradingApp;
 			packageProductDependencies = (
 				394D7C4F26BDC7DB00892BD4 /* CSV */,
+				E2A20B0826D43777005FA240 /* SwiftUICharts */,
 			);
 			productName = CoreDataTest;
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
@@ -389,6 +401,7 @@
 			mainGroup = E25FBC9726BADAC6000BDD65;
 			packageReferences = (
 				394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */,
+				E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
 			projectDirPath = "";
@@ -427,6 +440,7 @@
 				E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */,
 				E25A7CDC26CA9D0A00508EEE /* EditStudentDetailView.swift in Sources */,
 				E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */,
+				E2E2D0E026D4EC5B00C62887 /* GradeAtDatesView.swift in Sources */,
 				E25FBCBF26BAE976000BDD65 /* Course+helper.swift in Sources */,
 				E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */,
 				E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */,
@@ -455,6 +469,7 @@
 				E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */,
 				E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */,
 				E20C5E3826CD4B3F00F860C6 /* View+IfModifier.swift in Sources */,
+				E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */,
 				396D81AE26C06DF90093668A /* CustomBackButton.swift in Sources */,
 				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
 				39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */,
@@ -465,6 +480,7 @@
 				E2B055E226BD5842004F0087 /* AddSingleGradeView.swift in Sources */,
 				E25FBCBC26BAE7FF000BDD65 /* AddCourse.swift in Sources */,
 				E25FBCC326BAF6E6000BDD65 /* AddStudent.swift in Sources */,
+				E2E2D0E226D5453400C62887 /* GradeAtDatesEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,6 +745,14 @@
 				minimumVersion = 2.4.3;
 			};
 		};
+		E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = exactVersion;
+				version = "2.0.0-beta.1";
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -736,6 +760,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */;
 			productName = CSV;
+		};
+		E2A20B0826D43777005FA240 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 

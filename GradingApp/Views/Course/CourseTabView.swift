@@ -21,8 +21,21 @@ struct CourseTabView: View {
                     Image(systemName:"person.3.fill")
                     Text("Kurs")
                 }
-        }.navigationTitle(Text(course.name))
-        .navigationBarTitleDisplayMode(.large)
+            StudentGradeListView(course: course)
+                .tabItem {
+                    Image(systemName:"person.3.fill")
+                    Text("Noten")
+                }
+            
+            GradeAtDatesView(course: course)
+                .tabItem{
+                    Image(systemName:"person.3.fill")
+                    Text("Irgendwas")
+                }
+            
+        }
+        //.edgesIgnoringSafeArea(.top)
+        .navigationBarTitle(course.name, displayMode: .inline)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")

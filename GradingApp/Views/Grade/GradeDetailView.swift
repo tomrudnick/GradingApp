@@ -31,6 +31,8 @@ struct GradeDetailView: View {
                             }
                         }
                     }
+                }.onDelete { indexSet in
+                    Grade.delete(at: indexSet, for: student.gradesArr)
                 }
             }
         }

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 extension Grade {
     //setter and getter for Grade
@@ -58,6 +59,24 @@ extension Grade {
     static func convertDecimalGradesToGradePoints(points: Double) -> Double {
         return (17.0 - points) / 3.0
     }
+    
+    static func getColor(points: Double) -> Color {
+        let points = Int(points)
+        switch points {
+        case 13...16:
+            return Color(red: 0.173, green: 0.894, blue: 0.455)
+        case 10...12:
+            return Color(red: 0.803, green: 0.941, blue: 0.229)
+        case 7...9:
+            return Color(red: 1.0, green: 0.898, blue: 0.0)
+        case 4...6:
+            return Color(red: 1.0, green: 0.592, blue: 0.0)
+        case 1...3:
+            return Color(red: 1.0, green: 0.224, blue: 0.141)
+        default:
+            return Color(red: 0.737, green: 0.067, blue: 0.0)
+        }
+    }
 }
 
 
@@ -77,6 +96,12 @@ extension Grade {
     static func addGrade(value: Int, date: Date, half: HalfType, type: GradeType, comment: String, multiplier: Double, student: Student, context: NSManagedObjectContext) {
         _ = Grade(value: value, date: date, half: half, type: type, comment: comment, multiplier: multiplier, student: student, context: context)
         context.saveCustom()
+    }
+    
+    static func delete(at offset: IndexSet, for grades: [Grade]) {
+        if let first = grades.first, let viewContext = first.managedObjectContext {
+            offset.map{ grades[$0] }.forEach(viewContext.delete)
+        }
     }
     
     func dateAsString() -> String {
