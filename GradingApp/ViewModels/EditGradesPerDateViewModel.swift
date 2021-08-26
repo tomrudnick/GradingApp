@@ -34,10 +34,8 @@ class EditGradesPerDateViewModel : ObservableObject {
             gradeMultiplier = Grade.gradeMultiplier[newValue]
         }
     }
-    
+    //This hole init function should be heavily tested!!!
     init(studentGrades: [GradeStudent], course: Course) {
-        
-        //This code is probably not needed but we leave it for security reasons! Should be heavily tested!!
         let nonNilStudentGrades = studentGrades.filter{ $0.grade != nil }
         let comments = nonNilStudentGrades.map{ $0.grade!.comment! }
         if let comment = comments.first, comments.allSatisfy({$0 == comment}) {
