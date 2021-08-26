@@ -12,17 +12,32 @@ struct MoreActionsView: View {
     
     @State private var showingExporter = false
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.presentationMode) var presentationMode
      
     var body: some View {
-        Form {
-            Section {
-                Button {
-                    self.showingExporter = true
-                } label: {
-                    Text("Backup")
+        NavigationView {
+            Form {
+                Section {
+                    Button {
+                        self.showingExporter = true
+                    } label: {
+                        Text("Backup")
+                    }
+                }
+            }.navigationBarTitle("Weiteres...", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Schließen")
+                    }
+
                 }
             }
-        }.fileExporter(isPresented: $showingExporter, documents: getDocuments(), contentType: .commaSeparatedText) { result in
+            
+        }
+        .fileExporter(isPresented: $showingExporter, documents: getDocuments(), contentType: .commaSeparatedText) { result in
             switch result {
             case .success(let url):
                 print("Saved to \(url)")
