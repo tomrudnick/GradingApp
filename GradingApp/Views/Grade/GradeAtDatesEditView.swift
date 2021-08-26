@@ -75,7 +75,10 @@ struct GradeAtDatesEditView : View{
                                 proxy.scrollTo(selectedStudent?.id, anchor: .top)
                             }.id(studentGrade.student.id)
                         }
-                        CustomButtonView(label: "Löschen", action: {}, buttonColor: Color.red)
+                        CustomButtonView(label: "Löschen", action: {
+                            editGradesPerDateVM.delete()
+                            presentationMode.wrappedValue.dismiss()
+                        }, buttonColor: Color.red)
 
                         Spacer().frame(height: geometry.size.height * 0.4)
                     }

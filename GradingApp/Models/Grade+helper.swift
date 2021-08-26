@@ -117,6 +117,12 @@ extension Grade {
         }
     }
     
+    func delete() {
+        if let viewContext = self.managedObjectContext {
+            viewContext.delete(self)
+        }
+    }
+    
     func dateAsString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM"

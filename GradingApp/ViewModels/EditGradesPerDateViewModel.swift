@@ -93,4 +93,8 @@ class EditGradesPerDateViewModel : ObservableObject {
             }
         }
     }
+    
+    func delete() {
+        self.studentGrades.forEach({$0.grade?.delete()})
+    }
 }
