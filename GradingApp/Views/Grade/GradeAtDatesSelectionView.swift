@@ -23,17 +23,6 @@ struct GradeAtDatesSelectionView: View {
                 Text("Written").tag(1)
             }.pickerStyle(SegmentedPickerStyle())
             GradeAtDatesView(course: course, gradeType: gradeType)
-            /*List {
-                ForEach(getGradesPerDate(for: gradeType).sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
-                    NavigationLink(destination: StudentGradesAtDate(course: course, date: key, gradeType: gradeType)) {
-                        HStack {
-                            Text(key.dateAsString())
-                            Spacer()
-                            Text(String(value))
-                        }
-                    }
-                }
-            }*/
         }
     }
 }

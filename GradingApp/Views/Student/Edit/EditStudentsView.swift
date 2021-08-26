@@ -11,15 +11,19 @@ struct EditStudentsView: View {
     
     @ObservedObject var course: CourseEditViewModel.CourseVM
     @State private var showEditStudentSheet = false
+    @State private var selectedStudent: Student.DataModel? = nil
+    
+    
     
     var body: some View {
         VStack {
             List {
                 ForEach(course.students) { student in
-                    EditStudentDetailView(student: binding(for: student))
+                    EditStudentDetailView(student: student)
                         .contextMenu(ContextMenu(menuItems: {
                             Button(action: {
-                                showEditStudentSheet = true
+                                self.selectedStudent = student
+                                showEditStudentSheet.toggle()
                             }, label: {
                                 Label("Edit", systemImage: "pencil")
                             })
@@ -33,9 +37,6 @@ struct EditStudentsView: View {
                                 }
                             })
                         }))
-                        .sheet(isPresented: $showEditStudentSheet, content: {
-                            EditStudentView(oldStudent: binding(for: student))
-                        })
                 }
                 .onDelete(perform: { indexSet in
                     course.deleteStudentCoursesEdit(atOffsets: indexSet)
@@ -43,6 +44,11 @@ struct EditStudentsView: View {
                 
             }
         }.navigationTitle(course.name)
+        .sheet(item: $selectedStudent, content: { student in
+            SingleStudent(viewTitle: "Schüler bearbeiten", student: student) { newStudent in
+                course.updateStudent(for: newStudent)
+            }
+        })
     }
     
     private func binding(for student: Student.DataModel) -> Binding<Student.DataModel> {
@@ -57,3 +63,5 @@ struct EditStudentsView: View {
  EditStudentView()
  }
  }*/
+
+//Don't know how to extract this overload thing into another file at the moment....

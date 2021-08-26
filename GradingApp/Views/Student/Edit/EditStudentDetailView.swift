@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditStudentDetailView: View {
     
-    @Binding var student: Student.DataModel
+    let student: Student.DataModel
     
     var body: some View {
         HStack {
@@ -31,8 +31,8 @@ struct EditStudentDetailView: View {
 }
 
 struct EditStudentDetailView_Previews: PreviewProvider {
-    @State static var student = Student.DataModel(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch")
+    static let student = Student.DataModel(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch")
     static var previews: some View {
-        EditStudentDetailView(student: $student)
+        EditStudentDetailView(student: student)
     }
 }
