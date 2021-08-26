@@ -23,7 +23,7 @@ struct CourseTabView: View {
                 }
             StudentGradeListView(course: course)
                 .tabItem {
-                    Image(systemName:"person.3.fill")
+                    Image(systemName:"graduationcap")
                     Text("Leistungsübersicht")
                 }
             

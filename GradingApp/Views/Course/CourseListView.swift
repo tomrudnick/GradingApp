@@ -45,6 +45,9 @@ struct CourseListView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     editButton
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    moreButton
+                }
             }
         }
     }
@@ -63,6 +66,15 @@ struct CourseListView: View {
             showEditCourses = true
         } label: {
             Image(systemName: "pencil.circle")
+                .font(.title)
+        }
+    }
+    
+    var moreButton: some View {
+        Button {
+            
+        } label: {
+            Image(systemName: "ellipsis.circle")
                 .font(.title)
         }
     }
