@@ -17,7 +17,6 @@ struct StudentView: View {
     @State var showAddGradeSheet = false
     @State private var action: Int? = 0
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
-    @State var chartData: [Double] = [0, 5, 6, 2, 13, 4, 3, 6]
     
     var body: some View {
         VStack {
@@ -44,47 +43,6 @@ struct StudentView: View {
             .padding()
             //LineChartView(data: student.gradesArr.filter({$0.type == .oral}).map({Double(Int($0.value))}), title: "Mündlich", form: ChartForm.extraLarge)
             Spacer()
-            /*HStack {
-                VStack(alignment: .leading) {
-                    HStack{
-                        Text("Gesamt: ")
-                            .font(.title)
-                            .padding()
-                        Spacer()
-                        Button(action: {}, label: {
-                                CostumGradeView(roundedGrade: student.getRoundedGradeAverage(),
-                                                grade: student.getGradeAverage())
-                        }).padding()
-                    }
-                    HStack{
-                        Text("Mündlich: ")
-                            .font(.title)
-                            .padding()
-                        Spacer()
-                        NavigationLink(
-                            destination: GradeDetailView(student: student, gradeType: .oral),
-                            label: {
-                                CostumGradeView(roundedGrade: student.getRoundedGradeAverage(.oral),
-                                                grade: student.getGradeAverage(.oral))
-                            }).padding()
-                    }
-                    HStack{
-                        Text("Schriftlich: ")
-                            .font(.title)
-                            .padding()
-                        Spacer()
-                        NavigationLink(
-                            destination: GradeDetailView(student: student, gradeType: .written),
-                            label: {
-                                CostumGradeView(roundedGrade: student.getRoundedGradeAverage(.written), grade: student.getGradeAverage(.written))
-                            }).padding()
-                    }
-                    Spacer()
-                }
-                .frame(maxWidth: 235)
-                Spacer()
-            }*/
-            
         }
         .padding()
         .padding(.trailing, 5.0)

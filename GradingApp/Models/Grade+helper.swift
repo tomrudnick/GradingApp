@@ -77,6 +77,19 @@ extension Grade {
             return Color(red: 0.737, green: 0.067, blue: 0.0)
         }
     }
+    
+    
+    static func getGradesPerDate(grades: FetchedResults<Grade>) -> [Date : [GradeStudent]] {
+        var allDates: [Date : [GradeStudent]] = [:]
+        for grade in grades {
+            if let _ = allDates[grade.date!] {
+                allDates[grade.date!]!.append(GradeStudent(student: grade.student!, grade: grade))
+            } else {
+                allDates[grade.date!] = [GradeStudent(student: grade.student!, grade: grade)]
+            }
+        }
+        return allDates
+    }
 }
 
 
@@ -108,5 +121,12 @@ extension Grade {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM"
         return formatter.string(from: self.date!)
+    }
+    
+    static func fetch(_ predicate: NSPredicate) -> NSFetchRequest<Grade> {
+        let request = NSFetchRequest<Grade>(entityName: "Grade")
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        request.predicate = predicate
+        return request
     }
 }

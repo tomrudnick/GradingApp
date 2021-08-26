@@ -7,44 +7,19 @@
 
 import SwiftUI
 
-struct StudentGradesAtDate : View{
+struct GradeAtDatesEditView : View{
     
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.managedObjectContext) private var viewContext
     
-    @ObservedObject var course: Course
-    @State var date: Date
-    @State var selectedGradeType: Int
-    @State var studentGrades: [StudentGrade]
-    @State var selectedGradeMultiplier: Int?
-    @State var comment: String?
+    @StateObject var editGradesPerDateVM: EditGradesPerDateViewModel
+    
     @State private var showAddGradeSheet: Bool = false
     @State private var selectedStudent: Student?
     
-    private var gradeType: GradeType {
-        selectedGradeType == 0 ? .oral : .written
-    }
     
-    init(course: Course, date: Date, gradeType: GradeType) {
-        self._date = State(initialValue: date)
-        self._selectedGradeType = State(initialValue: gradeType == .oral ? 0 : 1)
-        self.course = course
-        self._studentGrades = State(initialValue: course.getGradesAtOneDate(for: date, gradeType: gradeType))
-        
-        let comments = self.studentGrades.filter({$0.grade != nil}).map({$0.grade!.comment!})
-        
-        if let comment = comments.first, comments.allSatisfy({$0 == comment}) {
-            self._comment = State(initialValue: comment)
-        } else {
-            self._comment = State(initialValue: nil)
-        }
-        
-        let multipliers = self.studentGrades.filter({$0.grade != nil}).map({$0.grade!.multiplier})
-        if let multiplier = multipliers.first, multipliers.allSatisfy({$0 == multiplier }) {
-            self._selectedGradeMultiplier = State(initialValue: Grade.gradeMultiplier.firstIndex(where: {$0 == multiplier}))
-        } else {
-            self._selectedGradeMultiplier = State(initialValue: nil)
-        }
-        
+    init(course: Course, studentGrades: [GradeStudent]) {
+        self._editGradesPerDateVM = StateObject(wrappedValue: EditGradesPerDateViewModel(studentGrades: studentGrades, course: course))
     }
     
     var body: some View {
@@ -53,18 +28,18 @@ struct StudentGradesAtDate : View{
                 Form {
                     Section {
                         HStack {
-                            DatePicker("Datum", selection: $date, displayedComponents: [.date])
-                                .id(date) //Erzwingt den Datepicker einen rebuild des Views zu machen
+                            DatePicker("Datum", selection: $editGradesPerDateVM.date, displayedComponents: [.date])
+                                .id(editGradesPerDateVM.date) //Erzwingt den Datepicker einen rebuild des Views zu machen
                                 .environment(\.locale, Locale.init(identifier: "de"))
                         }
-                        Picker(selection: $selectedGradeType.animation(), label: Text(""), content: {
+                        Picker(selection: $editGradesPerDateVM.gradeTypeNumber.animation(), label: Text(""), content: {
                             Text("Oral").tag(0)
                             Text("Written").tag(1)
                         }).pickerStyle(SegmentedPickerStyle())
                     }
-                    if selectedGradeType == 0 && selectedGradeMultiplier != nil {
+                    if editGradesPerDateVM.gradeType == .oral && editGradesPerDateVM.gradeMultiplier != nil {
                         Section(header: Text("Grade Multiplier") ) {
-                            Picker(selection: $selectedGradeMultiplier ?? 1, label: Text(""), content: {
+                            Picker(selection: $editGradesPerDateVM.gradeMultiplierNumber, label: Text(""), content: {
                                 Text(String(Grade.gradeMultiplier[0])).tag(0)
                                 Text(String(Grade.gradeMultiplier[1])).tag(1)
                                 Text(String(Grade.gradeMultiplier[2])).tag(2)
@@ -72,18 +47,18 @@ struct StudentGradesAtDate : View{
                             }).pickerStyle(SegmentedPickerStyle())
                         }.transition(.slide)
                     }
-                    if comment != nil {
+                    if editGradesPerDateVM.comment != nil {
                         Section(header: Text("Comment")) {
-                            TextField("Comment...", text: $comment ?? "")
+                            TextField("Comment...", text: $editGradesPerDateVM.comment ?? "")
                         }
                     }
                     Section(header: Text("Grades")) {
-                        ForEach(studentGrades) { studentGrade in
+                        ForEach(editGradesPerDateVM.studentGrades) { studentGrade in
                             HStack {
                                 Text("\(studentGrade.student.firstName) \(studentGrade.student.lastName)")
                                 Spacer()
-                                Text(Grade.convertGradePointsToGrades(value: Int(studentGrade.grade?.value ?? -1)))
-                                    .foregroundColor(Grade.getColor(points: Double(studentGrade.grade?.value ?? -1)))
+                                Text(Grade.convertGradePointsToGrades(value: studentGrade.value))
+                                    .foregroundColor(Grade.getColor(points: Double(studentGrade.value)))
                                     .padding()
                                     .frame(minWidth: 55)
                                     .foregroundColor(.white)
@@ -110,8 +85,8 @@ struct StudentGradesAtDate : View{
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], content: {
                         ForEach(Grade.lowerSchoolGrades, id: \.self) { grade in
                             Button(action: {
-                                //studentGrade[selectedStudent!] = Grade.lowerSchoolGradesTranslate[grade]!
-                                selectedStudent = course.nextStudent(after: selectedStudent!)
+                                editGradesPerDateVM.setGrade(for: selectedStudent!, value: Grade.lowerSchoolGradesTranslate[grade]!)
+                                selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent!)
                                 scrollToNext(proxy: proxy)
                             }, label: {
                                 BottomSheetViewButtonLabel(labelView: Text(grade))
@@ -119,14 +94,14 @@ struct StudentGradesAtDate : View{
                             .padding(.all, 2.0)
                         }
                         Button {
-                            selectedStudent = course.previousStudent(before: selectedStudent!)
+                            selectedStudent = editGradesPerDateVM.course.previousStudent(before: selectedStudent!)
                             scrollToNext(proxy: proxy)
                         } label: {
                             BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.up"))
                         }
                         
                         Button {
-                            selectedStudent = course.nextStudent(after: selectedStudent!)
+                            selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent!)
                             scrollToNext(proxy: proxy)
                         } label: {
                             BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.down"))
@@ -142,6 +117,7 @@ struct StudentGradesAtDate : View{
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
+                    editGradesPerDateVM.save(viewContext: viewContext)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Save")
@@ -149,7 +125,7 @@ struct StudentGradesAtDate : View{
 
             }
         })
-        .navigationTitle(Text(date.dateAsString()))
+        .navigationTitle(Text(editGradesPerDateVM.date.asString(format: "dd MMM")))
         
     }
     

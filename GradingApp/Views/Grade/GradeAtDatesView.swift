@@ -2,64 +2,56 @@
 //  GradeAtDatesView.swift
 //  GradingApp
 //
-//  Created by Tom Rudnick on 24.08.21.
+//  Created by Tom Rudnick on 26.08.21.
 //
 
 import SwiftUI
 
+
 struct GradeAtDatesView: View {
-    @State private var selectedGradeType: Int = 0
-    private var gradeType : GradeType {
-        selectedGradeType == 0 ? GradeType.oral : GradeType.written
-    }
+
+    // An alternative to the fetch Requst would be to make the course Observable
+    // This however would complicate the logic of the getGradesPerDate function.
+    // Furthermore the view would not update automatically if a new grades would be added
+    @FetchRequest(fetchRequest: Grade.fetchRequest()) private var grades: FetchedResults<Grade>
     
-    @ObservedObject var course: Course
+    let gradeType: GradeType
+    let course: Course
+
+    init(course: Course, gradeType: GradeType) {
+        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", gradeType == .oral ? 0 : 1, course))
+        self._grades = FetchRequest(fetchRequest: request)
+        self.course = course
+        self.gradeType = gradeType
+    }
     
     
     var body: some View {
-        VStack {
-            Picker(selection: $selectedGradeType, label: Text("")) {
-                Text("Oral").tag(0)
-                Text("Written").tag(1)
-            }.pickerStyle(SegmentedPickerStyle())
-            List {
-                ForEach(getGradesPerDate(for: gradeType).sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
-                    NavigationLink(destination: StudentGradesAtDate(course: course, date: key, gradeType: gradeType)) {
-                        HStack {
-                            Text(key.dateAsString())
-                            Spacer()
-                            Text(String(value))
+        List {
+            ForEach(Grade.getGradesPerDate(grades: grades).sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
+                NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value)) {
+                    HStack {
+                        Text(key.asString(format: "dd MMM HH:mm"))
+                        Spacer()
+                        if value.count == 1 {
+                            let student = value.first!.student
+                            if let firstLetter = student.lastName.first {
+                                Text("\(student.firstName) \(String(firstLetter))")
+                            } else {
+                                Text("\(student.firstName)")
+                            }
+                            
+                        } else {
+                            Text("\(value.count) / \(course.students.count)")
                         }
+                        
                     }
                 }
             }
         }
     }
-    
-    func getGradesPerDate(for gradeType: GradeType) -> [Date : Int] {
-        var allDates: [Date : Int] = [:]
-        for student in course.students {
-            for grade in student.grades.filter({$0.type == gradeType}) {
-                if let dateCount = allDates[grade.date!] {
-                    allDates[grade.date!] = dateCount + 1
-                } else {
-                    allDates[grade.date!] = 1
-                }
-            }
-        }
-        return allDates
-    }
-    
 }
 
-
-extension Date {
-    func dateAsString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM"
-        return formatter.string(from: self)
-    }
-}
 
 /*struct GradeAtDatesView_Previews: PreviewProvider {
     static var previews: some View {

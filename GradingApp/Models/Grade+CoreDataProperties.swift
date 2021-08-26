@@ -13,7 +13,9 @@ import CoreData
 extension Grade {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Grade> {
-        return NSFetchRequest<Grade>(entityName: "Grade")
+        let request = NSFetchRequest<Grade>(entityName: "Grade")
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        return request
     }
 
     @NSManaged public var date: Date?

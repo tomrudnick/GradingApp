@@ -24,13 +24,13 @@ struct CourseTabView: View {
             StudentGradeListView(course: course)
                 .tabItem {
                     Image(systemName:"person.3.fill")
-                    Text("Noten")
+                    Text("Leistungsübersicht")
                 }
             
-            GradeAtDatesView(course: course)
+            GradeAtDatesSelectionView(course: course)
                 .tabItem{
-                    Image(systemName:"person.3.fill")
-                    Text("Irgendwas")
+                    Image(systemName:"calendar")
+                    Text("Daten")
                 }
             
         }
