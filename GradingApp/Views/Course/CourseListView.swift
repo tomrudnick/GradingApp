@@ -17,6 +17,7 @@ struct CourseListView: View {
     
     @State var showEditCourses = false
     @State var showAddCourse = false
+    @State var showMoreActions = false
     
     var body: some View {
         NavigationView {
@@ -30,6 +31,9 @@ struct CourseListView: View {
             .padding(.top)
             .navigationTitle(Text("Kurse"))
             .listStyle(PlainListStyle())
+            .fullScreenCover(isPresented: $showMoreActions, content: {
+                MoreActionsView().environment(\.managedObjectContext, viewContext)
+            })
             .fullScreenCover(isPresented: $showEditCourses) {
                 NavigationView {
                     EditCoursesView(context: viewContext).environment(\.managedObjectContext, viewContext)
@@ -46,7 +50,7 @@ struct CourseListView: View {
                     editButton
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    moreButton
+                    moreActionsButton
                 }
             }
         }
@@ -70,9 +74,9 @@ struct CourseListView: View {
         }
     }
     
-    var moreButton: some View {
+    var moreActionsButton: some View {
         Button {
-            
+            showMoreActions = true
         } label: {
             Image(systemName: "ellipsis.circle")
                 .font(.title)

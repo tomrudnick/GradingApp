@@ -90,6 +90,18 @@ extension Grade {
         }
         return allDates
     }
+    
+    static func getGradesPerDate(grades: [Grade]) -> [Date : [GradeStudent]] {
+        var allDates: [Date : [GradeStudent]] = [:]
+        for grade in grades {
+            if let _ = allDates[grade.date!] {
+                allDates[grade.date!]!.append(GradeStudent(student: grade.student!, grade: grade))
+            } else {
+                allDates[grade.date!] = [GradeStudent(student: grade.student!, grade: grade)]
+            }
+        }
+        return allDates
+    }
 }
 
 
