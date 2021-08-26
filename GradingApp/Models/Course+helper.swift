@@ -76,12 +76,6 @@ extension Course {
     }
 }
 
-struct StudentGrade : Identifiable {
-    let id: UUID = UUID()
-    var student: Student
-    var grade: Grade?
-}
-
 extension Course {
     
     func getNumberOfGrades(for range: ClosedRange<Int>) -> Int{
@@ -115,22 +109,6 @@ extension Course {
         data.append(Double(getNumberOfGrades(for: 1...3)))
         data.append(Double(getNumberOfGrades(for: 0...0)))
         return data
-    }
-    
-    func getGradesAtOneDate(for date: Date, gradeType: GradeType) -> [StudentGrade] {
-        var studentGrades: [StudentGrade] = []
-        for student in self.students {
-            var appendedStudent: Bool = false
-            for grade in student.grades.filter({$0.date == date && $0.type == gradeType}) {
-                appendedStudent = true
-                studentGrades.append(StudentGrade(student: student, grade: grade))
-            }
-            if !appendedStudent {
-                studentGrades.append(StudentGrade(student: student, grade: nil))
-            }
-        }
-        
-        return studentGrades.sorted(by: {$0.student.firstName < $1.student.firstName}).sorted(by: {$0.student.lastName < $1.student.lastName})
     }
 }
 

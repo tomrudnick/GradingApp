@@ -79,6 +79,10 @@ class EditGradesPerDateViewModel : ObservableObject {
                 if let multiplier = gradeMultiplier {
                     grade.multiplier = multiplier
                 }
+                //reset grade Multiplier if gradeType changes to written
+                if gradeType == .written {
+                    grade.multiplier = 1.0
+                }
                 
                 if let comment = comment {
                     grade.comment = comment
