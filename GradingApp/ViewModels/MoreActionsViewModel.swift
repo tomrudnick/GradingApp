@@ -89,7 +89,7 @@ class MoreActionsViewModel: ObservableObject {
         self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
         
         let df = DateFormatter()
-        df.dateFormat = dateFormat
+        df.dateFormat = KeyValueConstants.dateFormat
         if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.firstHalf) {
             self.dateFirstHalf = df.date(from: date)!
         } else {
