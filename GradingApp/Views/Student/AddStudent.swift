@@ -39,15 +39,19 @@ struct AddStudent: View {
             CustomButtonView(label: "csv-Import", action: {openFile.toggle()}, buttonColor: .red)
             Spacer()
         }
-        .fileImporter(isPresented: $openFile, allowedContentTypes: [.plainText]) { res in
+        .fileImporter(isPresented: $openFile, allowedContentTypes: [.plainText, .commaSeparatedText]) { res in
             do {
                 let fileUrl = try res.get()
-                let csvStudentsData = try! Data(contentsOf: fileUrl)
-                let csvStudents = String(data: csvStudentsData, encoding: .utf8)
-                let studentArray = try! CSVReader(string: csvStudents!, hasHeaderRow: true)
-                while let studentRow = studentArray.next() {
-                    Student.addStudent(firstName: studentRow[0], lastName: studentRow[1], email: studentRow[2], course: course, context: viewContext)
+                if fileUrl.startAccessingSecurityScopedResource() {
+                    let csvStudentsData = try! Data(contentsOf: fileUrl)
+                    let csvStudents = String(data: csvStudentsData, encoding: .utf8)
+                    let studentArray = try! CSVReader(string: csvStudents!, hasHeaderRow: true)
+                    while let studentRow = studentArray.next() {
+                        Student.addStudent(firstName: studentRow[0], lastName: studentRow[1], email: studentRow[2], course: course, context: viewContext)
+                    }
+                    fileUrl.stopAccessingSecurityScopedResource()
                 }
+                
                 self.presentationMode.wrappedValue.dismiss()
             
             }

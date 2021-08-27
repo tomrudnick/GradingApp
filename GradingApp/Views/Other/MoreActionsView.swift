@@ -14,7 +14,8 @@ struct MoreActionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MoreActionsViewModel()
-     
+    @State var showHalfWarningAlert = false
+    
     var body: some View {
         NavigationView {
             Form {
@@ -37,17 +38,37 @@ struct MoreActionsView: View {
                         .id(viewModel.dateSecondHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
                         .environment(\.locale, Locale.init(identifier: "de"))
                     
-                    //Picker(selection: $viewModel.selectedHalf, label: <#T##_#>, content: <#T##() -> _#>)
+                    Picker(selection: $viewModel.selectedHalf, label: Text("")) {
+                        Text("1. Halbjahr").tag(0)
+                        Text("2. Halbjahr").tag(1)
+                    }.pickerStyle(SegmentedPickerStyle())
                     
                 }
-            }.navigationBarTitle("Weiteres...", displayMode: .inline)
+            }
+            .alert(isPresented: $showHalfWarningAlert, content: {
+                Alert(title: Text("Achtung"),
+                      message: Text("Das ausgewählte halbjahr stimmt nicht mit den eingestellten Daten überein"),
+                      primaryButton: Alert.Button.default(Text("Ok!"), action: {
+                    viewModel.done()
+                    presentationMode.wrappedValue.dismiss()
+                      }), secondaryButton: Alert.Button.cancel())
+            })
+            .navigationBarTitle("Weiteres...", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button {
-                        viewModel.done()
-                        presentationMode.wrappedValue.dismiss()
+                        done()
                     } label: {
                         Text("Schließen")
+                    }
+
+                }
+                
+                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Done")
                     }
 
                 }
@@ -64,6 +85,13 @@ struct MoreActionsView: View {
         }
     }
     
+    
+    func done() {
+        if !viewModel.halfCorrect() {
+            self.showHalfWarningAlert = true
+        }
+       
+    }
     
     
 }

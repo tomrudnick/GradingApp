@@ -15,7 +15,6 @@ class MoreActionsViewModel: ObservableObject {
     @Published var half: HalfType
     
     private let dateFormat = "dd.MM.yyyy"
-    private let keyValStore = NSUbiquitousKeyValueStore()
     
     private let firstHalfKey = "dateFirstHalf"
     private let secondHalfKey = "dateSecondHalf"
@@ -31,22 +30,22 @@ class MoreActionsViewModel: ObservableObject {
     }
     
     init() {
-        self.half = keyValStore.longLong(forKey: selectedHalfKey) == 0 ? .firstHalf : .secondHalf
+        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: selectedHalfKey) == 0 ? .firstHalf : .secondHalf
         
         let df = DateFormatter()
         df.dateFormat = dateFormat
-        if let date = keyValStore.string(forKey: firstHalfKey) {
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: firstHalfKey) {
             self.dateFirstHalf = df.date(from: date)!
         } else {
             self.dateFirstHalf = Date()
         }
         
-        if let date = keyValStore.string(forKey: secondHalfKey) {
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: secondHalfKey) {
             self.dateSecondHalf = df.date(from: date)!
         } else {
             self.dateSecondHalf = Date()
         }
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(onUbiquitousKeyValueStoreDidChangeExternally(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
     }
     
     
@@ -67,9 +66,51 @@ class MoreActionsViewModel: ObservableObject {
     func done() {
         let df = DateFormatter()
         df.dateFormat = dateFormat
-        keyValStore.set(df.string(from:self.dateFirstHalf), forKey: firstHalfKey)
-        keyValStore.set(df.string(from:self.dateSecondHalf), forKey: secondHalfKey)
-        keyValStore.set(self.half == .firstHalf ? 0 : 1, forKey: selectedHalfKey)
-        keyValStore.synchronize()
+        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateFirstHalf), forKey: firstHalfKey)
+        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateSecondHalf), forKey: secondHalfKey)
+        NSUbiquitousKeyValueStore.default.set(self.half == .firstHalf ? 0 : 1, forKey: selectedHalfKey)
+        NSUbiquitousKeyValueStore.default.synchronize()
+    }
+    
+    func halfCorrect() -> Bool {
+        print(compareDayMonth(Date(), to: dateFirstHalf))
+        if half == .firstHalf && compareDayMonth(Date(), to: dateFirstHalf) < 0 {
+            return true
+        } else if half == .secondHalf && compareDayMonth(Date(), to: dateFirstHalf) < 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func compareDayMonth(_ date1: Date, to date2: Date) -> TimeInterval {
+        let calendar = Calendar.current
+        var newDate1 = Date(timeIntervalSinceReferenceDate: 0)
+        var newDate2 = Date(timeIntervalSinceReferenceDate: 0)
+        let date1Components = calendar.dateComponents([.month, .day], from: date1)
+        let date2Components = calendar.dateComponents([.month, .day], from: date2)
+        newDate1 = calendar.date(byAdding: date1Components, to: date1)!
+        newDate2 = calendar.date(byAdding: date2Components, to: date2)!
+        print("New Date 1: \(newDate1)")
+        return newDate1.timeIntervalSince1970 - newDate2.timeIntervalSince1970
+    }
+    
+    @objc func onUbiquitousKeyValueStoreDidChangeExternally(notification:Notification)
+    {
+        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: selectedHalfKey) == 0 ? .firstHalf : .secondHalf
+        
+        let df = DateFormatter()
+        df.dateFormat = dateFormat
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: firstHalfKey) {
+            self.dateFirstHalf = df.date(from: date)!
+        } else {
+            self.dateFirstHalf = Date()
+        }
+        
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: secondHalfKey) {
+            self.dateSecondHalf = df.date(from: date)!
+        } else {
+            self.dateSecondHalf = Date()
+        }
     }
 }
