@@ -56,10 +56,10 @@ class MoreActionsViewModel: ObservableObject {
         for course in fetchedCourses {
             let oralRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 0, course))
             let oralGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: oralRequest)
-            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: oralGrades, fileName: "\(course.name)_muendlich"))
+            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: oralGrades, fileName: "\(course.title)_muendlich"))
             let writtenRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 1, course))
             let writtenGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: writtenRequest)
-            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: writtenGrades, fileName: "\(course.name)_schriftlich"))
+            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: writtenGrades, fileName: "\(course.title)_schriftlich"))
         }
         return files
     }
