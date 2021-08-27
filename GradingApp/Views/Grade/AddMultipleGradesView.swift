@@ -12,6 +12,8 @@ struct AddMultipleGradesView: View {
     @ObservedObject var course: Course
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.halfYear) var halfYear
+    
     @State private var gradeDate: Date = Date()
     @State private var selectedGradeType: Int = 0
     @State private var selectedGradeMultiplier: Int = 1
@@ -146,7 +148,7 @@ struct AddMultipleGradesView: View {
         for (key, value) in studentGrade {
             if value != -1 {
                 let multiplier = type == GradeType.oral ? multiplier : 1.0
-                Grade.addGrade(value: value, date: gradeDate, half: HalfType.firstHalf, type: type, comment: comment, multiplier: multiplier, student: key, context: viewContext)
+                Grade.addGrade(value: value, date: gradeDate, half: halfYear, type: type, comment: comment, multiplier: multiplier, student: key, context: viewContext)
             }
         }
         presentationMode.wrappedValue.dismiss()

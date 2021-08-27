@@ -47,11 +47,13 @@ struct MoreActionsView: View {
             }
             .alert(isPresented: $showHalfWarningAlert, content: {
                 Alert(title: Text("Achtung"),
-                      message: Text("Das ausgewählte halbjahr stimmt nicht mit den eingestellten Daten überein"),
-                      primaryButton: Alert.Button.default(Text("Ok!"), action: {
-                    viewModel.done()
-                    presentationMode.wrappedValue.dismiss()
-                      }), secondaryButton: Alert.Button.cancel())
+                      message: Text("Das ausgewählte Halbjahr stimmt nicht mit den eingestellten Daten überein"),
+                      primaryButton: Alert.Button.default(Text("Ok!"),
+                      action: {
+                            save()
+                      }),
+                      secondaryButton: Alert.Button.cancel()
+                )
             })
             .navigationBarTitle("Weiteres...", displayMode: .inline)
             .toolbar {
@@ -89,8 +91,14 @@ struct MoreActionsView: View {
     func done() {
         if !viewModel.halfCorrect() {
             self.showHalfWarningAlert = true
+        } else {
+            save()
         }
-       
+    }
+    
+    func save() {
+        viewModel.done()
+        presentationMode.wrappedValue.dismiss()
     }
     
     

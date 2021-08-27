@@ -10,13 +10,16 @@ import SwiftUI
 struct AddSingleGradeView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.halfYear) var halfYear
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var student: Student
     
+    
+    
     var body: some View {
         SingleGradeView(student: student) { points, type, multiplier, date, comment in
-            Grade.addGrade(value: points, date: date, half: HalfType.firstHalf, type: type, comment: comment, multiplier: multiplier, student: student, context: self.viewContext)
+            Grade.addGrade(value: points, date: date, half: halfYear, type: type, comment: comment, multiplier: multiplier, student: student, context: self.viewContext)
         }
     }
 }

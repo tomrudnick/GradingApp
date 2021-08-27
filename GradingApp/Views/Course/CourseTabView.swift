@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CourseTabView: View {
     
+    @Environment(\.halfYear) var halfYear
+    
     @ObservedObject var course: Course
     @State var showAddStudent = false
     @State var showAddMultipleGrades = false
@@ -35,7 +37,7 @@ struct CourseTabView: View {
             
         }
         //.edgesIgnoringSafeArea(.top)
-        .navigationBarTitle(course.title, displayMode: .inline)
+        .navigationBarTitle("\(course.title) - \(halfYear == .firstHalf ? "1. Halbjahr" : "2. Halbjahr")", displayMode: .inline)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")
@@ -51,9 +53,17 @@ struct CourseTabView: View {
         .sheet(isPresented: $showAddStudent, content: {
            // AddStudent(course: course)
         })
-        .fullScreenCover(isPresented: $showAddMultipleGrades, content: {
-            AddMultipleGradesView(course: course)
+        .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in
+            view.fullScreenCover(isPresented: $showAddMultipleGrades, content: {
+                AddMultipleGradesView(course: course)
+            })
         })
+        .if(UIScreen.main.traitCollection.userInterfaceIdiom == .pad) { view in
+            view.sheet(isPresented: $showAddMultipleGrades, content: {
+                AddMultipleGradesView(course: course)
+            })
+        }
+        
     }
 }
 

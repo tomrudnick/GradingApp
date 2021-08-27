@@ -14,15 +14,15 @@ struct GradeAtDatesView: View {
     // This however would complicate the logic of the getGradesPerDate function.
     // Furthermore the view would not update automatically if a new grades would be added
     @FetchRequest(fetchRequest: Grade.fetchRequest()) private var grades: FetchedResults<Grade>
-    
+   
     let gradeType: GradeType
     let course: Course
 
-    init(course: Course, gradeType: GradeType) {
-        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", gradeType == .oral ? 0 : 1, course))
-        self._grades = FetchRequest(fetchRequest: request)
+    init(course: Course, gradeType: GradeType, half: HalfType) {
         self.course = course
         self.gradeType = gradeType
+        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d", gradeType == .oral ? 0 : 1, course, half == .firstHalf ? 0 : 1))
+        self._grades = FetchRequest(fetchRequest: request)
     }
     
     
