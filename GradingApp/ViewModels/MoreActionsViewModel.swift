@@ -73,27 +73,15 @@ class MoreActionsViewModel: ObservableObject {
     }
     
     func halfCorrect() -> Bool {
-        print(compareDayMonth(Date(), to: dateFirstHalf))
-        if half == .firstHalf && compareDayMonth(Date(), to: dateFirstHalf) < 0 {
+        if half == .firstHalf && Date() >= dateFirstHalf {
             return true
-        } else if half == .secondHalf && compareDayMonth(Date(), to: dateFirstHalf) < 0 {
+        } else if half == .secondHalf && Date() >= dateSecondHalf {
             return true
         } else {
             return false
         }
     }
     
-    private func compareDayMonth(_ date1: Date, to date2: Date) -> TimeInterval {
-        let calendar = Calendar.current
-        var newDate1 = Date(timeIntervalSinceReferenceDate: 0)
-        var newDate2 = Date(timeIntervalSinceReferenceDate: 0)
-        let date1Components = calendar.dateComponents([.month, .day], from: date1)
-        let date2Components = calendar.dateComponents([.month, .day], from: date2)
-        newDate1 = calendar.date(byAdding: date1Components, to: date1)!
-        newDate2 = calendar.date(byAdding: date2Components, to: date2)!
-        print("New Date 1: \(newDate1)")
-        return newDate1.timeIntervalSince1970 - newDate2.timeIntervalSince1970
-    }
     
     @objc func onUbiquitousKeyValueStoreDidChangeExternally(notification:Notification)
     {
