@@ -12,7 +12,7 @@ struct AddStudent: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var course: Course
+    @ObservedObject var course: CourseEditViewModel.CourseVM
     
     @State var studentFirstName = ""
     @State var studentLastName = ""
@@ -33,43 +33,27 @@ struct AddStudent: View {
             CustomTextfieldView(label: "Email", input: $email)
                 .keyboardType(.emailAddress)
                 .autocapitalization(.none)
-            CustomButtonView(label: "Hinzufügen", action: self.saveButtonPressed, buttonColor: .accentColor)
+            CustomButtonView(label: "Hinzufügen", action: self.saveButtonPressed , buttonColor: .accentColor)
                 .disabled(studentFirstName.isEmpty || studentLastName.isEmpty)
                 Divider()
             CustomButtonView(label: "csv-Import", action: {openFile.toggle()}, buttonColor: .red)
             Spacer()
         }
         .fileImporter(isPresented: $openFile, allowedContentTypes: [.plainText, .commaSeparatedText]) { res in
-            do {
-                let fileUrl = try res.get()
-                if fileUrl.startAccessingSecurityScopedResource() {
-                    let csvStudentsData = try! Data(contentsOf: fileUrl)
-                    let csvStudents = String(data: csvStudentsData, encoding: .utf8)
-                    let studentArray = try! CSVReader(string: csvStudents!, hasHeaderRow: true)
-                    while let studentRow = studentArray.next() {
-                        Student.addStudent(firstName: studentRow[0], lastName: studentRow[1], email: studentRow[2], course: course, context: viewContext)
-                    }
-                    fileUrl.stopAccessingSecurityScopedResource()
-                }
-                
-                self.presentationMode.wrappedValue.dismiss()
-            
-            }
-            catch {
-                print("Error")
-            }
+            course.addCSVStudent(res: res)
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
  
     func saveButtonPressed() {
-        Student.addStudent(firstName: studentFirstName, lastName: studentLastName, email: email, course: course, context: viewContext)
+        course.addStudent(firstName: studentFirstName, lastName: studentLastName, email: email)
         presentationMode.wrappedValue.dismiss()
     }
 }
 
 //----------------------------Preview-------------------------------
 
-struct AddStudent_Previews: PreviewProvider {
+/*struct AddStudent_Previews: PreviewProvider {
     static var previewCourse : Course {
         let course = Course(context: PersistenceController.preview.container.viewContext)
         course.subject = "Mathe"
@@ -79,4 +63,4 @@ struct AddStudent_Previews: PreviewProvider {
     static var previews: some View {
         AddStudent(course: previewCourse).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
-}
+}*/

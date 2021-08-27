@@ -12,6 +12,7 @@ struct EditStudentsView: View {
     @ObservedObject var course: CourseEditViewModel.CourseVM
     @State private var showEditStudentSheet = false
     @State private var selectedStudent: Student.DataModel? = nil
+    @State var showAddStudent = false
     
     
     
@@ -43,11 +44,24 @@ struct EditStudentsView: View {
                 })
                 
             }
-        }.navigationTitle(course.title)
+        }
         .sheet(item: $selectedStudent, content: { student in
             SingleStudent(viewTitle: "Schüler bearbeiten", student: student) { newStudent in
                 course.updateStudent(for: newStudent)
             }
+        })
+        .navigationTitle(course.title)
+        .toolbar(content: {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                Button(action: {
+                    showAddStudent = true
+                }, label: {
+                    Image(systemName: "plus.circle")
+                })
+            }
+        })
+        .sheet(isPresented: $showAddStudent, content: {
+            AddStudent(course: course)
         })
     }
     

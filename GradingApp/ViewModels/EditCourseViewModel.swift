@@ -20,6 +20,7 @@
 
 import Foundation
 import CoreData
+import CSV
 
 class CourseEditViewModel: ObservableObject {
     @Published var courses: [CourseVM] = []
@@ -61,6 +62,13 @@ class CourseEditViewModel: ObservableObject {
                             }
                         }
                     }
+                    for student in courseVM.students {
+                        if !courseVM.fetchedStudents.contains(where: { (key: UUID, _ :Student) in
+                            key == student.id
+                        }) {
+                            Student.addStudent(student: student, course: course, context: context)
+                        }
+                    }
                 }
             } else {
                 context.delete(course)
@@ -77,8 +85,8 @@ class CourseEditViewModel: ObservableObject {
     }
     
     func deleteCoursesEdit (for course: CourseEditViewModel.CourseVM) {
-    course.deleted.toggle()
-    self.objectWillChange.send()
+        course.deleted.toggle()
+        self.objectWillChange.send()
     }
     
     class CourseVM : ObservableObject, Identifiable{
@@ -126,6 +134,29 @@ class CourseEditViewModel: ObservableObject {
                 fatalError("Something went terribly wrong while trying to delete a student")
             }
             students[studentIndex].toggleDelete()
+        }
+        
+        func addStudent (firstName: String, lastName: String, email: String) {
+            let newStudent = Student.DataModel(firstName: firstName, lastName: lastName, email: email)
+            students.append(newStudent)
+        }
+        
+        func addCSVStudent(res: Result<URL,Error>){
+            do {
+                let fileUrl = try res.get()
+                if fileUrl.startAccessingSecurityScopedResource() {
+                    let csvStudentsData = try! Data(contentsOf: fileUrl)
+                    let csvStudents = String(data: csvStudentsData, encoding: .utf8)
+                    let studentArray = try! CSVReader(string: csvStudents!, hasHeaderRow: true)
+                    while let studentRow = studentArray.next() {
+                        addStudent(firstName: studentRow[0], lastName: studentRow[1], email: studentRow[2])
+                    }
+                    fileUrl.stopAccessingSecurityScopedResource()
+                }
+            }
+            catch {
+                print("Error")
+            }
         }
     }
 }

@@ -48,6 +48,9 @@ extension Student {
         _ = Student(firstName: firstName, lastName: lastName, email: email, course: course, context: context)
         context.saveCustom()
     }
+    static func addStudent(student: DataModel,course: Course, context: NSManagedObjectContext){
+        addStudent(firstName: student.firstName, lastName: student.lastName, email: student.email, course: course, context: context)
+    }
 }
 
 

@@ -40,13 +40,6 @@ struct CourseTabView: View {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")
             }
-            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                Button(action: {
-                    showAddStudent = true
-                }, label: {
-                    Image(systemName: "plus.circle")
-                })
-            }
             ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
                 Button(action: {
                     showAddMultipleGrades = true
@@ -56,7 +49,7 @@ struct CourseTabView: View {
             }
         })
         .sheet(isPresented: $showAddStudent, content: {
-            AddStudent(course: course)
+           // AddStudent(course: course)
         })
         .fullScreenCover(isPresented: $showAddMultipleGrades, content: {
             AddMultipleGradesView(course: course)
