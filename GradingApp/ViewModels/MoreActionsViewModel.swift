@@ -8,17 +8,18 @@
 import Foundation
 import CoreData
 
+struct KeyValueConstants {
+    static let dateFormat = "dd.MM.yyyy"
+    static let firstHalf = "dateFirstHalf"
+    static let secondHalf = "dateSecondHalf"
+    static let selectedHalf = "selectedHalf"
+}
+
 class MoreActionsViewModel: ObservableObject {
     
     @Published var dateFirstHalf: Date
     @Published var dateSecondHalf: Date
     @Published var half: HalfType
-    
-    private let dateFormat = "dd.MM.yyyy"
-    
-    private let firstHalfKey = "dateFirstHalf"
-    private let secondHalfKey = "dateSecondHalf"
-    private let selectedHalfKey = "selectedHalf"
     
     var selectedHalf : Int {
         get {
@@ -30,17 +31,17 @@ class MoreActionsViewModel: ObservableObject {
     }
     
     init() {
-        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: selectedHalfKey) == 0 ? .firstHalf : .secondHalf
+        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
         
         let df = DateFormatter()
-        df.dateFormat = dateFormat
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: firstHalfKey) {
+        df.dateFormat = KeyValueConstants.dateFormat
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.firstHalf) {
             self.dateFirstHalf = df.date(from: date)!
         } else {
             self.dateFirstHalf = Date()
         }
         
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: secondHalfKey) {
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.secondHalf) {
             self.dateSecondHalf = df.date(from: date)!
         } else {
             self.dateSecondHalf = Date()
@@ -65,10 +66,10 @@ class MoreActionsViewModel: ObservableObject {
     
     func done() {
         let df = DateFormatter()
-        df.dateFormat = dateFormat
-        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateFirstHalf), forKey: firstHalfKey)
-        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateSecondHalf), forKey: secondHalfKey)
-        NSUbiquitousKeyValueStore.default.set(self.half == .firstHalf ? 0 : 1, forKey: selectedHalfKey)
+        df.dateFormat = KeyValueConstants.dateFormat
+        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateFirstHalf), forKey: KeyValueConstants.firstHalf)
+        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateSecondHalf), forKey: KeyValueConstants.secondHalf)
+        NSUbiquitousKeyValueStore.default.set(self.half == .firstHalf ? 0 : 1, forKey: KeyValueConstants.selectedHalf)
         NSUbiquitousKeyValueStore.default.synchronize()
     }
     
@@ -85,17 +86,17 @@ class MoreActionsViewModel: ObservableObject {
     
     @objc func onUbiquitousKeyValueStoreDidChangeExternally(notification:Notification)
     {
-        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: selectedHalfKey) == 0 ? .firstHalf : .secondHalf
+        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
         
         let df = DateFormatter()
         df.dateFormat = dateFormat
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: firstHalfKey) {
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.firstHalf) {
             self.dateFirstHalf = df.date(from: date)!
         } else {
             self.dateFirstHalf = Date()
         }
         
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: secondHalfKey) {
+        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.secondHalf) {
             self.dateSecondHalf = df.date(from: date)!
         } else {
             self.dateSecondHalf = Date()
