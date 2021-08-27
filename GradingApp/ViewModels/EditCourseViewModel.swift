@@ -35,7 +35,7 @@ class CourseEditViewModel: ObservableObject {
         let fetchedData = PersistenceController.fetchData(context: context, fetchRequest: Course.fetchAll())
         self.fetchedCourses = Dictionary(uniqueKeysWithValues: fetchedData.map {(UUID(), $0)})
         self.courses = fetchedCourses.map({ (key: UUID, value: Course) in
-            CourseVM(id: key, name: value.name, hidden: value.hidden, ageGroup: value.ageGroup, oralWeight: value.oralWeight, deleted: false,
+            CourseVM(id: key, name: value.name, subject: value.subject, hidden: value.hidden, ageGroup: value.ageGroup, oralWeight: value.oralWeight, deleted: false,
                      fetchedStudents: Dictionary(uniqueKeysWithValues: value.students.map {(UUID(), $0)}))
         }).sorted(by: { $0.name < $1.name })
     }
@@ -47,6 +47,7 @@ class CourseEditViewModel: ObservableObject {
                     context.delete(course)
                 } else {
                     course.name = courseVM.name
+                    course.subject = courseVM.subject
                     course.hidden = courseVM.hidden
                     course.ageGroup = courseVM.ageGroup
                     course.oralWeight = courseVM.oralWeight
@@ -83,15 +84,20 @@ class CourseEditViewModel: ObservableObject {
     class CourseVM : ObservableObject, Identifiable{
         var id: UUID
         @Published var name: String
+        @Published var subject: String
         @Published var hidden: Bool
         @Published var deleted: Bool
         @Published var oralWeight: Float
         @Published var ageGroup: AgeGroup
+        var title: String {
+            subject + " " + name
+        }
         private(set) var fetchedStudents: [UUID : Student] // SHOULD NEVER BE WRITABLE FROM THE OUTSIDE
         @Published var students: [Student.DataModel]
-        init(id: UUID = UUID(), name: String, hidden: Bool, ageGroup: AgeGroup, oralWeight: Float, deleted: Bool, fetchedStudents: [UUID : Student]) {
+        init(id: UUID = UUID(), name: String, subject: String, hidden: Bool, ageGroup: AgeGroup, oralWeight: Float, deleted: Bool, fetchedStudents: [UUID : Student]) {
             self.id = id
             self.name = name
+            self.subject = subject
             self.hidden = hidden
             self.deleted = deleted
             self.ageGroup = ageGroup

@@ -25,7 +25,7 @@ struct CourseListView: View {
                 NavigationLink(
                     destination: CourseTabView(course: course),
                     label: {
-                        Text(course.name).font(.title2)
+                        Text(course.title).font(.title2)
                     })
             }
             .padding(.top)
