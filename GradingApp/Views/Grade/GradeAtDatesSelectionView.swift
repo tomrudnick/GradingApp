@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct GradeAtDatesSelectionView: View {
+    @Environment(\.halfYear) var halfYear
     @State private var selectedGradeType: Int = 0
     private var gradeType : GradeType {
         selectedGradeType == 0 ? GradeType.oral : GradeType.written
     }
     
     @ObservedObject var course: Course
-    
-    
+
     var body: some View {
         VStack {
             Picker(selection: $selectedGradeType, label: Text("")) {
                 Text("Oral").tag(0)
                 Text("Written").tag(1)
             }.pickerStyle(SegmentedPickerStyle())
-            GradeAtDatesView(course: course, gradeType: gradeType)
+            GradeAtDatesView(course: course, gradeType: gradeType, half: halfYear)
         }
     }
 }

@@ -20,15 +20,20 @@ struct CourseListView: View {
     @State var showMoreActions = false
     
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
+    @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
     
     var body: some View {
         NavigationView {
             List(courses) { course in
                 NavigationLink(
-                    destination: CourseTabView(course: course),
+                    destination: CourseTabView(course: course).environment(\.halfYear, selectedHalfYearVM.activeHalf),
                     label: {
                         Text(course.title).font(.title2)
-                    })
+                    }
+                )
+            }
+            .onAppear {
+                selectedHalfYearVM.fetchValue()
             }
             .alert(isPresented: $showAlert, content: {
                 Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
@@ -38,6 +43,9 @@ struct CourseListView: View {
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
                 MoreActionsView().environment(\.managedObjectContext, viewContext)
+                    .onDisappear {
+                        selectedHalfYearVM.fetchValue()
+                    }
             })
             .fullScreenCover(isPresented: $showEditCourses) {
                 NavigationView {

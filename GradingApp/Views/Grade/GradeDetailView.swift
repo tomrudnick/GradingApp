@@ -9,7 +9,10 @@ import SwiftUI
 
 struct GradeDetailView: View {
     
+    @Environment(\.halfYear) var halfYear
+    
     @ObservedObject var student: Student
+    
     var gradeType: GradeType
     
     
@@ -17,7 +20,7 @@ struct GradeDetailView: View {
         VStack {
             List {
                 ForEach(student.gradesArr) { grade in
-                    if grade.type == gradeType {
+                    if grade.type == gradeType && grade.half == halfYear {
                         NavigationLink(destination: EditSingleGradeView(student: student, grade: grade)) {
                             HStack {
                                 VStack {
@@ -48,7 +51,7 @@ struct GradeDetailView_Previews: PreviewProvider {
         let student = (previewData(context: PersistenceController.preview.container.viewContext).first(where: {$0.name == "Mathe 10FLS"})?.studentsArr.first!)!
         
         NavigationView {
-            GradeDetailView(student: student , gradeType: .oral)
+            GradeDetailView(student: student , gradeType: .oral).environment(\.halfYear, .firstHalf)
         }
     }
 }

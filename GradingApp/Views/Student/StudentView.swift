@@ -11,6 +11,8 @@ import SwiftUICharts
 struct StudentView: View {
     
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.halfYear) private var halfYear
+    @Environment(\.managedObjectContext) private var viewContext
     
     @ObservedObject var student: Student
     
@@ -38,7 +40,7 @@ struct StudentView: View {
                 ChartLabel("Mündlich", type: .subTitle)
                 LineChart()
             }
-            .data(student.gradesArr.filter({$0.type == .oral}).map({Double(Int($0.value))}))
+            .data(student.gradesArr.filter({$0.type == .oral && $0.half == halfYear}).map({Double(Int($0.value))}))
             .chartStyle(ChartStyle(backgroundColor: .white, foregroundColor: [ColorGradient(.purple, .blue)]))
             .padding()
             //LineChartView(data: student.gradesArr.filter({$0.type == .oral}).map({Double(Int($0.value))}), title: "Mündlich", form: ChartForm.extraLarge)
@@ -57,6 +59,8 @@ struct StudentView: View {
         })
         .sheet(isPresented: $showAddGradeSheet, content: {
             AddSingleGradeView(student: student)
+                .environment(\.halfYear, halfYear)
+                .environment(\.managedObjectContext, viewContext)
         })
         
         //.navigationBarItems(trailing: addGradeButton)
