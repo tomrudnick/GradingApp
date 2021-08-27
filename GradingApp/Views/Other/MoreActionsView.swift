@@ -13,21 +13,38 @@ struct MoreActionsView: View {
     @State private var showingExporter = false
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
+    @StateObject var viewModel = MoreActionsViewModel()
      
     var body: some View {
         NavigationView {
             Form {
-                Section {
+                Section(header: Text("Backup / Import")) {
                     Button {
                         self.showingExporter = true
                     } label: {
                         Text("Backup")
                     }
                 }
+                
+                Section(header: Text("Halbjahres Einstellung")) {
+                    
+                    DatePicker("Start 1. Halbjahr", selection: $viewModel.dateFirstHalf, displayedComponents: [.date])
+                        .id(viewModel.dateFirstHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
+                        .environment(\.locale, Locale.init(identifier: "de"))
+                
+                
+                    DatePicker("Start 2. Halbjahr", selection: $viewModel.dateSecondHalf, displayedComponents: [.date])
+                        .id(viewModel.dateSecondHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
+                        .environment(\.locale, Locale.init(identifier: "de"))
+                    
+                    //Picker(selection: $viewModel.selectedHalf, label: <#T##_#>, content: <#T##() -> _#>)
+                    
+                }
             }.navigationBarTitle("Weiteres...", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button {
+                        viewModel.done()
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Schließen")
@@ -37,7 +54,7 @@ struct MoreActionsView: View {
             }
             
         }
-        .fileExporter(isPresented: $showingExporter, documents: getDocuments(), contentType: .commaSeparatedText) { result in
+        .fileExporter(isPresented: $showingExporter, documents: viewModel.getDocuments(viewContext: viewContext), contentType: .commaSeparatedText) { result in
             switch result {
             case .success(let url):
                 print("Saved to \(url)")
@@ -47,19 +64,7 @@ struct MoreActionsView: View {
         }
     }
     
-    func getDocuments() -> [CSVFile] {
-        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
-        var files: [CSVFile] = []
-        for course in fetchedCourses {
-            let oralRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 0, course))
-            let oralGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: oralRequest)
-            files.append(CSVFile(course: course, grades: oralGrades, fileName: "\(course.name)_muendlich"))
-            let writtenRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 1, course))
-            let writtenGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: writtenRequest)
-            files.append(CSVFile(course: course, grades: writtenGrades, fileName: "\(course.name)_schriftlich"))
-        }
-        return files
-    }
+    
     
 }
 
