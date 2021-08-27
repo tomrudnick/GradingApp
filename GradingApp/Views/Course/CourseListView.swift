@@ -19,6 +19,8 @@ struct CourseListView: View {
     @State var showAddCourse = false
     @State var showMoreActions = false
     
+    @State var showAlert = !MoreActionsViewModel().halfCorrect()
+    
     var body: some View {
         NavigationView {
             List(courses) { course in
@@ -28,6 +30,9 @@ struct CourseListView: View {
                         Text(course.title).font(.title2)
                     })
             }
+            .alert(isPresented: $showAlert, content: {
+                Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
+            })
             .padding(.top)
             .navigationTitle(Text("Kurse"))
             .listStyle(PlainListStyle())
