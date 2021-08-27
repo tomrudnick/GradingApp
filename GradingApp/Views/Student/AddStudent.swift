@@ -68,7 +68,8 @@ struct AddStudent: View {
 struct AddStudent_Previews: PreviewProvider {
     static var previewCourse : Course {
         let course = Course(context: PersistenceController.preview.container.viewContext)
-        course.name = "Mathe 10F"
+        course.subject = "Mathe"
+        course.name = "11D"
         return course
     }
     static var previews: some View {

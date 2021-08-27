@@ -22,7 +22,7 @@ struct CustomTextfieldView: View {
             .padding(.horizontal)
     }
 }
-
+// -------------------------Preview-----------------------------------------------------
 struct CustomTextfieldView_Previews: PreviewProvider {
     
     @State static var testBinding = ""

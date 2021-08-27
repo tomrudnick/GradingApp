@@ -4,6 +4,7 @@
         <attribute name="ageGroup_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
+        <attribute name="subject_" optional="YES" attributeType="String"/>
         <attribute name="weight_" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="students_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
     </entity>
@@ -24,7 +25,7 @@
         <relationship name="grades_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Grade" inverseName="student" inverseEntity="Grade"/>
     </entity>
     <elements>
-        <element name="Course" positionX="-336.328125" positionY="-116.09375" width="128" height="118"/>
+        <element name="Course" positionX="-336.328125" positionY="-116.09375" width="128" height="119"/>
         <element name="Grade" positionX="52.24609375" positionY="-131.0859375" width="128" height="134"/>
         <element name="Student" positionX="-134.28125" positionY="-146.15625" width="128" height="104"/>
     </elements>

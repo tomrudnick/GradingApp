@@ -35,7 +35,7 @@ struct CourseTabView: View {
             
         }
         //.edgesIgnoringSafeArea(.top)
-        .navigationBarTitle(course.name, displayMode: .inline)
+        .navigationBarTitle(course.title, displayMode: .inline)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")

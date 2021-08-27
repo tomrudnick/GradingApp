@@ -10,7 +10,7 @@ import CoreData
 import CSV
 import SwiftUI
 
-let expampleCourseNames = ["Mathe 6C", "Mathe 7F", "Mathe 10FLS"]
+let expampleCourseNames = ["6C", "7F", "10FLS"]
 let csvStudents = """
 Vorname, Nachname, Email
 Mathe 6C,Marit,Abken,marit-theresa.abken@nige.de,3,3,2,2,2-,_S_,4,3
@@ -98,6 +98,7 @@ func previewData (context: NSManagedObjectContext) -> [Course] {
     var courses: [Course] = []
     for course in expampleCourseNames {
         let newCourse = Course(context: context)
+        newCourse.subject = "Mathe"
         newCourse.name = course
         courses.append(newCourse)
     }

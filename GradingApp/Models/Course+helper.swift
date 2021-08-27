@@ -15,6 +15,14 @@ extension Course {
         set { name_ = newValue}
     }
     
+    var subject: String {
+        get { subject_ ?? "" }
+        set { subject_ = newValue}
+    }
+    
+    var title: String {
+        get {subject + " " + name}
+    }
     var oralWeight: Float {
         get { Float(weight_) }
         set { weight_ = Int32(newValue)}
@@ -44,28 +52,29 @@ public enum AgeGroup : Int16 {
 
 
 extension Course {
-    convenience init(name: String, hidden: Bool = false, context: NSManagedObjectContext) {
+    convenience init(name: String, subject: String, hidden: Bool = false, context: NSManagedObjectContext) {
         self.init(context: context)
         self.name = name
+        self.subject = subject
         self.hidden = hidden
     }
     
-    convenience init(name: String, hidden: Bool = false, ageGroup: AgeGroup, oralWeight: Float, context: NSManagedObjectContext) {
-        self.init(name: name, hidden: hidden, context: context)
+    convenience init(name: String, subject: String, hidden: Bool = false, ageGroup: AgeGroup, oralWeight: Float, context: NSManagedObjectContext) {
+        self.init(name: name, subject: subject, hidden: hidden, context: context)
         self.ageGroup = ageGroup
         self.oralWeight = oralWeight
     }
     
     
-    static func addCourse(courseName: String, oralWeight: Float, ageGroup: AgeGroup, hidden: Bool = false, context: NSManagedObjectContext) {
-        _ = Course(name: courseName, hidden: hidden, ageGroup: ageGroup, oralWeight: oralWeight, context: context)
+    static func addCourse(courseName: String, courseSubject: String, oralWeight: Float, ageGroup: AgeGroup, hidden: Bool = false, context: NSManagedObjectContext) {
+        _ = Course(name: courseName, subject: courseSubject, hidden: hidden, ageGroup: ageGroup, oralWeight: oralWeight, context: context)
         context.saveCustom()
     }
     
     
     static func fetchAll() -> NSFetchRequest<Course> {
         let request = NSFetchRequest<Course>(entityName: "Course")
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Course.name_, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Course.subject_, ascending: true)]
         return request
     }
     

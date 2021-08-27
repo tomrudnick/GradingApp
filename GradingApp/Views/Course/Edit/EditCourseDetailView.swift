@@ -16,13 +16,13 @@ struct EditCourseDetailView: View {
                 course.hidden.toggle()
             }
             if course.deleted {
-                Text(course.name).strikethrough()
+                Text(course.title).strikethrough()
                     .font(.title2)
                     .padding(.bottom)
                     .padding(.top)
             }
             else{
-                Text(course.name)
+                Text(course.title)
                     .font(.title2)
                     .padding(.bottom)
                     .padding(.top)

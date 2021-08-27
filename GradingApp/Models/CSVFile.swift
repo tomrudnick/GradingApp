@@ -30,7 +30,7 @@ struct CSVFile: FileDocument {
         
         for student in course.studentsArr {
             csv.beginNewRow()
-            try! csv.write(field: course.name)
+            try! csv.write(field: course.title)
             try! csv.write(field: student.firstName)
             try! csv.write(field: student.lastName)
             try! csv.write(field: student.email)

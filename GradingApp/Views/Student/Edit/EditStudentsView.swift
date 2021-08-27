@@ -43,7 +43,7 @@ struct EditStudentsView: View {
                 })
                 
             }
-        }.navigationTitle(course.name)
+        }.navigationTitle(course.title)
         .sheet(item: $selectedStudent, content: { student in
             SingleStudent(viewTitle: "Schüler bearbeiten", student: student) { newStudent in
                 course.updateStudent(for: newStudent)
