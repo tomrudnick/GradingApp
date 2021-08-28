@@ -71,23 +71,12 @@ extension Course {
         self.hidden = hidden
     }
     
-    convenience init(name: String, subject: String, hidden: Bool = false, ageGroup: AgeGroup, oralWeight: Float, context: NSManagedObjectContext) {
-        self.init(name: name, subject: subject, hidden: hidden, context: context)
-        self.ageGroup = ageGroup
-        self.oralWeight = oralWeight
-    }
     
     convenience init(name: String, subject: String, hidden: Bool = false, ageGroup: AgeGroup, type: CourseType, oralWeight: Float, context: NSManagedObjectContext) {
         self.init(name: name, subject: subject, hidden: hidden, context: context)
         self.type = type
         self.ageGroup = ageGroup
         self.oralWeight = oralWeight
-    }
-    
-    
-    static func addCourse(courseName: String, courseSubject: String, oralWeight: Float, ageGroup: AgeGroup, hidden: Bool = false, context: NSManagedObjectContext) {
-        _ = Course(name: courseName, subject: courseSubject, hidden: hidden, ageGroup: ageGroup, oralWeight: oralWeight, context: context)
-        context.saveCustom()
     }
     
     

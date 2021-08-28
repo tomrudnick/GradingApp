@@ -16,12 +16,13 @@ struct EditCourseView: View {
     
     
     var body: some View {
-        SingleCourse(viewTitle: "Kurs bearbeiten", courseName: course.name, courseSubject: course.subject, courseAgeGroup: course.ageGroup, courseOralWeight: course.oralWeight ) {  (name, subject, weight, ageGroup) in
+        SingleCourse(viewTitle: "Kurs bearbeiten", courseName: course.name, courseSubject: course.subject, courseAgeGroup: course.ageGroup, courseType: course.type, courseOralWeight: course.oralWeight) {  (name, subject, weight, ageGroup, type) in
             course.name = name
             course.subject = subject
             course.ageGroup = ageGroup
             course.oralWeight = weight
             course.ageGroup = ageGroup
+            course.type = type
         }
     }
    
