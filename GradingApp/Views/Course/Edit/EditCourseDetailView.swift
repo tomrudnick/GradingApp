@@ -20,12 +20,17 @@ struct EditCourseDetailView: View {
                     .font(.title2)
                     .padding(.bottom)
                     .padding(.top)
+                Text("(" + String(course.students.count) + ")")
+                    .font(.footnote)
+                    .strikethrough()
             }
             else{
                 Text(course.title)
                     .font(.title2)
                     .padding(.bottom)
                     .padding(.top)
+                Text("(" + String(course.students.count) + ")")
+                    .font(.footnote)
             }
         }
         
