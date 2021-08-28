@@ -50,9 +50,6 @@ struct CourseTabView: View {
                 })
             }
         })
-        .sheet(isPresented: $showAddStudent, content: {
-           // AddStudent(course: course)
-        })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in
             view.fullScreenCover(isPresented: $showAddMultipleGrades, content: {
                 AddMultipleGradesView(course: course)
