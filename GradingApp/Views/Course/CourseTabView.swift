@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CourseTabView: View {
     
-    @Environment(\.halfYear) var halfYear
+    @Environment(\.currentHalfYear) var halfYear
     
     @ObservedObject var course: Course
     @State var showAddStudent = false

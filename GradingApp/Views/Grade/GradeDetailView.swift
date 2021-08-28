@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GradeDetailView: View {
     
-    @Environment(\.halfYear) var halfYear
+    @Environment(\.currentHalfYear) var halfYear
     
     @ObservedObject var student: Student
     
@@ -39,7 +39,7 @@ struct GradeDetailView: View {
                 }
             }
         }
-        .navigationTitle(Text(gradeType == .oral ? "Mündliche Noten \(student.firstName) \(student.lastName)": "Schriftliche Noten \(student.firstName) \(student.lastName)"))
+        .navigationTitle(Text("\(halfYear == .firstHalf ? "1. " : "2. ")\(gradeType == .oral ? "Mündliche Noten" : "Schrifltiche Note") \(student.firstName) \(student.lastName)"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -51,7 +51,7 @@ struct GradeDetailView_Previews: PreviewProvider {
         let student = (previewData(context: PersistenceController.preview.container.viewContext).first(where: {$0.name == "Mathe 10FLS"})?.studentsArr.first!)!
         
         NavigationView {
-            GradeDetailView(student: student , gradeType: .oral).environment(\.halfYear, .firstHalf)
+            GradeDetailView(student: student , gradeType: .oral).environment(\.currentHalfYear, .firstHalf)
         }
     }
 }

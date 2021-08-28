@@ -10,7 +10,7 @@ import SwiftUI
 struct AddSingleGradeView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.halfYear) var halfYear
+    @Environment(\.currentHalfYear) var halfYear
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var student: Student

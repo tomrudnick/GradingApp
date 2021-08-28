@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GradeAtDatesSelectionView: View {
-    @Environment(\.halfYear) var halfYear
+    @Environment(\.currentHalfYear) var halfYear
     @State private var selectedGradeType: Int = 0
     private var gradeType : GradeType {
         selectedGradeType == 0 ? GradeType.oral : GradeType.written

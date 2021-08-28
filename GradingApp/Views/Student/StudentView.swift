@@ -11,7 +11,7 @@ import SwiftUICharts
 struct StudentView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.halfYear) private var halfYear
+    @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     
     @ObservedObject var student: Student
@@ -48,7 +48,7 @@ struct StudentView: View {
         }
         .padding()
         .padding(.trailing, 5.0)
-        .navigationTitle(Text("\(student.firstName) \(student.lastName)"))
+        .navigationTitle(Text("\(halfYear == .firstHalf ? "1. " : "2. ")\(student.firstName) \(student.lastName)"))
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")
@@ -59,7 +59,7 @@ struct StudentView: View {
         })
         .sheet(isPresented: $showAddGradeSheet, content: {
             AddSingleGradeView(student: student)
-                .environment(\.halfYear, halfYear)
+                .environment(\.currentHalfYear, halfYear)
                 .environment(\.managedObjectContext, viewContext)
         })
         

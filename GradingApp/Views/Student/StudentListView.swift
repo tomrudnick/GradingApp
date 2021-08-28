@@ -10,7 +10,7 @@ import SwiftUI
 struct StudentListView: View {
     
     @ObservedObject var course: Course
-    
+    @Environment(\.currentHalfYear) var halfYear
 
     var body: some View {
         List {
