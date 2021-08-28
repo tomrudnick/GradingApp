@@ -29,6 +29,7 @@ struct CourseListView: View {
                     destination: CourseTabView(course: course).environment(\.halfYear, selectedHalfYearVM.activeHalf),
                     label: {
                         Text(course.title).font(.title2)
+                        Text("(" + String(course.students.count) + ")").font(.footnote)
                     }
                 )
             }
