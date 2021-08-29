@@ -31,6 +31,8 @@ extension Grade {
                                                           "-" : -1
                                                           ]
     
+    private(set) static var lowerSchoolTranscriptGrades = ["1", "2", "3", "4", "5", "6"]
+    
     private(set) static var lowerSchoolGrades = ["1+", "1", "1-",
                                                  "2+", "2", "2-",
                                                  "3+", "3", "3-",
