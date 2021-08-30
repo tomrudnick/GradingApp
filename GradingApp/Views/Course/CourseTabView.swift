@@ -9,12 +9,13 @@ import SwiftUI
 
 struct CourseTabView: View {
     
-    @Environment(\.halfYear) var halfYear
+    @Environment(\.currentHalfYear) var halfYear
     
     @ObservedObject var course: Course
     @State var showAddStudent = false
     @State var showAddMultipleGrades = false
     
+    @State var showTranscriptSheet = false
     
     var body: some View {
         TabView {
@@ -37,17 +38,37 @@ struct CourseTabView: View {
             
         }
         //.edgesIgnoringSafeArea(.top)
-        .navigationBarTitle("\(course.title) - \(halfYear == .firstHalf ? "1. Halbjahr" : "2. Halbjahr")", displayMode: .inline)
+        .navigationBarTitle("\(course.title) - \(halfYear == .firstHalf ? "1. HJ" : "2. HJ")", displayMode: .inline)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")
             }
-            ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                Menu {
+                    Text("Emails versenden")
+                    Button {
+                        self.showTranscriptSheet.toggle()
+                    } label: {
+                        Text("Zeugnisnoten einstellen")
+                    }
+
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .imageScale(.large)
+                }
+            }
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Button(action: {
                     showAddMultipleGrades = true
                 }, label: {
-                    Text("Note")
+                    Image(systemName: "plus.circle")
                 })
+                
+            }
+        })
+        .fullScreenCover(isPresented: $showTranscriptSheet, content: {
+            if course.type == .holeYear {
+                StudentTranscriptGradesFullYearView(course: course)
             }
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in

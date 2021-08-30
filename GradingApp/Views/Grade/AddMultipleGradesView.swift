@@ -12,7 +12,7 @@ struct AddMultipleGradesView: View {
     @ObservedObject var course: Course
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.halfYear) var halfYear
+    @Environment(\.currentHalfYear) var halfYear
     
     @State private var gradeDate: Date = Date()
     @State private var selectedGradeType: Int = 0

@@ -26,7 +26,7 @@ struct CourseListView: View {
         NavigationView {
             List(courses) { course in
                 NavigationLink(
-                    destination: CourseTabView(course: course).environment(\.halfYear, selectedHalfYearVM.activeHalf),
+                    destination: CourseTabView(course: course),
                     label: {
                         Text(course.title).font(.title2)
                         Text("(" + String(course.students.count) + ")").font(.footnote)
@@ -40,7 +40,7 @@ struct CourseListView: View {
                 Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
             })
             .padding(.top)
-            .navigationTitle(Text("Kurse"))
+            .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
                 MoreActionsView().environment(\.managedObjectContext, viewContext)
@@ -68,6 +68,7 @@ struct CourseListView: View {
                 }
             }
         }
+        .environment(\.currentHalfYear, selectedHalfYearVM.activeHalf)
     }
     
     var addButton : some View {

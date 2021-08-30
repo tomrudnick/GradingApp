@@ -36,7 +36,7 @@ class CourseEditViewModel: ObservableObject {
         let fetchedData = PersistenceController.fetchData(context: context, fetchRequest: Course.fetchAll())
         self.fetchedCourses = Dictionary(uniqueKeysWithValues: fetchedData.map {(UUID(), $0)})
         self.courses = fetchedCourses.map({ (key: UUID, value: Course) in
-            CourseVM(id: key, name: value.name, subject: value.subject, hidden: value.hidden, ageGroup: value.ageGroup, oralWeight: value.oralWeight, deleted: false,
+            CourseVM(id: key, name: value.name, subject: value.subject, hidden: value.hidden, ageGroup: value.ageGroup, oralWeight: value.oralWeight, type: value.type, deleted: false,
                      fetchedStudents: Dictionary(uniqueKeysWithValues: value.students.map {(UUID(), $0)}))
         }).sorted(by: { $0.name < $1.name })
     }
@@ -52,6 +52,7 @@ class CourseEditViewModel: ObservableObject {
                     course.hidden = courseVM.hidden
                     course.ageGroup = courseVM.ageGroup
                     course.oralWeight = courseVM.oralWeight
+                    course.type = courseVM.type
                     //maybe extract this part into CourseVM Model
                     for (id, student) in courseVM.fetchedStudents {
                         if let studentModel = courseVM.students.first(where: {$0.id == id}) { //this should probably never fail (untested) (maybe replace with guard)
@@ -99,12 +100,13 @@ class CourseEditViewModel: ObservableObject {
         @Published var deleted: Bool
         @Published var oralWeight: Float
         @Published var ageGroup: AgeGroup
+        @Published var type: CourseType
         var title: String {
             subject + " " + name
         }
         private(set) var fetchedStudents: [UUID : Student] // SHOULD NEVER BE WRITABLE FROM THE OUTSIDE
         @Published var students: [Student.DataModel]
-        init(id: UUID = UUID(), name: String, subject: String, hidden: Bool, ageGroup: AgeGroup, oralWeight: Float, deleted: Bool, fetchedStudents: [UUID : Student]) {
+        init(id: UUID = UUID(), name: String, subject: String, hidden: Bool, ageGroup: AgeGroup, oralWeight: Float, type: CourseType, deleted: Bool, fetchedStudents: [UUID : Student]) {
             self.id = id
             self.name = name
             self.subject = subject
@@ -112,6 +114,7 @@ class CourseEditViewModel: ObservableObject {
             self.deleted = deleted
             self.ageGroup = ageGroup
             self.oralWeight = oralWeight
+            self.type = type
             self.fetchedStudents = fetchedStudents
             self.students = self.fetchedStudents.map { (key: UUID, value: Student) in
                 Student.DataModel(id: key, firstName: value.firstName, lastName: value.lastName, email: value.email)

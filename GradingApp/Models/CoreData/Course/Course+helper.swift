@@ -38,6 +38,11 @@ extension Course {
         set { ageGroup_ = newValue.rawValue }
     }
     
+    var type: CourseType {
+        get { CourseType(rawValue: type_)!}
+        set { type_ = newValue.rawValue }
+    }
+    
     var studentsArr: Array<Student> {
         get { students.sorted { $0.firstName < $1.firstName }.sorted{ $0.lastName < $1.lastName } }
     }
@@ -50,6 +55,13 @@ public enum AgeGroup : Int16 {
     case upper = 1
 }
 
+@objc
+public enum CourseType: Int16 {
+    case holeYear = 0
+    case firstHalf = 1
+    case secondHalf = 2
+}
+
 
 extension Course {
     convenience init(name: String, subject: String, hidden: Bool = false, context: NSManagedObjectContext) {
@@ -59,18 +71,19 @@ extension Course {
         self.hidden = hidden
     }
     
-    convenience init(name: String, subject: String, hidden: Bool = false, ageGroup: AgeGroup, oralWeight: Float, context: NSManagedObjectContext) {
+    
+    convenience init(name: String, subject: String, hidden: Bool = false, ageGroup: AgeGroup, type: CourseType, oralWeight: Float, context: NSManagedObjectContext) {
         self.init(name: name, subject: subject, hidden: hidden, context: context)
+        self.type = type
         self.ageGroup = ageGroup
         self.oralWeight = oralWeight
     }
     
     
-    static func addCourse(courseName: String, courseSubject: String, oralWeight: Float, ageGroup: AgeGroup, hidden: Bool = false, context: NSManagedObjectContext) {
-        _ = Course(name: courseName, subject: courseSubject, hidden: hidden, ageGroup: ageGroup, oralWeight: oralWeight, context: context)
+    static func addCourse(courseName: String, courseSubject: String, oralWeight: Float, ageGroup: AgeGroup, type: CourseType, hidden: Bool = false, context: NSManagedObjectContext) {
+        _ = Course(name: courseName, subject: courseSubject, hidden: hidden, ageGroup: ageGroup, type: type, oralWeight: oralWeight, context: context)
         context.saveCustom()
     }
-    
     
     static func fetchAll() -> NSFetchRequest<Course> {
         let request = NSFetchRequest<Course>(entityName: "Course")

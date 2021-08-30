@@ -13,21 +13,25 @@ struct SingleCourse: View {
     
     @State var courseName: String
     @State private var courseSubject: String
-    let subjects = ["Mathe", "Physik", "Chemie", "Informatik", "Seminarfach"]
+    
     @State var selectedAgeGroup: AgeGroup
     @State var selectedWeight: Float
+    @State var selectedType: CourseType
     
+    
+    let subjects = ["Mathe", "Physik", "Chemie", "Informatik", "Seminarfach"]
     let viewTitle: String
-    let saveHandler: (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup) -> ()
+    let saveHandler: (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup, _ type: CourseType) -> ()
     
     
-    init(viewTitle: String, courseName: String = "", courseSubject: String = "", courseAgeGroup: AgeGroup = .lower, courseOralWeight: Float = 50, saveHandler : @escaping (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup) -> ()) {
+    init(viewTitle: String, courseName: String = "", courseSubject: String = "", courseAgeGroup: AgeGroup = .lower, courseType: CourseType = .holeYear, courseOralWeight: Float = 50, saveHandler : @escaping (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup, _ type: CourseType) -> ()) {
         self.viewTitle = viewTitle
         self.saveHandler = saveHandler
         self._courseName = State(initialValue: courseName)
         self._courseSubject = State(initialValue: courseSubject)
         self._selectedAgeGroup = State(initialValue: courseAgeGroup)
         self._selectedWeight = State(initialValue: courseOralWeight)
+        self._selectedType = State(initialValue: courseType)
     }
     var body: some View {
         NavigationView {
@@ -46,6 +50,13 @@ struct SingleCourse: View {
                     Picker(selection: $selectedAgeGroup.animation(), label: Text(""), content: {
                         Text("Mittelstufe").tag(AgeGroup.lower)
                         Text("Oberstufe").tag(AgeGroup.upper)
+                    })
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding()
+                    Picker(selection: $selectedType, label: Text(""), content: {
+                        Text("1. Halbjahr").tag(CourseType.firstHalf)
+                        Text("Ganzjährig").tag(CourseType.holeYear)
+                        Text("2. Halbjahr").tag(CourseType.secondHalf)
                     })
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
@@ -79,7 +90,7 @@ struct SingleCourse: View {
     }
     
     func saveButtonPressed() {
-        saveHandler(courseName, courseSubject, selectedWeight, selectedAgeGroup)
+        saveHandler(courseName, courseSubject, selectedWeight, selectedAgeGroup, selectedType)
         presentationMode.wrappedValue.dismiss()
     }
 }

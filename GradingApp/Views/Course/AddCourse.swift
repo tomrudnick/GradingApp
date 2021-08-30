@@ -13,8 +13,8 @@ struct AddCourse: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        SingleCourse(viewTitle: "Neuer Kurs") { (name, subject, weight, ageGroup) in
-            Course.addCourse(courseName: name, courseSubject: subject, oralWeight: weight, ageGroup: ageGroup, context: viewContext)
+        SingleCourse(viewTitle: "Neuer Kurs") { (name, subject, weight, ageGroup, type) in
+            Course.addCourse(courseName: name, courseSubject: subject, oralWeight: weight, ageGroup: ageGroup, type: type, context: viewContext)
         }
     }
 }

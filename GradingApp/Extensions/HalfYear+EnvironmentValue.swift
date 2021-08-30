@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 
-struct HalfYear: EnvironmentKey {
-    static var defaultValue: HalfType = .firstHalf
+struct HalfYearKey: EnvironmentKey {
+    static let defaultValue: HalfType = .firstHalf
 }
 
 extension EnvironmentValues {
-    var halfYear: HalfType {
-        get { self[HalfYear.self] }
-        set { self[HalfYear.self] = newValue }
+    var currentHalfYear: HalfType {
+        get { self[HalfYearKey] }
+        set { self[HalfYearKey] = newValue }
     }
 }
