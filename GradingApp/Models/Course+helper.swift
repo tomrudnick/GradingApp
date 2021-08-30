@@ -119,6 +119,16 @@ extension Course {
         data.append(Double(getNumberOfGrades(for: 0...0)))
         return data
     }
+    
+    func gradeSystem () -> [String] {
+        switch self.ageGroup {
+        case .upper:
+            return Grade.uppperSchoolGrades
+        case .lower:
+          return Grade.lowerSchoolGrades
+        }
+    }
+    
 }
 
 

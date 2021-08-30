@@ -22,6 +22,7 @@ struct AddMultipleGradesView: View {
     @State private var selectedStudent: Student?
     @State private var studentGrade: [Student:Int]
     
+    
     init(course: Course) {
         self.course = course
         self._studentGrade = State(initialValue: Dictionary(uniqueKeysWithValues: course.students.map {($0, -1)}))
