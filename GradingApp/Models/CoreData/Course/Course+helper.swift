@@ -141,7 +141,6 @@ extension Course {
           return Grade.lowerSchoolGrades
         }
     }
-    
 }
 
 

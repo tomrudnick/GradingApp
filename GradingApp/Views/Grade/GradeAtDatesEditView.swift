@@ -18,7 +18,7 @@ struct GradeAtDatesEditView : View{
     @State private var selectedStudent: Student?
     
     
-    init(course: Course, studentGrades: [GradeStudent]) {
+    init(course: Course, studentGrades: [GradeStudent<Grade>]) {
         self._editGradesPerDateVM = StateObject(wrappedValue: EditGradesPerDateViewModel(studentGrades: studentGrades, course: course))
     }
     

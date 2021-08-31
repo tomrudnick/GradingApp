@@ -46,11 +46,25 @@ struct CourseTabView: View {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Menu {
                     Text("Emails versenden")
-                    Button {
-                        self.showTranscriptSheet.toggle()
-                    } label: {
-                        Text("Zeugnisnoten einstellen")
+                    if course.type == .holeYear {
+                        Button {
+                            self.showTranscriptSheet.toggle()
+                        } label: {
+                            Text("Zeugnisnoten \(halfYear == .firstHalf ? "1. " : "2. ") HJ einstellen")
+                        }
+                        Button {
+                            //self.showTranscriptSheet.toggle()
+                        } label: {
+                            Text("Gesamtzeugnisnote einstellen")
+                        }
+                    } else {
+                        Button {
+                            self.showTranscriptSheet.toggle()
+                        } label: {
+                            Text("Zeugnisnote einstellen")
+                        }
                     }
+                    
 
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -67,9 +81,7 @@ struct CourseTabView: View {
             }
         })
         .fullScreenCover(isPresented: $showTranscriptSheet, content: {
-            if course.type == .holeYear {
-                StudentTranscriptGradesFullYearView(course: course)
-            }
+            StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in
             view.fullScreenCover(isPresented: $showAddMultipleGrades, content: {

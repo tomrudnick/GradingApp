@@ -81,8 +81,8 @@ extension Grade {
     }
     
     
-    static func getGradesPerDate(grades: FetchedResults<Grade>) -> [Date : [GradeStudent]] {
-        var allDates: [Date : [GradeStudent]] = [:]
+    static func getGradesPerDate(grades: FetchedResults<Grade>) -> [Date : [GradeStudent<Grade>]] {
+        var allDates: [Date : [GradeStudent<Grade>]] = [:]
         for grade in grades {
             if let _ = allDates[grade.date!] {
                 allDates[grade.date!]!.append(GradeStudent(student: grade.student!, grade: grade))
@@ -93,8 +93,8 @@ extension Grade {
         return allDates
     }
     
-    static func getGradesPerDate(grades: [Grade]) -> [Date : [GradeStudent]] {
-        var allDates: [Date : [GradeStudent]] = [:]
+    static func getGradesPerDate(grades: [Grade]) -> [Date : [GradeStudent<Grade>]] {
+        var allDates: [Date : [GradeStudent<Grade>]] = [:]
         for grade in grades {
             if let _ = allDates[grade.date!] {
                 allDates[grade.date!]!.append(GradeStudent(student: grade.student!, grade: grade))

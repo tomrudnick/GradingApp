@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 class EditGradesPerDateViewModel : ObservableObject {
-    @Published var studentGrades: [GradeStudent]
+    @Published var studentGrades: [GradeStudent<Grade>]
     
     @Published var comment: String?
     @Published var date: Date
@@ -35,7 +35,7 @@ class EditGradesPerDateViewModel : ObservableObject {
         }
     }
     //This hole init function should be heavily tested!!!
-    init(studentGrades: [GradeStudent], course: Course) {
+    init(studentGrades: [GradeStudent<Grade>], course: Course) {
         let nonNilStudentGrades = studentGrades.filter{ $0.grade != nil }
         let comments = nonNilStudentGrades.map{ $0.grade!.comment! }
         if let comment = comments.first, comments.allSatisfy({$0 == comment}) {
@@ -64,9 +64,7 @@ class EditGradesPerDateViewModel : ObservableObject {
     }
     
     func setGrade(for student: Student, value: Int) {
-        if let studentIndex = studentGrades.firstIndex(where: {$0.student == student}) {
-            studentGrades[studentIndex].value = value
-        }
+        GradeStudent<Grade>.setGrade(studentGrades: &studentGrades, for: student, value: value)
     }
     
     func save(viewContext: NSManagedObjectContext) -> Void {

@@ -21,7 +21,12 @@ struct MoreActionsView: View {
     @State private var showingExporter = false
     @State var showBackupPicker = false
     @State var showRestorePicker  = false
-   
+    
+    var onRestore: () -> ()
+    
+    init(onRestore: @escaping () -> ()) {
+        self.onRestore = onRestore
+    }
 
     var body: some View {
         NavigationView {
@@ -52,7 +57,7 @@ struct MoreActionsView: View {
                     .documentPicker(
                           isPresented: $showRestorePicker,
                         documentTypes: [kUTTypeFolder as String], onDocumentsPicked:  { urls in
-                            viewModel.restore(url: urls.first!)
+                            restore(url: urls.first!)
                         })
                 }
                 
@@ -139,6 +144,11 @@ struct MoreActionsView: View {
     func save() {
         viewModel.done()
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    func restore(url: URL) {
+        viewModel.restore(url: url)
+        onRestore()
     }
     
 }
