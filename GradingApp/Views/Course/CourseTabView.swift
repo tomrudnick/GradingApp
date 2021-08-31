@@ -15,7 +15,9 @@ struct CourseTabView: View {
     @State var showAddStudent = false
     @State var showAddMultipleGrades = false
     
+    @State var showTranscriptHalfYearSheet = false
     @State var showTranscriptSheet = false
+    
     
     var body: some View {
         TabView {
@@ -48,18 +50,18 @@ struct CourseTabView: View {
                     Text("Emails versenden")
                     if course.type == .holeYear {
                         Button {
-                            self.showTranscriptSheet.toggle()
+                            self.showTranscriptHalfYearSheet.toggle()
                         } label: {
                             Text("Zeugnisnoten \(halfYear == .firstHalf ? "1. " : "2. ") HJ einstellen")
                         }
                         Button {
-                            //self.showTranscriptSheet.toggle()
+                            self.showTranscriptSheet.toggle()
                         } label: {
                             Text("Gesamtzeugnisnote einstellen")
                         }
                     } else {
                         Button {
-                            self.showTranscriptSheet.toggle()
+                            self.showTranscriptHalfYearSheet.toggle()
                         } label: {
                             Text("Zeugnisnote einstellen")
                         }
@@ -80,8 +82,11 @@ struct CourseTabView: View {
                 
             }
         })
-        .fullScreenCover(isPresented: $showTranscriptSheet, content: {
+        .fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
             StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
+        })
+        .fullScreenCover(isPresented: $showTranscriptSheet, content: {
+            StudentTranscriptGradesView(course: course).environment(\.currentHalfYear, halfYear)
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in
             view.fullScreenCover(isPresented: $showAddMultipleGrades, content: {

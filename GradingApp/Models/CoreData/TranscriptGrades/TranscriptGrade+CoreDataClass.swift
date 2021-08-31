@@ -20,4 +20,8 @@ public class TranscriptGrade: NSManagedObject {
     func setTranscriptGradeHalfValue(half: HalfType, value: Int) throws {
         preconditionFailure("Only use the overriden function")
     }
+    
+    func getCalculatedValue() -> Double {
+        preconditionFailure("Only use the overriden function")
+    }
 }

@@ -21,4 +21,8 @@ public class HalfYearTranscriptGrade: TranscriptGrade {
         }
         self.value = Int32(value)
     }
+    
+    override func getCalculatedValue() -> Double {
+        return Double(self.value)
+    }
 }

@@ -21,4 +21,16 @@ public class FullYearTranscriptGrade: TranscriptGrade {
             secondValue = Int32(value)
         }
     }
+    
+    override func getCalculatedValue() -> Double {
+        if firstValue == -1 && secondValue == -1{
+            return -1.0
+        } else if firstValue == -1 {
+            return Double(secondValue)
+        } else if secondValue == -1 {
+            return Double(firstValue)
+        } else {
+            return (Double(firstValue) + Double(secondValue)) / 2.0
+        }
+    }
 }
