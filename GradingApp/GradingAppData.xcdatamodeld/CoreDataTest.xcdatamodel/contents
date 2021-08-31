@@ -10,8 +10,8 @@
         <relationship name="students_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
     </entity>
     <entity name="FullYearTranscriptGrade" representedClassName="FullYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">
-        <attribute name="firstValue" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="secondValue" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="firstValue" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="secondValue" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
     </entity>
     <entity name="Grade" representedClassName="Grade" syncable="YES">
         <attribute name="comment" optional="YES" attributeType="String"/>
@@ -34,7 +34,7 @@
         <relationship name="transcriptGrade" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TranscriptGrade" inverseName="student" inverseEntity="TranscriptGrade"/>
     </entity>
     <entity name="TranscriptGrade" representedClassName="TranscriptGrade" isAbstract="YES" syncable="YES">
-        <attribute name="value" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="transcriptGrade" inverseEntity="Student"/>
     </entity>
     <elements>
