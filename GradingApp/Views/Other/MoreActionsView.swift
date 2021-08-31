@@ -7,23 +7,62 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
+import SwiftUILib_DocumentPicker
+import MobileCoreServices
+
 
 struct MoreActionsView: View {
     
-    @State private var showingExporter = false
+  
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MoreActionsViewModel()
     @State var showHalfWarningAlert = false
-    
+    @State private var showingExporter = false
+    @State var showBackupPicker = false
+    @State var showRestorePicker  = false
+   
+
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Backup / Import")) {
+                Section(header: Text("Backup / Export")) {
+                    Button {
+                        self.showBackupPicker = true
+                    } label: {
+                        Text("Backup")
+                    }
+                    .documentPicker(
+                          isPresented: $showBackupPicker,
+                        documentTypes: ["public.folder"], onDocumentsPicked:  { urls in
+                        viewModel.backup(url: urls.first!)
+                        })
                     Button {
                         self.showingExporter = true
                     } label: {
-                        Text("Backup")
+                        Text("Export")
+                    }
+                }
+                Section(header: Text("Import")) {
+                    Button {
+                        self.showRestorePicker = true
+                    } label: {
+                        Text("Import")
+                    }
+                    .documentPicker(
+                          isPresented: $showRestorePicker,
+                        documentTypes: [kUTTypeFolder as String], onDocumentsPicked:  { urls in
+                            viewModel.restore(url: urls.first!)
+                        })
+                }
+                
+                Section(header: Text("Temporary")) {
+                    Button {
+                        viewModel.deleteAllCourses(viewContext: viewContext)
+                    } label: {
+                        Text("Delete everything")
+                            .fontWeight(.bold)
+                            .foregroundColor(.red)
                     }
                 }
                 
@@ -77,7 +116,7 @@ struct MoreActionsView: View {
             }
             
         }
-        .fileExporter(isPresented: $showingExporter, documents: viewModel.getDocuments(viewContext: viewContext), contentType: .commaSeparatedText) { result in
+        .fileExporter(isPresented: $showingExporter, documents: viewModel.getDocumentsSingleFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
             switch result {
             case .success(let url):
                 print("Saved to \(url)")
@@ -85,6 +124,7 @@ struct MoreActionsView: View {
                 print(error.localizedDescription)
             }
         }
+        
     }
     
     
@@ -101,12 +141,11 @@ struct MoreActionsView: View {
         presentationMode.wrappedValue.dismiss()
     }
     
-    
 }
 
 
-struct MoreActionsView_Previews: PreviewProvider {
+/*struct MoreActionsView_Previews: PreviewProvider {
     static var previews: some View {
         MoreActionsView()
     }
-}
+}*/
