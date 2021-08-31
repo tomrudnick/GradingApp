@@ -33,14 +33,10 @@ class TranscriptGradesHalfYearViewModel : ObservableObject {
     func save(viewContext: NSManagedObjectContext) {
         for studentGrade in studentGrades {
             if let grade = studentGrade.grade {
-                if studentGrade.value == -1 {
-                    viewContext.delete(grade)
-                } else {
-                    do {
-                        try grade.setTranscriptGradeHalfValue(half: halfYear, value: studentGrade.value)
-                    } catch {
-                        print(error)
-                    }
+                do {
+                    try grade.setTranscriptGradeHalfValue(half: halfYear, value: studentGrade.value)
+                } catch {
+                    print(error)
                 }
                 print("Updated Transcript Grade")
                 viewContext.saveCustom()

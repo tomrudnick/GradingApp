@@ -72,6 +72,14 @@ struct StudentTranscriptGradesHalfYear: View {
                             })
                             .padding(.all, 2.0)
                         }
+                        Button {
+                            viewModel.setGrade(for: selectedStudent!, value: -1)
+                            selectedStudent = viewModel.course!.nextStudent(after: selectedStudent!)
+                            scrollToNext(proxy: proxy)
+                        } label: {
+                            BottomSheetViewButtonLabel(labelView: Text("-"))
+                        }
+
                     })
                 }.edgesIgnoringSafeArea(.bottom)
             }
