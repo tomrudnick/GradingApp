@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		391A6BCA26DD54A000C3AE16 /* SwiftUILib.DocumentPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 391A6BC926DD54A000C3AE16 /* SwiftUILib.DocumentPicker */; };
 		3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */; };
 		3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */; };
 		3936EA8526BEAC0A00A37B95 /* CancelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8426BEAC0A00A37B95 /* CancelButtonView.swift */; };
@@ -14,6 +15,7 @@
 		394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 394D7C4F26BDC7DB00892BD4 /* CSV */; };
 		395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */; };
 		39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39607B5026CD0A9D007DFD63 /* SingleStudent.swift */; };
+		3961FEC026DD796000764718 /* NSPersistentContainer+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3961FEBF26DD796000764718 /* NSPersistentContainer+extension.swift */; };
 		396D81AE26C06DF90093668A /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D81AD26C06DF90093668A /* CustomBackButton.swift */; };
 		39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F09BB426D00801007B6E8A /* CostumGradeView.swift */; };
 		E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */; };
@@ -87,6 +89,7 @@
 		3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerator.swift; sourceTree = "<group>"; };
 		39607B5026CD0A9D007DFD63 /* SingleStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStudent.swift; sourceTree = "<group>"; };
+		3961FEBF26DD796000764718 /* NSPersistentContainer+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPersistentContainer+extension.swift"; sourceTree = "<group>"; };
 		396D81AD26C06DF90093668A /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
 		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
 		E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomsheetView.swift; sourceTree = "<group>"; };
@@ -154,6 +157,7 @@
 			files = (
 				E24AF9D526D8DD62000F2313 /* CloudKit.framework in Frameworks */,
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
+				391A6BCA26DD54A000C3AE16 /* SwiftUILib.DocumentPicker in Frameworks */,
 				E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				E25FBCAC26BADAC8000BDD65 /* Persistence.swift */,
+				3961FEBF26DD796000764718 /* NSPersistentContainer+extension.swift */,
 				E2B7451626C00E09002D0B4C /* ViewContext+SaveHelper.swift */,
 			);
 			path = CoreData;
@@ -441,6 +446,7 @@
 			packageProductDependencies = (
 				394D7C4F26BDC7DB00892BD4 /* CSV */,
 				E2A20B0826D43777005FA240 /* SwiftUICharts */,
+				391A6BC926DD54A000C3AE16 /* SwiftUILib.DocumentPicker */,
 			);
 			productName = CoreDataTest;
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
@@ -494,6 +500,7 @@
 			packageReferences = (
 				394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */,
+				391A6BC826DD54A000C3AE16 /* XCRemoteSwiftPackageReference "document-picker" */,
 			);
 			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
 			projectDirPath = "";
@@ -576,6 +583,7 @@
 				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
 				39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */,
 				E25FBCC126BAF24D000BDD65 /* StudentView.swift in Sources */,
+				3961FEC026DD796000764718 /* NSPersistentContainer+extension.swift in Sources */,
 				E2E2D0E426D67EB500C62887 /* Student+GradeHelper.swift in Sources */,
 				395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */,
 				E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */,
@@ -841,6 +849,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		391A6BC826DD54A000C3AE16 /* XCRemoteSwiftPackageReference "document-picker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftuilib/document-picker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
@@ -860,6 +876,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		391A6BC926DD54A000C3AE16 /* SwiftUILib.DocumentPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 391A6BC826DD54A000C3AE16 /* XCRemoteSwiftPackageReference "document-picker" */;
+			productName = SwiftUILib.DocumentPicker;
+		};
 		394D7C4F26BDC7DB00892BD4 /* CSV */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */;
