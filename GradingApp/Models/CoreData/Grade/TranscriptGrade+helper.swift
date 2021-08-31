@@ -18,7 +18,7 @@ extension HalfYearTranscriptGrade {
 
 protocol TranscriptGradeProtocol {
     func getTranscriptValueString() -> String
-    func getTranscriptSetKeyPath() -> KeyPath<TranscriptGrade, Int>
+    //func getTranscriptSetKeyPath() -> KeyPath<TranscriptGrade, Int>
 }
 
 extension HalfYearTranscriptGrade : TranscriptGradeProtocol {
@@ -26,9 +26,9 @@ extension HalfYearTranscriptGrade : TranscriptGradeProtocol {
         return "\(half == .firstHalf ? "1. " : "2. ") Halbjahr Note: \(value)"
     }
     
-    func getTranscriptSetKeyPath() -> KeyPath<TranscriptGrade, Int> {
-        <#code#>
-    }
+    /*func getTranscriptSetKeyPath() -> KeyPath<TranscriptGrade, Int> {
+        
+    }*/
     
     
 }
