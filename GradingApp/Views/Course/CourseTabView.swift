@@ -15,7 +15,9 @@ struct CourseTabView: View {
     @State var showAddStudent = false
     @State var showAddMultipleGrades = false
     
+    @State var showTranscriptHalfYearSheet = false
     @State var showTranscriptSheet = false
+    
     
     var body: some View {
         TabView {
@@ -46,11 +48,25 @@ struct CourseTabView: View {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Menu {
                     Text("Emails versenden")
-                    Button {
-                        self.showTranscriptSheet.toggle()
-                    } label: {
-                        Text("Zeugnisnoten einstellen")
+                    if course.type == .holeYear {
+                        Button {
+                            self.showTranscriptHalfYearSheet.toggle()
+                        } label: {
+                            Text("Zeugnisnoten \(halfYear == .firstHalf ? "1. " : "2. ") HJ einstellen")
+                        }
+                        Button {
+                            self.showTranscriptSheet.toggle()
+                        } label: {
+                            Text("Gesamtzeugnisnote einstellen")
+                        }
+                    } else {
+                        Button {
+                            self.showTranscriptHalfYearSheet.toggle()
+                        } label: {
+                            Text("Zeugnisnote einstellen")
+                        }
                     }
+                    
 
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -66,10 +82,11 @@ struct CourseTabView: View {
                 
             }
         })
+        .fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
+            StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
+        })
         .fullScreenCover(isPresented: $showTranscriptSheet, content: {
-            if course.type == .holeYear {
-                StudentTranscriptGradesFullYearView(course: course)
-            }
+            StudentTranscriptGradesView(course: course).environment(\.currentHalfYear, halfYear)
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in
             view.fullScreenCover(isPresented: $showAddMultipleGrades, content: {

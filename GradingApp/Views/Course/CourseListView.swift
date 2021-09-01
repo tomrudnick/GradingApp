@@ -21,6 +21,7 @@ struct CourseListView: View {
     
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
     @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
+    @State private var refreshingID = UUID()
     
     var body: some View {
         NavigationView {
@@ -43,7 +44,11 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView().environment(\.managedObjectContext, viewContext)
+                MoreActionsView(onRestore: {
+                    /*let vm = CourseEditViewModel(context: viewContext)
+                    vm.save()
+                    print("Save Custom")*/
+                }).environment(\.managedObjectContext, viewContext)
                     .onDisappear {
                         selectedHalfYearVM.fetchValue()
                     }
