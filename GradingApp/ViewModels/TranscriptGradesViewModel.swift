@@ -11,7 +11,7 @@ import CoreData
 protocol TranscriptGradesViewModelProtocol : ObservableObject {
     var studentGrades: [GradeStudent<TranscriptGrade>] { get set }
     var course: Course? { get }
-    func fetchData(course: Course)
+    func fetchData(course: Course) //This could maybe be removed in the future
     func setGrade(for student: Student, value: Int)
     func save(viewContext: NSManagedObjectContext)
 }
