@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
-
-struct StudentTranscriptGradesView<Model, DetailView : StudentGradeDetailViewProtocol>: View where Model: TranscriptGradesViewModelProtocol {
+/**
+    This View is used to init the TranscriptGrades for a half Year or a full Year
+    The View has two generic types:
+        1. Model which is the viewModel that conforms to TranscriptGradesViewModelProtocol
+        2. DetailView which is the way the Rows are displayed of the ListView and therefore every student is displayed it conforms to the StudentGradeDetailViewProtocol
+ */
+struct StudentTranscriptGradesView<Model, DetailView>: View where Model: TranscriptGradesViewModelProtocol, DetailView: StudentGradeDetailViewProtocol {
     
     @Environment(\.currentHalfYear) private var halfYear
     @Environment(\.managedObjectContext) private var viewContext
