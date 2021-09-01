@@ -86,7 +86,7 @@ struct CourseTabView: View {
             StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
         })
         .fullScreenCover(isPresented: $showTranscriptSheet, content: {
-            StudentTranscriptGradesView(course: course).environment(\.currentHalfYear, halfYear)
+            StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in
             view.fullScreenCover(isPresented: $showAddMultipleGrades, content: {

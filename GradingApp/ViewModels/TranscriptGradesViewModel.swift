@@ -8,7 +8,15 @@
 import Foundation
 import CoreData
 
-class TranscriptGradesViewModel : ObservableObject {
+protocol TranscriptGradesViewModelProtocol : ObservableObject {
+    var studentGrades: [GradeStudent<TranscriptGrade>] { get set }
+    var course: Course? { get }
+    func fetchData(course: Course)
+    func setGrade(for student: Student, value: Int)
+    func save(viewContext: NSManagedObjectContext)
+}
+
+class TranscriptGradesViewModel : TranscriptGradesViewModelProtocol {
     @Published var studentGrades: [GradeStudent<TranscriptGrade>]
     private(set) var course: Course?
     

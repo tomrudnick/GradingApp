@@ -37,7 +37,7 @@ struct StudentGradeListView: View {
                             EmptyView()
                         }
                         HStack {
-                            StudentDetailListView(student: student)
+                            StudentDetailView(student: student)
                             Button {
                                 action = student
                             } label: {
@@ -57,38 +57,6 @@ struct StudentGradeListView: View {
 }
 
 
-struct StudentDetailListView: View {
-    @ObservedObject var student: Student
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Text(student.firstName)
-                Spacer()
-                Text("\(student.getRoundedGradeAverage()) (\(student.getGradeAverage()))")
-                    .foregroundColor(Grade.getColor(points: student.totalGradeAverage()))
-            }
-            HStack {
-                Text(student.lastName).bold()
-                VStack(spacing: 0) {
-                    Divider()
-                }
-            }.padding(.top, -8)
-            HStack {
-                Text("Mündlich: ")
-                Text("\(student.getRoundedGradeAverage(.oral)) (\(student.getGradeAverage(.oral)))")
-                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .oral)))
-                Spacer()
-            }
-            HStack {
-                Text("Schriftlich: ")
-                Text("\(student.getRoundedGradeAverage(.written)) (\(student.getGradeAverage(.written)))")
-                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .written)))
-                Spacer()
-            }
-        }
-    }
-}
 
 struct Line: Shape {
     func path(in rect: CGRect) -> Path {

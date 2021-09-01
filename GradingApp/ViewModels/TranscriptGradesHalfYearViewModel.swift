@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class TranscriptGradesHalfYearViewModel : ObservableObject {
+class TranscriptGradesHalfYearViewModel : TranscriptGradesViewModelProtocol {
     @Published var studentGrades: [GradeStudent<TranscriptGrade>]
     private(set) var halfYear: HalfType
     private(set) var course: Course?
@@ -17,10 +17,13 @@ class TranscriptGradesHalfYearViewModel : ObservableObject {
         self.halfYear = .firstHalf
         self.studentGrades = []
     }
-    
-    func fetchData(course: Course, halfYear: HalfType) {
-        self.course = course
+    //You need to make sure that this method is called before fetching data
+    func setHalf(halfYear: HalfType) {
         self.halfYear = halfYear
+    }
+    
+    func fetchData(course: Course) {
+        self.course = course
         self.studentGrades = course.studentsArr.map({ student in
             GradeStudent(student: student, grade: student.transcriptGrade, value: student.transcriptGrade?.getTranscriptGradeHalfValue(half: halfYear) ?? -1)
         }).sorted(by: {$0.student.firstName < $1.student.firstName}).sorted(by: {$0.student.lastName < $1.student.lastName })

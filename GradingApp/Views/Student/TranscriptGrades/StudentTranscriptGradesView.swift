@@ -7,15 +7,25 @@
 
 import SwiftUI
 
-struct StudentTranscriptGradesView: View {
-    @ObservedObject var course: Course
+struct StudentTranscriptGradesView<Model, DetailView : StudentGradeDetailViewProtocol>: View where Model: TranscriptGradesViewModelProtocol {
+    
     @Environment(\.currentHalfYear) private var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
+    
     @State private var showAddGradeSheet: Bool = false
     @State private var selectedStudent: Student?
-    @StateObject private var viewModel = TranscriptGradesViewModel()
     
+    @ObservedObject var viewModel : Model
+    @ObservedObject var course: Course
+    
+    let detailStudentView: (_ student: Student) -> DetailView
+    
+    init(course: Course, viewModel: Model, @ViewBuilder detailView: @escaping (_ student: Student) -> DetailView) {
+        self.course = course
+        self.viewModel = viewModel
+        self.detailStudentView = detailView
+    }
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -37,7 +47,7 @@ struct StudentTranscriptGradesView: View {
                     List {
                         ForEach(viewModel.studentGrades) { studentGrade in
                             HStack {
-                                StudentTranscriptDetailView(student: studentGrade.student)
+                                detailStudentView(studentGrade.student)
                                 Spacer()
                                 Text(Grade.convertGradePointsToGrades(value: studentGrade.value))
                                     .foregroundColor(Grade.getColor(points: Double(studentGrade.value)))
@@ -83,9 +93,6 @@ struct StudentTranscriptGradesView: View {
                 }.edgesIgnoringSafeArea(.bottom)
             }
         }
-        .onAppear {
-            viewModel.fetchData(course: course)
-        }
     }
     
     func scrollToNext(proxy: ScrollViewProxy) {
@@ -103,44 +110,7 @@ struct StudentTranscriptGradesView: View {
 }
 
 
-struct StudentTranscriptDetailView: View {
-    @ObservedObject var student: Student
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Text(student.firstName)
-                Spacer()
-                if student.transcriptGrade == nil {
-                    Text("Berechnet: -")
-                        .foregroundColor(Grade.getColor(points: -1.0))
-                } else {
-                    Text("Berechnet: \(String(student.transcriptGrade!.getCalculatedValue()))")
-                        .foregroundColor(Grade.getColor(points: student.transcriptGrade!.getCalculatedValue()))
-                }
-                
-            }
-            HStack {
-                Text(student.lastName).bold()
-                VStack(spacing: 0) {
-                    Divider()
-                }
-            }.padding(.top, -8)
-            HStack {
-                Text("1. Halbjahr: ")
-                Text("\((student.transcriptGrade?.getTranscriptGradeHalfValue(half: .firstHalf)) ?? -1)")
-                    .foregroundColor(Grade.getColor(points: Double(student.transcriptGrade?.getTranscriptGradeHalfValue(half: .firstHalf) ?? -1)))
-                Spacer()
-            }
-            HStack {
-                Text("2. Halbjahr: ")
-                Text("\(student.transcriptGrade?.getTranscriptGradeHalfValue(half: .secondHalf) ?? -1)")
-                    .foregroundColor(Grade.getColor(points: Double(student.transcriptGrade?.getTranscriptGradeHalfValue(half: .secondHalf) ?? -1)))
-                Spacer()
-            }
-        }
-    }
-}
+
 
 
 /*struct StudentTranscriptGradesView_Previews: PreviewProvider {

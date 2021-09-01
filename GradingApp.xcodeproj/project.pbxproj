@@ -33,6 +33,8 @@
 		E20C5E3826CD4B3F00F860C6 /* View+IfModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20C5E3726CD4B3F00F860C6 /* View+IfModifier.swift */; };
 		E210AEE926C1190D00DF2D85 /* SingleCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210AEE826C1190C00DF2D85 /* SingleCourse.swift */; };
 		E210AEEB26C11C1300DF2D85 /* EditCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210AEEA26C11C1300DF2D85 /* EditCourseView.swift */; };
+		E2234A4526E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2234A4426E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift */; };
+		E2234A4726E02F65002CCC07 /* StudentGradeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */; };
 		E24AF9CD26D82DDF000F2313 /* MoreActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CC26D82DDF000F2313 /* MoreActionsView.swift */; };
 		E24AF9CF26D83306000F2313 /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CE26D83306000F2313 /* CSVFile.swift */; };
 		E24AF9D126D84AD2000F2313 /* MoreActionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9D026D84AD2000F2313 /* MoreActionsViewModel.swift */; };
@@ -115,6 +117,8 @@
 		E20C5E3726CD4B3F00F860C6 /* View+IfModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+IfModifier.swift"; sourceTree = "<group>"; };
 		E210AEE826C1190C00DF2D85 /* SingleCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCourse.swift; sourceTree = "<group>"; };
 		E210AEEA26C11C1300DF2D85 /* EditCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseView.swift; sourceTree = "<group>"; };
+		E2234A4426E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTranscriptGradesFullYearView.swift; sourceTree = "<group>"; };
+		E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeDetailView.swift; sourceTree = "<group>"; };
 		E24AF9CC26D82DDF000F2313 /* MoreActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreActionsView.swift; sourceTree = "<group>"; };
 		E24AF9CE26D83306000F2313 /* CSVFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVFile.swift; sourceTree = "<group>"; };
 		E24AF9D026D84AD2000F2313 /* MoreActionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreActionsViewModel.swift; sourceTree = "<group>"; };
@@ -197,6 +201,7 @@
 				3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */,
 				E2B7451426BFDFC9002D0B4C /* BottomsheetGradePickerView.swift */,
 				396D81AD26C06DF90093668A /* CustomBackButton.swift */,
+				E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 			children = (
 				E2574C1526DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift */,
 				E200846F26DEE7D40098D981 /* StudentTranscriptGradesView.swift */,
+				E2234A4426E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift */,
 			);
 			path = TranscriptGrades;
 			sourceTree = "<group>";
@@ -610,6 +616,7 @@
 				E200846C26DED7D70098D981 /* TranscriptGrade+helper.swift in Sources */,
 				E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */,
 				E2574C1626DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift in Sources */,
+				E2234A4526E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift in Sources */,
 				E200846326DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift in Sources */,
 				E24AF9D126D84AD2000F2313 /* MoreActionsViewModel.swift in Sources */,
 				3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */,
@@ -626,6 +633,7 @@
 				395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */,
 				E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */,
 				E200847026DEE7D40098D981 /* StudentTranscriptGradesView.swift in Sources */,
+				E2234A4726E02F65002CCC07 /* StudentGradeDetailView.swift in Sources */,
 				E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */,
 				E2B055E226BD5842004F0087 /* AddSingleGradeView.swift in Sources */,
 				E25FBCBC26BAE7FF000BDD65 /* AddCourse.swift in Sources */,
