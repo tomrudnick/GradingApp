@@ -44,11 +44,7 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView(onRestore: {
-                    /*let vm = CourseEditViewModel(context: viewContext)
-                    vm.save()
-                    print("Save Custom")*/
-                }).environment(\.managedObjectContext, viewContext)
+                MoreActionsView().environment(\.managedObjectContext, viewContext)
                     .onDisappear {
                         selectedHalfYearVM.fetchValue()
                     }
