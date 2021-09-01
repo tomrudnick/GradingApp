@@ -69,54 +69,6 @@ class MoreActionsViewModel: ObservableObject {
         
     }
     
-    func backup(url: URL){
-        let container = NSPersistentContainer(name: "GradingAppData")
-        try! container.copyPersistentStores(to: url)
-    }
-    
-    func restore(url: URL){
-        let container = NSPersistentContainer(name: "GradingAppData")
-        container.loadPersistentStores { description, error in
-                    if let error = error {
-                        fatalError("Unable to load persistent stores: \(error)")
-                    }
-                }
-        try! container.restorePersistentStore(from: url)
-        
-    }
-   
-    
-    /*func backup(url: URL) {
-            let backUpFolderUrl = url
-            let backupUrl = backUpFolderUrl.appendingPathComponent("GradingApp_Backup" + ".txt")
-            let container = NSPersistentContainer(name: "GradingAppData")
-            container.loadPersistentStores(completionHandler: { (storeDescription, error) in })
-            let store:NSPersistentStore
-            store = container.persistentStoreCoordinator.persistentStores.last!
-            do {
-                try container.persistentStoreCoordinator.migratePersistentStore(store,to: backupUrl,options: nil,withType: NSSQLiteStoreType)
-            } catch {
-                print("Failed to migrate")
-            }
-        }
-    
-    func restore (url: URL, viewContext: NSManagedObjectContext){
-            let storeFolderUrl = FileManager.default.urls(for: .applicationSupportDirectory, in:.userDomainMask).first!
-            let storeUrl = storeFolderUrl.appendingPathComponent("GradingAppData.sqlite")
-            let backupUrl = url
-            let container = NSPersistentContainer(name: "GradingAppData")
-            container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-                do{
-                    try container.persistentStoreCoordinator.replacePersistentStore(at: storeUrl,destinationOptions: nil,withPersistentStoreFrom: backupUrl,sourceOptions: nil,ofType: NSSQLiteStoreType)
-                } catch {
-                    print("Failed to restore")
-                }
-
-            })
-        }*/
-        
-    
-    
     func done() {
         let df = DateFormatter()
         df.dateFormat = KeyValueConstants.dateFormat

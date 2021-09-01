@@ -13,30 +13,24 @@ import MobileCoreServices
 
 struct MoreActionsView: View {
     
-  
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MoreActionsViewModel()
     @State var showHalfWarningAlert = false
     @State private var showingExporter = false
-    @State var showBackupPicker = false
-    @State var showRestorePicker  = false
-   
 
+    
+    
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Backup / Export")) {
                     Button {
-                        self.showBackupPicker = true
+                        
                     } label: {
                         Text("Backup")
                     }
-                    .documentPicker(
-                          isPresented: $showBackupPicker,
-                        documentTypes: ["public.folder"], onDocumentsPicked:  { urls in
-                        viewModel.backup(url: urls.first!)
-                        })
                     Button {
                         self.showingExporter = true
                     } label: {
@@ -45,15 +39,10 @@ struct MoreActionsView: View {
                 }
                 Section(header: Text("Import")) {
                     Button {
-                        self.showRestorePicker = true
+                       
                     } label: {
                         Text("Import")
                     }
-                    .documentPicker(
-                          isPresented: $showRestorePicker,
-                        documentTypes: [kUTTypeFolder as String], onDocumentsPicked:  { urls in
-                            viewModel.restore(url: urls.first!)
-                        })
                 }
                 
                 Section(header: Text("Temporary")) {
@@ -71,8 +60,8 @@ struct MoreActionsView: View {
                     DatePicker("Start 1. Halbjahr", selection: $viewModel.dateFirstHalf, displayedComponents: [.date])
                         .id(viewModel.dateFirstHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
                         .environment(\.locale, Locale.init(identifier: "de"))
-                
-                
+                    
+                    
                     DatePicker("Start 2. Halbjahr", selection: $viewModel.dateSecondHalf, displayedComponents: [.date])
                         .id(viewModel.dateSecondHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
                         .environment(\.locale, Locale.init(identifier: "de"))
@@ -88,9 +77,9 @@ struct MoreActionsView: View {
                 Alert(title: Text("Achtung"),
                       message: Text("Das ausgewählte Halbjahr stimmt nicht mit den eingestellten Daten überein"),
                       primaryButton: Alert.Button.default(Text("Ok!"),
-                      action: {
-                            save()
-                      }),
+                                                          action: {
+                                                            save()
+                                                          }),
                       secondaryButton: Alert.Button.cancel()
                 )
             })
@@ -102,7 +91,7 @@ struct MoreActionsView: View {
                     } label: {
                         Text("Schließen")
                     }
-
+                    
                 }
                 
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -111,7 +100,7 @@ struct MoreActionsView: View {
                     } label: {
                         Text("Done")
                     }
-
+                    
                 }
             }
             
@@ -145,7 +134,7 @@ struct MoreActionsView: View {
 
 
 /*struct MoreActionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MoreActionsView()
-    }
-}*/
+ static var previews: some View {
+ MoreActionsView()
+ }
+ }*/

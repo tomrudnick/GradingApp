@@ -11,9 +11,12 @@ struct PersistenceController {
     static let shared = PersistenceController()
 
     let container: NSPersistentContainer
+    
 
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "GradingAppData")
+        let description = container.persistentStoreDescriptions.first
+        description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
