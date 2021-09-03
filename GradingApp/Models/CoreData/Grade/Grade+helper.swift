@@ -143,6 +143,10 @@ extension Grade {
         return formatter.string(from: self.date!)
     }
     
+    func getColor() -> Color {
+        Grade.getColor(points: Double(self.value))
+    }
+    
     static func fetch(_ predicate: NSPredicate) -> NSFetchRequest<Grade> {
         let request = NSFetchRequest<Grade>(entityName: "Grade")
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]

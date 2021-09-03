@@ -24,15 +24,15 @@ struct StudentView: View {
         VStack {
             LazyVGrid(columns: columns, spacing: 30) {
                 
-                GradeGridViewDisplay(title: "Gesamt     ", grade: student.getGradeAverage(), color: Grade.getColor(points: student.totalGradeAverage()))
+                GradeGridViewDisplay(title: "Gesamt     ", grade: student.getGradeAverage(half: halfYear), color: Grade.getColor(points: student.totalGradeAverage(half: halfYear)))
                 
                 
                 NavigationLink(destination: GradeDetailView(student: student, gradeType: .oral)) {
-                    GradeGridViewDisplay(title: "Mündlich   ", grade: student.getGradeAverage(.oral), color: Grade.getColor(points: student.gradeAverage(type: .oral)))
+                    GradeGridViewDisplay(title: "Mündlich   ", grade: student.getGradeAverage(.oral, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .oral, half: halfYear)))
                 }
                 
                 NavigationLink(destination: GradeDetailView(student: student, gradeType: .written)) {
-                    GradeGridViewDisplay(title: "Schriftlich", grade: student.getGradeAverage(.written), color: Grade.getColor(points: student.gradeAverage(type: .written)))
+                    GradeGridViewDisplay(title: "Schriftlich", grade: student.getGradeAverage(.written, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
                 }
                 
             }

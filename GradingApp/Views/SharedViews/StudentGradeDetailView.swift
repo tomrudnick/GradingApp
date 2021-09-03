@@ -52,14 +52,19 @@ struct StudentTranscriptDetailView: StudentGradeDetailViewProtocol{
 
 struct StudentDetailView: StudentGradeDetailViewProtocol {
     @ObservedObject var student: Student
+    @Environment(\.currentHalfYear) var halfYear
+    
+    init(student: Student) {
+        self.student = student
+    }
     
     var body: some View {
         VStack {
             HStack {
                 Text(student.firstName)
                 Spacer()
-                Text("\(student.getRoundedGradeAverage()) (\(student.getGradeAverage()))")
-                    .foregroundColor(Grade.getColor(points: student.totalGradeAverage()))
+                Text("\(student.getRoundedGradeAverage(half: halfYear)) (\(student.getGradeAverage(half: halfYear)))")
+                    .foregroundColor(Grade.getColor(points: student.totalGradeAverage(half: halfYear)))
             }
             HStack {
                 Text(student.lastName).bold()
@@ -69,14 +74,14 @@ struct StudentDetailView: StudentGradeDetailViewProtocol {
             }.padding(.top, -8)
             HStack {
                 Text("Mündlich: ")
-                Text("\(student.getRoundedGradeAverage(.oral)) (\(student.getGradeAverage(.oral)))")
-                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .oral)))
+                Text("\(student.getRoundedGradeAverage(.oral, half: halfYear)) (\(student.getGradeAverage(.oral, half: halfYear)))")
+                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .oral, half: halfYear)))
                 Spacer()
             }
             HStack {
                 Text("Schriftlich: ")
-                Text("\(student.getRoundedGradeAverage(.written)) (\(student.getGradeAverage(.written)))")
-                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .written)))
+                Text("\(student.getRoundedGradeAverage(.written, half: halfYear)) (\(student.getGradeAverage(.written, half: halfYear)))")
+                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
                 Spacer()
             }
         }

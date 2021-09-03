@@ -10,6 +10,7 @@ import SwiftUICharts
 
 struct StudentGradeListView: View {
     @ObservedObject var course: Course
+    @Environment(\.currentHalfYear) var halfYear
     @State private var action: Student? = nil
     let mixedColorStyle = ChartStyle(backgroundColor: .white, foregroundColor: [
             ColorGradient(Color(red: 0.173, green: 0.894, blue: 0.455), Color(red: 0.173, green: 0.894, blue: 0.455)),
@@ -27,7 +28,7 @@ struct StudentGradeListView: View {
                     ChartLabel("Notenverteilung", type: .legend)
                     BarChart()
                 }
-                .data(course.getChartDataNumbers())
+                .data(course.getChartDataNumbers(half: halfYear))
                 .chartStyle(mixedColorStyle)
                 .frame(height: 240)
                 .padding()

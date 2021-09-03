@@ -9,8 +9,8 @@ import Foundation
 
 
 extension Student {
-    func gradesExist (_ type: GradeType) -> Bool {
-        let filteredGrades = grades.filter { $0.type == type }
+    func gradesExist (_ type: GradeType, half: HalfType) -> Bool {
+        let filteredGrades = grades.filter { $0.type == type && $0.half == half }
         if filteredGrades.count == 0 {
             return false
         }
@@ -19,8 +19,9 @@ extension Student {
         }
     }
     
-    func gradesExist () -> Bool {
-        if grades.count == 0 {
+    func gradesExist (half: HalfType) -> Bool {
+        let filteredGrades = grades.filter { $0.half == half }
+        if filteredGrades.count == 0 {
             return false
         }
         else {
@@ -29,8 +30,8 @@ extension Student {
     }
     
     
-    func gradeAverage(type: GradeType) -> Double {
-        let filteredGrades = grades.filter { $0.type == type }
+    func gradeAverage(type: GradeType, half: HalfType) -> Double {
+        let filteredGrades = grades.filter { $0.type == type && $0.half == half }
         if filteredGrades.count == 0 {
             return -1
         }
@@ -42,66 +43,66 @@ extension Student {
     
     
     
-    func totalGradeAverage() -> Double {
-        if gradesExist(.oral) && gradesExist(.written) {
+    func totalGradeAverage(half: HalfType) -> Double {
+        if gradesExist(.oral, half: half) && gradesExist(.written, half: half) {
             let oralWeight = Double(self.course!.oralWeight)/100
             let writtenWeight = 1 - oralWeight
-            return oralWeight * gradeAverage(type: .oral) + writtenWeight * gradeAverage(type: .written)
-        } else if gradesExist(.oral) && !gradesExist(.written) {
-            return gradeAverage(type: .oral)
-        } else if !gradesExist(.oral) && gradesExist(.written) {
-            return gradeAverage(type: .written)
+            return oralWeight * gradeAverage(type: .oral, half: half) + writtenWeight * gradeAverage(type: .written, half: half)
+        } else if gradesExist(.oral, half: half) && !gradesExist(.written, half: half) {
+            return gradeAverage(type: .oral, half: half)
+        } else if !gradesExist(.oral, half: half) && gradesExist(.written, half: half) {
+            return gradeAverage(type: .written, half: half)
         } else {
             return -1
         }
     }
     
-    func getRoundedGradeAverage(_ type: GradeType) -> String {
-        if gradesExist(type) {
+    func getRoundedGradeAverage(_ type: GradeType, half: HalfType) -> String {
+        if gradesExist(type, half: half) {
             switch self.course!.ageGroup {
             case .lower:
-                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: gradeAverage(type: type)))
+                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: gradeAverage(type: type, half: half)))
             case .upper:
-                return String(Grade.roundPoints(points: gradeAverage(type: type)))
+                return String(Grade.roundPoints(points: gradeAverage(type: type, half: half)))
             }
         } else {
             return "-"
         }
     }
     
-    func getRoundedGradeAverage() -> String {
-        if gradesExist() {
+    func getRoundedGradeAverage(half: HalfType) -> String {
+        if gradesExist(half: half) {
             switch self.course!.ageGroup {
             case .lower:
-                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: totalGradeAverage()))
+                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: totalGradeAverage(half: half)))
             case .upper:
-                return String(Grade.roundPoints(points: totalGradeAverage()))
+                return String(Grade.roundPoints(points: totalGradeAverage(half: half)))
             }
         } else {
             return "-"
         }
     }
     
-    func getGradeAverage(_ type: GradeType) -> String {
-        if gradesExist(type) {
+    func getGradeAverage(_ type: GradeType, half: HalfType) -> String {
+        if gradesExist(type, half: half) {
             switch self.course!.ageGroup {
             case .lower:
-                return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: gradeAverage(type: type)))
+                return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: gradeAverage(type: type, half: half)))
             case .upper:
-                return String(format: "%.1f", self.gradeAverage(type: type))
+                return String(format: "%.1f", self.gradeAverage(type: type, half: half))
             }
         } else {
             return "-"
         }
     }
     
-    func getGradeAverage() -> String {
-        if gradesExist() {
+    func getGradeAverage(half: HalfType) -> String {
+        if gradesExist(half: half) {
             switch self.course!.ageGroup {
             case .lower:
-                return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: totalGradeAverage()))
+                return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: totalGradeAverage(half: half)))
             case .upper:
-                return String(format: "%.1f", self.totalGradeAverage())
+                return String(format: "%.1f", self.totalGradeAverage(half: half))
             }
         } else {
             return "-"
