@@ -23,7 +23,7 @@ struct StudentTranscriptDetailView: StudentGradeDetailViewProtocol{
                     Text("Berechnet: -")
                         .foregroundColor(Grade.getColor(points: -1.0))
                 } else {
-                    Text("Berechnet: \(String(student.transcriptGrade!.getCalculatedValue()))")
+                    Text("Berechnet: \(student.transcriptGrade!.getCalculatedValueString())")
                         .foregroundColor(Grade.getColor(points: student.transcriptGrade!.getCalculatedValue()))
                 }
                 
@@ -36,13 +36,13 @@ struct StudentTranscriptDetailView: StudentGradeDetailViewProtocol{
             }.padding(.top, -8)
             HStack {
                 Text("1. Halbjahr: ")
-                Text("\((student.transcriptGrade?.getTranscriptGradeHalfValue(half: .firstHalf)) ?? -1)")
+                Text(student.transcriptGrade?.getTranscriptGradeHalfValueString(half: .firstHalf) ?? "-")
                     .foregroundColor(Grade.getColor(points: Double(student.transcriptGrade?.getTranscriptGradeHalfValue(half: .firstHalf) ?? -1)))
                 Spacer()
             }
             HStack {
                 Text("2. Halbjahr: ")
-                Text("\(student.transcriptGrade?.getTranscriptGradeHalfValue(half: .secondHalf) ?? -1)")
+                Text(student.transcriptGrade?.getTranscriptGradeHalfValueString(half: .secondHalf) ?? "-")
                     .foregroundColor(Grade.getColor(points: Double(student.transcriptGrade?.getTranscriptGradeHalfValue(half: .secondHalf) ?? -1)))
                 Spacer()
             }

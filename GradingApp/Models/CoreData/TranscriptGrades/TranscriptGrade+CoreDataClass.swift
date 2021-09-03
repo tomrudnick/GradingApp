@@ -24,4 +24,27 @@ public class TranscriptGrade: NSManagedObject {
     func getCalculatedValue() -> Double {
         preconditionFailure("Only use the overriden function")
     }
+    
+    func getTranscriptGradeHalfValueString(half: HalfType) -> String {
+        switch self.student?.course?.ageGroup {
+        case .lower:
+            return Grade.convertGradePointsToGrades(value: getTranscriptGradeHalfValue(half: half) ?? -1)
+        case .upper:
+            return String(getTranscriptGradeHalfValue(half: half) ?? -1)
+        case .none:
+            return "-"
+        }
+    }
+    
+    func getCalculatedValueString() -> String {
+        let value = getCalculatedValue()
+        switch self.student?.course?.ageGroup {
+        case .lower:
+            return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: value))
+        case .upper:
+            return String(format: "%.1f", value)
+        case .none:
+            return "-"
+        }
+    }
 }

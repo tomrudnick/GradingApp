@@ -33,4 +33,5 @@ public class FullYearTranscriptGrade: TranscriptGrade {
             return (Double(firstValue) + Double(secondValue)) / 2.0
         }
     }
+    
 }
