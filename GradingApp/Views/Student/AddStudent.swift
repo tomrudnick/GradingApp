@@ -25,7 +25,11 @@ struct AddStudent: View {
             HStack{
                 Text("Neuer Schüler").font(.headline)
             Spacer()
-                CancelButtonView(label: "Abbrechen")
+                Button {
+                    self.presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Abbrechen")
+                }
             }
             .padding()
             CustomTextfieldView(label: "Vorname", input: $studentFirstName)

@@ -98,7 +98,7 @@ struct AddMultipleGradesView: View {
                                     }.id(student.key.id)
                                 }
                             }
-                            Spacer().frame(height: geometry.size.height * 0.4)
+                            Spacer().frame(height: geometry.size.height * 0.5)
                         }
                        
                     }

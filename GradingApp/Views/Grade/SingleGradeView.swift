@@ -52,7 +52,12 @@ struct SingleGradeView: View {
             VStack {
                 if showSaveCancelButtons {
                     HStack {
-                        CancelButtonView(label: "Abbrechen")
+                        Button {
+                            self.presentationMode.wrappedValue.dismiss()
+                        } label: {
+                            Text("Abbrechen")
+                        }
+
                         Spacer()
                         Button(action: {
                             save()
@@ -113,8 +118,6 @@ struct SingleGradeView: View {
                 }
             }
             .navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }))
-        
-            /*BottomsheetGradePickerView(showAddGradeSheet: $showAddGradeSheet, currentGrade: $currentGrade, geometry: geometry)*/
             BottomSheetSingleGradePicker(showAddGradeSheet: $showAddGradeSheet, viewModel: viewModel, geometry: geometry) { grade in
                 currentGrade = grade
             }

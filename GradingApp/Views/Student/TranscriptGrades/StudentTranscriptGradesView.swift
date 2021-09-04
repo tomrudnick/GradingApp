@@ -73,7 +73,7 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                             }.id(studentGrade.student.id)
 
                         }
-                        Spacer().frame(height: geometry.size.height * 0.4)
+                        Spacer().frame(height: geometry.size.height * 0.5)
                     }
                 }
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in

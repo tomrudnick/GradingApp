@@ -81,7 +81,7 @@ struct GradeAtDatesEditView : View{
                             presentationMode.wrappedValue.dismiss()
                         }, buttonColor: Color.red)
 
-                        Spacer().frame(height: geometry.size.height * 0.4)
+                        Spacer().frame(height: geometry.size.height * 0.5)
                     }
                 }
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: editGradesPerDateVM.course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in
