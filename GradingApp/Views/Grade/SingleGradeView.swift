@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct SingleGradeView: View {
+    
+    @StateObject var viewModel = GradePickerViewModel()
+    
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var student: Student
     
     @State private var gradeDate: Date
     @State private var selectedGradeType: Int
-    @State private var currentGrade: String
+    @State private var currentGrade: Int
     @State private var selectedGradeMultiplier: Int
     @State private var comment: String
-    
     @State private var showAddGradeSheet = false
     
     private let showSaveCancelButtons: Bool
@@ -37,7 +39,7 @@ struct SingleGradeView: View {
         self.student = student
         self._gradeDate = State(initialValue: gradeDate)
         self._selectedGradeType = State(initialValue: selectedGradeType == .oral ? 0 : 1)
-        self._currentGrade = State(initialValue: Grade.convertGradePointsToGrades(value: Int(currentGrade)))
+        self._currentGrade = State(initialValue: Int(currentGrade))
         let selectedGradeMultiplier = Grade.gradeMultiplier.firstIndex(where: { $0 == gradeMultiplier })!
         self._selectedGradeMultiplier = State(initialValue: selectedGradeMultiplier)
         self._comment = State(initialValue: comment)
@@ -57,7 +59,7 @@ struct SingleGradeView: View {
                         }, label: {
                             Text("Save")
                         })
-                        .disabled(currentGrade == "-")
+                        .disabled(currentGrade == -1)
                     }
                     .padding(.top)
                     .padding(.horizontal)
@@ -88,7 +90,7 @@ struct SingleGradeView: View {
                             Button(action: {
                                 showAddGradeSheet.toggle()
                             }, label: {
-                                Text(currentGrade)
+                                Text(viewModel.translateToString(currentGrade))
                                     .padding()
                                     .frame(height: 25)
                                     .background(Color(#colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)))
@@ -111,16 +113,21 @@ struct SingleGradeView: View {
                 }
             }
             .navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }))
-          
-            BottomsheetGradePickerView(showAddGradeSheet: $showAddGradeSheet, currentGrade: $currentGrade, geometry: geometry)
+        
+            /*BottomsheetGradePickerView(showAddGradeSheet: $showAddGradeSheet, currentGrade: $currentGrade, geometry: geometry)*/
+            BottomSheetSingleGradePicker(showAddGradeSheet: $showAddGradeSheet, viewModel: viewModel, geometry: geometry) { grade in
+                currentGrade = grade
+            }
+        }
+        .onAppear {
+            viewModel.setup(courseType: student.course!.ageGroup, options: .normal)
         }
     }
     
     func save() {
         let multiplier = Grade.gradeMultiplier[selectedGradeMultiplier]
         let type = selectedGradeType == 0 ? GradeType.oral : GradeType.written
-        let points = Grade.lowerSchoolGradesTranslate[currentGrade]!
-        saveHandler(points, type, multiplier, gradeDate, comment)
+        saveHandler(currentGrade, type, multiplier, gradeDate, comment)
         presentationMode.wrappedValue.dismiss()
     }
     
