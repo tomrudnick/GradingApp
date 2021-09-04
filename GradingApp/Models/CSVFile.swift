@@ -100,7 +100,7 @@ struct CSVFile: FileDocument {
             let studentGrades = Grade.getGradesPerDate(grades: studentGradesOfCourse)
             
             // CSV - HEADER ROW START
-            try! csv.write(row: ["BEGIN NEW COURSE"])
+            try! csv.write(row: ["BEGIN \(course.title)"])
             try! csv.write(row: ["Kurs", "Vorname", "Nachname", "Email"])
             for (key, _) in studentGrades.sorted(by: {$0.key < $1.key}) {
                 try! csv.write(field: key.asString(format: "YYYY-MM-dd_HH:MM:SS"))
