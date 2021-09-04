@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+
 struct KeyValueConstants {
     static let dateFormat = "dd.MM.yyyy"
     static let firstHalf = "dateFirstHalf"
@@ -60,14 +61,31 @@ class MoreActionsViewModel: ObservableObject {
         for course in fetchedCourses {
             let oralRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 0, course))
             let oralGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: oralRequest)
-            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: oralGrades, fileName: "\(course.title)_muendlich_"+fileDate))
+            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: oralGrades, fileName: "\(course.title)_muendlich_" + fileDate))
             let writtenRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 1, course))
             let writtenGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: writtenRequest)
-            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: writtenGrades, fileName: "\(course.title)_schriftlich_"+fileDate))
+            files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: writtenGrades, fileName: "\(course.title)_schriftlich_" + fileDate))
         }
         return files
         
     }
+    func getDocumentsOneFile(viewContext: NSManagedObjectContext) -> CSVFile {
+        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
+        let backupFile = CSVFile.generateCSVCourseData(courses: fetchedCourses)
+        return backupFile
+    }
+    
+    
+//    func getDocumentsOneFile(viewContext: NSManagedObjectContext) -> CSVFile {
+//        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
+//        var file: CSVFile
+//        let date = Date()
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "dd_MM_YYYY"
+//        let fileDate = dateFormatter.string(from: date)
+//        file = CSVFile.generateCSVFileOFAllCourses(courses: fetchedCourses, fileName: "GradingApp_Backup_"+fileDate)
+//        return file
+//    }
     
     func done() {
         let df = DateFormatter()
