@@ -69,10 +69,10 @@ class MoreActionsViewModel: ObservableObject {
         return files
         
     }
-    func getDocumentsOneFile(viewContext: NSManagedObjectContext) -> CSVFile {
+    func getDocumentsOneFile(viewContext: NSManagedObjectContext) -> [CSVFile] {
         let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
         let backupFile = CSVFile.generateCSVCourseData(courses: fetchedCourses)
-        return backupFile
+        return [backupFile]
     }
     
     

@@ -13,6 +13,10 @@ import MobileCoreServices
 
 struct MoreActionsView: View {
     
+    private enum BackupType {
+        case backup
+        case export
+    }
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
@@ -20,8 +24,7 @@ struct MoreActionsView: View {
     @State var showHalfWarningAlert = false
     @State private var showingExporter = false
     @State private var showingBackup = false
-
-    
+    @State private var backupType: BackupType = .backup
     
     var body: some View {
         NavigationView {
@@ -29,11 +32,13 @@ struct MoreActionsView: View {
                 Section(header: Text("Backup / Export")) {
                     Button {
                         self.showingBackup = true
+                        backupType = .backup
                     } label: {
                         Text("Backup")
                     }
                     Button {
-                        self.showingExporter = true
+                        self.showingBackup = true
+                        backupType = .export
                     } label: {
                         Text("Export")
                     }
@@ -106,15 +111,7 @@ struct MoreActionsView: View {
             }
             
         }
-        .fileExporter(isPresented: $showingExporter, documents: viewModel.getDocumentsSingleFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
-            switch result {
-            case .success(let url):
-                print("Saved to \(url)")
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        .fileExporter(isPresented: $showingBackup, document: viewModel.getDocumentsOneFile(viewContext: viewContext), contentType: .commaSeparatedText) { result in
+        .fileExporter(isPresented: $showingBackup, documents: getBackupFiles(), contentType: .commaSeparatedText) { result in
             switch result {
             case .success(let url):
                 print("Saved to \(url)")
@@ -136,6 +133,15 @@ struct MoreActionsView: View {
     func save() {
         viewModel.done()
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    func getBackupFiles() -> [CSVFile] {
+        switch backupType {
+        case .backup:
+            return viewModel.getDocumentsOneFile(viewContext: viewContext)
+        case .export:
+            return viewModel.getDocumentsSingleFiles(viewContext: viewContext)
+        }
     }
     
 }
