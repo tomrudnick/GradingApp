@@ -18,9 +18,15 @@ struct KeyValueConstants {
 
 class MoreActionsViewModel: ObservableObject {
     
+    enum BackupType {
+        case backup
+        case export
+    }
+    
     @Published var dateFirstHalf: Date
     @Published var dateSecondHalf: Date
     @Published var half: HalfType
+    @Published var backupType: BackupType = .backup
     
     var selectedHalf : Int {
         get {
@@ -50,6 +56,15 @@ class MoreActionsViewModel: ObservableObject {
         NotificationCenter.default.addObserver(self, selector: #selector(onUbiquitousKeyValueStoreDidChangeExternally(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
     }
     
+    func getBackupFiles(viewContext: NSManagedObjectContext) -> [CSVFile] {
+        switch backupType {
+        case .backup:
+            return getDocumentsOneFile(viewContext: viewContext)
+        case .export:
+            return getDocumentsSingleFiles(viewContext: viewContext)
+        }
+    }
+    
     
     func getDocumentsSingleFiles(viewContext: NSManagedObjectContext) -> [CSVFile] {
         let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
@@ -76,16 +91,7 @@ class MoreActionsViewModel: ObservableObject {
     }
     
     
-//    func getDocumentsOneFile(viewContext: NSManagedObjectContext) -> CSVFile {
-//        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
-//        var file: CSVFile
-//        let date = Date()
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "dd_MM_YYYY"
-//        let fileDate = dateFormatter.string(from: date)
-//        file = CSVFile.generateCSVFileOFAllCourses(courses: fetchedCourses, fileName: "GradingApp_Backup_"+fileDate)
-//        return file
-//    }
+
     
     func done() {
         let df = DateFormatter()
