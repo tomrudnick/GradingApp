@@ -12,13 +12,13 @@ class SelectedHalfYearViewModel : ObservableObject {
     @Published private(set) var activeHalf: HalfType
     
     init() {
-        self.activeHalf = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
+        self.activeHalf = NSUbiquitousKeyValueStore.default.longLong(forKey: MoreActionsViewModel.KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
         
         NotificationCenter.default.addObserver(self, selector: #selector(onUbiquitousKeyValueStoreDidChangeExternally(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
     }
     
     func fetchValue() {
-        let fetchedValue: HalfType = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
+        let fetchedValue: HalfType = NSUbiquitousKeyValueStore.default.longLong(forKey: MoreActionsViewModel.KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
         if fetchedValue != activeHalf {
             activeHalf = fetchedValue
         }

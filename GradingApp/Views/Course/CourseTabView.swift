@@ -17,6 +17,7 @@ struct CourseTabView: View {
     
     @State var showTranscriptHalfYearSheet = false
     @State var showTranscriptSheet = false
+    @State var showSendEmailSheet = false
     
     
     var body: some View {
@@ -47,7 +48,11 @@ struct CourseTabView: View {
             }
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Menu {
-                    Text("Emails versenden")
+                    Button(action: {
+                        self.showSendEmailSheet.toggle()
+                    }, label: {
+                        Text("Send Emails...")
+                    })
                     if course.type == .holeYear {
                         Button {
                             self.showTranscriptHalfYearSheet.toggle()
@@ -81,6 +86,9 @@ struct CourseTabView: View {
                 })
                 
             }
+        })
+        .sheet(isPresented: $showSendEmailSheet, content: {
+            SendEmailsView(course: course).environment(\.currentHalfYear, halfYear)
         })
         .fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
             StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
