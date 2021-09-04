@@ -9,7 +9,10 @@ import SwiftUI
 
 struct AddMultipleGradesView: View {
     
+    @StateObject var viewModel = GradePickerViewModel()
+    
     @ObservedObject var course: Course
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.currentHalfYear) var halfYear
@@ -76,7 +79,7 @@ struct AddMultipleGradesView: View {
                                     HStack {
                                         Text("\(student.key.firstName) \(student.key.lastName)")
                                         Spacer()
-                                        Text(Grade.convertGradePointsToGrades(value: student.value))
+                                        Text(viewModel.translateToString(student.value))
                                             .padding()
                                             .frame(minWidth: 55)
                                             .foregroundColor(.white)
@@ -100,36 +103,20 @@ struct AddMultipleGradesView: View {
                        
                     }
                 }
-                BottomSheetView(isOpen: $showAddGradeSheet, maxHeight: geometry.size.height * 0.4) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], content: {
-                        ForEach(Grade.lowerSchoolGrades, id: \.self) { grade in
-                            Button(action: {
-                                studentGrade[selectedStudent!] = Grade.lowerSchoolGradesTranslate[grade]!
-                                selectedStudent = course.nextStudent(after: selectedStudent!)
-                                scrollToNext(proxy: proxy)
-                            }, label: {
-                                BottomSheetViewButtonLabel(labelView: Text(grade))
-                            })
-                            .padding(.all, 2.0)
-                        }
-                        Button {
-                            selectedStudent = course.previousStudent(before: selectedStudent!)
-                            scrollToNext(proxy: proxy)
-                        } label: {
-                            BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.up"))
-                        }
-                        
-                        Button {
-                            selectedStudent = course.nextStudent(after: selectedStudent!)
-                            scrollToNext(proxy: proxy)
-                        } label: {
-                            BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.down"))
-                        }
-
-                    })
-                }.edgesIgnoringSafeArea(.bottom)
+                BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet,
+                                           selectedStudent: $selectedStudent,
+                                           course: course,
+                                           viewModel: viewModel,
+                                           geometry: geometry,
+                                           scrollProxy: proxy) { grade in
+                    studentGrade[selectedStudent!] = grade
+                    selectedStudent = course.nextStudent(after: selectedStudent!)
+                }
             }
         })
+        .onAppear {
+            viewModel.setup(courseType: course.ageGroup, options: .normal)
+        }
     }
     
     
