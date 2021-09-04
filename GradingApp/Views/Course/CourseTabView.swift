@@ -11,6 +11,8 @@ struct CourseTabView: View {
     
     @Environment(\.currentHalfYear) var halfYear
     
+    @StateObject var emailViewModel = EmailViewModel()
+    
     @ObservedObject var course: Course
     @State var showAddStudent = false
     @State var showAddMultipleGrades = false
@@ -51,8 +53,8 @@ struct CourseTabView: View {
                     Button(action: {
                         self.showSendEmailSheet.toggle()
                     }, label: {
-                        Text("Send Emails...")
-                    })
+                        Text("Email verschicken...")
+                    }).disabled(!emailViewModel.emailAccountUsed)
                     if course.type == .holeYear {
                         Button {
                             self.showTranscriptHalfYearSheet.toggle()
@@ -88,7 +90,7 @@ struct CourseTabView: View {
             }
         })
         .sheet(isPresented: $showSendEmailSheet, content: {
-            SendEmailsView(course: course).environment(\.currentHalfYear, halfYear)
+            SendEmailsView(course: course, emailViewModel: emailViewModel)
         })
         .fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
             StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)

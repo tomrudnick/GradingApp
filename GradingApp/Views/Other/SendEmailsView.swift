@@ -15,7 +15,7 @@ struct SendEmailsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var course: Course
-    @StateObject var emailViewModel = EmailViewModel()
+    @ObservedObject var emailViewModel: EmailViewModel
     @State var emailText = "Hallo $firstName $lastName du hast Mündlich: $oralGrade, und Schriftlich: $writtenGrade und gesamt $grade"
     @State var showProgressbar = false
     @State var doubleValue = 0.0
