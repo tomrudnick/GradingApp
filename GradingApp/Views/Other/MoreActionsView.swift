@@ -19,6 +19,7 @@ struct MoreActionsView: View {
     @StateObject var viewModel = MoreActionsViewModel()
     @State var showHalfWarningAlert = false
     @State private var showingExporter = false
+    @State private var showingBackup = false
 
     
     
@@ -27,7 +28,7 @@ struct MoreActionsView: View {
             Form {
                 Section(header: Text("Backup / Export")) {
                     Button {
-                        
+                        self.showingBackup = true
                     } label: {
                         Text("Backup")
                     }
@@ -113,7 +114,14 @@ struct MoreActionsView: View {
                 print(error.localizedDescription)
             }
         }
-        
+        .fileExporter(isPresented: $showingBackup, document: viewModel.getDocumentsOneFile(viewContext: viewContext), contentType: .commaSeparatedText) { result in
+            switch result {
+            case .success(let url):
+                print("Saved to \(url)")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     
