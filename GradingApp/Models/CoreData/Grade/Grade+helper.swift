@@ -147,6 +147,15 @@ extension Grade {
         Grade.getColor(points: Double(self.value))
     }
     
+    func toString() -> String {
+        switch self.student!.course!.ageGroup {
+        case .lower:
+            return Grade.convertGradePointsToGrades(value: Int(value))
+        case .upper:
+            return String(value)
+        }
+    }
+    
     static func fetch(_ predicate: NSPredicate) -> NSFetchRequest<Grade> {
         let request = NSFetchRequest<Grade>(entityName: "Grade")
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
