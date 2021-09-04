@@ -120,16 +120,6 @@ struct AddMultipleGradesView: View {
     }
     
     
-    
-    func scrollToNext(proxy: ScrollViewProxy) {
-        if selectedStudent == nil {
-            self.showAddGradeSheet = false
-        } else {
-            proxy.scrollTo(selectedStudent?.id, anchor: .top)
-        }
-    }
-    
-    
     func save() {
         let multiplier = Grade.gradeMultiplier[selectedGradeMultiplier]
         let type = selectedGradeType == 0 ? GradeType.oral : GradeType.written

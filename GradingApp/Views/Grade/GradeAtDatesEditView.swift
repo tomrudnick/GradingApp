@@ -13,6 +13,7 @@ struct GradeAtDatesEditView : View{
     @Environment(\.managedObjectContext) private var viewContext
     
     @StateObject var editGradesPerDateVM: EditGradesPerDateViewModel
+    @StateObject var gradePickerViewModel = GradePickerViewModel()
     
     @State private var showAddGradeSheet: Bool = false
     @State private var selectedStudent: Student?
@@ -57,7 +58,7 @@ struct GradeAtDatesEditView : View{
                             HStack {
                                 Text("\(studentGrade.student.firstName) \(studentGrade.student.lastName)")
                                 Spacer()
-                                Text(Grade.convertGradePointsToGrades(value: studentGrade.value))
+                                Text(gradePickerViewModel.translateToString(studentGrade.value))
                                     .foregroundColor(Grade.getColor(points: Double(studentGrade.value)))
                                     .padding()
                                     .frame(minWidth: 55)
@@ -83,36 +84,14 @@ struct GradeAtDatesEditView : View{
                         Spacer().frame(height: geometry.size.height * 0.4)
                     }
                 }
-                
-                BottomSheetView(isOpen: $showAddGradeSheet, maxHeight: geometry.size.height * 0.5) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], content: {
-                        ForEach(Grade.lowerSchoolGrades, id: \.self) { grade in
-                            Button(action: {
-                                editGradesPerDateVM.setGrade(for: selectedStudent!, value: Grade.lowerSchoolGradesTranslate[grade]!)
-                                selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent!)
-                                scrollToNext(proxy: proxy)
-                            }, label: {
-                                BottomSheetViewButtonLabel(labelView: Text(grade))
-                            })
-                            .padding(.all, 2.0)
-                        }
-                        Button {
-                            selectedStudent = editGradesPerDateVM.course.previousStudent(before: selectedStudent!)
-                            scrollToNext(proxy: proxy)
-                        } label: {
-                            BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.up"))
-                        }
-                        
-                        Button {
-                            selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent!)
-                            scrollToNext(proxy: proxy)
-                        } label: {
-                            BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.down"))
-                        }
-
-                    })
-                }.edgesIgnoringSafeArea(.bottom)
+                BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: editGradesPerDateVM.course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in
+                    editGradesPerDateVM.setGrade(for: selectedStudent!, value: grade)
+                    selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent!)
+                }
             }
+        }
+        .onAppear {
+            gradePickerViewModel.setup(courseType: editGradesPerDateVM.course.ageGroup, options: .normal)
         }
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -130,14 +109,6 @@ struct GradeAtDatesEditView : View{
         })
         .navigationTitle(Text(editGradesPerDateVM.date.asString(format: "dd MMM")))
         
-    }
-    
-    func scrollToNext(proxy: ScrollViewProxy) {
-        if selectedStudent == nil {
-            self.showAddGradeSheet = false
-        } else {
-            proxy.scrollTo(selectedStudent?.id, anchor: .top)
-        }
     }
     
 }
