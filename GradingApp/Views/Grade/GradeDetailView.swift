@@ -43,7 +43,7 @@ struct GradeDetailView: View {
                 }
             }
         }
-        .navigationTitle(Text("\(halfYear == .firstHalf ? "1. " : "2. ")\(gradeType == .oral ? "Mündliche Noten" : "Schrifltiche Note") \(student.firstName) \(student.lastName)"))
+        .navigationTitle(Text("\(gradeType == .oral ? "Mündliche Noten" : "Schrifltiche Note") \(student.firstName) \(student.lastName)"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

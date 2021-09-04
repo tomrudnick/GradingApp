@@ -11,6 +11,7 @@ struct GradeAtDatesEditView : View{
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.currentHalfYear) private var halfYear
     
     @StateObject var editGradesPerDateVM: EditGradesPerDateViewModel
     @StateObject var gradePickerViewModel = GradePickerViewModel()
@@ -57,6 +58,8 @@ struct GradeAtDatesEditView : View{
                         ForEach(editGradesPerDateVM.studentGrades) { studentGrade in
                             HStack {
                                 Text("\(studentGrade.student.firstName) \(studentGrade.student.lastName)")
+                                Text("(\(studentGrade.student.gradeCount(editGradesPerDateVM.gradeType, half: halfYear)))")
+                                    .font(.footnote)
                                 Spacer()
                                 Text(gradePickerViewModel.translateToString(studentGrade.value))
                                     .foregroundColor(Grade.getColor(points: Double(studentGrade.value)))

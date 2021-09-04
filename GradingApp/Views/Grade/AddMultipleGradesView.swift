@@ -78,6 +78,8 @@ struct AddMultipleGradesView: View {
                                 if let student = studentGrade.first { (key: Student, value: Int) in key == student }{
                                     HStack {
                                         Text("\(student.key.firstName) \(student.key.lastName)")
+                                        Text("(\(student.key.gradeCount(selectedGradeType == 0 ? GradeType.oral : GradeType.written, half: halfYear)))")
+                                            .font(.footnote)
                                         Spacer()
                                         Text(viewModel.translateToString(student.value))
                                             .padding()

@@ -9,6 +9,11 @@ import Foundation
 
 
 extension Student {
+    
+    func gradeCount (_ type: GradeType, half: HalfType) -> Int {
+        return grades.filter { $0.type == type && $0.half == half }.count
+    }
+    
     func gradesExist (_ type: GradeType, half: HalfType) -> Bool {
         let filteredGrades = grades.filter { $0.type == type && $0.half == half }
         if filteredGrades.count == 0 {

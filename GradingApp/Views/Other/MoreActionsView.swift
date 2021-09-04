@@ -95,15 +95,6 @@ struct MoreActionsView: View {
                     }
                     
                 }
-                
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Text("Done")
-                    }
-                    
-                }
             }
             
         }

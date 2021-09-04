@@ -48,7 +48,7 @@ struct StudentView: View {
         }
         .padding()
         .padding(.trailing, 5.0)
-        .navigationTitle(Text("\(halfYear == .firstHalf ? "1. " : "2. ")\(student.firstName) \(student.lastName)"))
+        .navigationTitle(Text("\(student.firstName) \(student.lastName)"))
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")
