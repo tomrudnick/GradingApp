@@ -23,14 +23,18 @@ struct GradeDetailView: View {
                     if grade.type == gradeType && grade.half == halfYear {
                         NavigationLink(destination: EditSingleGradeView(student: student, grade: grade)) {
                             HStack {
-                                VStack {
-                                    Text(Grade.convertGradePointsToGrades(value: Int(grade.value)))
-                                    Text(String(grade.multiplier)).font(.footnote)
+                                if grade.multiplier != 1.0 {
+                                    VStack {
+                                        Text(grade.toString())
+                                        Text(String(grade.multiplier)).font(.footnote)
+                                    }
+                                } else {
+                                    Text(grade.toString())
                                 }
-                            
+                                
+                                Spacer()
                                 Text(grade.dateAsString())
                                 Text(grade.comment ?? "")
-                                Spacer()
                             }
                         }
                     }
