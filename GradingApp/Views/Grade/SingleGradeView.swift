@@ -120,7 +120,7 @@ struct SingleGradeView: View {
                     }
                 }
             }
-            .navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }))
+            .navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }).disabled(currentGrade == -1))
             BottomSheetSingleGradePicker(showAddGradeSheet: $showAddGradeSheet, viewModel: viewModel, geometry: geometry) { grade in
                 currentGrade = grade
             }
