@@ -56,7 +56,7 @@ struct GradeAtDatesView: View {
                         self.showEmailSheet = true
                     }, label: {
                         Text("Send Email via Grade")
-                    })
+                    }).disabled(!sendGradeEmailViewModel.emailViewModel.emailAccountUsed)
                 })
             }
         }.sheet(isPresented: $showEmailSheet, content: {

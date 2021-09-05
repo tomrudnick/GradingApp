@@ -51,8 +51,7 @@ struct StudentView: View {
                     .background(Color.blue)
                     .cornerRadius(25)
                     .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
-                }
-
+                }.disabled(!sendEmailViewModel.emailViewModel.emailAccountUsed)
                 
             }
             CardView {

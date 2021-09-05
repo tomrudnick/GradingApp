@@ -85,7 +85,7 @@ struct SingleGradeView: View {
                                 .id(gradeDate) //Erzwingt den Datepicker einen rebuild des Views zu machen
                                 .environment(\.locale, Locale.init(identifier: "de"))
                         }
-                        Picker(selection: $selectedGradeType, label: Text(""), content: {
+                        Picker(selection: $selectedGradeType.animation(), label: Text(""), content: {
                             Text("Oral").tag(0)
                             Text("Written").tag(1)
                         }).pickerStyle(SegmentedPickerStyle())
@@ -103,15 +103,18 @@ struct SingleGradeView: View {
                             })
                         }
                     }
-                    Section(header: Text("Grade Multiplier") ) {
-                        Picker(selection: $selectedGradeMultiplier, label: Text(""), content: {
-                            Text(String(Grade.gradeMultiplier[0])).tag(0)
-                            Text(String(Grade.gradeMultiplier[1])).tag(1)
-                            Text(String(Grade.gradeMultiplier[2])).tag(2)
-                            Text(String(Grade.gradeMultiplier[3])).tag(3)
-                        }).pickerStyle(SegmentedPickerStyle())
+                    if selectedGradeType == 0 {
+                        Section(header: Text("Grade Multiplier") ) {
+                            Picker(selection: $selectedGradeMultiplier, label: Text(""), content: {
+                                Text(String(Grade.gradeMultiplier[0])).tag(0)
+                                Text(String(Grade.gradeMultiplier[1])).tag(1)
+                                Text(String(Grade.gradeMultiplier[2])).tag(2)
+                                Text(String(Grade.gradeMultiplier[3])).tag(3)
+                            }).pickerStyle(SegmentedPickerStyle())
+                        }
+                        
                     }
-                    
+                   
                     Section(header: Text("Comment")) {
                         TextField("Comment...", text: $comment)
                     }
@@ -128,8 +131,11 @@ struct SingleGradeView: View {
     }
     
     func save() {
-        let multiplier = Grade.gradeMultiplier[selectedGradeMultiplier]
+        var multiplier = Grade.gradeMultiplier[selectedGradeMultiplier]
         let type = selectedGradeType == 0 ? GradeType.oral : GradeType.written
+        if type == .written {
+            multiplier = 1.0
+        }
         saveHandler(currentGrade, type, multiplier, gradeDate, comment)
         presentationMode.wrappedValue.dismiss()
     }

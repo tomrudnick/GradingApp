@@ -271,9 +271,9 @@
 				6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift */,
 				6DE3E8B626E55533004212D3 /* SendMultipleEmailsViewModel.swift */,
 				6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */,
+				6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */,
 				6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */,
 				6DE3E8B426E5551C004212D3 /* EmailKeys.swift */,
-				6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */,
 			);
 			path = Email;
 			sourceTree = "<group>";
