@@ -14,7 +14,12 @@ struct GradeAtDatesView: View {
     // This however would complicate the logic of the getGradesPerDate function.
     // Furthermore the view would not update automatically if a new grades would be added
     @FetchRequest(fetchRequest: Grade.fetchRequest()) private var grades: FetchedResults<Grade>
+    @StateObject var sendGradeEmailViewModel = SendMultipileEmailsSelectedGradeViewModel()
    
+    @Environment(\.currentHalfYear) var halfYear
+    
+    @State var showEmailSheet = false
+    
     let gradeType: GradeType
     let course: Course
 
@@ -44,11 +49,19 @@ struct GradeAtDatesView: View {
                         } else {
                             Text("\(value.count) / \(course.students.count)")
                         }
-                        
                     }
-                }
+                }.contextMenu(menuItems: {
+                    Button(action: {
+                        sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
+                        self.showEmailSheet = true
+                    }, label: {
+                        Text("Send Email via Grade")
+                    })
+                })
             }
-        }
+        }.sheet(isPresented: $showEmailSheet, content: {
+            SendEmailsView(course: course, emailViewModel: sendGradeEmailViewModel)
+        })
     }
 }
 

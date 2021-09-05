@@ -89,6 +89,9 @@ struct CourseTabView: View {
                 
             }
         })
+        .onAppear {
+            self.sendEmailViewModel.fetchData(course: course, half: halfYear)
+        }
         .sheet(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(course: course, emailViewModel: sendEmailViewModel)
         })

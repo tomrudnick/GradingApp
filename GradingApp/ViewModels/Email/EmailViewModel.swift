@@ -50,7 +50,6 @@ class EmailViewModel: ObservableObject {
     }
     
     func save() {
-        print(port)
         keychain[KeyValueConstants.password] = self.password
         NSUbiquitousKeyValueStore.default.set(email, forKey: KeyValueConstants.email)
         NSUbiquitousKeyValueStore.default.set(hostname, forKey: KeyValueConstants.hostname)

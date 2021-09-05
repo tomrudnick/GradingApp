@@ -10,6 +10,8 @@ import SwiftSMTP
 
 class SendMultipleEmailsViewModel : SendMultipleEmailsViewModelBase {
     
+    private var course: Course?
+    private var half: HalfType?
     
     override var emailKeys: [String] {
         get {
@@ -24,14 +26,24 @@ class SendMultipleEmailsViewModel : SendMultipleEmailsViewModelBase {
         }
     }
     
-    func sendEmails(course: Course,
-                    half: HalfType,
-                    progressHandler: @escaping (_ progress: Double) -> (),
-                    completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
+    func fetchData(course: Course, half: HalfType) {
+        self.course = course
+        self.half = half
+    }
+    
+    override func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
     {
-        let multipleEmailSender = SendMultipleEmails(emailViewModel: emailViewModel)
-        multipleEmailSender.sendEmails(subject: subject, emailText: emailText, course: course, half: half, emailTextReplaceHandler: { emailText, student in
-            return SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)
-        }, progressHandler: progressHandler, completionHandler: completionHandler)
+        if let course = course, let half = half {
+            let multipleEmailSender = SendMultipleEmails(emailViewModel: emailViewModel)
+            multipleEmailSender.sendEmails(subject: subject,
+                                           emailText: emailText,
+                                           students: course.studentsArr,
+                                           half: half,
+                                           emailTextReplaceHandler: { emailText, student in
+                                                return SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)
+                                           }, progressHandler: progressHandler, completionHandler: completionHandler
+            )
+        }
+        
     }
 }

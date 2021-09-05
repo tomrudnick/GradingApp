@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftSMTP
 
 
 protocol SendEmailProtocol: ObservableObject {
@@ -13,6 +14,7 @@ protocol SendEmailProtocol: ObservableObject {
     var subject: String {get set }
     var emailKeys: [String] { get }
     var regexString: String { get }
+    func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
 }
 
 
@@ -32,5 +34,9 @@ class SendMultipleEmailsViewModelBase : SendEmailProtocol {
     var regexString: String {
         emailKeys.joined(separator: "|")
     }
-
+    
+    func send(progressHandler: @escaping (Double) -> (), completionHandler: @escaping ([(Mail, Error)]) -> ()) {
+        preconditionFailure("Please use the overriden function")
+    }
+    
 }

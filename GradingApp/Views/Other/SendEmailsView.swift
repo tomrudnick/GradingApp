@@ -9,16 +9,13 @@ import SwiftUI
 import HighlightedTextEditor
 
 
-
-
-
-struct SendEmailsView: View {
+struct SendEmailsView<Model: SendEmailProtocol>: View {
     
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var course: Course
-    @ObservedObject var emailViewModel: SendMultipleEmailsViewModel
+    @ObservedObject var emailViewModel: Model
     @State var showProgressbar = false
     @State var doubleValue = 0.0
     @State var showErrorAlert = false
@@ -26,7 +23,7 @@ struct SendEmailsView: View {
     
 
     
-    init(course: Course, emailViewModel: SendMultipleEmailsViewModel) {
+    init(course: Course, emailViewModel: Model) {
         self.course = course
         self.emailViewModel = emailViewModel
     }
@@ -52,7 +49,7 @@ struct SendEmailsView: View {
                     ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                         Button(action: {
                             self.showProgressbar = true
-                            emailViewModel.sendEmails(course: course, half: halfYear) { progress in
+                            emailViewModel.send { progress in
                                 doubleValue = progress
                             } completionHandler: { failed in
                                 self.showProgressbar = false

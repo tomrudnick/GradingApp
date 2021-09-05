@@ -15,11 +15,11 @@ class SendMultipleEmails {
         self.emailViewModel = emailViewModel
     }
     
-    func sendEmails(subject: String, emailText: String, course: Course, half: HalfType, emailTextReplaceHandler: (_ emailText: String, _ student: Student) -> (String) , progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
-        let smtp = SMTP(hostname: emailViewModel.hostname, email: emailViewModel.email, password: emailViewModel.password, port: Int32(emailViewModel.portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 200)
+    func sendEmails(subject: String, emailText: String, students: [Student], half: HalfType, emailTextReplaceHandler: (_ emailText: String, _ student: Student) -> (String) , progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
+        let smtp = SMTP(hostname: emailViewModel.hostname, email: emailViewModel.email, password: emailViewModel.password, port: Int32(emailViewModel.portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 10)
         var mails: [Mail] = []
         let sender = Mail.User(email: emailViewModel.email)
-        for student in course.studentsArr {
+        for student in students {
             let receiverStudent = Mail.User(email: student.email)
             let emailString = emailTextReplaceHandler(emailText, student)
             print(emailString)
