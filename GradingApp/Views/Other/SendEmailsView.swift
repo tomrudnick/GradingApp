@@ -52,7 +52,7 @@ struct SendEmailsView: View {
                                     if failed.count == 1 {
                                         errorMessage = "Es konnte eine Email nicht versendet werden"
                                     } else {
-                                        errorMessage = "Es konnten \(failed.count) Email nicht versendet werden"
+                                        errorMessage = "Es konnten \(failed.count) Emails nicht versendet werden"
                                     }
                                     
                                 }
