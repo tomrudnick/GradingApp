@@ -16,6 +16,7 @@ struct KeyValueConstants {
     static let selectedHalf = "selectedHalf"
 }
 
+
 class MoreActionsViewModel: ObservableObject {
     
     enum BackupType {
@@ -56,17 +57,29 @@ class MoreActionsViewModel: ObservableObject {
         NotificationCenter.default.addObserver(self, selector: #selector(onUbiquitousKeyValueStoreDidChangeExternally(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
     }
     
-    func getBackupFiles(viewContext: NSManagedObjectContext) -> [CSVFile] {
-        switch backupType {
-        case .backup:
-            return getDocumentsOneFile(viewContext: viewContext)
-        case .export:
-            return getDocumentsSingleFiles(viewContext: viewContext)
+//    func getBackupFiles(viewContext: NSManagedObjectContext) -> [Any] {
+//        switch backupType {
+//        case .backup:
+//            return getOneJsonFile(viewContext: viewContext)
+//        case .export:
+//            return getSingleCSVFiles(viewContext: viewContext)
+//        }
+//    }
+    
+
+    func getOneJsonFile(viewContext: NSManagedObjectContext) -> JSONFile {
+        var jsonData: Data = Data()
+        do {
+            let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
+            jsonData = try JSONEncoder().encode(fetchedCourses)
+                
+        } catch {
+            print("Error fetching data from CoreData", error)
         }
+        return JSONFile.generateJSONBackupFile(jsonData: String(data: jsonData, encoding: .utf8)!)
     }
     
-    
-    func getDocumentsSingleFiles(viewContext: NSManagedObjectContext) -> [CSVFile] {
+    func getSingleCSVFiles(viewContext: NSManagedObjectContext) -> [CSVFile] {
         let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
         var files: [CSVFile] = []
         let date = Date()
@@ -84,15 +97,7 @@ class MoreActionsViewModel: ObservableObject {
         return files
         
     }
-    func getDocumentsOneFile(viewContext: NSManagedObjectContext) -> [CSVFile] {
-        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
-        let backupFile = CSVFile.generateCSVCourseData(courses: fetchedCourses)
-        return [backupFile]
-    }
-    
-    
 
-    
     func done() {
         let df = DateFormatter()
         df.dateFormat = KeyValueConstants.dateFormat

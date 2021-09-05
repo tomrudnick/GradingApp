@@ -33,13 +33,13 @@ extension Grade : Identifiable {
 }
 
 @objc
-public enum GradeType: Int16 {
+public enum GradeType: Int16, Codable {
     case oral
     case written
 }
 
 @objc
-public enum HalfType: Int16 {
+public enum HalfType: Int16, Codable {
     case firstHalf
     case secondHalf
 }

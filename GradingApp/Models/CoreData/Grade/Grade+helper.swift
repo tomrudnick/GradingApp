@@ -120,6 +120,7 @@ extension Grade {
         self.student = student
     }
     
+    
     static func addGrade(value: Int, date: Date, half: HalfType, type: GradeType, comment: String, multiplier: Double, student: Student, context: NSManagedObjectContext) {
         _ = Grade(value: value, date: date, half: half, type: type, comment: comment, multiplier: multiplier, student: student, context: context)
         context.saveCustom()

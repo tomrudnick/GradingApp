@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Course" representedClassName="Course" syncable="YES" codeGenerationType="class">
+    <entity name="Course" representedClassName="Course" syncable="YES" codeGenerationType="category">
         <attribute name="ageGroup_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
@@ -25,7 +25,7 @@
     <entity name="HalfYearTranscriptGrade" representedClassName="HalfYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">
         <attribute name="half_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
-    <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="class">
+    <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="category">
         <attribute name="email_" optional="YES" attributeType="String"/>
         <attribute name="firstName_" optional="YES" attributeType="String"/>
         <attribute name="lastName_" optional="YES" attributeType="String"/>

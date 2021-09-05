@@ -50,13 +50,13 @@ extension Course {
 
 
 @objc
-public enum AgeGroup : Int16 {
+public enum AgeGroup : Int16, Codable {
     case lower = 0
     case upper = 1
 }
 
 @objc
-public enum CourseType: Int16 {
+public enum CourseType: Int16, Codable {
     case holeYear = 0
     case firstHalf = 1
     case secondHalf = 2

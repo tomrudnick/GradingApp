@@ -121,7 +121,7 @@ struct CSVFile: FileDocument {
                 }
             }
             
-            
+    
             //STUDENT Grades
             for student in course.studentsArr {
                 csv.beginNewRow()

@@ -13,13 +13,14 @@ import MobileCoreServices
 
 struct MoreActionsView: View {
     
-   
-
+    
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MoreActionsViewModel()
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
+    @State private var showingRestore = false
     
     
     var body: some View {
@@ -41,7 +42,7 @@ struct MoreActionsView: View {
                 }
                 Section(header: Text("Import")) {
                     Button {
-                       
+                        self.showingRestore = true
                     } label: {
                         Text("Import")
                     }
@@ -107,12 +108,26 @@ struct MoreActionsView: View {
             }
             
         }
-        .fileExporter(isPresented: $showingBackup, documents: viewModel.getBackupFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
+        .fileExporter(isPresented: $showingBackup, document: viewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
             switch result {
             case .success(let url):
                 print("Saved to \(url)")
             case .failure(let error):
                 print(error.localizedDescription)
+            }
+        }
+        .fileImporter(
+            isPresented: $showingRestore,
+            allowedContentTypes: [.json],
+            allowsMultipleSelection: false
+        ) { result in
+            do {
+                guard let selectedFileURL: URL = try result.get().first else { return }
+                let selectedFileData = try Data(contentsOf: selectedFileURL)
+                let _ = try! JSONDecoder().decode([Course].self, from: selectedFileData)
+                viewContext.saveCustom()
+            } catch {
+                print("Something went wrong")
             }
         }
     }
