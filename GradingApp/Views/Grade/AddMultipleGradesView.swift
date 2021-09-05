@@ -78,6 +78,8 @@ struct AddMultipleGradesView: View {
                                 if let student = studentGrade.first { (key: Student, value: Int) in key == student }{
                                     HStack {
                                         Text("\(student.key.firstName) \(student.key.lastName)")
+                                        Text("(\(student.key.gradeCount(selectedGradeType == 0 ? GradeType.oral : GradeType.written, half: halfYear)))")
+                                            .font(.footnote)
                                         Spacer()
                                         Text(viewModel.translateToString(student.value))
                                             .padding()
@@ -98,7 +100,7 @@ struct AddMultipleGradesView: View {
                                     }.id(student.key.id)
                                 }
                             }
-                            Spacer().frame(height: geometry.size.height * 0.4)
+                            Spacer().frame(height: geometry.size.height * 0.5)
                         }
                        
                     }
@@ -116,16 +118,6 @@ struct AddMultipleGradesView: View {
         })
         .onAppear {
             viewModel.setup(courseType: course.ageGroup, options: .normal)
-        }
-    }
-    
-    
-    
-    func scrollToNext(proxy: ScrollViewProxy) {
-        if selectedStudent == nil {
-            self.showAddGradeSheet = false
-        } else {
-            proxy.scrollTo(selectedStudent?.id, anchor: .top)
         }
     }
     

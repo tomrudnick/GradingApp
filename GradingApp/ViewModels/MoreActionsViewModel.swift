@@ -9,15 +9,15 @@ import Foundation
 import CoreData
 
 
-struct KeyValueConstants {
-    static let dateFormat = "dd.MM.yyyy"
-    static let firstHalf = "dateFirstHalf"
-    static let secondHalf = "dateSecondHalf"
-    static let selectedHalf = "selectedHalf"
-}
 
 
 class MoreActionsViewModel: ObservableObject {
+    struct KeyValueConstants {
+        static let dateFormat = "dd.MM.yyyy"
+        static let firstHalf = "dateFirstHalf"
+        static let secondHalf = "dateSecondHalf"
+        static let selectedHalf = "selectedHalf"
+    }
     
     enum BackupType {
         case backup

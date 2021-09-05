@@ -9,6 +9,11 @@ import Foundation
 
 
 extension Student {
+    
+    func gradeCount (_ type: GradeType, half: HalfType) -> Int {
+        return grades.filter { $0.type == type && $0.half == half }.count
+    }
+    
     func gradesExist (_ type: GradeType, half: HalfType) -> Bool {
         let filteredGrades = grades.filter { $0.type == type && $0.half == half }
         if filteredGrades.count == 0 {
@@ -109,6 +114,31 @@ extension Student {
             }
         } else {
             return "-"
+        }
+    }
+    
+    func getSimpleGradeAverage(_ type: GradeType, half: HalfType) -> String {
+        let average = self.gradeAverage(type: type, half: half)
+        let floorAverage = Int(floor(average))
+        switch self.course!.ageGroup {
+        case .lower:
+            return Grade.convertGradePointsToGrades(value: floorAverage)
+        case .upper:
+            return String(floorAverage)
+        }
+    }
+    
+    func getSimpleGradeAverage(half: HalfType) -> String {
+        let average = Int(self.totalGradeAverage(half: half))
+        switch self.course!.ageGroup {
+        case .lower:
+            return Grade.convertGradePointsToGrades(value: average)
+        case .upper:
+            if average == -1 {
+                return "-"
+            } else {
+                return String(average)
+            }
         }
     }
 }

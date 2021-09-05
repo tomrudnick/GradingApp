@@ -14,6 +14,8 @@ import SwiftUI
  */
 struct StudentTranscriptGradesView<Model, DetailView>: View where Model: TranscriptGradesViewModelProtocol, DetailView: StudentGradeDetailViewProtocol {
     
+    @StateObject var gradePickerViewModel = GradePickerViewModel()
+    
     @Environment(\.currentHalfYear) private var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
@@ -54,7 +56,7 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                             HStack {
                                 detailStudentView(studentGrade.student)
                                 Spacer()
-                                Text(Grade.convertGradePointsToGrades(value: studentGrade.value))
+                                Text(gradePickerViewModel.translateToString(studentGrade.value))
                                     .foregroundColor(Grade.getColor(points: Double(studentGrade.value)))
                                     .padding()
                                     .frame(minWidth: 55)
@@ -71,43 +73,18 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                             }.id(studentGrade.student.id)
 
                         }
-                        Spacer().frame(height: geometry.size.height * 0.4)
+                        Spacer().frame(height: geometry.size.height * 0.5)
                     }
                 }
-                BottomSheetView(isOpen: $showAddGradeSheet, maxHeight: geometry.size.height * 0.4) {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], content: {
-                        ForEach(Grade.lowerSchoolTranscriptGrades, id: \.self) { grade in
-                            Button(action: {
-                                viewModel.setGrade(for: selectedStudent!, value: Grade.lowerSchoolGradesTranslate[grade]!)
-                                selectedStudent = viewModel.course!.nextStudent(after: selectedStudent!)
-                                scrollToNext(proxy: proxy)
-                            }, label: {
-                                BottomSheetViewButtonLabel(labelView: Text(grade))
-                            })
-                            .padding(.all, 2.0)
-                        }
-                        Button {
-                            viewModel.setGrade(for: selectedStudent!, value: -1)
-                            selectedStudent = viewModel.course!.nextStudent(after: selectedStudent!)
-                            scrollToNext(proxy: proxy)
-                        } label: {
-                            BottomSheetViewButtonLabel(labelView: Text("-"))
-                        }
-
-                    })
-                }.edgesIgnoringSafeArea(.bottom)
+                BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in
+                    viewModel.setGrade(for: selectedStudent!, value: grade)
+                    selectedStudent = viewModel.course!.nextStudent(after: selectedStudent!)
+                }
             }
+        }.onAppear {
+            gradePickerViewModel.setup(courseType: course.ageGroup, options: .transcript)
         }
     }
-    
-    func scrollToNext(proxy: ScrollViewProxy) {
-        if selectedStudent == nil {
-            self.showAddGradeSheet = false
-        } else {
-            proxy.scrollTo(selectedStudent?.id, anchor: .top)
-        }
-    }
-    
     func save() {
         viewModel.save(viewContext: viewContext)
         presentationMode.wrappedValue.dismiss()

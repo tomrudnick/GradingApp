@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		391A6BCA26DD54A000C3AE16 /* SwiftUILib.DocumentPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 391A6BC926DD54A000C3AE16 /* SwiftUILib.DocumentPicker */; };
 		3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */; };
 		3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */; };
-		3936EA8526BEAC0A00A37B95 /* CancelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8426BEAC0A00A37B95 /* CancelButtonView.swift */; };
 		3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */; };
 		394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 394D7C4F26BDC7DB00892BD4 /* CSV */; };
 		395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */; };
@@ -21,6 +19,10 @@
 		39BCE45C26E4C7B900FB2680 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */; };
 		39BCE45E26E4C7B900FB2680 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */; };
 		39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F09BB426D00801007B6E8A /* CostumGradeView.swift */; };
+		6D3EECD626E3D29B00E9D290 /* EmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECD526E3D29B00E9D290 /* EmailViewModel.swift */; };
+		6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECD826E3D2CC00E9D290 /* KeychainAccess */; };
+		6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECDB26E3D32100E9D290 /* SwiftSMTP */; };
+		6D3EECDE26E3E0CE00E9D290 /* SendEmailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */; };
 		6DBCF24126E372C1009F4167 /* GradePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */; };
 		6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */; };
 		E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */; };
@@ -101,7 +103,6 @@
 /* Begin PBXFileReference section */
 		3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseDetailView.swift; sourceTree = "<group>"; };
 		3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldView.swift; sourceTree = "<group>"; };
-		3936EA8426BEAC0A00A37B95 /* CancelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelButtonView.swift; sourceTree = "<group>"; };
 		3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerator.swift; sourceTree = "<group>"; };
 		39607B5026CD0A9D007DFD63 /* SingleStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStudent.swift; sourceTree = "<group>"; };
@@ -111,6 +112,8 @@
 		39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass.swift"; sourceTree = "<group>"; };
 		39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
 		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
+		6D3EECD526E3D29B00E9D290 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
+		6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmailsView.swift; sourceTree = "<group>"; };
 		6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradePickerViewModel.swift; sourceTree = "<group>"; };
 		6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSingleGradePicker.swift; sourceTree = "<group>"; };
 		E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -189,8 +192,9 @@
 			files = (
 				E24AF9D526D8DD62000F2313 /* CloudKit.framework in Frameworks */,
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
-				391A6BCA26DD54A000C3AE16 /* SwiftUILib.DocumentPicker in Frameworks */,
+				6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */,
 				E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */,
+				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,10 +213,8 @@
 			children = (
 				3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */,
 				E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */,
-				3936EA8426BEAC0A00A37B95 /* CancelButtonView.swift */,
 				3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */,
 				E2B7451426BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift */,
-				396D81AD26C06DF90093668A /* CustomBackButton.swift */,
 				E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */,
 				6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */,
 			);
@@ -274,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				E24AF9CC26D82DDF000F2313 /* MoreActionsView.swift */,
+				6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				E200846926DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift */,
 				E200846D26DEE4EF0098D981 /* TranscriptGradesViewModel.swift */,
 				6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */,
+				6D3EECD526E3D29B00E9D290 /* EmailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -502,7 +506,8 @@
 			packageProductDependencies = (
 				394D7C4F26BDC7DB00892BD4 /* CSV */,
 				E2A20B0826D43777005FA240 /* SwiftUICharts */,
-				391A6BC926DD54A000C3AE16 /* SwiftUILib.DocumentPicker */,
+				6D3EECD826E3D2CC00E9D290 /* KeychainAccess */,
+				6D3EECDB26E3D32100E9D290 /* SwiftSMTP */,
 			);
 			productName = CoreDataTest;
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
@@ -556,7 +561,8 @@
 			packageReferences = (
 				394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */,
-				391A6BC826DD54A000C3AE16 /* XCRemoteSwiftPackageReference "document-picker" */,
+				6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
 			);
 			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
 			projectDirPath = "";
@@ -605,6 +611,7 @@
 				E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */,
 				E210AEEB26C11C1300DF2D85 /* EditCourseView.swift in Sources */,
 				E200846A26DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift in Sources */,
+				6D3EECDE26E3E0CE00E9D290 /* SendEmailsView.swift in Sources */,
 				3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */,
 				E25FBCB026BADAC8000BDD65 /* GradingAppData.xcdatamodeld in Sources */,
 				E25FBCB826BAE1AB000BDD65 /* CourseTabView.swift in Sources */,
@@ -625,6 +632,7 @@
 				3936EA8526BEAC0A00A37B95 /* CancelButtonView.swift in Sources */,
 				E26ACC9926CE70F2004468AB /* Course+StudentHelper.swift in Sources */,
 				E25FBCBA26BAE1EC000BDD65 /* StudentListView.swift in Sources */,
+				6D3EECD626E3D29B00E9D290 /* EmailViewModel.swift in Sources */,
 				E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */,
 				3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */,
 				E200846726DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift in Sources */,
@@ -647,7 +655,6 @@
 				E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */,
 				E20C5E3826CD4B3F00F860C6 /* View+IfModifier.swift in Sources */,
 				E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */,
-				396D81AE26C06DF90093668A /* CustomBackButton.swift in Sources */,
 				E200846626DE99330098D981 /* TranscriptGrade+CoreDataClass.swift in Sources */,
 				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
 				39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */,
@@ -921,20 +928,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		391A6BC826DD54A000C3AE16 /* XCRemoteSwiftPackageReference "document-picker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/swiftuilib/document-picker";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.4.3;
+			};
+		};
+		6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+		6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-SMTP";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.200;
 			};
 		};
 		E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */ = {
@@ -948,15 +963,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		391A6BC926DD54A000C3AE16 /* SwiftUILib.DocumentPicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 391A6BC826DD54A000C3AE16 /* XCRemoteSwiftPackageReference "document-picker" */;
-			productName = SwiftUILib.DocumentPicker;
-		};
 		394D7C4F26BDC7DB00892BD4 /* CSV */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */;
 			productName = CSV;
+		};
+		6D3EECD826E3D2CC00E9D290 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		6D3EECDB26E3D32100E9D290 /* SwiftSMTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
+			productName = SwiftSMTP;
 		};
 		E2A20B0826D43777005FA240 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;

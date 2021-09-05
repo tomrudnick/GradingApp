@@ -7,17 +7,14 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
-import SwiftUILib_DocumentPicker
 import MobileCoreServices
 
 
 struct MoreActionsView: View {
-    
-    
-    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MoreActionsViewModel()
+    @StateObject var emailViewModel = EmailViewModel()
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
@@ -75,6 +72,39 @@ struct MoreActionsView: View {
                     }.pickerStyle(SegmentedPickerStyle())
                     
                 }
+                
+                Section(header: Text("Email Einstellungen")) {
+                    Toggle("Email Account active: ", isOn: $emailViewModel.emailAccountUsed)
+                    if emailViewModel.emailAccountUsed {
+                        HStack {
+                            Text("Hostname:")
+                            Spacer()
+                            TextField("sslout.server.com: ", text: $emailViewModel.hostname)
+                                .disableAutocorrection(true)
+                        }
+                        HStack {
+                            Text("Email:")
+                            Spacer()
+                            TextField("max@musterman.com", text: $emailViewModel.email)
+                                .disableAutocorrection(true)
+                        }
+                       
+                        HStack {
+                            Text("Port:")
+                            Spacer()
+                            TextField("465", text: $emailViewModel.port)
+                                .keyboardType(.numberPad)
+                        }
+                        
+                        HStack {
+                            Text("Password")
+                            Spacer()
+                            SecureField("*******", text: $emailViewModel.password)
+                        }
+                        
+                        
+                    }
+                }
             }
             .alert(isPresented: $showHalfWarningAlert, content: {
                 Alert(title: Text("Achtung"),
@@ -91,17 +121,9 @@ struct MoreActionsView: View {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button {
                         done()
+                        emailViewModel.save()
                     } label: {
                         Text("Schließen")
-                    }
-                    
-                }
-                
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Text("Done")
                     }
                     
                 }

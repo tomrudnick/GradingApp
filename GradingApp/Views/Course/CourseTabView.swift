@@ -11,12 +11,15 @@ struct CourseTabView: View {
     
     @Environment(\.currentHalfYear) var halfYear
     
+    @StateObject var emailViewModel = EmailViewModel()
+    
     @ObservedObject var course: Course
     @State var showAddStudent = false
     @State var showAddMultipleGrades = false
     
     @State var showTranscriptHalfYearSheet = false
     @State var showTranscriptSheet = false
+    @State var showSendEmailSheet = false
     
     
     var body: some View {
@@ -47,7 +50,11 @@ struct CourseTabView: View {
             }
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Menu {
-                    Text("Emails versenden")
+                    Button(action: {
+                        self.showSendEmailSheet.toggle()
+                    }, label: {
+                        Text("Email verschicken...")
+                    }).disabled(!emailViewModel.emailAccountUsed)
                     if course.type == .holeYear {
                         Button {
                             self.showTranscriptHalfYearSheet.toggle()
@@ -81,6 +88,9 @@ struct CourseTabView: View {
                 })
                 
             }
+        })
+        .sheet(isPresented: $showSendEmailSheet, content: {
+            SendEmailsView(course: course, emailViewModel: emailViewModel)
         })
         .fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
             StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)

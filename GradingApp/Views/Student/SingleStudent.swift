@@ -29,7 +29,11 @@ struct SingleStudent: View {
                 HStack{
                     Text(viewTitle).font(.headline)
                 Spacer()
-                    CancelButtonView(label: "Abbrechen")
+                    Button {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Abbrechen")
+                    }
                 }
             }
             .padding()
