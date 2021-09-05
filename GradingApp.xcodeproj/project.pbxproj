@@ -25,6 +25,12 @@
 		6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */; };
 		6DBCF24126E372C1009F4167 /* GradePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */; };
 		6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */; };
+		6DE3E8B126E554B9004212D3 /* SendMultipleEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */; };
+		6DE3E8B326E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift */; };
+		6DE3E8B526E5551C004212D3 /* EmailKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B426E5551C004212D3 /* EmailKeys.swift */; };
+		6DE3E8B726E55533004212D3 /* SendMultipleEmailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B626E55533004212D3 /* SendMultipleEmailsViewModel.swift */; };
+		6DE3E8B926E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */; };
+		6DE3E8BB26E55623004212D3 /* EmailEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */; };
 		E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */; };
 		E200846326DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845D26DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift */; };
 		E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845E26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift */; };
@@ -116,6 +122,12 @@
 		6D78609526E50C580090D7F4 /* HighlightedTextEditor */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HighlightedTextEditor; path = ../HighlightedTextEditor; sourceTree = "<group>"; };
 		6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradePickerViewModel.swift; sourceTree = "<group>"; };
 		6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSingleGradePicker.swift; sourceTree = "<group>"; };
+		6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmails.swift; sourceTree = "<group>"; };
+		6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsViewModelBase.swift; sourceTree = "<group>"; };
+		6DE3E8B426E5551C004212D3 /* EmailKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailKeys.swift; sourceTree = "<group>"; };
+		6DE3E8B626E55533004212D3 /* SendMultipleEmailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsViewModel.swift; sourceTree = "<group>"; };
+		6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultileEmailsSelectedGradeViewModel.swift; sourceTree = "<group>"; };
+		6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailEditorView.swift; sourceTree = "<group>"; };
 		E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E200845D26DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E200845E26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HalfYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -218,6 +230,7 @@
 				E2B7451426BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift */,
 				E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */,
 				6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */,
+				6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -247,6 +260,19 @@
 				E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */,
 			);
 			path = Edit;
+			sourceTree = "<group>";
+		};
+		6DE3E8AF26E5549B004212D3 /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				6D3EECD526E3D29B00E9D290 /* EmailViewModel.swift */,
+				6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */,
+				6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift */,
+				6DE3E8B426E5551C004212D3 /* EmailKeys.swift */,
+				6DE3E8B626E55533004212D3 /* SendMultipleEmailsViewModel.swift */,
+				6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */,
+			);
+			path = Email;
 			sourceTree = "<group>";
 		};
 		E200846826DE993C0098D981 /* TranscriptGrades */ = {
@@ -455,6 +481,7 @@
 		E2C5138426BBD3EB0069D340 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				6DE3E8AF26E5549B004212D3 /* Email */,
 				E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */,
 				E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */,
 				E24AF9D026D84AD2000F2313 /* MoreActionsViewModel.swift */,
@@ -462,7 +489,6 @@
 				E200846926DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift */,
 				E200846D26DEE4EF0098D981 /* TranscriptGradesViewModel.swift */,
 				6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */,
-				6D3EECD526E3D29B00E9D290 /* EmailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -603,6 +629,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */,
+				6DE3E8B926E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift in Sources */,
 				E25A7CDC26CA9D0A00508EEE /* EditStudentDetailView.swift in Sources */,
 				E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */,
 				E2574C0326D92F6E00ED2CFD /* SelectedHalfYearViewModel.swift in Sources */,
@@ -632,16 +659,21 @@
 				E2B7451726C00E09002D0B4C /* ViewContext+SaveHelper.swift in Sources */,
 				E2EA7AA626BEF9E50036048E /* EditSingleGradeView.swift in Sources */,
 				E276A6E026D7B97E00380C14 /* GradeStudent.swift in Sources */,
+				6DE3E8BB26E55623004212D3 /* EmailEditorView.swift in Sources */,
 				39B3775126E3F14B0005A390 /* JSONFile.swift in Sources */,
 				E26ACC9926CE70F2004468AB /* Course+StudentHelper.swift in Sources */,
 				E25FBCBA26BAE1EC000BDD65 /* StudentListView.swift in Sources */,
 				6D3EECD626E3D29B00E9D290 /* EmailViewModel.swift in Sources */,
+				6DE3E8B726E55533004212D3 /* SendMultipleEmailsViewModel.swift in Sources */,
 				E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */,
 				3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */,
 				E200846726DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift in Sources */,
 				E25FBCAD26BADAC8000BDD65 /* Persistence.swift in Sources */,
+				6DE3E8B326E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift in Sources */,
+				6DE3E8B126E554B9004212D3 /* SendMultipleEmails.swift in Sources */,
 				E25FBCA626BADAC6000BDD65 /* CourseListView.swift in Sources */,
 				E2B7451526BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift in Sources */,
+				6DE3E8B526E5551C004212D3 /* EmailKeys.swift in Sources */,
 				E200846E26DEE4EF0098D981 /* TranscriptGradesViewModel.swift in Sources */,
 				E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */,
 				E200846C26DED7D70098D981 /* TranscriptGrade+helper.swift in Sources */,
