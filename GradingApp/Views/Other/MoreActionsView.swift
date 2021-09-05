@@ -18,6 +18,7 @@ struct MoreActionsView: View {
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
+    @State private var showingExport = false
     
     
     var body: some View {
@@ -31,7 +32,7 @@ struct MoreActionsView: View {
                         Text("Backup")
                     }
                     Button {
-                        self.showingBackup = true
+                        self.showingExport = true
                         viewModel.backupType = .export
                     } label: {
                         Text("Export")
@@ -129,15 +130,26 @@ struct MoreActionsView: View {
                 }
             }
             
-        }
-        .fileExporter(isPresented: $showingBackup, document: viewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
-            switch result {
-            case .success(let url):
-                print("Saved to \(url)")
-            case .failure(let error):
-                print(error.localizedDescription)
+        }.if(viewModel.backupType == .backup, transform: { view in
+            view.fileExporter(isPresented: $showingBackup, document: viewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
+                switch result {
+                case .success(let url):
+                    print("Saved to \(url)")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
-        }
+        }).if(viewModel.backupType == .export, transform: { view in
+            view.fileExporter(isPresented: $showingExport, documents: viewModel.getSingleCSVFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
+                switch result {
+                case .success(let url):
+                    print("Saved to \(url)")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        })
+       
         .fileImporter(
             isPresented: $showingRestore,
             allowedContentTypes: [.json],

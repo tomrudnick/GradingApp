@@ -50,7 +50,6 @@ struct StudentGradeListView: View {
                             .frame(height: 1.5)
                             .edgesIgnoringSafeArea(.horizontal)
                     }
-                    
                 }
             }
         }
