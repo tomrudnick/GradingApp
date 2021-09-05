@@ -18,13 +18,13 @@ class SendMultipileEmailsSelectedGradeViewModel: SendMultipleEmailsViewModelBase
         get {
             ["\\\(EmailKeys.firstName)",
              "\\\(EmailKeys.lastName)",
+             "\\\(EmailKeys.selectedGradeDate)",
+             "\\\(EmailKeys.selectedGrade)",
              "\\\(EmailKeys.oralGrade)",
              "\\\(EmailKeys.writtenGrade)",
              "\\\(EmailKeys.grade)",
              "\\\(EmailKeys.transcriptGradeHalf)",
-             "\\\(EmailKeys.transcriptGrade)",
-             "\\\(EmailKeys.selectedGrade)",
-             "\\\(EmailKeys.selectedGradeDate)"
+             "\\\(EmailKeys.transcriptGrade)"
             ]
         }
     }
