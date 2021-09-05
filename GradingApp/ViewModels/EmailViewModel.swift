@@ -44,6 +44,25 @@ class EmailViewModel: ObservableObject {
         }
     }
     
+    var emailKeys: [String] {
+        get {
+            ["\\\(EmailKeys.firstName)",
+             "\\\(EmailKeys.lastName)",
+             "\\\(EmailKeys.oralGrade)",
+             "\\\(EmailKeys.writtenGrade)",
+             "\\\(EmailKeys.grade)",
+             "\\\(EmailKeys.transcriptGradeHalf)",
+             "\\\(EmailKeys.transcriptGrade)"
+            ]
+        }
+    }
+    
+    
+    
+    var regexString: String {
+        emailKeys.joined(separator: "|")
+    }
+    
     let keychain: Keychain
     
     init() {
@@ -66,7 +85,7 @@ class EmailViewModel: ObservableObject {
         NSUbiquitousKeyValueStore.default.synchronize()
     }
     
-    func sendEmails(emailText: String, course: Course, half: HalfType, progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
+    func sendEmails(subject: String, emailText: String, course: Course, half: HalfType, progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
         let smtp = SMTP(hostname: hostname, email: self.email, password: password, port: Int32(portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 10)
         var mails: [Mail] = []
         let sender = Mail.User(email: self.email)
@@ -81,7 +100,7 @@ class EmailViewModel: ObservableObject {
             emailString = emailString.replacingOccurrences(of: EmailKeys.grade, with: student.getSimpleGradeAverage(half: half))
             mails.append(Mail(from: sender,
                                to: [receiverStudent],
-                               subject: "Note",
+                               subject: subject,
                                text: emailString
                          )
             )

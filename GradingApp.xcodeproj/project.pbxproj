@@ -22,6 +22,7 @@
 		6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECD826E3D2CC00E9D290 /* KeychainAccess */; };
 		6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECDB26E3D32100E9D290 /* SwiftSMTP */; };
 		6D3EECDE26E3E0CE00E9D290 /* SendEmailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */; };
+		6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */; };
 		6DBCF24126E372C1009F4167 /* GradePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */; };
 		6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */; };
 		E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */; };
@@ -112,6 +113,7 @@
 		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
 		6D3EECD526E3D29B00E9D290 /* EmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailViewModel.swift; sourceTree = "<group>"; };
 		6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmailsView.swift; sourceTree = "<group>"; };
+		6D78609526E50C580090D7F4 /* HighlightedTextEditor */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HighlightedTextEditor; path = ../HighlightedTextEditor; sourceTree = "<group>"; };
 		6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradePickerViewModel.swift; sourceTree = "<group>"; };
 		6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSingleGradePicker.swift; sourceTree = "<group>"; };
 		E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
 				6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */,
 				E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */,
+				6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */,
 				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,6 +345,7 @@
 		E25FBC9726BADAC6000BDD65 = {
 			isa = PBXGroup;
 			children = (
+				6D78609526E50C580090D7F4 /* HighlightedTextEditor */,
 				E25FBCA226BADAC6000BDD65 /* GradingApp */,
 				E2B7451D26C01C4F002D0B4C /* GradingAppTests */,
 				E25FBCA126BADAC6000BDD65 /* Products */,
@@ -506,6 +510,7 @@
 				E2A20B0826D43777005FA240 /* SwiftUICharts */,
 				6D3EECD826E3D2CC00E9D290 /* KeychainAccess */,
 				6D3EECDB26E3D32100E9D290 /* SwiftSMTP */,
+				6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */,
 			);
 			productName = CoreDataTest;
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
@@ -561,6 +566,7 @@
 				E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */,
 				6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
+				6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 			);
 			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
 			projectDirPath = "";
@@ -949,6 +955,14 @@
 				minimumVersion = 5.1.200;
 			};
 		};
+		6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kyle-n/HighlightedTextEditor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
 		E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
@@ -974,6 +988,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
 			productName = SwiftSMTP;
+		};
+		6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */;
+			productName = HighlightedTextEditor;
 		};
 		E2A20B0826D43777005FA240 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
