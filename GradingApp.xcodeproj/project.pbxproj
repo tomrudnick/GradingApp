@@ -31,6 +31,7 @@
 		6DE3E8B726E55533004212D3 /* SendMultipleEmailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B626E55533004212D3 /* SendMultipleEmailsViewModel.swift */; };
 		6DE3E8B926E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */; };
 		6DE3E8BB26E55623004212D3 /* EmailEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */; };
+		6DE3E8BD26E56865004212D3 /* SendSingleEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */; };
 		E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */; };
 		E200846326DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845D26DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift */; };
 		E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845E26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift */; };
@@ -128,6 +129,7 @@
 		6DE3E8B626E55533004212D3 /* SendMultipleEmailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsViewModel.swift; sourceTree = "<group>"; };
 		6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultileEmailsSelectedGradeViewModel.swift; sourceTree = "<group>"; };
 		6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailEditorView.swift; sourceTree = "<group>"; };
+		6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSingleEmailViewModel.swift; sourceTree = "<group>"; };
 		E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E200845D26DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E200845E26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HalfYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */,
 				6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */,
 				6DE3E8B426E5551C004212D3 /* EmailKeys.swift */,
+				6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */,
 			);
 			path = Email;
 			sourceTree = "<group>";
@@ -639,6 +642,7 @@
 				E25FBCBF26BAE976000BDD65 /* Course+helper.swift in Sources */,
 				E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */,
 				E24AF9CF26D83306000F2313 /* CSVFile.swift in Sources */,
+				6DE3E8BD26E56865004212D3 /* SendSingleEmailViewModel.swift in Sources */,
 				E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */,
 				E210AEEB26C11C1300DF2D85 /* EditCourseView.swift in Sources */,
 				E200846A26DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift in Sources */,

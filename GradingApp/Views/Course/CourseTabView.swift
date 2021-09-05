@@ -93,7 +93,7 @@ struct CourseTabView: View {
             self.sendEmailViewModel.fetchData(course: course, half: halfYear)
         }
         .sheet(isPresented: $showSendEmailSheet, content: {
-            SendEmailsView(course: course, emailViewModel: sendEmailViewModel)
+            SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel)
         })
         .fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
             StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)

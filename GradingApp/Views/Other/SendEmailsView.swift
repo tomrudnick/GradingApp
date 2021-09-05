@@ -14,18 +14,18 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var course: Course
     @ObservedObject var emailViewModel: Model
     @State var showProgressbar = false
     @State var doubleValue = 0.0
     @State var showErrorAlert = false
     @State var errorMessage = ""
     
+    private var title: String
 
     
-    init(course: Course, emailViewModel: Model) {
-        self.course = course
+    init(title: String, emailViewModel: Model) {
         self.emailViewModel = emailViewModel
+        self.title = title
     }
     
     var body: some View {
@@ -37,7 +37,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                 .alert(isPresented: $showErrorAlert, content: {
                     Alert(title: Text("Fehler"), message: Text(errorMessage), dismissButton: .default(Text("Ok!")))
                 })
-                .navigationBarTitle(Text("Mail an: \(course.name)"), displayMode: .inline)
+                .navigationBarTitle(Text("Mail an: \(title)"), displayMode: .inline)
                 .toolbar(content: {
                     ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                         Button(action: {

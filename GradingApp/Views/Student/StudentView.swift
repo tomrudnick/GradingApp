@@ -15,7 +15,9 @@ struct StudentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @ObservedObject var student: Student
+    @StateObject var sendEmailViewModel = SendSingleEmailViewModel()
     
+    @State var showSendEmailSheet = false
     @State var showAddGradeSheet = false
     @State private var action: Int? = 0
     var columns = Array(repeating: GridItem(.flexible(), spacing: 20), count: 2)
@@ -34,6 +36,23 @@ struct StudentView: View {
                 NavigationLink(destination: GradeDetailView(student: student, gradeType: .written)) {
                     GradeGridViewDisplay(title: "Schriftlich", grade: student.getGradeAverage(.written, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
                 }
+                
+                Button {
+                    self.sendEmailViewModel.fetchData(student: student, half: halfYear)
+                    self.showSendEmailSheet.toggle()
+                } label: {
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Send Email")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.white)
+                    }
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(25)
+                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 5)
+                }
+
                 
             }
             CardView {
@@ -56,6 +75,9 @@ struct StudentView: View {
             ToolbarItem(placement: ToolbarItemPlacement.primaryAction) {
                 addGradeButton
             }
+        })
+        .sheet(isPresented: $showSendEmailSheet, content: {
+            SendEmailsView(title: "\(student.firstName) \(student.lastName)", emailViewModel: sendEmailViewModel)
         })
         .sheet(isPresented: $showAddGradeSheet, content: {
             AddSingleGradeView(student: student)

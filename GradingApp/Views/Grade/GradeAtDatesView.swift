@@ -60,7 +60,7 @@ struct GradeAtDatesView: View {
                 })
             }
         }.sheet(isPresented: $showEmailSheet, content: {
-            SendEmailsView(course: course, emailViewModel: sendGradeEmailViewModel)
+            SendEmailsView(title: course.title, emailViewModel: sendGradeEmailViewModel)
         })
     }
 }
