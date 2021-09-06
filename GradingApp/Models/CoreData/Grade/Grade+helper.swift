@@ -149,11 +149,13 @@ extension Grade {
     }
     
     func toString() -> String {
-        switch self.student!.course!.ageGroup {
+        switch self.student?.course?.ageGroup {
         case .lower:
             return Grade.convertGradePointsToGrades(value: Int(value))
         case .upper:
             return String(value)
+        case .none:
+            return ""
         }
     }
     

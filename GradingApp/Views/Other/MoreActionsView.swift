@@ -20,6 +20,12 @@ struct MoreActionsView: View {
     @State private var showingRestore = false
     @State private var showingExport = false
     
+    var onDelete: () -> ()
+    
+    init(onDelete: @escaping () -> ()) {
+        self.onDelete = onDelete
+    }
+    
     
     var body: some View {
         NavigationView {
@@ -48,6 +54,7 @@ struct MoreActionsView: View {
                 
                 Section(header: Text("Temporary")) {
                     Button {
+                        onDelete()
                         viewModel.deleteAllCourses(viewContext: viewContext)
                     } label: {
                         Text("Delete everything")

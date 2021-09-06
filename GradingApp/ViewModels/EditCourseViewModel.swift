@@ -63,13 +63,6 @@ class CourseEditViewModel: ObservableObject {
                             }
                         }
                     }
-                    /*for student in courseVM.students {
-                        if !courseVM.fetchedStudents.contains(where: { (key: UUID, _ :Student) in
-                            key == student.id
-                        }) {
-                            Student.addStudent(student: student, course: course, context: context)
-                        }
-                    }*/
                     courseVM.students.filter { student in !courseVM.fetchedStudents.contains(where: { $0.key == student.id })}
                         .forEach({Student.addStudent(student: $0, course: course, context: context)})
                 }

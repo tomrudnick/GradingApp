@@ -93,11 +93,13 @@ extension Student {
     
     func getGradeAverage(_ type: GradeType, half: HalfType) -> String {
         if gradesExist(type, half: half) {
-            switch self.course!.ageGroup {
+            switch self.course?.ageGroup {
             case .lower:
                 return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: gradeAverage(type: type, half: half)))
             case .upper:
                 return String(format: "%.1f", self.gradeAverage(type: type, half: half))
+            case .none:
+                return "-"
             }
         } else {
             return "-"
@@ -106,11 +108,13 @@ extension Student {
     
     func getGradeAverage(half: HalfType) -> String {
         if gradesExist(half: half) {
-            switch self.course!.ageGroup {
+            switch self.course?.ageGroup {
             case .lower:
                 return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: totalGradeAverage(half: half)))
             case .upper:
                 return String(format: "%.1f", self.totalGradeAverage(half: half))
+            case .none:
+                return "-"
             }
         } else {
             return "-"
@@ -120,17 +124,19 @@ extension Student {
     func getSimpleGradeAverage(_ type: GradeType, half: HalfType) -> String {
         let average = self.gradeAverage(type: type, half: half)
         let floorAverage = Int(floor(average))
-        switch self.course!.ageGroup {
+        switch self.course?.ageGroup {
         case .lower:
             return Grade.convertGradePointsToGrades(value: floorAverage)
         case .upper:
             return String(floorAverage)
+        case .none:
+            return "-"
         }
     }
     
     func getSimpleGradeAverage(half: HalfType) -> String {
         let average = Int(self.totalGradeAverage(half: half))
-        switch self.course!.ageGroup {
+        switch self.course?.ageGroup {
         case .lower:
             return Grade.convertGradePointsToGrades(value: average)
         case .upper:
@@ -139,6 +145,8 @@ extension Student {
             } else {
                 return String(average)
             }
+        case .none:
+            return "-"
         }
     }
 }

@@ -14,28 +14,33 @@ struct CourseListView: View {
     
     @FetchRequest(fetchRequest: Course.fetchAllNonHidden(), animation: .default )
     private var courses: FetchedResults<Course>
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    private var dummyCourse = Course()
     
     @State var showEditCourses = false
     @State var showAddCourse = false
     @State var showMoreActions = false
-    
+    @State var activeLink: ObjectIdentifier? = nil
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
     @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
-    @State private var refreshingID = UUID()
+    
     
     var body: some View {
         NavigationView {
             List(courses) { course in
-                NavigationLink(
-                    destination: CourseTabView(course: course),
-                    label: {
-                        Text(course.title).font(.title2)
-                        Text("(" + String(course.students.count) + ")").font(.footnote)
-                    }
-                )
+                NavigationLink(destination: CourseTabView(course: course), tag: course.id, selection: $activeLink) {
+                    Text(course.title).font(.title2)
+                    Text("(" + String(course.students.count) + ")").font(.footnote)
+                }
             }
             .onAppear {
+                //let hashable: Hashable = courses.first!.id
                 selectedHalfYearVM.fetchValue()
+                if idiom == .pad {
+                    self.activeLink = dummyCourse.id
+                }
+                
+                print("UPDATE!")
             }
             .alert(isPresented: $showAlert, content: {
                 Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
@@ -44,7 +49,11 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView().environment(\.managedObjectContext, viewContext)
+                MoreActionsView(onDelete: {
+                    if idiom == .pad {
+                        self.activeLink = dummyCourse.id
+                    }
+                }).environment(\.managedObjectContext, viewContext)
                     .onDisappear {
                         selectedHalfYearVM.fetchValue()
                     }
@@ -68,6 +77,7 @@ struct CourseListView: View {
                     moreActionsButton
                 }
             }
+            NavigationLink(destination: WelcomeViewIpad(), tag: dummyCourse.id, selection: $activeLink) { }
         }
         .environment(\.currentHalfYear, selectedHalfYearVM.activeHalf)
     }
@@ -108,3 +118,11 @@ struct CourseListView: View {
         }
     }
 
+
+struct WelcomeViewIpad: View {
+    var body: some View {
+        Text("Willkommen zurück Matthias!")
+            .font(.largeTitle)
+            .navigationBarHidden(true)
+    }
+}
