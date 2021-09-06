@@ -71,8 +71,8 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                         print(emailViewModel.regexString)
                     }
                     .introspect { editor in
-                        if let range = selectionRange {
-                            let lowerPosition = editor.textView.position(from: editor.textView.beginningOfDocument, offset: range.lowerBound)!
+                        editor.textView.autocorrectionType = .no
+                        if let range = selectionRange,  let lowerPosition = editor.textView.position(from: editor.textView.beginningOfDocument, offset: range.lowerBound) {
                             editor.textView.selectedTextRange = editor.textView.textRange(from: lowerPosition, to: lowerPosition)
                         }
                     }.frame(height: 500)
