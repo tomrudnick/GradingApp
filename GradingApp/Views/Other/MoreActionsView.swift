@@ -157,9 +157,13 @@ struct MoreActionsView: View {
         ) { result in
             do {
                 guard let selectedFileURL: URL = try result.get().first else { return }
-                let selectedFileData = try Data(contentsOf: selectedFileURL)
-                let _ = try! JSONDecoder().decode([Course].self, from: selectedFileData)
-                viewContext.saveCustom()
+                if selectedFileURL.startAccessingSecurityScopedResource() {
+                    let selectedFileData = try Data(contentsOf: selectedFileURL)
+                    let _ = try! JSONDecoder().decode([Course].self, from: selectedFileData)
+                    viewContext.saveCustom()
+                    selectedFileURL.stopAccessingSecurityScopedResource()
+                }
+               
             } catch {
                 print("Something went wrong")
             }

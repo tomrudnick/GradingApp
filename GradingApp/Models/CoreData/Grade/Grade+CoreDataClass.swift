@@ -12,7 +12,7 @@ import CoreData
 @objc(Grade)
 public class Grade: NSManagedObject, Codable {
     
-    private enum CodingKeys: String, CodingKey { case date, type, value, comment }
+    private enum CodingKeys: String, CodingKey { case date, type, value, comment, half, multiplier }
     
     required public convenience init(from decoder: Decoder) throws {
             self.init(context: PersistenceController.shared.container.viewContext)
@@ -21,6 +21,8 @@ public class Grade: NSManagedObject, Codable {
         type = try! container.decode(GradeType.self, forKey: .type)
         value = try! container.decode(Int32.self, forKey: .value)
         comment = try! container.decode(String.self, forKey: .comment)
+        half = try! container.decode(HalfType.self, forKey: .half)
+        multiplier = try! container.decode(Double.self, forKey: .multiplier)
         }
 
     
@@ -30,6 +32,8 @@ public class Grade: NSManagedObject, Codable {
         try container.encode(type.rawValue, forKey: .type)
         try container.encode(value, forKey: .value)
         try container.encode(comment, forKey: .comment)
+        try container.encode(half.rawValue, forKey: .half)
+        try container.encode(multiplier, forKey: .multiplier)
     }
 
 }
