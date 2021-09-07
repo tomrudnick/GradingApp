@@ -14,7 +14,6 @@ struct EditCoursesView: View {
     private var viewContext: NSManagedObjectContext
     
     @StateObject var editVM: CourseEditViewModel
-    @State private var showEditCourseSheet = false
     @State private var selectedCourse: CourseEditViewModel.CourseVM? = nil
     @State private var showSaveAlert = false
     @State private var saveAlertText = ""
@@ -26,7 +25,7 @@ struct EditCoursesView: View {
     
     var body: some View {
         VStack {
-            if #available(iOS 15.0, *) { //if the app is ported to iOS 15 this 'if' statement should be removed
+            if #available(iOS 15.0, macCatalyst 15.0, OSX 12.0, *) { //if the app is ported to iOS 15 this 'if' statement should be removed
                 List {
                     ForEach(editVM.courses) { course in
                         NavigationLink(
@@ -35,7 +34,7 @@ struct EditCoursesView: View {
                                 EditCourseDetailView(course: course)
                                     .contextMenu(menuItems: {
                                         Button(action: {
-                                            showEditCourseSheet = true
+                                            editCourse(course: course)
                                         }, label: {
                                             Label("Edit", systemImage: "pencil")
                                         })
@@ -52,8 +51,7 @@ struct EditCoursesView: View {
                             })
                             .swipeActions {
                                 Button {
-                                    self.selectedCourse = course
-                                    showEditCourseSheet = true
+                                    editCourse(course: course)
                                 } label: {
                                     Label("Edit", systemImage: "pencil")
                                 }.tint(Color.accentColor)
@@ -79,7 +77,7 @@ struct EditCoursesView: View {
                                 EditCourseDetailView(course: course)
                                     .contextMenu(menuItems: {
                                         Button(action: {
-                                            showEditCourseSheet = true
+                                            editCourse(course: course)
                                         }, label: {
                                             Label("Edit", systemImage: "pencil")
                                         })
@@ -94,9 +92,6 @@ struct EditCoursesView: View {
                                         })
                                     })
                             })
-                            .sheet(isPresented: $showEditCourseSheet, content: {
-                                EditCourseView(course: course)
-                            })
                     }
                     .onDelete(
                         perform: editVM.deleteCoursesEdit
@@ -105,17 +100,12 @@ struct EditCoursesView: View {
                 }
             }
         }
-        .alert(isPresented: $showSaveAlert, TextAlert(title: "Achtung!", message: "Möchten sie wirklich Speichern?", placeholder: "Geben sie hier \"speichern\" ein", accept: "Speichern", cancel: "Abbrechen", secondaryActionTitle: nil, keyboardType: .default, action: { string in
-            if let result = string {
-                if result == "speichern" {
-                    editVM.save()
-                    presentationMode.wrappedValue.dismiss()
-                }
-                showSaveAlert = false
-            }
-        }, secondaryAction: {
-            print("no Success")
-        }))
+        .alert(isPresented: $showSaveAlert) {
+            Alert(title: Text("Achtung!"), message: Text("Möchten sie wirklich speichern?"), primaryButton: .default(Text("Speichern"), action: {
+                editVM.save()
+                presentationMode.wrappedValue.dismiss()
+            }), secondaryButton: .cancel())
+        }
         .sheet(item: $selectedCourse, content: { course in
             EditCourseView(course: course)
         })
@@ -131,7 +121,7 @@ struct EditCoursesView: View {
     }
     var saveButton: some View {
         Button {
-            showSaveAlert.toggle()
+            showSaveAlert = true
         } label: {
             Text("Speichern")
         }
@@ -145,6 +135,9 @@ struct EditCoursesView: View {
         }
     }
     
+    func editCourse(course: CourseEditViewModel.CourseVM) {
+        self.selectedCourse = course
+    }
     
 }
 struct EditCourseView_Previews: PreviewProvider {

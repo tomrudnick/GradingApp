@@ -10,22 +10,19 @@ import SwiftUI
 struct EditStudentsView: View {
     
     @ObservedObject var course: CourseEditViewModel.CourseVM
-    @State private var showEditStudentSheet = false
     @State private var selectedStudent: Student.DataModel? = nil
-    @State var showAddStudent = false
-    
+    @State private var showAddStudent = false
     
     
     var body: some View {
         VStack {
-            if #available(iOS 15.0, *) {
+            if #available(iOS 15.0, OSX 12.0, macCatalyst 15.0, *) {
                 List {
                     ForEach(course.students) { student in
                         EditStudentDetailView(student: student)
                             .contextMenu(ContextMenu(menuItems: {
                                 Button(action: {
                                     self.selectedStudent = student
-                                    showEditStudentSheet.toggle()
                                 }, label: {
                                     Label("Edit", systemImage: "pencil")
                                 })
@@ -42,7 +39,6 @@ struct EditStudentsView: View {
                             .swipeActions(content: {
                                 Button {
                                     self.selectedStudent = student
-                                    showEditStudentSheet.toggle()
                                 } label: {
                                     Label("Edit", systemImage: "pencil")
                                 }.tint(Color.accentColor)
@@ -67,7 +63,6 @@ struct EditStudentsView: View {
                             .contextMenu(ContextMenu(menuItems: {
                                 Button(action: {
                                     self.selectedStudent = student
-                                    showEditStudentSheet.toggle()
                                 }, label: {
                                     Label("Edit", systemImage: "pencil")
                                 })
@@ -95,6 +90,9 @@ struct EditStudentsView: View {
                 course.updateStudent(for: newStudent)
             }
         })
+        .sheet(isPresented: $showAddStudent, content: {
+            AddStudent(course: course)
+        })
         .navigationTitle(course.title)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -105,9 +103,7 @@ struct EditStudentsView: View {
                 })
             }
         })
-        .sheet(isPresented: $showAddStudent, content: {
-            AddStudent(course: course)
-        })
+
     }
     
     private func binding(for student: Student.DataModel) -> Binding<Student.DataModel> {
