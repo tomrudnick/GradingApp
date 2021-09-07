@@ -13,7 +13,6 @@
 		394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 394D7C4F26BDC7DB00892BD4 /* CSV */; };
 		395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */; };
 		39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39607B5026CD0A9D007DFD63 /* SingleStudent.swift */; };
-		3974C8E326E4B98C00D2352B /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3974C8E226E4B98C00D2352B /* Bundle-Decodable.swift */; };
 		39B3775126E3F14B0005A390 /* JSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B3775026E3F14B0005A390 /* JSONFile.swift */; };
 		39BCE45C26E4C7B900FB2680 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */; };
 		39BCE45E26E4C7B900FB2680 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */; };
@@ -113,7 +112,6 @@
 		3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerator.swift; sourceTree = "<group>"; };
 		39607B5026CD0A9D007DFD63 /* SingleStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStudent.swift; sourceTree = "<group>"; };
-		3974C8E226E4B98C00D2352B /* Bundle-Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
 		39B3775026E3F14B0005A390 /* JSONFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFile.swift; sourceTree = "<group>"; };
 		39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass.swift"; sourceTree = "<group>"; };
 		39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -512,7 +510,6 @@
 				395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */,
 				E276A6DF26D7B97E00380C14 /* GradeStudent.swift */,
 				E24AF9CE26D83306000F2313 /* CSVFile.swift */,
-				3974C8E226E4B98C00D2352B /* Bundle-Decodable.swift */,
 				39B3775026E3F14B0005A390 /* JSONFile.swift */,
 			);
 			path = Models;
@@ -697,7 +694,6 @@
 				E200846626DE99330098D981 /* TranscriptGrade+CoreDataClass.swift in Sources */,
 				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
 				39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */,
-				3974C8E326E4B98C00D2352B /* Bundle-Decodable.swift in Sources */,
 				E25FBCC126BAF24D000BDD65 /* StudentView.swift in Sources */,
 				E2E2D0E426D67EB500C62887 /* Student+GradeHelper.swift in Sources */,
 				395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */,
