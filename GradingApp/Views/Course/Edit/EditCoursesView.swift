@@ -14,9 +14,10 @@ struct EditCoursesView: View {
     private var viewContext: NSManagedObjectContext
     
     @StateObject var editVM: CourseEditViewModel
-    @State private var showAlert = false
     @State private var showEditCourseSheet = false
     @State private var selectedCourse: CourseEditViewModel.CourseVM? = nil
+    @State private var showSaveAlert = false
+    @State private var saveAlertText = ""
     
     init(context: NSManagedObjectContext) {
         _editVM = StateObject(wrappedValue: CourseEditViewModel(context: context))
@@ -104,6 +105,17 @@ struct EditCoursesView: View {
                 }
             }
         }
+        .alert(isPresented: $showSaveAlert, TextAlert(title: "Achtung!", message: "Möchten sie wirklich Speichern?", placeholder: "Geben sie hier \"speichern\" ein", accept: "Speichern", cancel: "Abbrechen", secondaryActionTitle: nil, keyboardType: .default, action: { string in
+            if let result = string {
+                if result == "speichern" {
+                    editVM.save()
+                    presentationMode.wrappedValue.dismiss()
+                }
+                showSaveAlert = false
+            }
+        }, secondaryAction: {
+            print("no Success")
+        }))
         .sheet(item: $selectedCourse, content: { course in
             EditCourseView(course: course)
         })
@@ -119,8 +131,7 @@ struct EditCoursesView: View {
     }
     var saveButton: some View {
         Button {
-            editVM.save()
-            presentationMode.wrappedValue.dismiss()
+            showSaveAlert.toggle()
         } label: {
             Text("Speichern")
         }
