@@ -45,11 +45,11 @@ class SendMultipleEmails {
     static func standardReplacementEmailString(_ text: String, student: Student, half: HalfType) -> String {
         var emailString = text.replacingOccurrences(of: EmailKeys.firstName, with: student.firstName)
         emailString = emailString.replacingOccurrences(of: EmailKeys.lastName, with: student.lastName)
-        emailString = emailString.replacingOccurrences(of: EmailKeys.oralGrade, with: student.getSimpleGradeAverage(.oral, half: half))
-        emailString = emailString.replacingOccurrences(of: EmailKeys.writtenGrade, with: student.getSimpleGradeAverage(.written, half: half))
+        emailString = emailString.replacingOccurrences(of: EmailKeys.oralGrade, with: student.getRoundedGradeAverage(.oral, half: half))
+        emailString = emailString.replacingOccurrences(of: EmailKeys.writtenGrade, with: student.getRoundedGradeAverage(.written, half: half))
         emailString = emailString.replacingOccurrences(of: EmailKeys.transcriptGradeHalf, with: student.transcriptGrade?.getTranscriptGradeHalfValueString(half: half) ?? "-")
         emailString = emailString.replacingOccurrences(of: EmailKeys.transcriptGrade, with: student.transcriptGrade?.getCalculatedValueString() ?? "-")
-        emailString = emailString.replacingOccurrences(of: EmailKeys.grade, with: student.getSimpleGradeAverage(half: half))
+        emailString = emailString.replacingOccurrences(of: EmailKeys.grade, with: student.getRoundedGradeAverage(half: half))
         return emailString
     }
 }

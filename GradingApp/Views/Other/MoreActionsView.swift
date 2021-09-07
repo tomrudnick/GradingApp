@@ -166,6 +166,7 @@ struct MoreActionsView: View {
                 guard let selectedFileURL: URL = try result.get().first else { return }
                 if selectedFileURL.startAccessingSecurityScopedResource() {
                     let selectedFileData = try Data(contentsOf: selectedFileURL)
+                    viewModel.deleteAllCourses(viewContext: viewContext)
                     let _ = try! JSONDecoder().decode([Course].self, from: selectedFileData)
                     viewContext.saveCustom()
                     selectedFileURL.stopAccessingSecurityScopedResource()

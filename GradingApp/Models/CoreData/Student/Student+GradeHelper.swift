@@ -64,14 +64,17 @@ extension Student {
             return -1
         }
     }
-    
+    //This Method is only to display the grade and not for futher calculations
     func getRoundedGradeAverage(_ type: GradeType, half: HalfType) -> String {
-        if gradesExist(type, half: half) {
-            switch self.course!.ageGroup {
+        if gradesExist(half: half) {
+            let average = Int(round(self.gradeAverage(type: type, half: half)))
+            switch self.course?.ageGroup {
             case .lower:
-                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: gradeAverage(type: type, half: half)))
+                return Grade.convertGradePointsToGrades(value: average)
             case .upper:
-                return String(Grade.roundPoints(points: gradeAverage(type: type, half: half)))
+                return String(average)
+            case .none:
+                return "-"
             }
         } else {
             return "-"
@@ -80,11 +83,14 @@ extension Student {
     
     func getRoundedGradeAverage(half: HalfType) -> String {
         if gradesExist(half: half) {
-            switch self.course!.ageGroup {
+            let average = Int(round(self.totalGradeAverage(half: half)))
+            switch self.course?.ageGroup {
             case .lower:
-                return Grade.convertGradePointsToGrades(value: Grade.roundPoints(points: totalGradeAverage(half: half)))
+                return Grade.convertGradePointsToGrades(value: average)
             case .upper:
-                return String(Grade.roundPoints(points: totalGradeAverage(half: half)))
+                return String(average)
+            case .none:
+                return "-"
             }
         } else {
             return "-"
@@ -117,35 +123,6 @@ extension Student {
                 return "-"
             }
         } else {
-            return "-"
-        }
-    }
-    
-    func getSimpleGradeAverage(_ type: GradeType, half: HalfType) -> String {
-        let average = self.gradeAverage(type: type, half: half)
-        let floorAverage = Int(floor(average))
-        switch self.course?.ageGroup {
-        case .lower:
-            return Grade.convertGradePointsToGrades(value: floorAverage)
-        case .upper:
-            return String(floorAverage)
-        case .none:
-            return "-"
-        }
-    }
-    
-    func getSimpleGradeAverage(half: HalfType) -> String {
-        let average = Int(self.totalGradeAverage(half: half))
-        switch self.course?.ageGroup {
-        case .lower:
-            return Grade.convertGradePointsToGrades(value: average)
-        case .upper:
-            if average == -1 {
-                return "-"
-            } else {
-                return String(average)
-            }
-        case .none:
             return "-"
         }
     }

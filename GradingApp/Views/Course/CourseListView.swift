@@ -36,11 +36,6 @@ struct CourseListView: View {
             .onAppear {
                 //let hashable: Hashable = courses.first!.id
                 selectedHalfYearVM.fetchValue()
-                if idiom == .pad {
-                    self.activeLink = dummyCourse.id
-                }
-                
-                print("UPDATE!")
             }
             .alert(isPresented: $showAlert, content: {
                 Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
