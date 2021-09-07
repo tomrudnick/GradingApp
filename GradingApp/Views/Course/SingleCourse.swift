@@ -83,7 +83,11 @@ struct SingleCourse: View {
                     Text("Neuer Kurs")
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    CustomButtonView(label: "Abbrechen", action: {presentationMode.wrappedValue.dismiss()}, buttonColor: .accentColor)
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Abbrechen")
+                    }
                 }
             })
         }

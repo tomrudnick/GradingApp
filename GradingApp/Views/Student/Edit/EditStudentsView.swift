@@ -41,6 +41,13 @@ struct EditStudentsView: View {
                             }))
                             .swipeActions(content: {
                                 Button {
+                                    self.selectedStudent = student
+                                    showEditStudentSheet.toggle()
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
+                                }.tint(Color.accentColor)
+
+                                Button {
                                     course.deleteStudentCoursesEdit(id: student.id)
                                 } label: {
                                     if student.deleted {

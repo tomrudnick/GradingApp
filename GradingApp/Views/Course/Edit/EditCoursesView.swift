@@ -16,6 +16,7 @@ struct EditCoursesView: View {
     @StateObject var editVM: CourseEditViewModel
     @State private var showAlert = false
     @State private var showEditCourseSheet = false
+    @State private var selectedCourse: CourseEditViewModel.CourseVM? = nil
     
     init(context: NSManagedObjectContext) {
         _editVM = StateObject(wrappedValue: CourseEditViewModel(context: context))
@@ -48,10 +49,14 @@ struct EditCoursesView: View {
                                         })
                                     })
                             })
-                            .sheet(isPresented: $showEditCourseSheet, content: {
-                                EditCourseView(course: course)
-                            })
                             .swipeActions {
+                                Button {
+                                    self.selectedCourse = course
+                                    showEditCourseSheet = true
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
+                                }.tint(Color.accentColor)
+
                                 Button {
                                     editVM.deleteCoursesEdit(for: course)
                                 } label: {
@@ -98,7 +103,11 @@ struct EditCoursesView: View {
                     
                 }
             }
-        }.navigationBarTitle(Text("Edit Courses"), displayMode: .inline)
+        }
+        .sheet(item: $selectedCourse, content: { course in
+            EditCourseView(course: course)
+        })
+        .navigationBarTitle(Text("Edit Courses"), displayMode: .inline)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 saveButton
