@@ -24,37 +24,79 @@ struct EditCoursesView: View {
     
     var body: some View {
         VStack {
-            List {
-                ForEach(editVM.courses) { course in
-                    NavigationLink(
-                        destination: EditStudentsView(course: course),
-                        label: {
-                            EditCourseDetailView(course: course)
-                                .contextMenu(menuItems: {
-                                    Button(action: {
-                                        showEditCourseSheet = true
-                                    }, label: {
-                                        Label("Edit", systemImage: "pencil")
+            if #available(iOS 15.0, *) { //if the app is ported to iOS 15 this 'if' statement should be removed
+                List {
+                    ForEach(editVM.courses) { course in
+                        NavigationLink(
+                            destination: EditStudentsView(course: course),
+                            label: {
+                                EditCourseDetailView(course: course)
+                                    .contextMenu(menuItems: {
+                                        Button(action: {
+                                            showEditCourseSheet = true
+                                        }, label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        })
+                                        Button(action: {
+                                            editVM.deleteCoursesEdit(for: course)
+                                        }, label: {
+                                            if course.deleted {
+                                                Label("Restore", systemImage: "arrow.uturn.backward")
+                                            } else {
+                                                Label("Delete", systemImage: "trash")
+                                            }
+                                        })
                                     })
-                                    Button(action: {
-                                        editVM.deleteCoursesEdit(for: course)
-                                    }, label: {
-                                        if course.deleted {
-                                            Label("Restore", systemImage: "arrow.uturn.backward")
-                                        } else {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                    })
-                                })
-                        })
-                        .sheet(isPresented: $showEditCourseSheet, content: {
-                            EditCourseView(course: course)
-                        })
+                            })
+                            .sheet(isPresented: $showEditCourseSheet, content: {
+                                EditCourseView(course: course)
+                            })
+                            .swipeActions {
+                                Button {
+                                    editVM.deleteCoursesEdit(for: course)
+                                } label: {
+                                    if course.deleted {
+                                        Label("Restore", systemImage: "arrow.uturn.backward")
+                                    } else {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }.tint(course.deleted ? Color.purple : Color.red)
+                            }
+                    }
                 }
-                .onDelete(
-                    perform: editVM.deleteCoursesEdit
-                )
-                
+            } else {
+                List {
+                    ForEach(editVM.courses) { course in
+                        NavigationLink(
+                            destination: EditStudentsView(course: course),
+                            label: {
+                                EditCourseDetailView(course: course)
+                                    .contextMenu(menuItems: {
+                                        Button(action: {
+                                            showEditCourseSheet = true
+                                        }, label: {
+                                            Label("Edit", systemImage: "pencil")
+                                        })
+                                        Button(action: {
+                                            editVM.deleteCoursesEdit(for: course)
+                                        }, label: {
+                                            if course.deleted {
+                                                Label("Restore", systemImage: "arrow.uturn.backward")
+                                            } else {
+                                                Label("Delete", systemImage: "trash")
+                                            }
+                                        })
+                                    })
+                            })
+                            .sheet(isPresented: $showEditCourseSheet, content: {
+                                EditCourseView(course: course)
+                            })
+                    }
+                    .onDelete(
+                        perform: editVM.deleteCoursesEdit
+                    )
+                    
+                }
             }
         }.navigationBarTitle(Text("Edit Courses"), displayMode: .inline)
         .toolbar(content: {
@@ -82,6 +124,7 @@ struct EditCoursesView: View {
             Text("Abbrechen")
         }
     }
+    
     
 }
 struct EditCourseView_Previews: PreviewProvider {

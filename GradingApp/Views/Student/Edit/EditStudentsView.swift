@@ -18,32 +18,70 @@ struct EditStudentsView: View {
     
     var body: some View {
         VStack {
-            List {
-                ForEach(course.students) { student in
-                    EditStudentDetailView(student: student)
-                        .contextMenu(ContextMenu(menuItems: {
-                            Button(action: {
-                                self.selectedStudent = student
-                                showEditStudentSheet.toggle()
-                            }, label: {
-                                Label("Edit", systemImage: "pencil")
-                            })
-                            Button(action: {
-                                course.deleteStudentCoursesEdit(id: student.id)
-                            }, label: {
+            if #available(iOS 15.0, *) {
+                List {
+                    ForEach(course.students) { student in
+                        EditStudentDetailView(student: student)
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button(action: {
+                                    self.selectedStudent = student
+                                    showEditStudentSheet.toggle()
+                                }, label: {
+                                    Label("Edit", systemImage: "pencil")
+                                })
+                                Button(action: {
+                                    course.deleteStudentCoursesEdit(id: student.id)
+                                }, label: {
+                                        if student.deleted {
+                                            Label("Restore", systemImage: "arrow.uturn.backward")
+                                        } else {
+                                            Label("Delete", systemImage: "trash")
+                                    }
+                                })
+                            }))
+                            .swipeActions(content: {
+                                Button {
+                                    course.deleteStudentCoursesEdit(id: student.id)
+                                } label: {
                                     if student.deleted {
                                         Label("Restore", systemImage: "arrow.uturn.backward")
                                     } else {
                                         Label("Delete", systemImage: "trash")
-                                }
+                                    }
+                                }.tint(student.deleted ? Color.purple : Color.red)
+
                             })
-                        }))
+                    }
                 }
-                .onDelete(perform: { indexSet in
-                    course.deleteStudentCoursesEdit(atOffsets: indexSet)
-                })
-                
+            } else {
+                List {
+                    ForEach(course.students) { student in
+                        EditStudentDetailView(student: student)
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button(action: {
+                                    self.selectedStudent = student
+                                    showEditStudentSheet.toggle()
+                                }, label: {
+                                    Label("Edit", systemImage: "pencil")
+                                })
+                                Button(action: {
+                                    course.deleteStudentCoursesEdit(id: student.id)
+                                }, label: {
+                                        if student.deleted {
+                                            Label("Restore", systemImage: "arrow.uturn.backward")
+                                        } else {
+                                            Label("Delete", systemImage: "trash")
+                                    }
+                                })
+                            }))
+                    }
+                    .onDelete(perform: { indexSet in
+                        course.deleteStudentCoursesEdit(atOffsets: indexSet)
+                    })
+                    
+                }
             }
+            
         }
         .sheet(item: $selectedStudent, content: { student in
             SingleStudent(viewTitle: "Schüler bearbeiten", student: student) { newStudent in
