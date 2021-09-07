@@ -82,7 +82,6 @@ struct CourseListView: View {
             showAddCourse = true
         } label: {
             Image(systemName: "plus.app")
-                .font(.title)
         }
     }
     
@@ -91,7 +90,6 @@ struct CourseListView: View {
             showEditCourses = true
         } label: {
             Image(systemName: "pencil.circle")
-                .font(.title)
         }
     }
     
@@ -100,7 +98,6 @@ struct CourseListView: View {
             showMoreActions = true
         } label: {
             Image(systemName: "ellipsis.circle")
-                .font(.title)
         }
     }
 }
