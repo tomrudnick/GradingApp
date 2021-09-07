@@ -70,18 +70,22 @@ class EditGradesPerDateViewModel : ObservableObject {
     func save(viewContext: NSManagedObjectContext) -> Void {
         for studentGrade in studentGrades {
             if let grade = studentGrade.grade {
-                grade.value = Int32(studentGrade.value)
-                grade.date = date
-                if let multiplier = gradeMultiplier {
-                    grade.multiplier = multiplier
-                }
-                //reset grade Multiplier if gradeType changes to written
-                if gradeType == .written {
-                    grade.multiplier = 1.0
-                }
-                
-                if let comment = comment {
-                    grade.comment = comment
+                if studentGrade.value == -1 {
+                    viewContext.delete(grade)
+                } else {
+                    grade.value = Int32(studentGrade.value)
+                    grade.date = date
+                    if let multiplier = gradeMultiplier {
+                        grade.multiplier = multiplier
+                    }
+                    //reset grade Multiplier if gradeType changes to written
+                    if gradeType == .written {
+                        grade.multiplier = 1.0
+                    }
+                    
+                    if let comment = comment {
+                        grade.comment = comment
+                    }
                 }
                 viewContext.saveCustom()
             } else if studentGrade.value != -1 {

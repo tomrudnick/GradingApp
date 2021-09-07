@@ -14,7 +14,7 @@ struct HalfYearKey: EnvironmentKey {
 
 extension EnvironmentValues {
     var currentHalfYear: HalfType {
-        get { self[HalfYearKey] }
-        set { self[HalfYearKey] = newValue }
+        get { self[HalfYearKey.self] }
+        set { self[HalfYearKey.self] = newValue }
     }
 }
