@@ -81,6 +81,62 @@ class EditGradesPerDateViewModelTest: XCTestCase {
         XCTAssertEqual(viewModel.date, dateInTwoDays)
     }
     
+    func testSetNewValue() throws {
+        let tomsNewValue = 12
+        let course = try! context.fetch(Course.fetchAll()).first!
+        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d", 0, course, 0))
+        let grades = try! context.fetch(request)
+        let gradesPerDates = Grade.getGradesPerDate(grades: grades)
+        let todayGrades = gradesPerDates[dateToday]!
+        viewModel = EditGradesPerDateViewModel(studentGrades: todayGrades, course: course)
+        var studentTom = course.students.first(where: {$0.firstName == "Tom" && $0.lastName == "Rudnick"})!
+        viewModel.setGrade(for: studentTom, value: tomsNewValue)
+        viewModel.save(viewContext: context)
+    
+        let courseNew = try! context.fetch(Course.fetchAll()).first!
+        studentTom = courseNew.students.first(where: {$0.firstName == "Tom" && $0.lastName == "Rudnick"})!
+        let gradeTomToday = studentTom.grades.first(where: {$0.date == dateToday})
+        if let gradeTom = gradeTomToday {
+            XCTAssertEqual(gradeTom.value, Int32(tomsNewValue))
+        } else {
+            XCTFail("Grade is Nil")
+        }
+    }
+    
+    func testDeleteGrade() throws {
+        let course = try! context.fetch(Course.fetchAll()).first!
+        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d", 0, course, 0))
+        var grades = try! context.fetch(request)
+        var gradesPerDates = Grade.getGradesPerDate(grades: grades)
+        let todayGrades = gradesPerDates[dateToday]!
+        viewModel = EditGradesPerDateViewModel(studentGrades: todayGrades, course: course)
+        viewModel.delete()
+        grades = try! context.fetch(request)
+        gradesPerDates = Grade.getGradesPerDate(grades: grades)
+        XCTAssertNil(gradesPerDates[dateToday])
+        
+    }
+    
+    func testSwitchToWrittenGrade() throws {
+        
+        let course = try! context.fetch(Course.fetchAll()).first!
+        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d", 0, course, 0))
+        var grades = try! context.fetch(request)
+        let gradesPerDates = Grade.getGradesPerDate(grades: grades)
+        let gradesInTwoDays = gradesPerDates[dateInTwoDays]
+        XCTAssertNotNil(gradesInTwoDays)
+        viewModel = EditGradesPerDateViewModel(studentGrades: gradesInTwoDays!, course: course)
+        viewModel.gradeType = .written
+        viewModel.save(viewContext: context)
+        
+        let writtenGradesRequest = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d", 1, course, 0))
+        grades = try! context.fetch(writtenGradesRequest)
+        grades = grades.filter({$0.date == dateInTwoDays})
+        for grade in grades {
+            XCTAssertEqual(grade.multiplier, 1.0)
+        }
+    }
+    
     func generateTestData() {
         let course = Course(name: "10f", subject: "Mathe", ageGroup: .lower, type: .firstHalf, oralWeight: 50, context: context)
         let studentTom = Student(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch", course: course, context: context)
