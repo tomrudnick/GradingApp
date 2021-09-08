@@ -16,7 +16,7 @@ class SendMultipleEmails {
     }
     
     func sendEmails(subject: String, emailText: String, students: [Student], half: HalfType, emailTextReplaceHandler: (_ emailText: String, _ student: Student) -> (String) , progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
-        let smtp = SMTP(hostname: emailViewModel.hostname, email: emailViewModel.email, password: emailViewModel.password, port: Int32(emailViewModel.portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 10)
+        let smtp = SMTP(hostname: emailViewModel.hostname, email: emailViewModel.username, password: emailViewModel.password, port: Int32(emailViewModel.portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 10)
         var mails: [Mail] = []
         let sender = Mail.User(email: emailViewModel.email)
         for student in students {
@@ -38,6 +38,9 @@ class SendMultipleEmails {
             },
             completion: { (sent, failed) in
                 completionHandler(failed)
+                for fail in failed {
+                    print(fail.1)
+                }
             }
         )
     }

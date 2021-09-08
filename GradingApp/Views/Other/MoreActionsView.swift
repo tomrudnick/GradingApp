@@ -96,12 +96,21 @@ struct MoreActionsView: View {
                             TextField("max@musterman.com", text: $emailViewModel.email)
                                 .disableAutocorrection(true)
                         }
+                        
+                        
                        
                         HStack {
                             Text("Port:")
                             Spacer()
                             TextField("465", text: $emailViewModel.port)
                                 .keyboardType(.numberPad)
+                        }
+                        
+                        HStack {
+                            Text("Username: ")
+                            Spacer()
+                            TextField("max.musterman", text: $emailViewModel.username)
+                                .disableAutocorrection(true)
                         }
                         
                         HStack {

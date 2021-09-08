@@ -51,6 +51,7 @@ struct BottomSheetMultipleGradesPicker: View {
                 } label: {
                     BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.down"))
                 }
+                //A dismiss button for the mac os version is included in order to easier dismiss the sheet
                 #if targetEnvironment(macCatalyst)
                 Button {
                     self.showAddGradeSheet = false
