@@ -58,13 +58,22 @@ struct StudentDetailView: StudentGradeDetailViewProtocol {
         self.student = student
     }
     
+    var noGradeText: Text {
+        Text("-").foregroundColor(Grade.getColor(points: -1.0))
+    }
+    
     var body: some View {
         VStack {
             HStack {
                 Text(student.firstName)
                 Spacer()
-                Text("\(student.getRoundedGradeAverage(half: halfYear)) (\(student.getGradeAverage(half: halfYear)))")
-                    .foregroundColor(Grade.getColor(points: student.totalGradeAverage(half: halfYear)))
+                if student.gradesExist(half: halfYear) {
+                    Text("\(student.getRoundedGradeAverage(half: halfYear)) (\(student.getGradeAverage(half: halfYear)))")
+                        .foregroundColor(Grade.getColor(points: student.totalGradeAverage(half: halfYear)))
+                } else {
+                    noGradeText
+                }
+                
             }
             HStack {
                 Text(student.lastName).bold()
@@ -74,14 +83,22 @@ struct StudentDetailView: StudentGradeDetailViewProtocol {
             }.padding(.top, -8)
             HStack {
                 Text("Mündlich: ")
-                Text("\(student.getRoundedGradeAverage(.oral, half: halfYear)) (\(student.getGradeAverage(.oral, half: halfYear)))")
-                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .oral, half: halfYear)))
+                if student.gradesExist(.oral, half: halfYear) {
+                    Text("\(student.getRoundedGradeAverage(.oral, half: halfYear)) (\(student.getGradeAverage(.oral, half: halfYear)))")
+                        .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .oral, half: halfYear)))
+                } else {
+                    noGradeText
+                }
                 Spacer()
             }
             HStack {
                 Text("Schriftlich: ")
-                Text("\(student.getRoundedGradeAverage(.written, half: halfYear)) (\(student.getGradeAverage(.written, half: halfYear)))")
-                    .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
+                if student.gradesExist(.written, half: halfYear) {
+                    Text("\(student.getRoundedGradeAverage(.written, half: halfYear)) (\(student.getGradeAverage(.written, half: halfYear)))")
+                        .foregroundColor(Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
+                } else {
+                    noGradeText
+                }
                 Spacer()
             }
         }

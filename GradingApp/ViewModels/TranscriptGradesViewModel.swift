@@ -15,7 +15,10 @@ protocol TranscriptGradesViewModelProtocol : ObservableObject {
     func setGrade(for student: Student, value: Int)
     func save(viewContext: NSManagedObjectContext)
 }
-
+/**
+ The TranscriptGradesViewModel only fetches the transcriptGrades that are not nil. That means you can only set transcript grades for
+ Students that allready have **at least** one half transcript grade!
+ */
 class TranscriptGradesViewModel : TranscriptGradesViewModelProtocol {
     @Published var studentGrades: [GradeStudent<TranscriptGrade>]
     private(set) var course: Course?
@@ -38,7 +41,7 @@ class TranscriptGradesViewModel : TranscriptGradesViewModelProtocol {
     func setGrade(for student: Student, value: Int) {
         GradeStudent<TranscriptGrade>.setGrade(studentGrades: &studentGrades, for: student, value: value)
     }
-    
+
     func save(viewContext: NSManagedObjectContext) {
         for studentGrade in studentGrades {
             //since we filtered the grades for non nil objects this should allways succeed

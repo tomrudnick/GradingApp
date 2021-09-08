@@ -51,8 +51,8 @@ struct MoreActionsView: View {
                         Text("Import")
                     }
                 }
-                
-                Section(header: Text("Temporary")) {
+                //This is only for development code
+                /*Section(header: Text("Temporary")) {
                     Button {
                         onDelete()
                         viewModel.deleteAllCourses(viewContext: viewContext)
@@ -61,7 +61,7 @@ struct MoreActionsView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.red)
                     }
-                }
+                }*/
                 
                 Section(header: Text("Halbjahres Einstellung")) {
                     
