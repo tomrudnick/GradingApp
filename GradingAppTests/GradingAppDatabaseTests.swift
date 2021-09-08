@@ -17,7 +17,8 @@ class GradingAppDatabaseTests: XCTestCase {
     var context: NSManagedObjectContext {
         controller.container.viewContext
     }
-    let testCourseName = "KURS"
+    let testCourseName = "NAME"
+    let testCourseSubject = "KURS"
     let testCourseNameHidden = "KURS_HIDDEN"
     
     let studentFirstName = "Tom"
@@ -35,8 +36,8 @@ class GradingAppDatabaseTests: XCTestCase {
     }
     
     func testAddCourse() throws {
-        Course.addCourse(courseName: testCourseName, context: context)
-        Course.addCourse(courseName: testCourseNameHidden, hidden: true, context: context)
+        Course.addCourse(courseName: testCourseName, courseSubject: testCourseSubject, oralWeight: 0, ageGroup: .lower, type: .firstHalf, context: context)
+        Course.addCourse(courseName: testCourseNameHidden, courseSubject: testCourseSubject, oralWeight: 0, ageGroup: .lower, type: .firstHalf, hidden: true, context: context)
         
         do {
             let courses = try context.fetch(Course.fetchAll())
@@ -51,7 +52,8 @@ class GradingAppDatabaseTests: XCTestCase {
     }
     
     func testAddStudent() throws {
-        let course = Course(name: testCourseName, context: context)
+        let course = Course(name: testCourseName, subject: testCourseSubject, ageGroup: .lower, type: .firstHalf, oralWeight: 0, context: context)
+        context.saveCustom()
         Student.addStudent(firstName: studentFirstName, lastName: studentLastName, email: "", course: course, context: context)
         
         do {
@@ -72,7 +74,8 @@ class GradingAppDatabaseTests: XCTestCase {
     
     
     func testAddManyStudents() {
-        let course = Course(name: testCourseName, context: context)
+        let course = Course(name: testCourseName, subject: testCourseSubject, ageGroup: .lower, type: .firstHalf, oralWeight: 0, context: context)
+        context.saveCustom()
         let numberOfStudents = 500
         for _ in 1...numberOfStudents {
             Student.addStudent(firstName: randomString(length: 6), lastName: randomString(length: 8), email: "", course: course, context: context)
@@ -89,7 +92,6 @@ class GradingAppDatabaseTests: XCTestCase {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
       return String((0..<length).map{ _ in letters.randomElement()! })
     }
-    
-    
-    
 }
+
+
