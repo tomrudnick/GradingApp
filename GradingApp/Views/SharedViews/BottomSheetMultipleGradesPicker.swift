@@ -52,7 +52,12 @@ struct BottomSheetMultipleGradesPicker: View {
                     BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.down"))
                 }
             })
-        }.edgesIgnoringSafeArea(.bottom)
+        }.onChange(of: showAddGradeSheet, perform: { newValue in
+            if newValue == false {
+                selectedStudent = nil
+            }
+        })
+        .edgesIgnoringSafeArea(.bottom)
     }
     
     func scrollToNext() {

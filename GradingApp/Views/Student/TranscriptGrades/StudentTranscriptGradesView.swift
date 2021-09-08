@@ -64,6 +64,7 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                                     .font(.headline)
                                     .background(Color.accentColor)
                                     .cornerRadius(10)
+                                    .shadow(radius: 5.0)
                             }.if(studentGrade.student == selectedStudent) { view in
                                 view.border(Color.red)
                             }.onTapGesture {
