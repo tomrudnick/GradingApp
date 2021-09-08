@@ -25,6 +25,7 @@
 		6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */; };
 		6DBCF24126E372C1009F4167 /* GradePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */; };
 		6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */; };
+		6DD327B726E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD327B626E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift */; };
 		6DE3E8B126E554B9004212D3 /* SendMultipleEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */; };
 		6DE3E8B326E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift */; };
 		6DE3E8B526E5551C004212D3 /* EmailKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B426E5551C004212D3 /* EmailKeys.swift */; };
@@ -123,6 +124,7 @@
 		6D78609526E50C580090D7F4 /* HighlightedTextEditor */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HighlightedTextEditor; path = ../HighlightedTextEditor; sourceTree = "<group>"; };
 		6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradePickerViewModel.swift; sourceTree = "<group>"; };
 		6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSingleGradePicker.swift; sourceTree = "<group>"; };
+		6DD327B626E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGradesPerDateViewModelTest.swift; sourceTree = "<group>"; };
 		6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmails.swift; sourceTree = "<group>"; };
 		6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModelBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsViewModelBase.swift; sourceTree = "<group>"; };
 		6DE3E8B426E5551C004212D3 /* EmailKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailKeys.swift; sourceTree = "<group>"; };
@@ -477,6 +479,7 @@
 			children = (
 				E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */,
 				E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */,
+				6DD327B626E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift */,
 				E2B7452026C01C4F002D0B4C /* Info.plist */,
 			);
 			path = GradingAppTests;
@@ -718,6 +721,7 @@
 			files = (
 				E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */,
 				E2B7451F26C01C4F002D0B4C /* GradingAppDatabaseTests.swift in Sources */,
+				6DD327B726E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
