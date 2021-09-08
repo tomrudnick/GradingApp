@@ -95,20 +95,27 @@ struct CourseTabView: View {
         .sheet(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel)
         })
-        .fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
-            StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
-        })
-        .fullScreenCover(isPresented: $showTranscriptSheet, content: {
-            StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
-        })
-        .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone, transform: { view in
-            view.fullScreenCover(isPresented: $showAddMultipleGrades, content: {
+        .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone) { view in
+            view.fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
+                StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
+            })
+            .fullScreenCover(isPresented: $showAddMultipleGrades, content: {
                 AddMultipleGradesView(course: course)
             })
-        })
+            .fullScreenCover(isPresented: $showTranscriptSheet, content: {
+                StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
+            })
+    }
+        
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .pad) { view in
             view.sheet(isPresented: $showAddMultipleGrades, content: {
                 AddMultipleGradesView(course: course)
+            })
+            .sheet(isPresented: $showTranscriptHalfYearSheet) {
+                StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
+            }
+            .sheet(isPresented: $showTranscriptSheet, content: {
+                StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
             })
         }
         
