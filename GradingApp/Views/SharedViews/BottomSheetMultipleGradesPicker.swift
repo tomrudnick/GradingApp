@@ -51,6 +51,13 @@ struct BottomSheetMultipleGradesPicker: View {
                 } label: {
                     BottomSheetViewButtonLabel(labelView: Image(systemName: "arrow.down"))
                 }
+                #if targetEnvironment(macCatalyst)
+                Button {
+                    self.showAddGradeSheet = false
+                } label: {
+                    BottomSheetViewButtonLabel(labelView: Image(systemName: "xmark.square"))
+                }
+                #endif
             })
         }.onChange(of: showAddGradeSheet, perform: { newValue in
             if newValue == false {
