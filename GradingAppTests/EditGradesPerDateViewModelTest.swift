@@ -110,7 +110,7 @@ class EditGradesPerDateViewModelTest: XCTestCase {
         var gradesPerDates = Grade.getGradesPerDate(grades: grades)
         let todayGrades = gradesPerDates[dateToday]!
         viewModel = EditGradesPerDateViewModel(studentGrades: todayGrades, course: course)
-        viewModel.delete()
+        viewModel.delete(viewContext: context)
         grades = try! context.fetch(request)
         gradesPerDates = Grade.getGradesPerDate(grades: grades)
         XCTAssertNil(gradesPerDates[dateToday])
