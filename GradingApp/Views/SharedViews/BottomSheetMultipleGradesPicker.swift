@@ -34,6 +34,7 @@ struct BottomSheetMultipleGradesPicker: View {
                 }
                 Button {
                     buttonHandler(-1)
+                    scrollToNext()
                 } label: {
                     BottomSheetViewButtonLabel(labelView: Text("-"))
                 }
