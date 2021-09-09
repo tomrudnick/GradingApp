@@ -86,11 +86,11 @@ struct SingleGradeView: View {
                                 .environment(\.locale, Locale.init(identifier: "de"))
                         }
                         Picker(selection: $selectedGradeType.animation(), label: Text(""), content: {
-                            Text("Oral").tag(0)
-                            Text("Written").tag(1)
+                            Text("Mündlich").tag(0)
+                            Text("Schriftlich").tag(1)
                         }).pickerStyle(SegmentedPickerStyle())
                         HStack {
-                            Text("Grade")
+                            Text("Note")
                             Spacer()
                             Button(action: {
                                 showAddGradeSheet.toggle()
@@ -104,7 +104,7 @@ struct SingleGradeView: View {
                         }
                     }
                     if selectedGradeType == 0 {
-                        Section(header: Text("Grade Multiplier") ) {
+                        Section(header: Text("Gewichtung") ) {
                             Picker(selection: $selectedGradeMultiplier, label: Text(""), content: {
                                 Text(String(Grade.gradeMultiplier[0])).tag(0)
                                 Text(String(Grade.gradeMultiplier[1])).tag(1)
@@ -115,8 +115,8 @@ struct SingleGradeView: View {
                         
                     }
                    
-                    Section(header: Text("Comment")) {
-                        TextField("Comment...", text: $comment)
+                    Section(header: Text("Kommentar")) {
+                        TextField("LZK...", text: $comment)
                     }
                 }
             }

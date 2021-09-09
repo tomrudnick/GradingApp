@@ -17,6 +17,7 @@ struct GradeAtDatesEditView : View{
     @StateObject var gradePickerViewModel = GradePickerViewModel()
     
     @State private var showAddGradeSheet: Bool = false
+    @State private var showDeleteAlert: Bool = false
     @State private var selectedStudent: Student?
     
     
@@ -35,12 +36,12 @@ struct GradeAtDatesEditView : View{
                                 .environment(\.locale, Locale.init(identifier: "de"))
                         }
                         Picker(selection: $editGradesPerDateVM.gradeTypeNumber.animation(), label: Text(""), content: {
-                            Text("Oral").tag(0)
-                            Text("Written").tag(1)
+                            Text("Mündlich").tag(0)
+                            Text("Schriftlich").tag(1)
                         }).pickerStyle(SegmentedPickerStyle())
                     }
                     if editGradesPerDateVM.gradeType == .oral && editGradesPerDateVM.gradeMultiplier != nil {
-                        Section(header: Text("Grade Multiplier") ) {
+                        Section(header: Text("Gewichtung") ) {
                             Picker(selection: $editGradesPerDateVM.gradeMultiplierNumber, label: Text(""), content: {
                                 Text(String(Grade.gradeMultiplier[0])).tag(0)
                                 Text(String(Grade.gradeMultiplier[1])).tag(1)
@@ -50,11 +51,11 @@ struct GradeAtDatesEditView : View{
                         }.transition(.slide)
                     }
                     if editGradesPerDateVM.comment != nil {
-                        Section(header: Text("Comment")) {
-                            TextField("Comment...", text: $editGradesPerDateVM.comment ?? "")
+                        Section(header: Text("Kommentar")) {
+                            TextField("LZK...", text: $editGradesPerDateVM.comment ?? "")
                         }
                     }
-                    Section(header: Text("Grades")) {
+                    Section(header: Text("Noten")) {
                         ForEach(editGradesPerDateVM.studentGrades) { studentGrade in
                             HStack {
                                 Text("\(studentGrade.student.firstName) \(studentGrade.student.lastName)")
@@ -80,8 +81,7 @@ struct GradeAtDatesEditView : View{
                             }.id(studentGrade.student.id)
                         }
                         CustomButtonView(label: "Löschen", action: {
-                            editGradesPerDateVM.delete()
-                            presentationMode.wrappedValue.dismiss()
+                            self.showDeleteAlert = true
                         }, buttonColor: Color.red)
 
                         Spacer().frame(height: geometry.size.height * 0.5)
@@ -93,6 +93,17 @@ struct GradeAtDatesEditView : View{
                 }
             }
         }
+        .alert(isPresented: $showDeleteAlert, content: {
+            Alert(
+                title: Text("Achtung!"),
+                message: Text("Möchten sie diese Noten wirklich löschen?"),
+                primaryButton: .destructive(Text("Ja")) {
+                    editGradesPerDateVM.delete(viewContext: viewContext)
+                    presentationMode.wrappedValue.dismiss()
+                },
+                secondaryButton: .cancel()
+            )
+        })
         .onAppear {
             gradePickerViewModel.setup(courseType: editGradesPerDateVM.course.ageGroup, options: .normal)
         }
@@ -105,7 +116,7 @@ struct GradeAtDatesEditView : View{
                     editGradesPerDateVM.save(viewContext: viewContext)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
-                    Text("Save")
+                    Text("Speichern")
                 }
 
             }

@@ -26,7 +26,7 @@ struct EditStudentsView: View {
                                 }, label: {
                                     Label("Edit", systemImage: "pencil")
                                 })
-                                Button(action: {
+                                Button(role: .destructive, action: {
                                     course.deleteStudentCoursesEdit(id: student.id)
                                 }, label: {
                                         if student.deleted {

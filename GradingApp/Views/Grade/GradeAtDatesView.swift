@@ -17,8 +17,9 @@ struct GradeAtDatesView: View {
     @StateObject var sendGradeEmailViewModel = SendMultipileEmailsSelectedGradeViewModel()
    
     @Environment(\.currentHalfYear) var halfYear
-    
+    @Environment(\.managedObjectContext) private var viewContext
     @State var showEmailSheet = false
+    @State var selectedStudentGradeNavLink: Date? = nil
     
     let gradeType: GradeType
     let course: Course
@@ -34,7 +35,7 @@ struct GradeAtDatesView: View {
     var body: some View {
         List {
             ForEach(Grade.getGradesPerDate(grades: grades).sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
-                NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value)) {
+                NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value), tag: key, selection: $selectedStudentGradeNavLink) {
                     HStack {
                         Text(key.asString(format: "dd MMM HH:mm"))
                         Spacer()
@@ -50,7 +51,13 @@ struct GradeAtDatesView: View {
                             Text("\(value.count) / \(course.students.count)")
                         }
                     }
-                }.contextMenu(menuItems: {
+                }
+                .onChange(of: selectedStudentGradeNavLink, perform: { value in
+                    if value == nil {
+                        viewContext.saveCustom()
+                    }
+                })
+                .contextMenu(menuItems: {
                     Button(action: {
                         sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
                         self.showEmailSheet = true

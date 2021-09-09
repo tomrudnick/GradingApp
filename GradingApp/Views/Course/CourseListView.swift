@@ -15,7 +15,6 @@ struct CourseListView: View {
     @FetchRequest(fetchRequest: Course.fetchAllNonHidden(), animation: .default )
     private var courses: FetchedResults<Course>
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    private var dummyCourse = Course()
     
     @State var showEditCourses = false
     @State var showAddCourse = false
@@ -24,6 +23,8 @@ struct CourseListView: View {
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
     @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
     
+    @State var firstCourseActive = false
+    @State var firstCourse: Course = Course()
     
     var body: some View {
         NavigationView {
@@ -44,11 +45,7 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView(onDelete: {
-                    if idiom == .pad {
-                        self.activeLink = dummyCourse.id
-                    }
-                }).environment(\.managedObjectContext, viewContext)
+                MoreActionsView().environment(\.managedObjectContext, viewContext)
                     .onDisappear {
                         selectedHalfYearVM.fetchValue()
                     }
@@ -65,14 +62,28 @@ struct CourseListView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     addButton
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     editButton
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     moreActionsButton
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    undoButton
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    redoButton
+                }
+                
             }
-            NavigationLink(destination: WelcomeViewIpad(), tag: dummyCourse.id, selection: $activeLink) { }
+            NavigationLink("", destination: CourseTabView(course: firstCourse).navigationBarBackButtonHidden(true), isActive: $firstCourseActive)
+                
+        }
+        .onAppear {
+            if let course = courses.first, idiom == .pad{
+                self.firstCourse = course
+                self.firstCourseActive = true
+            }
         }
         .environment(\.currentHalfYear, selectedHalfYearVM.activeHalf)
     }
@@ -98,6 +109,22 @@ struct CourseListView: View {
             showMoreActions = true
         } label: {
             Image(systemName: "ellipsis.circle")
+        }
+    }
+    
+    var undoButton: some View {
+        Button {
+            viewContext.undo()
+        } label: {
+            Image(systemName: "arrow.uturn.backward")
+        }
+    }
+    
+    var redoButton: some View {
+        Button {
+            viewContext.redo()
+        } label: {
+            Image(systemName: "arrow.uturn.forward")
         }
     }
 }

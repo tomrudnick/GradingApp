@@ -10,8 +10,10 @@ import SwiftUI
 struct CourseTabView: View {
     
     @Environment(\.currentHalfYear) var halfYear
+    @Environment(\.managedObjectContext) private var viewContext
     
     @StateObject var sendEmailViewModel = SendMultipleEmailsViewModel()
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
     @ObservedObject var course: Course
     @State var showAddStudent = false
@@ -73,7 +75,8 @@ struct CourseTabView: View {
                             Text("Zeugnisnote einstellen")
                         }
                     }
-                    
+                    undoButton
+                    redoButton
 
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -119,6 +122,21 @@ struct CourseTabView: View {
             })
         }
         
+    }
+    var undoButton: some View {
+        Button {
+            viewContext.undo()
+        } label: {
+            Label("Undo", systemImage: "arrow.uturn.backward")
+        }
+    }
+    
+    var redoButton: some View {
+        Button {
+            viewContext.redo()
+        } label: {
+            Label("Redo", systemImage: "arrow.uturn.forward")
+        }
     }
 }
 

@@ -22,7 +22,7 @@ struct MoreActionsView: View {
     
     var onDelete: () -> ()
     
-    init(onDelete: @escaping () -> ()) {
+    init(onDelete: @escaping () -> () = { }) {
         self.onDelete = onDelete
     }
     

@@ -38,7 +38,7 @@ struct EditCoursesView: View {
                                         }, label: {
                                             Label("Edit", systemImage: "pencil")
                                         })
-                                        Button(action: {
+                                        Button(role: .destructive, action: {
                                             editVM.deleteCoursesEdit(for: course)
                                         }, label: {
                                             if course.deleted {
