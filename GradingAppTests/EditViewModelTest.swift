@@ -6,6 +6,9 @@
 //
 
 import XCTest
+import Combine
+import ViewInspector
+import SwiftUI
 import CoreData
 
 @testable import GradingApp

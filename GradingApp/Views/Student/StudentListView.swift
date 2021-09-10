@@ -12,6 +12,8 @@ struct StudentListView: View {
     @ObservedObject var course: Course
     @Environment(\.currentHalfYear) var halfYear
 
+    internal var didAppear: ((Self) -> Void)?
+    
     var body: some View {
         List {
             ForEach(course.studentsArr) { student in
@@ -22,6 +24,8 @@ struct StudentListView: View {
                     }
                 }
             }
+        }.onAppear {
+            self.didAppear?(self)
         }
     }
 }

@@ -18,6 +18,7 @@ struct EditCoursesView: View {
     @State private var showSaveAlert = false
     @State private var saveAlertText = ""
     
+    internal var didAppear: ((Self) -> Void)? // Test Reasons
    
     var body: some View {
         VStack {
@@ -96,6 +97,9 @@ struct EditCoursesView: View {
                 }
             }
         }
+        .onAppear(perform: {
+            self.didAppear?(self)
+        })
         .alert(isPresented: $showSaveAlert) {
             Alert(title: Text("Achtung!"), message: Text("Möchten sie wirklich speichern?"), primaryButton: .default(Text("Speichern"), action: {
                 editVM.save(context: viewContext)

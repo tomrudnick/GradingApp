@@ -107,7 +107,7 @@ func previewData (context: NSManagedObjectContext) -> [Course] {
     let studentArray = try! CSVReader(string: csvStudents, hasHeaderRow: true)
     while let studentRow = studentArray.next() {
         let student = Student(firstName: studentRow[1], lastName: studentRow[2], email: studentRow[3],
-                              course: courses.first(where: { $0.name == studentRow[0]})!, context: context)
+                              course: courses.first(where: { $0.title == studentRow[0]})!, context: context)
         students.append(student)
         let studentGrades = studentRow[4..<studentRow.count]
         if studentGrades.count > 0 {

@@ -27,6 +27,8 @@ struct CourseListView: View {
     @State var firstCourseActive = false
     @State var firstCourse: Course = Course()
     
+    internal var didAppear: ((Self) -> Void)? // Test Reasons
+    
     var body: some View {
         NavigationView {
             List(courses) { course in
@@ -85,6 +87,7 @@ struct CourseListView: View {
                 self.firstCourse = course
                 self.firstCourseActive = true
             }
+            self.didAppear?(self)
         }
         .environment(\.currentHalfYear, selectedHalfYearVM.activeHalf)
     }
