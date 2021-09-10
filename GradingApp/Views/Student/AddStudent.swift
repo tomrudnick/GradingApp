@@ -40,7 +40,7 @@ struct AddStudent: View {
             CustomButtonView(label: "Hinzufügen", action: self.saveButtonPressed , buttonColor: .accentColor)
                 .disabled(studentFirstName.isEmpty || studentLastName.isEmpty)
                 Divider()
-            CustomButtonView(label: "csv-Import", action: {openFile.toggle()}, buttonColor: .red)
+            CustomButtonView(label: "csv-Import (UTF-8 mit Headerrow)", action: {openFile.toggle()}, buttonColor: .red)
             Spacer()
         }
         .fileImporter(isPresented: $openFile, allowedContentTypes: [.plainText, .commaSeparatedText]) { res in

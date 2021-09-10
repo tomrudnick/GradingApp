@@ -10,6 +10,12 @@ import CoreData
 
 
 struct CourseListView: View {
+    
+    enum AlertType {
+        case undoRedo
+        case halfYearWarning
+    }
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(fetchRequest: Course.fetchAllNonHidden(), animation: .default )
@@ -23,9 +29,11 @@ struct CourseListView: View {
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
     @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
     @StateObject var editCourseViewModel = CourseEditViewModel()
+    @StateObject var undoRedoVM = UndoRedoViewModel()
     
     @State var firstCourseActive = false
     @State var firstCourse: Course = Course()
+    @State var alertType: AlertType = .halfYearWarning
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
     
@@ -42,7 +50,12 @@ struct CourseListView: View {
                 selectedHalfYearVM.fetchValue()
             }
             .alert(isPresented: $showAlert, content: {
-                Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
+                if alertType == .halfYearWarning {
+                    return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
+                } else {
+                    return undoRedoVM.getAlert(viewContext: viewContext)
+                }
+                
             })
             .padding(.top)
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
@@ -119,7 +132,9 @@ struct CourseListView: View {
     
     var undoButton: some View {
         Button {
-            viewContext.undo()
+            self.alertType = .undoRedo
+            self.undoRedoVM.undoManagerAction = .undo
+            self.showAlert = true
         } label: {
             Image(systemName: "arrow.uturn.backward")
         }
@@ -127,7 +142,9 @@ struct CourseListView: View {
     
     var redoButton: some View {
         Button {
-            viewContext.redo()
+            self.alertType = .undoRedo
+            self.undoRedoVM.undoManagerAction = .redo
+            self.showAlert = true
         } label: {
             Image(systemName: "arrow.uturn.forward")
         }

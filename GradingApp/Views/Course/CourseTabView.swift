@@ -7,12 +7,19 @@
 
 import SwiftUI
 
+enum UndoManagerAction {
+    case undo
+    case redo
+    case none
+}
+
 struct CourseTabView: View {
     
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     
     @StateObject var sendEmailViewModel = SendMultipleEmailsViewModel()
+    @StateObject var undoRedoVM = UndoRedoViewModel()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
     @ObservedObject var course: Course
@@ -22,7 +29,7 @@ struct CourseTabView: View {
     @State var showTranscriptHalfYearSheet = false
     @State var showTranscriptSheet = false
     @State var showSendEmailSheet = false
-    
+    @State var showUndoRedoAlert = false
     
     var body: some View {
         TabView {
@@ -92,6 +99,10 @@ struct CourseTabView: View {
                 
             }
         })
+        .alert(isPresented: $showUndoRedoAlert) {
+            return undoRedoVM.getAlert(viewContext: viewContext)
+            
+        }
         .onAppear {
             self.sendEmailViewModel.fetchData(course: course, half: halfYear)
         }
@@ -125,7 +136,8 @@ struct CourseTabView: View {
     }
     var undoButton: some View {
         Button {
-            viewContext.undo()
+            self.undoRedoVM.undoManagerAction = .undo
+            self.showUndoRedoAlert = true
         } label: {
             Label("Undo", systemImage: "arrow.uturn.backward")
         }
@@ -133,7 +145,8 @@ struct CourseTabView: View {
     
     var redoButton: some View {
         Button {
-            viewContext.redo()
+            self.undoRedoVM.undoManagerAction = .redo
+            self.showUndoRedoAlert = true
         } label: {
             Label("Redo", systemImage: "arrow.uturn.forward")
         }
