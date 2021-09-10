@@ -22,6 +22,7 @@ struct CourseListView: View {
     @State var activeLink: ObjectIdentifier? = nil
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
     @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
+    @StateObject var editCourseViewModel = CourseEditViewModel()
     
     @State var firstCourseActive = false
     @State var firstCourse: Course = Course()
@@ -52,7 +53,7 @@ struct CourseListView: View {
             })
             .fullScreenCover(isPresented: $showEditCourses) {
                 NavigationView {
-                    EditCoursesView(context: viewContext).environment(\.managedObjectContext, viewContext)
+                    EditCoursesView(editVM: editCourseViewModel).environment(\.managedObjectContext, viewContext)
                 }
             }
             .sheet(isPresented: $showAddCourse) {
@@ -98,6 +99,7 @@ struct CourseListView: View {
     
     var editButton : some View {
         Button {
+            editCourseViewModel.fetchCourses(context: viewContext)
             showEditCourses = true
         } label: {
             Image(systemName: "pencil.circle")

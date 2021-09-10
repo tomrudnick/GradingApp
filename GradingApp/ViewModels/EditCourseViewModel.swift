@@ -25,14 +25,8 @@ import CSV
 class CourseEditViewModel: ObservableObject {
     @Published var courses: [CourseVM] = []
     private var fetchedCourses: [UUID : Course] = [:] // SHOULD NEVER BE ACCESSIBLE FROM THE OUTSIDE
-    private var context: NSManagedObjectContext
     
-    init(context: NSManagedObjectContext) {
-        self.context = context
-        fetchCourses()
-    }
-    
-    private func fetchCourses() {
+    func fetchCourses(context: NSManagedObjectContext) {
         let fetchedData = PersistenceController.fetchData(context: context, fetchRequest: Course.fetchAll())
         self.fetchedCourses = Dictionary(uniqueKeysWithValues: fetchedData.map {(UUID(), $0)})
         self.courses = fetchedCourses.map({ (key: UUID, value: Course) in
@@ -41,7 +35,7 @@ class CourseEditViewModel: ObservableObject {
         }).sorted(by: { $0.name < $1.name })
     }
     
-    func save() {
+    func save(context: NSManagedObjectContext) {
         for (id, course) in fetchedCourses {
             if let courseVM = courses.first(where: {$0.id == id}) {  // where: {course: Course in course.id == id}
                 if courseVM.deleted {

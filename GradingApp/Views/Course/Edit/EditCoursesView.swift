@@ -11,18 +11,14 @@ import CoreData
 struct EditCoursesView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    private var viewContext: NSManagedObjectContext
+    @Environment(\.managedObjectContext) private var viewContext
     
-    @StateObject var editVM: CourseEditViewModel
+    @ObservedObject var editVM: CourseEditViewModel
     @State private var selectedCourse: CourseEditViewModel.CourseVM? = nil
     @State private var showSaveAlert = false
     @State private var saveAlertText = ""
     
-    init(context: NSManagedObjectContext) {
-        _editVM = StateObject(wrappedValue: CourseEditViewModel(context: context))
-        self.viewContext = context
-    }
-    
+   
     var body: some View {
         VStack {
             if #available(iOS 15.0, macCatalyst 15.0, OSX 12.0, *) { //if the app is ported to iOS 15 this 'if' statement should be removed
@@ -102,7 +98,7 @@ struct EditCoursesView: View {
         }
         .alert(isPresented: $showSaveAlert) {
             Alert(title: Text("Achtung!"), message: Text("Möchten sie wirklich speichern?"), primaryButton: .default(Text("Speichern"), action: {
-                editVM.save()
+                editVM.save(context: viewContext)
                 presentationMode.wrappedValue.dismiss()
             }), secondaryButton: .cancel())
         }
@@ -140,8 +136,9 @@ struct EditCoursesView: View {
     }
     
 }
-struct EditCourseView_Previews: PreviewProvider {
+/*struct EditCourseView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        EditCoursesView(context: PersistenceController.preview.container.viewContext)
+        EditCoursesView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
-}
+}*/
