@@ -75,6 +75,7 @@ class EditGradesPerDateViewModel : ObservableObject {
                 } else {
                     grade.value = Int32(studentGrade.value)
                     grade.date = date
+                    grade.type = gradeType
                     if let multiplier = gradeMultiplier {
                         grade.multiplier = multiplier
                     }

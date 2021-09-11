@@ -46,6 +46,8 @@ class SimpleUITest: XCTestCase {
         tablesQuery.cells["Gewichtung"].children(matching: .other).element(boundBy: 0).swipeUp()
         tablesQuery.cells["Speichern"].children(matching: .other).element(boundBy: 0).children(matching: .other).element.tap()
         
+        
+        
                                             
     }
 }
