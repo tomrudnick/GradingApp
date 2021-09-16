@@ -25,6 +25,7 @@ struct AddMultipleGradesView: View {
     @State private var selectedStudent: Student?
     @State private var studentGrade: [Student:Int]
     
+    @FocusState private var focusTextField: Bool
     
     init(course: Course) {
         self.course = course
@@ -72,7 +73,14 @@ struct AddMultipleGradesView: View {
                         }
                         Section(header: Text("Kommentar")) {
                             TextField("LZK...", text: $comment)
+                                .focused($focusTextField)
+                                .onChange(of: focusTextField) { value in
+                                    if value {
+                                        showAddGradeSheet = false
+                                    }
+                                }
                         }
+                            
                         Section(header: Text("Noten")) {
                             ForEach(course.studentsArr) { student in
                                 if let student = studentGrade.first { (key: Student, value: Int) in key == student }{
@@ -113,6 +121,10 @@ struct AddMultipleGradesView: View {
                                            scrollProxy: proxy) { grade in
                     studentGrade[selectedStudent!] = grade
                     selectedStudent = course.nextStudent(after: selectedStudent!)
+                }.onChange(of: showAddGradeSheet) { value in
+                    if value {
+                        focusTextField = false
+                    }
                 }
             }
         })
