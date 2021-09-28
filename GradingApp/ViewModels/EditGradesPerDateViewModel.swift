@@ -36,14 +36,8 @@ class EditGradesPerDateViewModel : ObservableObject {
     }
     //This hole init function should be heavily tested!!!
     init(studentGrades: [GradeStudent<Grade>], course: Course) {
+        self.comment = Grade.getComment(studentGrades: studentGrades)
         let nonNilStudentGrades = studentGrades.filter{ $0.grade != nil }
-        let comments = nonNilStudentGrades.map{ $0.grade!.comment! }
-        if let comment = comments.first, comments.allSatisfy({$0 == comment}) {
-            self.comment = comment
-        } else {
-            self.comment = nil
-        }
-        
         let multipliers = nonNilStudentGrades.map{$0.grade!.multiplier}
         if let multiplier = multipliers.first, multipliers.allSatisfy({$0 == multiplier}) {
             self.gradeMultiplier = multiplier

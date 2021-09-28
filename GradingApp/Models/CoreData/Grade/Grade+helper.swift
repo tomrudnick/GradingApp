@@ -159,6 +159,16 @@ extension Grade {
         }
     }
     
+    static func getComment(studentGrades: [GradeStudent<Grade>]) -> String? {
+        let nonNilStudentGrades = studentGrades.filter{ $0.grade != nil }
+        let comments = nonNilStudentGrades.map{ $0.grade!.comment! }
+        if let comment = comments.first, comments.allSatisfy({$0 == comment}) {
+            return comment
+        } else {
+            return nil
+        }
+    }
+    
     static func fetch(_ predicate: NSPredicate) -> NSFetchRequest<Grade> {
         let request = NSFetchRequest<Grade>(entityName: "Grade")
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]

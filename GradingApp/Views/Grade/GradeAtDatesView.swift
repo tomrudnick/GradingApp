@@ -39,6 +39,8 @@ struct GradeAtDatesView: View {
                     HStack {
                         Text(key.asString(format: "dd MMM HH:mm"))
                         Spacer()
+                        Text(Grade.getComment(studentGrades: value) ?? "ver. Kommentare")
+                        Spacer()
                         if value.count == 1 {
                             let student = value.first!.student
                             if let firstLetter = student.lastName.first {
