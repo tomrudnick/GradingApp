@@ -22,80 +22,80 @@ struct EditCoursesView: View {
    
     var body: some View {
         VStack {
-            if #available(iOS 15.0, macCatalyst 15.0, OSX 12.0, *) { //if the app is ported to iOS 15 this 'if' statement should be removed
-                List {
-                    ForEach(editVM.courses) { course in
-                        NavigationLink(
-                            destination: EditStudentsView(course: course),
-                            label: {
-                                EditCourseDetailView(course: course)
-                                    .contextMenu(menuItems: {
-                                        Button(action: {
-                                            editCourse(course: course)
-                                        }, label: {
-                                            Label("Edit", systemImage: "pencil")
-                                        })
-                                        Button(role: .destructive, action: {
-                                            editVM.deleteCoursesEdit(for: course)
-                                        }, label: {
-                                            if course.deleted {
-                                                Label("Restore", systemImage: "arrow.uturn.backward")
-                                            } else {
-                                                Label("Delete", systemImage: "trash")
-                                            }
-                                        })
+            #if targetEnvironment(macCatalyst)
+            List {
+                ForEach(editVM.courses) { course in
+                    NavigationLink(
+                        destination: EditStudentsView(course: course),
+                        label: {
+                            EditCourseDetailView(course: course)
+                                .contextMenu(menuItems: {
+                                    Button(action: {
+                                        editCourse(course: course)
+                                    }, label: {
+                                        Label("Edit", systemImage: "pencil")
                                     })
-                            })
-                            .swipeActions {
-                                Button {
-                                    editCourse(course: course)
-                                } label: {
-                                    Label("Edit", systemImage: "pencil")
-                                }.tint(Color.accentColor)
-
-                                Button {
-                                    editVM.deleteCoursesEdit(for: course)
-                                } label: {
-                                    if course.deleted {
-                                        Label("Restore", systemImage: "arrow.uturn.backward")
-                                    } else {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }.tint(course.deleted ? Color.purple : Color.red)
-                            }
-                    }
+                                    Button(action: {
+                                        editVM.deleteCoursesEdit(for: course)
+                                    }, label: {
+                                        if course.deleted {
+                                            Label("Restore", systemImage: "arrow.uturn.backward")
+                                        } else {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    })
+                                })
+                        })
                 }
-            } else {
-                List {
-                    ForEach(editVM.courses) { course in
-                        NavigationLink(
-                            destination: EditStudentsView(course: course),
-                            label: {
-                                EditCourseDetailView(course: course)
-                                    .contextMenu(menuItems: {
-                                        Button(action: {
-                                            editCourse(course: course)
-                                        }, label: {
-                                            Label("Edit", systemImage: "pencil")
-                                        })
-                                        Button(action: {
-                                            editVM.deleteCoursesEdit(for: course)
-                                        }, label: {
-                                            if course.deleted {
-                                                Label("Restore", systemImage: "arrow.uturn.backward")
-                                            } else {
-                                                Label("Delete", systemImage: "trash")
-                                            }
-                                        })
+                .onDelete(
+                    perform: editVM.deleteCoursesEdit
+                )
+                
+            }
+            #else
+            List {
+                ForEach(editVM.courses) { course in
+                    NavigationLink(
+                        destination: EditStudentsView(course: course),
+                        label: {
+                            EditCourseDetailView(course: course)
+                                .contextMenu(menuItems: {
+                                    Button(action: {
+                                        editCourse(course: course)
+                                    }, label: {
+                                        Label("Edit", systemImage: "pencil")
                                     })
-                            })
-                    }
-                    .onDelete(
-                        perform: editVM.deleteCoursesEdit
-                    )
-                    
+                                    Button(role: .destructive, action: {
+                                        editVM.deleteCoursesEdit(for: course)
+                                    }, label: {
+                                        if course.deleted {
+                                            Label("Restore", systemImage: "arrow.uturn.backward")
+                                        } else {
+                                            Label("Delete", systemImage: "trash")
+                                        }
+                                    })
+                                })
+                        })
+                        .swipeActions {
+                            Button {
+                                editCourse(course: course)
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }.tint(Color.accentColor)
+
+                            Button {
+                                editVM.deleteCoursesEdit(for: course)
+                            } label: {
+                                if course.deleted {
+                                    Label("Restore", systemImage: "arrow.uturn.backward")
+                                } else {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }.tint(course.deleted ? Color.purple : Color.red)
+                        }
                 }
             }
+            #endif
         }
         .onAppear(perform: {
             self.didAppear?(self)

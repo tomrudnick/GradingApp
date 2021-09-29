@@ -24,8 +24,9 @@ struct AddMultipleGradesView: View {
     @State private var showAddGradeSheet: Bool = false
     @State private var selectedStudent: Student?
     @State private var studentGrade: [Student:Int]
-    
+    #if !targetEnvironment(macCatalyst)
     @FocusState private var focusTextField: Bool
+    #endif
     
     init(course: Course) {
         self.course = course
@@ -73,12 +74,14 @@ struct AddMultipleGradesView: View {
                         }
                         Section(header: Text("Kommentar")) {
                             TextField("LZK...", text: $comment)
+                                #if !targetEnvironment(macCatalyst)
                                 .focused($focusTextField)
                                 .onChange(of: focusTextField) { value in
                                     if value {
                                         showAddGradeSheet = false
                                     }
                                 }
+                                #endif
                         }
                             
                         Section(header: Text("Noten")) {
@@ -121,11 +124,14 @@ struct AddMultipleGradesView: View {
                                            scrollProxy: proxy) { grade in
                     studentGrade[selectedStudent!] = grade
                     selectedStudent = course.nextStudent(after: selectedStudent!)
-                }.onChange(of: showAddGradeSheet) { value in
+                }
+                #if !targetEnvironment(macCatalyst)
+               .onChange(of: showAddGradeSheet) { value in
                     if value {
                         focusTextField = false
                     }
                 }
+                #endif
             }
         })
         .onAppear {

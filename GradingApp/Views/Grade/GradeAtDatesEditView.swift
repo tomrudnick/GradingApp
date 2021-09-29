@@ -20,7 +20,9 @@ struct GradeAtDatesEditView : View{
     @State private var showDeleteAlert: Bool = false
     @State private var selectedStudent: Student?
     
+    #if !targetEnvironment(macCatalyst)
     @FocusState private var focusTextField: Bool
+    #endif
     
     init(course: Course, studentGrades: [GradeStudent<Grade>]) {
         self._editGradesPerDateVM = StateObject(wrappedValue: EditGradesPerDateViewModel(studentGrades: studentGrades, course: course))
@@ -54,12 +56,14 @@ struct GradeAtDatesEditView : View{
                     if editGradesPerDateVM.comment != nil {
                         Section(header: Text("Kommentar")) {
                             TextField("LZK...", text: $editGradesPerDateVM.comment ?? "")
+                                #if !targetEnvironment(macCatalyst)
                                 .focused($focusTextField)
                                 .onChange(of: focusTextField) { value in
                                     if value {
                                         showAddGradeSheet = false
                                     }
                                 }
+                                #endif
                         }
                     }
                     Section(header: Text("Noten")) {
@@ -97,11 +101,14 @@ struct GradeAtDatesEditView : View{
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: editGradesPerDateVM.course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in
                     editGradesPerDateVM.setGrade(for: selectedStudent!, value: grade)
                     selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent!)
-                }.onChange(of: showAddGradeSheet) { value in
+                }
+                #if !targetEnvironment(macCatalyst)
+                .onChange(of: showAddGradeSheet) { value in
                     if value {
                         focusTextField = false
                     }
                 }
+                #endif
             }
         }
         .alert(isPresented: $showDeleteAlert, content: {

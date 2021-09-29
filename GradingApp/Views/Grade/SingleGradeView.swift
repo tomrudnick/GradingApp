@@ -22,7 +22,9 @@ struct SingleGradeView: View {
     @State private var comment: String
     @State private var showAddGradeSheet = false
     
+    #if !targetEnvironment(macCatalyst)
     @FocusState private var focusTextField: Bool
+    #endif
     
     private let showSaveCancelButtons: Bool
     private let saveHandler: (_ points: Int, _ type: GradeType, _ multiplier: Double, _ date: Date, _ comment: String) -> ()
@@ -122,23 +124,28 @@ struct SingleGradeView: View {
                             "LZK",
                             text: $comment
                         )
+                        #if !targetEnvironment(macCatalyst)
                         .focused($focusTextField)
                         .onChange(of: focusTextField) { value in
                             if value {
                                 showAddGradeSheet = false
                             }
                         }
+                        #endif
                     }
                 }
             }
             .navigationBarItems(trailing: Button(action: save, label: { Text("Speichern") }).disabled(currentGrade == -1))
             BottomSheetSingleGradePicker(showAddGradeSheet: $showAddGradeSheet, viewModel: viewModel, geometry: geometry) { grade in
                 currentGrade = grade
-            }.onChange(of: showAddGradeSheet) { value in
+            }
+            #if !targetEnvironment(macCatalyst)
+            .onChange(of: showAddGradeSheet) { value in
                 if value {
                     focusTextField = false
                 }
             }
+            #endif
         }
         .onAppear {
             viewModel.setup(courseType: student.course!.ageGroup, options: .normal)
