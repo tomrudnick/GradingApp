@@ -78,8 +78,11 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                     }
                 }
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in
-                    viewModel.setGrade(for: selectedStudent!, value: grade)
-                    selectedStudent = viewModel.course!.nextStudent(after: selectedStudent!)
+                    if let selectedStudent = selectedStudent {
+                        viewModel.setGrade(for: selectedStudent, value: grade)
+                        self.selectedStudent = viewModel.course!.nextStudent(after: selectedStudent)
+                    }
+                    
                 }
             }
         }.onAppear {

@@ -22,16 +22,12 @@ struct AddMultipleGradesView: View {
     @State private var selectedGradeMultiplier: Int = 1
     @State private var comment: String = ""
     @State private var showAddGradeSheet: Bool = false
-    @State private var selectedStudent: Student?
-    @State private var studentGrade: [Student:Int]
+    @State private var selectedStudent: Student? = nil
+    @Binding var studentGrade: [Student:Int]
     #if !targetEnvironment(macCatalyst)
     @FocusState private var focusTextField: Bool
     #endif
     
-    init(course: Course) {
-        self.course = course
-        self._studentGrade = State(initialValue: Dictionary(uniqueKeysWithValues: course.students.map {($0, -1)}))
-    }
     
     var body: some View {
         ScrollViewReader(content: { proxy in
@@ -122,8 +118,10 @@ struct AddMultipleGradesView: View {
                                            viewModel: viewModel,
                                            geometry: geometry,
                                            scrollProxy: proxy) { grade in
-                    studentGrade[selectedStudent!] = grade
-                    selectedStudent = course.nextStudent(after: selectedStudent!)
+                    if let selectedStudent = selectedStudent {
+                        studentGrade[selectedStudent] = grade
+                        self.selectedStudent = course.nextStudent(after: selectedStudent)
+                    }
                 }
                 #if !targetEnvironment(macCatalyst)
                .onChange(of: showAddGradeSheet) { value in
@@ -149,6 +147,7 @@ struct AddMultipleGradesView: View {
                 Grade.addGrade(value: value, date: gradeDate, half: halfYear, type: type, comment: comment, multiplier: multiplier, student: key, context: viewContext)
             }
         }
+        studentGrade.removeAll()
         presentationMode.wrappedValue.dismiss()
     }
 }

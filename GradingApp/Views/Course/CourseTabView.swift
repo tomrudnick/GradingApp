@@ -31,6 +31,8 @@ struct CourseTabView: View {
     @State var showSendEmailSheet = false
     @State var showUndoRedoAlert = false
     
+    @State var studentGrade: [Student:Int] = [:]
+    
     var body: some View {
         TabView {
             StudentListView(course: course)
@@ -92,6 +94,9 @@ struct CourseTabView: View {
             }
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Button(action: {
+                    if studentGrade.isEmpty {
+                        studentGrade = Dictionary(uniqueKeysWithValues: course.students.map({($0, -1)}))
+                    }
                     showAddMultipleGrades = true
                 }, label: {
                     Image(systemName: "plus.circle")
@@ -114,7 +119,7 @@ struct CourseTabView: View {
                 StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
             })
             .fullScreenCover(isPresented: $showAddMultipleGrades, content: {
-                AddMultipleGradesView(course: course)
+                AddMultipleGradesView(course: course, studentGrade: $studentGrade)
             })
             .fullScreenCover(isPresented: $showTranscriptSheet, content: {
                 StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
@@ -123,7 +128,7 @@ struct CourseTabView: View {
         
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .pad) { view in
             view.sheet(isPresented: $showAddMultipleGrades, content: {
-                AddMultipleGradesView(course: course)
+                AddMultipleGradesView(course: course, studentGrade: $studentGrade)
             })
             .sheet(isPresented: $showTranscriptHalfYearSheet) {
                 StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)

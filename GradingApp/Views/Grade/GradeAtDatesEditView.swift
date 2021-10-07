@@ -99,8 +99,11 @@ struct GradeAtDatesEditView : View{
                     }
                 }
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: editGradesPerDateVM.course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in
-                    editGradesPerDateVM.setGrade(for: selectedStudent!, value: grade)
-                    selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent!)
+                    if let selectedStudent = selectedStudent {
+                        editGradesPerDateVM.setGrade(for: selectedStudent, value: grade)
+                        self.selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent)
+                    }
+                    
                 }
                 #if !targetEnvironment(macCatalyst)
                 .onChange(of: showAddGradeSheet) { value in
