@@ -46,6 +46,10 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                             Text("Abbrechen")
                         })
                     }
+                    
+                    //let failed: [(Mail, Error)]
+                    
+                    
                     ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                         Button(action: {
                             self.showProgressbar = true
@@ -58,9 +62,14 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                                 } else {
                                     self.showErrorAlert.toggle()
                                     if failed.count == 1 {
-                                        errorMessage = "Es konnte eine Email nicht versendet werden"
+                                        errorMessage = "Folgende Email konnte nicht versendet werden:"
                                     } else {
-                                        errorMessage = "Es konnten \(failed.count) Emails nicht versendet werden"
+                                        errorMessage = "Die \(failed.count) folgenden Emails konnten nicht versendet werden:"
+                                    }
+                                    for failedMail in failed {
+                                        if let failedUser = failedMail.0.to.first {
+                                            errorMessage += "\n\(failedUser.name ?? "-"): \(failedUser.email)"
+                                        }
                                     }
                                     
                                 }

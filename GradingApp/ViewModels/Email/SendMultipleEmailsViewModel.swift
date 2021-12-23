@@ -38,7 +38,6 @@ class SendMultipleEmailsViewModel : SendMultipleEmailsViewModelBase {
             multipleEmailSender.sendEmails(subject: subject,
                                            emailText: emailText,
                                            students: course.studentsArr,
-                                           half: half,
                                            emailTextReplaceHandler: { emailText, student in
                                                 return SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)
                                            }, progressHandler: progressHandler, completionHandler: completionHandler

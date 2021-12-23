@@ -40,7 +40,7 @@ class SendMultipileEmailsSelectedGradeViewModel: SendMultipleEmailsViewModelBase
         if let half = half, let date = date, let gradeStudents = gradeStudents {
             let students = gradeStudents.filter({$0.grade != nil}).map({$0.student})
             let multipleEmailSender = SendMultipleEmails(emailViewModel: emailViewModel)
-            multipleEmailSender.sendEmails(subject: subject, emailText: emailText, students: students, half: half, emailTextReplaceHandler: { emailText, student in
+            multipleEmailSender.sendEmails(subject: subject, emailText: emailText, students: students, emailTextReplaceHandler: { emailText, student in
                 var emailString = SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)
                 
                 emailString = emailString.replacingOccurrences(of: EmailKeys.selectedGradeDate, with: date.asString(format: "dd.MM.yyyy"))

@@ -60,7 +60,7 @@ class SendSingleEmailViewModel: SendEmailProtocol {
     func send(progressHandler: @escaping (Double) -> (), completionHandler: @escaping ([(Mail, Error)]) -> ()) {
         if let student = student, let half = half {
             let emailSender = SendMultipleEmails(emailViewModel: emailViewModel)
-            emailSender.sendEmails(subject: subject, emailText: emailText, students: [student], half: half, emailTextReplaceHandler: { emailText, student in
+            emailSender.sendEmails(subject: subject, emailText: emailText, students: [student], emailTextReplaceHandler: { emailText, student in
                 var emailString = emailText
                 for i in 0..<gradeNumber {
                     let target = "$writtenGrade_\(i + 1)"
