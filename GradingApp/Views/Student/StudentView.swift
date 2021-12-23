@@ -26,15 +26,15 @@ struct StudentView: View {
         VStack {
             LazyVGrid(columns: columns, spacing: 30) {
                 
-                GradeGridViewDisplay(title: "Gesamt     ", grade: student.getGradeAverage(half: halfYear), color: Grade.getColor(points: student.totalGradeAverage(half: halfYear)))
+                GradeGridViewDisplay(title: "Gesamt     ", gradeRounded: student.getRoundedGradeAverage(half: halfYear), grade: student.getGradeAverage(half: halfYear), color: Grade.getColor(points: student.totalGradeAverage(half: halfYear)))
                 
                 
                 NavigationLink(destination: GradeDetailView(student: student, gradeType: .oral)) {
-                    GradeGridViewDisplay(title: "Mündlich   ", grade: student.getGradeAverage(.oral, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .oral, half: halfYear)))
+                    GradeGridViewDisplay(title: "Mündlich   ", gradeRounded: student.getRoundedGradeAverage(.oral, half: halfYear), grade: student.getGradeAverage(.oral, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .oral, half: halfYear)))
                 }
                 
                 NavigationLink(destination: GradeDetailView(student: student, gradeType: .written)) {
-                    GradeGridViewDisplay(title: "Schriftlich", grade: student.getGradeAverage(.written, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
+                    GradeGridViewDisplay(title: "Schriftlich", gradeRounded: student.getRoundedGradeAverage(.written, half: halfYear), grade: student.getGradeAverage(.written, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
                 }
                 
                 Button {
@@ -100,6 +100,7 @@ struct StudentView: View {
 
 struct GradeGridViewDisplay: View {
     var title: String
+    var gradeRounded: String
     var grade: String
     var color: Color
     
@@ -109,9 +110,12 @@ struct GradeGridViewDisplay: View {
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(Color.white)
-            Text(grade)
+            Text(gradeRounded)
                 .fontWeight(.bold)
-                .padding(.top)
+                .font(.title)
+                .foregroundColor(color)
+            Text("(\(grade))")
+                .fontWeight(.bold)
                 .font(.title)
                 .foregroundColor(color)
                 

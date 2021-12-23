@@ -36,6 +36,19 @@ public class TranscriptGrade: NSManagedObject {
         }
     }
     
+    func getTranscriptGradeValueString() -> String {
+        switch self.student?.course?.ageGroup {
+        case .lower:
+            return Grade.convertGradePointsToGrades(value: Int(value))
+        case .upper:
+            return String(Int(value))
+        case .none:
+            return "-"
+        }
+    }
+    
+    //convertGradePointsToGrades(value: Int(value)))
+    
     func getCalculatedValueString() -> String {
         let value = getCalculatedValue()
         switch self.student?.course?.ageGroup {
@@ -47,4 +60,5 @@ public class TranscriptGrade: NSManagedObject {
             return "-"
         }
     }
+    
 }

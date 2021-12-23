@@ -8,13 +8,13 @@
 import Foundation
 
 struct EmailKeys {
-    static let firstName = "$firstName"
-    static let lastName = "$lastName"
-    static let oralGrade = "$oralGrade"
-    static let writtenGrade = "$writtenGrade"
-    static let grade = "$grade"
-    static let transcriptGradeHalf = "$transcriptGradeHalf"
-    static let transcriptGrade = "$transcriptGrade"
-    static let selectedGrade = "$selectedGrade"
-    static let selectedGradeDate = "$selectedGradeDate"
+    static let firstName = "$Vorname"
+    static let lastName = "$Nachname"
+    static let oralGrade = "$mündliche Note"
+    static let writtenGrade = "$schriftliche Note"
+    static let grade = "$aktuelle Note"
+    static let transcriptGradeHalf = "$Zeugnisnote aktuelles Halbjahr"
+    static let transcriptGrade = "$Gesamtjahresnote"
+    static let selectedGrade = "$ausgewählte Note"
+    static let selectedGradeDate = "$Datum ausgewählte Note"
 }

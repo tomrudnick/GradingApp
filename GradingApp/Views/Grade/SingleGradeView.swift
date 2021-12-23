@@ -110,10 +110,9 @@ struct SingleGradeView: View {
                     if selectedGradeType == 0 {
                         Section(header: Text("Gewichtung") ) {
                             Picker(selection: $selectedGradeMultiplier, label: Text(""), content: {
-                                Text(String(Grade.gradeMultiplier[0])).tag(0)
-                                Text(String(Grade.gradeMultiplier[1])).tag(1)
-                                Text(String(Grade.gradeMultiplier[2])).tag(2)
-                                Text(String(Grade.gradeMultiplier[3])).tag(3)
+                                ForEach(0..<Grade.gradeMultiplier.count, id: \.self) {index in
+                                    Text(String(Grade.gradeMultiplier[index])).tag(index)
+                                }
                             }).pickerStyle(SegmentedPickerStyle())
                         }
                         

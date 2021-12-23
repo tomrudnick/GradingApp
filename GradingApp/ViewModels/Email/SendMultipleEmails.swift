@@ -51,7 +51,7 @@ class SendMultipleEmails {
         emailString = emailString.replacingOccurrences(of: EmailKeys.oralGrade, with: student.getRoundedGradeAverage(.oral, half: half))
         emailString = emailString.replacingOccurrences(of: EmailKeys.writtenGrade, with: student.getRoundedGradeAverage(.written, half: half))
         emailString = emailString.replacingOccurrences(of: EmailKeys.transcriptGradeHalf, with: student.transcriptGrade?.getTranscriptGradeHalfValueString(half: half) ?? "-")
-        emailString = emailString.replacingOccurrences(of: EmailKeys.transcriptGrade, with: student.transcriptGrade?.getCalculatedValueString() ?? "-")
+        emailString = emailString.replacingOccurrences(of: EmailKeys.transcriptGrade, with: student.transcriptGrade?.getTranscriptGradeValueString() ?? "-")
         emailString = emailString.replacingOccurrences(of: EmailKeys.grade, with: student.getRoundedGradeAverage(half: half))
         return emailString
     }

@@ -47,7 +47,7 @@ extension Grade {
                                                  "3", "2", "1",
                                                  "0"]
     
-    private(set) static var gradeMultiplier = [0.5, 1.0, 1.5, 2]
+    private(set) static var gradeMultiplier = [0.5, 1.0, 1.5, 2, 3, 4, 5]
     
 
     static func convertGradePointsToGrades(value: Int) -> String {
