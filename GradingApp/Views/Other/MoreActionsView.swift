@@ -15,6 +15,7 @@ struct MoreActionsView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MoreActionsViewModel()
     @StateObject var emailViewModel = EmailViewModel()
+    @StateObject var backupSettingsViewModel = BackupSettingsViewModel()
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
@@ -43,6 +44,17 @@ struct MoreActionsView: View {
                     } label: {
                         Text("Export")
                     }
+                }
+                Section(header: Text("Backup-Einstellung")){
+                    DatePicker("Backup Zeit", selection: $backupSettingsViewModel.backupTime, displayedComponents: .hourAndMinute)
+                    NavigationLink(destination: BackupTimeIntervalView(selection: $backupSettingsViewModel.backupNotifyInterval)) {
+                        HStack{
+                            Text("Wiederholen")
+                            Spacer()
+                            Text(backupSettingsViewModel.backupNotifyInterval.rawValue).foregroundColor(.gray)
+                        }
+                    }
+                
                 }
                 Section(header: Text("Import")) {
                     Button {
@@ -139,6 +151,8 @@ struct MoreActionsView: View {
                     Button {
                         done()
                         emailViewModel.save()
+                        backupSettingsViewModel.save()
+                        backupSettingsViewModel.addNotifications()
                     } label: {
                         Text("Schließen")
                     }
@@ -146,14 +160,20 @@ struct MoreActionsView: View {
                 }
             }
             
-        }.if(viewModel.backupType == .backup, transform: { view in
+        }
+        .onAppear(perform: {
+            backupSettingsViewModel.requestNotificationAuthorization()
+        })
+        .if(viewModel.backupType == .backup, transform: { view in
             view.fileExporter(isPresented: $showingBackup, document: viewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
                 switch result {
                 case .success(let url):
                     print("Saved to \(url)")
+                    backupSettingsViewModel.resetBadge()
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+
             }
         }).if(viewModel.backupType == .export, transform: { view in
             view.fileExporter(isPresented: $showingExport, documents: viewModel.getSingleCSVFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
