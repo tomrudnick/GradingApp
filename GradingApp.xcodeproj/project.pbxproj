@@ -128,6 +128,7 @@
 		3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseDetailView.swift; sourceTree = "<group>"; };
 		3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldView.swift; sourceTree = "<group>"; };
 		3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
+		3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GradingAppDataModel.xcdatamodel; sourceTree = "<group>"; };
 		395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerator.swift; sourceTree = "<group>"; };
 		39607B5026CD0A9D007DFD63 /* SingleStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStudent.swift; sourceTree = "<group>"; };
 		396182542774B1B7009596F3 /* HighlightedTextEditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HighlightedTextEditor; sourceTree = "<group>"; };
@@ -1219,9 +1220,10 @@
 		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */,
 				E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */,
 			);
-			currentVersion = E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */;
+			currentVersion = 3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */;
 			path = GradingAppData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

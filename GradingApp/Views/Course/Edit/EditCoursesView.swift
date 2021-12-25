@@ -33,15 +33,15 @@ struct EditCoursesView: View {
                                     Button(action: {
                                         editCourse(course: course)
                                     }, label: {
-                                        Label("Edit", systemImage: "pencil")
+                                        Label("Bearbeiten", systemImage: "pencil")
                                     })
                                     Button(action: {
                                         editVM.deleteCoursesEdit(for: course)
                                     }, label: {
                                         if course.deleted {
-                                            Label("Restore", systemImage: "arrow.uturn.backward")
+                                            Label("Wiederherstellen", systemImage: "arrow.uturn.backward")
                                         } else {
-                                            Label("Delete", systemImage: "trash")
+                                            Label("Löschen", systemImage: "trash")
                                         }
                                     })
                                 })
@@ -63,33 +63,33 @@ struct EditCoursesView: View {
                                     Button(action: {
                                         editCourse(course: course)
                                     }, label: {
-                                        Label("Edit", systemImage: "pencil")
+                                        Label("Bearbeiten", systemImage: "pencil")
                                     })
                                     Button(role: .destructive, action: {
                                         editVM.deleteCoursesEdit(for: course)
                                     }, label: {
                                         if course.deleted {
-                                            Label("Restore", systemImage: "arrow.uturn.backward")
+                                            Label("Wiederherstellen", systemImage: "arrow.uturn.backward")
                                         } else {
-                                            Label("Delete", systemImage: "trash")
+                                            Label("Löschen", systemImage: "trash")
                                         }
                                     })
-                                })
+                                }).id(course.deleted ? 0 : 1) //SwiftUIProblem: Hackfix, forced to redraw context menu
                         })
                         .swipeActions {
                             Button {
                                 editCourse(course: course)
                             } label: {
-                                Label("Edit", systemImage: "pencil")
+                                Label("Bearbeiten", systemImage: "pencil")
                             }.tint(Color.accentColor)
 
                             Button {
                                 editVM.deleteCoursesEdit(for: course)
                             } label: {
                                 if course.deleted {
-                                    Label("Restore", systemImage: "arrow.uturn.backward")
+                                    Label("Wiederherstellen", systemImage: "arrow.uturn.backward")
                                 } else {
-                                    Label("Delete", systemImage: "trash")
+                                    Label("Löschen", systemImage: "trash")
                                 }
                             }.tint(course.deleted ? Color.purple : Color.red)
                         }
@@ -109,7 +109,7 @@ struct EditCoursesView: View {
         .sheet(item: $selectedCourse, content: { course in
             EditCourseView(course: course)
         })
-        .navigationBarTitle(Text("Edit Courses"), displayMode: .inline)
+        .navigationBarTitle(Text("Kurse bearbeiten"), displayMode: .inline)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 saveButton

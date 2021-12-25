@@ -36,20 +36,21 @@ extension Student {
 
 
 extension Student {
-    convenience init(firstName: String, lastName: String, email: String, course: Course, context: NSManagedObjectContext) {
+    convenience init(firstName: String, lastName: String, email: String, hidden: Bool = false, course: Course, context: NSManagedObjectContext) {
         self.init(context: context)
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
+        self.hidden = hidden
         self.course = course
     }
     
-    static func addStudent(firstName: String, lastName: String, email: String, course: Course, context: NSManagedObjectContext) {
-        _ = Student(firstName: firstName, lastName: lastName, email: email, course: course, context: context)
+    static func addStudent(firstName: String, lastName: String, email: String, hidden: Bool = false, course: Course, context: NSManagedObjectContext) {
+        _ = Student(firstName: firstName, lastName: lastName, email: email, hidden: hidden, course: course, context: context)
         context.saveCustom()
     }
     static func addStudent(student: DataModel,course: Course, context: NSManagedObjectContext){
-        addStudent(firstName: student.firstName, lastName: student.lastName, email: student.email, course: course, context: context)
+        addStudent(firstName: student.firstName, lastName: student.lastName, email: student.email, hidden: student.hidden, course: course, context: context)
     }
 }
 

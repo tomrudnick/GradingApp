@@ -57,7 +57,7 @@ class CourseEditViewModel: ObservableObject {
                             }
                         }
                     }
-                    courseVM.students.filter { student in !courseVM.fetchedStudents.contains(where: { $0.key == student.id })}
+                    courseVM.students.filter { student in !courseVM.fetchedStudents.contains(where: { $0.key == student.id })} //Neuhinzugefügte Studenten werden zur Datenbank hinzugefügt.
                         .forEach({Student.addStudent(student: $0, course: course, context: context)})
                 }
             } else {
@@ -104,7 +104,7 @@ class CourseEditViewModel: ObservableObject {
             self.type = type
             self.fetchedStudents = fetchedStudents
             self.students = self.fetchedStudents.map { (key: UUID, value: Student) in
-                Student.DataModel(id: key, firstName: value.firstName, lastName: value.lastName, email: value.email)
+                Student.DataModel(id: key, firstName: value.firstName, lastName: value.lastName, email: value.email, hidden: value.hidden)
             }.sorted(by: { $0.lastName < $1.lastName })
         }
         
@@ -128,8 +128,8 @@ class CourseEditViewModel: ObservableObject {
             students[studentIndex].toggleDelete()
         }
         
-        func addStudent (firstName: String, lastName: String, email: String) {
-            let newStudent = Student.DataModel(firstName: firstName, lastName: lastName, email: email)
+        func addStudent (firstName: String, lastName: String, email: String, hidden: Bool = false) {
+            let newStudent = Student.DataModel(firstName: firstName, lastName: lastName, email: email, hidden: hidden)
             students.append(newStudent)
         }
         

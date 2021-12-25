@@ -24,15 +24,15 @@ struct EditStudentsView: View {
                             Button(action: {
                                 self.selectedStudent = student
                             }, label: {
-                                Label("Edit", systemImage: "pencil")
+                                Label("Bearbeiten", systemImage: "pencil")
                             })
                             Button(action: {
                                 course.deleteStudentCoursesEdit(id: student.id)
                             }, label: {
                                     if student.deleted {
-                                        Label("Restore", systemImage: "arrow.uturn.backward")
+                                        Label("Wiederherstellen", systemImage: "arrow.uturn.backward")
                                     } else {
-                                        Label("Delete", systemImage: "trash")
+                                        Label("Löschen", systemImage: "trash")
                                 }
                             })
                         }))
@@ -45,37 +45,37 @@ struct EditStudentsView: View {
             #else
             List {
                 ForEach(course.students) { student in
-                    EditStudentDetailView(student: student)
+                    EditStudentDetailView(student: binding(for: student))
                         .contextMenu(ContextMenu(menuItems: {
                             Button(action: {
                                 self.selectedStudent = student
                             }, label: {
-                                Label("Edit", systemImage: "pencil")
+                                Label("Bearbeiten", systemImage: "pencil")
                             })
                             Button(role: .destructive, action: {
                                 course.deleteStudentCoursesEdit(id: student.id)
                             }, label: {
                                     if student.deleted {
-                                        Label("Restore", systemImage: "arrow.uturn.backward")
+                                        Label("Wiederherstellen", systemImage: "arrow.uturn.backward")
                                     } else {
-                                        Label("Delete", systemImage: "trash")
+                                        Label("Löschen", systemImage: "trash")
                                 }
-                            })
+                            }).id(student.deleted ? 0 : 1) //SwiftUIProblem: Hackfix, forced to redraw context menu
                         }))
                         .swipeActions(content: {
                             Button {
                                 self.selectedStudent = student
                             } label: {
-                                Label("Edit", systemImage: "pencil")
+                                Label("Bearbeiten", systemImage: "pencil")
                             }.tint(Color.accentColor)
 
                             Button {
                                 course.deleteStudentCoursesEdit(id: student.id)
                             } label: {
                                 if student.deleted {
-                                    Label("Restore", systemImage: "arrow.uturn.backward")
+                                    Label("Wiederherstellen", systemImage: "arrow.uturn.backward")
                                 } else {
-                                    Label("Delete", systemImage: "trash")
+                                    Label("Löschen", systemImage: "trash")
                                 }
                             }.tint(student.deleted ? Color.purple : Color.red)
 

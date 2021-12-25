@@ -9,10 +9,14 @@ import SwiftUI
 
 struct EditStudentDetailView: View {
     
-    let student: Student.DataModel
+    @Binding var student: Student.DataModel
+    
     
     var body: some View {
         HStack {
+            Image(systemName: student.hidden ? "eye.slash" : "eye").onTapGesture {
+                student.hidden.toggle()
+            }
             if student.deleted {
                 Text("\(student.firstName) \(student.lastName)")
                     .strikethrough()
@@ -30,9 +34,9 @@ struct EditStudentDetailView: View {
     }
 }
 
-struct EditStudentDetailView_Previews: PreviewProvider {
-    static let student = Student.DataModel(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch")
-    static var previews: some View {
-        EditStudentDetailView(student: student)
-    }
-}
+//struct EditStudentDetailView_Previews: PreviewProvider {
+//    static let student = Student.DataModel(firstName: "Tom", lastName: "Rudnick", email: "tom@rudnick.ch", hidden: false)
+//    static var previews: some View {
+//        EditStudentDetailView(student: student)
+//    }
+//}

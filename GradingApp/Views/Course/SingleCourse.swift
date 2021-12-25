@@ -80,7 +80,7 @@ struct SingleCourse: View {
             }
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Text("Neuer Kurs")
+                    Text(viewTitle)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
