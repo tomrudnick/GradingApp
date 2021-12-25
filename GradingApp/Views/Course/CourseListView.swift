@@ -7,6 +7,8 @@
 
 import SwiftUI
 import CoreData
+//import ViewInspector
+import UIKit
 
 
 struct CourseListView: View {
@@ -17,7 +19,7 @@ struct CourseListView: View {
     }
     
     @Environment(\.managedObjectContext) private var viewContext
-    
+    @Environment(\.scenePhase) var scenePhase
     @FetchRequest(fetchRequest: Course.fetchAllNonHidden(), animation: .default )
     private var courses: FetchedResults<Course>
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
@@ -34,6 +36,7 @@ struct CourseListView: View {
     @State var firstCourseActive = false
     @State var firstCourse: Course = Course()
     @State var alertType: AlertType = .halfYearWarning
+    @State var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
     
@@ -47,8 +50,15 @@ struct CourseListView: View {
             }
             .onAppear {
                 //let hashable: Hashable = courses.first!.id
+
+                badgeNumber = UIApplication.shared.applicationIconBadgeNumber
                 selectedHalfYearVM.fetchValue()
             }
+            .onChange(of: scenePhase, perform: { newPhase in
+                if newPhase == .active {
+                    badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+                }
+            })
             .alert(isPresented: $showAlert, content: {
                 if alertType == .halfYearWarning {
                     return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
@@ -63,6 +73,7 @@ struct CourseListView: View {
             .fullScreenCover(isPresented: $showMoreActions, content: {
                 MoreActionsView().environment(\.managedObjectContext, viewContext)
                     .onDisappear {
+                        badgeNumber = UIApplication.shared.applicationIconBadgeNumber
                         selectedHalfYearVM.fetchValue()
                     }
             })
@@ -126,7 +137,12 @@ struct CourseListView: View {
         Button {
             showMoreActions = true
         } label: {
-            Image(systemName: "ellipsis.circle")
+            ZStack {
+                Image(systemName: "ellipsis.circle")
+                if badgeNumber != 0 {
+                    Text("1").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
+                }
+            }
         }
     }
     

@@ -13,8 +13,13 @@ import UIKit
 class BackupSettingsViewModel: ObservableObject {
     
     @Published var backupTime: Date
-    @Published var backupNotifyInterval: BackupNotifyInterval = .never
+    @Published var backupNotifyInterval: BackupNotifyInterval = .never {
+        didSet {
+            changeOccurred = true
+        }
+    }
     private(set) var notifyAllowed = false
+    private(set) var changeOccurred = false
     
     enum BackupNotifyInterval: String, CaseIterable, Identifiable {
         case test = "Test"
@@ -62,6 +67,7 @@ class BackupSettingsViewModel: ObservableObject {
             self.backupNotifyInterval = backupNotifyIntervalEnum
         }
         isoFormatter.timeZone = TimeZone.current
+        changeOccurred = false
     }
     
     func save() {
@@ -82,10 +88,12 @@ class BackupSettingsViewModel: ObservableObject {
         }
     }
     
+    
     func addNotifications() {
-        if !notifyAllowed {
+        if !notifyAllowed || !changeOccurred {
             return
         }
+        print("ADD NOtifcations")
         let center = UNUserNotificationCenter.current()
         let content = UNMutableNotificationContent()
         content.badge = 1
@@ -115,8 +123,8 @@ class BackupSettingsViewModel: ObservableObject {
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerMonthly, repeats: true)
             let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
             center.add(request)
-        default:
-            break
+        case .never:
+            resetBadge()
         }
     }
     func resetBadge() {

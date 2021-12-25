@@ -8,11 +8,13 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import MobileCoreServices
+import UIKit
 
 
 struct MoreActionsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = MoreActionsViewModel()
     @StateObject var emailViewModel = EmailViewModel()
     @StateObject var backupSettingsViewModel = BackupSettingsViewModel()
@@ -20,6 +22,7 @@ struct MoreActionsView: View {
     @State private var showingBackup = false
     @State private var showingRestore = false
     @State private var showingExport = false
+    @State var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
     
     var onDelete: () -> ()
     
@@ -36,7 +39,14 @@ struct MoreActionsView: View {
                         self.showingBackup = true
                         viewModel.backupType = .backup
                     } label: {
-                        Text("Backup")
+                        ZStack {
+                            Text("Backup")
+                                
+                            if badgeNumber != 0 {
+                                Text("1").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 34, y: -6)
+                            }
+                        }
+                        
                     }
                     Button {
                         self.showingExport = true
@@ -161,7 +171,13 @@ struct MoreActionsView: View {
             }
             
         }
+        .onChange(of: scenePhase, perform: { newPhase in
+            if newPhase == .active {
+                badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+            }
+        })
         .onAppear(perform: {
+            badgeNumber = UIApplication.shared.applicationIconBadgeNumber
             backupSettingsViewModel.requestNotificationAuthorization()
         })
         .if(viewModel.backupType == .backup, transform: { view in
@@ -170,6 +186,7 @@ struct MoreActionsView: View {
                 case .success(let url):
                     print("Saved to \(url)")
                     backupSettingsViewModel.resetBadge()
+                    badgeNumber = 0
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
