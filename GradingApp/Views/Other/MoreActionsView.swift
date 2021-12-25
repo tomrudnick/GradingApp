@@ -43,7 +43,7 @@ struct MoreActionsView: View {
                             Text("Backup")
                                 
                             if badgeNumber != 0 {
-                                Text("1").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 34, y: -6)
+                                Text("\(badgeNumber)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 34, y: -6)
                             }
                         }
                         

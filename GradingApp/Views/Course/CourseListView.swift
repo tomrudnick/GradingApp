@@ -49,16 +49,14 @@ struct CourseListView: View {
                 }
             }
             .onAppear {
-                //let hashable: Hashable = courses.first!.id
-
                 badgeNumber = UIApplication.shared.applicationIconBadgeNumber
                 selectedHalfYearVM.fetchValue()
-            }
+            }//Wird aufgerufen, wenn der View neu berechnet wird
             .onChange(of: scenePhase, perform: { newPhase in
                 if newPhase == .active {
                     badgeNumber = UIApplication.shared.applicationIconBadgeNumber
                 }
-            })
+            }) //Im Hintergrund laufende App wird erneut aufgerufen.
             .alert(isPresented: $showAlert, content: {
                 if alertType == .halfYearWarning {
                     return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
@@ -140,7 +138,7 @@ struct CourseListView: View {
             ZStack {
                 Image(systemName: "ellipsis.circle")
                 if badgeNumber != 0 {
-                    Text("1").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
+                    Text("\(badgeNumber)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
                 }
             }
         }
