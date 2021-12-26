@@ -13,6 +13,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     @ObservedObject var emailViewModel: Model
     
     @State var selectionRange: NSRange?
+    @State var senderMenuExpanded: Bool = false
     
     private let tags: NSRegularExpression
     private let rules: [HighlightRule]
@@ -32,6 +33,34 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     var body: some View {
         VStack {
             Form {
+                //Absender: alle Schüler des Kurses
+                //Absender: ausgewählte Schüler
+                Section(header: Text("Absender")) {
+                    VStack{
+                        HStack{
+                            Text("alle Schüler")
+                            Spacer()
+                            Button {
+                                senderMenuExpanded.toggle()
+                            } label: {
+                                Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down")
+                            }
+
+                        }
+                        if senderMenuExpanded {
+                            List {
+                                //ForEach(emailViewModel.students){ (key,value) in
+                                //HStack{
+                                    //Text(key)
+                                    //Spacer()
+                                 // Text(value)
+                                //}
+                                //}
+                            }
+                        }
+                    }
+                    
+                }
                 Section(header: Text("Betreff")) {
                     TextField("Subject....", text: $emailViewModel.subject)
                 }

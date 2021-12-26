@@ -65,7 +65,7 @@ struct GradeAtDatesView: View {
                         sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
                         self.showEmailSheet = true
                     }, label: {
-                        Text("Send Email via Grade")
+                        Text("Ausgewählte Noten als E-Mail verschicken")
                     }).disabled(!sendGradeEmailViewModel.emailViewModel.emailAccountUsed)
                 })
             }

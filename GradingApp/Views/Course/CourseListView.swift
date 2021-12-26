@@ -25,7 +25,6 @@ struct CourseListView: View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
     @State var showEditCourses = false
-    @State var showAddCourse = false
     @State var showMoreActions = false
     @State var activeLink: ObjectIdentifier? = nil
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
@@ -80,13 +79,7 @@ struct CourseListView: View {
                     EditCoursesView(editVM: editCourseViewModel).environment(\.managedObjectContext, viewContext)
                 }
             }
-            .sheet(isPresented: $showAddCourse) {
-                AddCourse().environment(\.managedObjectContext, viewContext)
-            }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    addButton
-                }
                 ToolbarItem(placement: .navigationBarLeading) {
                     editButton
                 }
@@ -112,14 +105,6 @@ struct CourseListView: View {
             self.didAppear?(self)
         }
         .environment(\.currentHalfYear, selectedHalfYearVM.activeHalf)
-    }
-    
-    var addButton : some View {
-        Button {
-            showAddCourse = true
-        } label: {
-            Image(systemName: "plus.app")
-        }
     }
     
     var editButton : some View {

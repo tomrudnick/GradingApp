@@ -26,7 +26,7 @@ class SendSingleEmailViewModel: SendEmailProtocol {
              "\\\(EmailKeys.transcriptGrade)"
             ]
             for i in 0..<gradeNumber {
-                keys.append("\\$writtenGrade_\(i + 1)")
+                keys.append("\\$schriftliche Note \(i + 1)")
             }
             keys.append("\\\(EmailKeys.writtenGrade)")
             return keys

@@ -9,20 +9,20 @@ import SwiftUI
 
 struct AddCourse: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var editVM: CourseEditViewModel
     
     var body: some View {
         SingleCourse(viewTitle: "Neuer Kurs") { (name, subject, weight, ageGroup, type) in
-            Course.addCourse(courseName: name, courseSubject: subject, oralWeight: weight, ageGroup: ageGroup, type: type, context: viewContext)
+            editVM.addCourse(course: CourseEditViewModel.CourseVM(name: name, subject: subject, hidden: false, ageGroup: ageGroup, oralWeight: weight, type: type, deleted: false, fetchedStudents:[:]))
         }
     }
 }
 
 //----------------------------Preview-------------------------------
 
-struct AddCourseView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddCourse().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}
+//struct AddCourseView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddCourse().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+//    }
+//}

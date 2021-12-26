@@ -36,6 +36,9 @@ class CourseEditViewModel: ObservableObject {
     }
     
     func save(context: NSManagedObjectContext) {
+        courses.filter { course in !fetchedCourses.contains(where: {$0.key == course.id})}
+        .forEach({Course.addCourse(course: $0, context: context)})
+        
         for (id, course) in fetchedCourses {
             if let courseVM = courses.first(where: {$0.id == id}) {  // where: {course: Course in course.id == id}
                 if courseVM.deleted {
@@ -74,9 +77,13 @@ class CourseEditViewModel: ObservableObject {
         }
     }
     
-    func deleteCoursesEdit (for course: CourseEditViewModel.CourseVM) {
+    func deleteCoursesEdit (for course: CourseVM) {
         course.deleted.toggle()
         self.objectWillChange.send()
+    }
+    
+    func addCourse (course: CourseVM) {
+        courses.append(course)
     }
     
     class CourseVM : ObservableObject, Identifiable{

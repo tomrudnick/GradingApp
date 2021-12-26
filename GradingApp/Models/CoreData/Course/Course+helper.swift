@@ -88,6 +88,9 @@ extension Course {
         _ = Course(name: courseName, subject: courseSubject, hidden: hidden, ageGroup: ageGroup, type: type, oralWeight: oralWeight, context: context)
         context.saveCustom()
     }
+    static func addCourse(course: CourseEditViewModel.CourseVM, context: NSManagedObjectContext){
+        addCourse(courseName: course.name, courseSubject: course.subject, oralWeight: course.oralWeight, ageGroup: course.ageGroup, type: course.type, hidden: course.hidden, context: context)
+    }
     
     static func fetchAll() -> NSFetchRequest<Course> {
         let request = NSFetchRequest<Course>(entityName: "Course")

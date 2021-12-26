@@ -17,6 +17,7 @@ struct EditCoursesView: View {
     @State private var selectedCourse: CourseEditViewModel.CourseVM? = nil
     @State private var showSaveAlert = false
     @State private var saveAlertText = ""
+    @State private var showAddCourse = false
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
    
@@ -109,8 +110,15 @@ struct EditCoursesView: View {
         .sheet(item: $selectedCourse, content: { course in
             EditCourseView(course: course)
         })
+        .sheet(isPresented: $showAddCourse) {
+            AddCourse(editVM: editVM)
+        }
         .navigationBarTitle(Text("Kurse bearbeiten"), displayMode: .inline)
         .toolbar(content: {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Spacer()
+                addButton
+            }
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 saveButton
             }
@@ -119,6 +127,15 @@ struct EditCoursesView: View {
             }
         })
     }
+    
+    var addButton : some View {
+        Button {
+            showAddCourse = true
+        } label: {
+            Image(systemName: "plus.circle").font(.largeTitle)
+        }
+    }
+    
     var saveButton: some View {
         Button {
             showSaveAlert = true
