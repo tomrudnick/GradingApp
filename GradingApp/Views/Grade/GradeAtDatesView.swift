@@ -27,7 +27,8 @@ struct GradeAtDatesView: View {
     init(course: Course, gradeType: GradeType, half: HalfType) {
         self.course = course
         self.gradeType = gradeType
-        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d", gradeType == .oral ? 0 : 1, course, half == .firstHalf ? 0 : 1))
+        let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d AND student.hidden = NO", gradeType == .oral ? 0 : 1, course, half == .firstHalf ? 0 : 1))
+        
         self._grades = FetchRequest(fetchRequest: request)
     }
     
@@ -50,7 +51,7 @@ struct GradeAtDatesView: View {
                             }
                             
                         } else {
-                            Text("\(value.count) / \(course.students.count)")
+                            Text("\(value.count) / \(course.studentsCount)")
                         }
                     }
                 }

@@ -8,7 +8,7 @@
 import Foundation
 
 // This Model should be a simple way to associate a specific grade to a specific student
-// Furthermore the value Var is the grade.value in order to change it without editing the grade directly
+// Furthermore the variable value is the grade.value in order to change it without editing the grade directly
 
 protocol GradeValue {
     var value: Int32 { get set }

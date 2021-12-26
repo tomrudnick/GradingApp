@@ -45,7 +45,7 @@ struct CourseListView: View {
             List(courses) { course in
                 NavigationLink(destination: CourseTabView(course: course), tag: course.id, selection: $activeLink) {
                     Text(course.title).font(.title2)
-                    Text("(" + String(course.students.count) + ")").font(.footnote)
+                    Text("(" + String(course.studentsCount) + ")").font(.footnote)
                 }
             }
             .onAppear {

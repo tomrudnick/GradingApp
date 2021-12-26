@@ -50,9 +50,9 @@ class EditGradesPerDateViewModel : ObservableObject {
         // Add missing students
         var tmpStudentGrades = studentGrades
         course.students.filter { student in
-            !studentGrades.contains(where: {$0.student == student})
+            !studentGrades.contains(where: {$0.student == student}) && student.hidden == false
         }.forEach({tmpStudentGrades.append(GradeStudent(student: $0))})
-        self.studentGrades = tmpStudentGrades.sorted { $0.student.firstName < $1.student.firstName }.sorted{ $0.student.lastName < $1.student.lastName }
+        self.studentGrades = tmpStudentGrades.sorted { $0.student.lastName < $1.student.lastName }.sorted{ $0.student.firstName < $1.student.firstName}
         self.course = course
         
     }
