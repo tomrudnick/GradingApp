@@ -39,7 +39,7 @@ class EmailViewModel: ObservableObject {
         }
     }
     
-    let keychain: Keychain
+    private let keychain: Keychain
     
     init() {
         let keychain = Keychain(service: "com.rudnick.gradingapp").synchronizable(true)
