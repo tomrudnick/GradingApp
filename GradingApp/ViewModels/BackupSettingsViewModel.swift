@@ -22,7 +22,6 @@ class BackupSettingsViewModel: ObservableObject {
     private(set) var changeOccurred = false
     
     enum BackupNotifyInterval: String, CaseIterable, Identifiable {
-        case test = "Test"
         case never = "Niemals"
         case daily = "Täglich"
         case weekly = "Wöchentlich"
@@ -99,11 +98,6 @@ class BackupSettingsViewModel: ObservableObject {
         content.badge = 1
         center.removeAllPendingNotificationRequests()
         switch backupNotifyInterval {
-        case .test:
-            let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
-            let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
-            center.add(request)
         case .daily:
             let triggerDaily = Calendar.current.dateComponents([.hour,.minute], from: backupTime)
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
