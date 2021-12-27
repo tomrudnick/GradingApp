@@ -33,39 +33,41 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     var body: some View {
         VStack {
             Form {
-                //Absender: alle Schüler des Kurses
-                //Absender: ausgewählte Schüler
-                Section(header: Text("Absender")) {
-                    VStack{
-                        HStack{
-                            Text(!self.emailViewModel.recipients.contains(where: { (key: Student, value: Bool) in
-                                value == false
-                            }) ? "An alle Schüler" : "An \(self.emailViewModel.recipients.filter{$0.1}.count) ausgewählte Schüler")
-                            Spacer()
-                            Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down").onTapGesture {
-                                senderMenuExpanded.toggle()
+                Section(header: Text("Empfänger")) {
+                    
+                    if self.emailViewModel.recipients.count == 1 {
+                        Text("\(self.emailViewModel.recipients.first!.key.firstName) \(self.emailViewModel.recipients.first!.key.lastName)")
+                    } else {
+                        VStack{
+                            HStack{
+                                Text(!self.emailViewModel.recipients.contains(where: { (key: Student, value: Bool) in
+                                    value == false
+                                }) ? "Alle Schüler" : "\(self.emailViewModel.recipients.filter{$0.1}.count) Schüler")
+                                Spacer()
+                                Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down").onTapGesture {
+                                    senderMenuExpanded.toggle()
+                                }
+                            }.padding([.bottom, .top])
                             
-                            }
-                        }.padding([.bottom, .top])
-                        if senderMenuExpanded {
-                            List {
-                                ForEach(emailViewModel.recipients.sorted(by: {$0.0.lastName < $1.0.lastName}), id: \.key) { key, value in
-                                    HStack {
-                                        Text("\(key.firstName) \(key.lastName)")
-                                        Spacer()
-                                        Image(systemName: (self.emailViewModel.recipients[key] ?? false) ? "checkmark.circle.fill" : "circle")
-                                            .font(.title)
-                                            .onTapGesture {
-                                                if let value = self.emailViewModel.recipients[key] {
-                                                    self.emailViewModel.recipients[key] = !value
+                            if senderMenuExpanded {
+                                List {
+                                    ForEach(emailViewModel.recipients.sorted(by: {$0.0.lastName < $1.0.lastName}), id: \.key) { key, value in
+                                        HStack {
+                                            Text("\(key.firstName) \(key.lastName)")
+                                            Spacer()
+                                            Image(systemName: (self.emailViewModel.recipients[key] ?? false) ? "checkmark.circle.fill" : "circle")
+                                                .font(.title)
+                                                .onTapGesture {
+                                                    if let value = self.emailViewModel.recipients[key] {
+                                                        self.emailViewModel.recipients[key] = !value
+                                                    }
                                                 }
-                                            }
-                                    }.padding(.bottom)
+                                        }.padding(.bottom)
+                                    }
                                 }
                             }
                         }
                     }
-                    
                 }
                 Section(header: Text("Betreff")) {
                     TextField("Subject....", text: $emailViewModel.subject)

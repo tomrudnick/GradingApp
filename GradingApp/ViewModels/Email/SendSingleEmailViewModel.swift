@@ -55,6 +55,7 @@ class SendSingleEmailViewModel: SendEmailProtocol {
         self.half = half
         self.writtenGrades = student.gradesArr.filter({$0.type == .written && $0.half == half}).sorted(by: {$0.date! < $1.date! })
         self.gradeNumber = writtenGrades.count
+        self.recipients [student] = true
     }
 
     

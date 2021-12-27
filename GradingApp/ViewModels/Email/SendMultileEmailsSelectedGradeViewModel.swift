@@ -33,15 +33,13 @@ class SendMultipileEmailsSelectedGradeViewModel: SendMultipleEmailsViewModel {
         self.date = date
         self.gradeStudents = gradeStudents
         self.half = half
-        self.recipients = Dictionary(uniqueKeysWithValues: gradeStudents.map({ gradeStudent in
-            (gradeStudent.student, true)
-        }))
+        self.recipients = Dictionary(uniqueKeysWithValues: gradeStudents.filter({!$0.student.hidden && $0.grade != nil}).map({($0.student, true)}))
     }
     
     override func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
     {
         if let half = half, let date = date, let gradeStudents = gradeStudents {
-            let students = gradeStudents.filter({$0.grade != nil}).map({$0.student})
+            let students = recipients.filter({$0.1}).map({$0.0})
             let multipleEmailSender = SendMultipleEmails(emailAccountViewModel: emailAccountViewModel)
             multipleEmailSender.sendEmails(subject: subject, emailText: emailText, students: students, emailTextReplaceHandler: { emailText, student in
                 var emailString = SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)

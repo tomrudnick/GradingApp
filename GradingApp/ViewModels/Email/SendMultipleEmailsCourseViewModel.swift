@@ -29,18 +29,16 @@ class SendMultipleEmailsCourseViewModel : SendMultipleEmailsViewModel {
     func fetchData(course: Course, half: HalfType) {
         self.course = course
         self.half = half
-        self.recipients = Dictionary(uniqueKeysWithValues: course.students.map({ student in
-            (student, true)
-        }))
+        self.recipients = Dictionary(uniqueKeysWithValues: course.students.filter({!$0.hidden}).map({($0, true)}))
     }
     
     override func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
     {
-        if let course = course, let half = half {
+        if let half = half {
             let multipleEmailSender = SendMultipleEmails(emailAccountViewModel: emailAccountViewModel)
             multipleEmailSender.sendEmails(subject: subject,
                                            emailText: emailText,
-                                           students: course.studentsArr,
+                                           students: recipients.filter({$0.1}).map({$0.0}),
                                            emailTextReplaceHandler: { emailText, student in
                                                 return SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)
                                            }, progressHandler: progressHandler, completionHandler: completionHandler
