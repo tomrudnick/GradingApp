@@ -76,7 +76,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                             }
                         }, label: {
                             Text("Send...")
-                        })
+                        }).disabled(self.emailViewModel.recipients.filter{$0.1}.count == 0)
                     }
                 })
                 if showProgressbar {

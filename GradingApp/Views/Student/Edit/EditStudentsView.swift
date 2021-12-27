@@ -19,7 +19,7 @@ struct EditStudentsView: View {
             #if targetEnvironment(macCatalyst)
             List {
                 ForEach(course.students) { student in
-                    EditStudentDetailView(student: student)
+                    EditStudentDetailView(student: binding(for: student))
                         .contextMenu(ContextMenu(menuItems: {
                             Button(action: {
                                 self.selectedStudent = student

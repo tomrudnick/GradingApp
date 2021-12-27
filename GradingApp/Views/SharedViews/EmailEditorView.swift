@@ -38,16 +38,21 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                 Section(header: Text("Absender")) {
                     VStack{
                         HStack{
-                            Text("alle Schüler")
+                            Text(!self.emailViewModel.recipients.contains(where: { (key: Student, value: Bool) in
+                                value == false
+                            }) ? "An alle Schüler" : "An \(self.emailViewModel.recipients.filter{$0.1}.count) ausgewählte Schüler")
                             Spacer()
                             Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down").onTapGesture {
                                 senderMenuExpanded.toggle()
+                            
                             }
                         }.padding([.bottom, .top])
                         if senderMenuExpanded {
                             List {
                                 ForEach(emailViewModel.recipients.sorted(by: {$0.0.lastName < $1.0.lastName}), id: \.key) { key, value in
                                     HStack {
+                                        Text("\(key.firstName) \(key.lastName)")
+                                        Spacer()
                                         Image(systemName: (self.emailViewModel.recipients[key] ?? false) ? "checkmark.circle.fill" : "circle")
                                             .font(.title)
                                             .onTapGesture {
@@ -55,8 +60,6 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                                                     self.emailViewModel.recipients[key] = !value
                                                 }
                                             }
-                                        Spacer()
-                                        Text("\(key.firstName) \(key.lastName)")
                                     }.padding(.bottom)
                                 }
                             }
@@ -115,3 +118,4 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
         }
     }
 }
+
