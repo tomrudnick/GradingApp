@@ -7,7 +7,7 @@
         <attribute name="subject_" optional="YES" attributeType="String"/>
         <attribute name="type_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weight_" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="students_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
+        <relationship name="students_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
     </entity>
     <entity name="FullYearTranscriptGrade" representedClassName="FullYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">
         <attribute name="firstValue" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
@@ -31,8 +31,8 @@
         <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="lastName_" optional="YES" attributeType="String"/>
         <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="students_" inverseEntity="Course"/>
-        <relationship name="grades_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Grade" inverseName="student" inverseEntity="Grade"/>
-        <relationship name="transcriptGrade" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TranscriptGrade" inverseName="student" inverseEntity="TranscriptGrade"/>
+        <relationship name="grades_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Grade" inverseName="student" inverseEntity="Grade"/>
+        <relationship name="transcriptGrade" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TranscriptGrade" inverseName="student" inverseEntity="TranscriptGrade"/>
     </entity>
     <entity name="TranscriptGrade" representedClassName="TranscriptGrade" isAbstract="YES" syncable="YES">
         <attribute name="value" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
