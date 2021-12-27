@@ -40,22 +40,25 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                         HStack{
                             Text("alle Schüler")
                             Spacer()
-                            Button {
+                            Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down").onTapGesture {
                                 senderMenuExpanded.toggle()
-                            } label: {
-                                Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down")
                             }
-
-                        }
+                        }.padding([.bottom, .top])
                         if senderMenuExpanded {
                             List {
-                                //ForEach(emailViewModel.students){ (key,value) in
-                                //HStack{
-                                    //Text(key)
-                                    //Spacer()
-                                 // Text(value)
-                                //}
-                                //}
+                                ForEach(emailViewModel.recipients.sorted(by: {$0.0.lastName < $1.0.lastName}), id: \.key) { key, value in
+                                    HStack {
+                                        Image(systemName: (self.emailViewModel.recipients[key] ?? false) ? "checkmark.circle.fill" : "circle")
+                                            .font(.title)
+                                            .onTapGesture {
+                                                if let value = self.emailViewModel.recipients[key] {
+                                                    self.emailViewModel.recipients[key] = !value
+                                                }
+                                            }
+                                        Spacer()
+                                        Text("\(key.firstName) \(key.lastName)")
+                                    }.padding(.bottom)
+                                }
                             }
                         }
                     }

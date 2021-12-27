@@ -10,10 +10,11 @@ import SwiftSMTP
 
 
 class SendSingleEmailViewModel: SendEmailProtocol {
-    let emailViewModel: EmailViewModel
+    let emailAccountViewModel: EmailAccountViewModel
     
     @Published var emailText: String = ""
     @Published var subject: String = ""
+    @Published var recipients: [Student : Bool] = [:]
     
     //we assume O(1) beacuse gradeNumber should in practice be very small (< 10)
     var emailKeys: [String] {
@@ -44,7 +45,7 @@ class SendSingleEmailViewModel: SendEmailProtocol {
     private var writtenGrades: [Grade]
     
     init() {
-        self.emailViewModel = EmailViewModel()
+        self.emailAccountViewModel = EmailAccountViewModel()
         gradeNumber = 0
         self.writtenGrades = []
     }
@@ -59,7 +60,7 @@ class SendSingleEmailViewModel: SendEmailProtocol {
     
     func send(progressHandler: @escaping (Double) -> (), completionHandler: @escaping ([(Mail, Error)]) -> ()) {
         if let student = student, let half = half {
-            let emailSender = SendMultipleEmails(emailViewModel: emailViewModel)
+            let emailSender = SendMultipleEmails(emailAccountViewModel: emailAccountViewModel)
             emailSender.sendEmails(subject: subject, emailText: emailText, students: [student], emailTextReplaceHandler: { emailText, student in
                 var emailString = emailText
                 for i in 0..<gradeNumber {

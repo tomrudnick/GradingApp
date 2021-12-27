@@ -66,7 +66,7 @@ struct GradeAtDatesView: View {
                         self.showEmailSheet = true
                     }, label: {
                         Text("Ausgewählte Noten als E-Mail verschicken")
-                    }).disabled(!sendGradeEmailViewModel.emailViewModel.emailAccountUsed)
+                    }).disabled(!sendGradeEmailViewModel.emailAccountViewModel.emailAccountUsed)
                 })
             }
         }.sheet(isPresented: $showEmailSheet, content: {

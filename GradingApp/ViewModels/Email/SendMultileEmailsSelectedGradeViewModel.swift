@@ -8,7 +8,7 @@
 import Foundation
 import SwiftSMTP
 
-class SendMultipileEmailsSelectedGradeViewModel: SendMultipleEmailsViewModelBase {
+class SendMultipileEmailsSelectedGradeViewModel: SendMultipleEmailsViewModel {
 
     private var half: HalfType?
     private var date: Date?
@@ -33,13 +33,16 @@ class SendMultipileEmailsSelectedGradeViewModel: SendMultipleEmailsViewModelBase
         self.date = date
         self.gradeStudents = gradeStudents
         self.half = half
+        self.recipients = Dictionary(uniqueKeysWithValues: gradeStudents.map({ gradeStudent in
+            (gradeStudent.student, true)
+        }))
     }
     
     override func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
     {
         if let half = half, let date = date, let gradeStudents = gradeStudents {
             let students = gradeStudents.filter({$0.grade != nil}).map({$0.student})
-            let multipleEmailSender = SendMultipleEmails(emailViewModel: emailViewModel)
+            let multipleEmailSender = SendMultipleEmails(emailAccountViewModel: emailAccountViewModel)
             multipleEmailSender.sendEmails(subject: subject, emailText: emailText, students: students, emailTextReplaceHandler: { emailText, student in
                 var emailString = SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)
                 

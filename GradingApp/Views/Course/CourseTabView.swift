@@ -18,7 +18,7 @@ struct CourseTabView: View {
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     
-    @StateObject var sendEmailViewModel = SendMultipleEmailsViewModel()
+    @StateObject var sendEmailViewModel = SendMultipleEmailsCourseViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
@@ -65,7 +65,7 @@ struct CourseTabView: View {
                         self.showSendEmailSheet.toggle()
                     }, label: {
                         Text("Email verschicken...")
-                    }).disabled(!sendEmailViewModel.emailViewModel.emailAccountUsed)
+                    }).disabled(!sendEmailViewModel.emailAccountViewModel.emailAccountUsed)
                     if course.type == .holeYear {
                         Button {
                             self.showTranscriptHalfYearSheet.toggle()

@@ -10,15 +10,15 @@ import KeychainAccess
 import SwiftSMTP
 
 class SendMultipleEmails {
-    private let emailViewModel: EmailViewModel
-    init(emailViewModel: EmailViewModel) {
-        self.emailViewModel = emailViewModel
+    private let emailAccountViewModel: EmailAccountViewModel
+    init(emailAccountViewModel: EmailAccountViewModel) {
+        self.emailAccountViewModel = emailAccountViewModel
     }
     
     func sendEmails(subject: String, emailText: String, students: [Student], emailTextReplaceHandler: (_ emailText: String, _ student: Student) -> (String) , progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
-        let smtp = SMTP(hostname: emailViewModel.hostname, email: emailViewModel.username, password: emailViewModel.password, port: Int32(emailViewModel.portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 10)
+        let smtp = SMTP(hostname: emailAccountViewModel.hostname, email: emailAccountViewModel.username, password: emailAccountViewModel.password, port: Int32(emailAccountViewModel.portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 10)
         var mails: [Mail] = []
-        let sender = Mail.User(email: emailViewModel.email)
+        let sender = Mail.User(email: emailAccountViewModel.email)
         for student in students {
             let receiverStudent = Mail.User(name: "\(student.firstName) \(student.lastName)", email: student.email)
             let emailString = emailTextReplaceHandler(emailText, student)

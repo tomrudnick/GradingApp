@@ -8,41 +8,38 @@
 import Foundation
 import SwiftSMTP
 
-class SendMultipleEmailsViewModel : SendMultipleEmailsViewModelBase {
+
+protocol SendEmailProtocol: ObservableObject {
+    var emailText: String { get set }
+    var subject: String {get set }
+    var emailKeys: [String] { get }
+    var regexString: String { get }
+    var recipients: [Student : Bool] { get set }
+    func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
+}
+
+
+class SendMultipleEmailsViewModel : SendEmailProtocol {
+    let emailAccountViewModel: EmailAccountViewModel
+    @Published var emailText: String = ""
+    @Published var subject: String = ""
+    @Published var recipients: [Student : Bool] = [:]
     
-    private var course: Course?
-    private var half: HalfType?
-    
-    override var emailKeys: [String] {
-        get {
-            ["\\\(EmailKeys.firstName)",
-             "\\\(EmailKeys.lastName)",
-             "\\\(EmailKeys.oralGrade)",
-             "\\\(EmailKeys.writtenGrade)",
-             "\\\(EmailKeys.grade)",
-             "\\\(EmailKeys.transcriptGradeHalf)",
-             "\\\(EmailKeys.transcriptGrade)"
-            ]
-        }
+    var emailKeys: [String] {
+        get { [] }
     }
     
-    func fetchData(course: Course, half: HalfType) {
-        self.course = course
-        self.half = half
+    
+    init() {
+        emailAccountViewModel = EmailAccountViewModel()
     }
     
-    override func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
-    {
-        if let course = course, let half = half {
-            let multipleEmailSender = SendMultipleEmails(emailViewModel: emailViewModel)
-            multipleEmailSender.sendEmails(subject: subject,
-                                           emailText: emailText,
-                                           students: course.studentsArr,
-                                           emailTextReplaceHandler: { emailText, student in
-                                                return SendMultipleEmails.standardReplacementEmailString(emailText, student: student, half: half)
-                                           }, progressHandler: progressHandler, completionHandler: completionHandler
-            )
-        }
-        
+    var regexString: String {
+        emailKeys.joined(separator: "|")
     }
+    
+    func send(progressHandler: @escaping (Double) -> (), completionHandler: @escaping ([(Mail, Error)]) -> ()) {
+        preconditionFailure("Please use the overriden function")
+    }
+    
 }

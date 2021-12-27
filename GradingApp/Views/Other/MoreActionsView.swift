@@ -16,7 +16,7 @@ struct MoreActionsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = MoreActionsViewModel()
-    @StateObject var emailViewModel = EmailViewModel()
+    @StateObject var emailViewModel = EmailAccountViewModel()
     @StateObject var backupSettingsViewModel = BackupSettingsViewModel()
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false

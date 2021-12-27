@@ -11,7 +11,7 @@ import SwiftSMTP
 
 
 
-class EmailViewModel: ObservableObject {
+class EmailAccountViewModel: ObservableObject {
     
     struct KeyValueConstants {
         static let emailActive = "emailActive"
