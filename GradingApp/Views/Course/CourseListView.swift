@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 //import ViewInspector
 import UIKit
+import Combine
 
 
 struct CourseListView: View {
@@ -38,6 +39,9 @@ struct CourseListView: View {
     @State var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
+    
+    @State private var canceallable: AnyCancellable?
+    @State private var showNewAlert = false
     
     var body: some View {
         NavigationView {
@@ -98,6 +102,26 @@ struct CourseListView: View {
                 
         }
         .onAppear {
+            canceallable = NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: { value in
+                    print("Belastend:")
+                    if let dict = value.userInfo as NSDictionary? {
+                        if let values = dict[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] {
+                            if values.contains(BackupSettingsViewModel.KeyValueConstants.badge) {
+                                if NSUbiquitousKeyValueStore.default.longLong(forKey: BackupSettingsViewModel.KeyValueConstants.badge) == 0 {
+                                    UIApplication.shared.applicationIconBadgeNumber = 0
+                                    print("Resetted badge")
+                                    NSUbiquitousKeyValueStore.default.set(1, forKey: BackupSettingsViewModel.KeyValueConstants.badge)
+                                    NSUbiquitousKeyValueStore.default.synchronize()
+                                }
+                            }
+                            print(dict)
+                        }
+                    }
+                    
+                    self.showNewAlert = true
+                })
             if let course = courses.first, idiom == .pad{
                 self.firstCourse = course
                 self.firstCourseActive = true
@@ -166,3 +190,4 @@ struct WelcomeViewIpad: View {
             .navigationBarHidden(true)
     }
 }
+
