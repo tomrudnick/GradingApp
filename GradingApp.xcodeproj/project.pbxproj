@@ -82,6 +82,7 @@
 		E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC426BAF781000BDD65 /* Student+helper.swift */; };
 		E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */; };
 		E26ACC9926CE70F2004468AB /* Course+StudentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */; };
+		E275C0EF277E190200E5A5ED /* BackupNotificationBadgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E275C0EE277E190200E5A5ED /* BackupNotificationBadgeViewModel.swift */; };
 		E276A6DC26D79D2E00380C14 /* GradeAtDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DB26D79D2E00380C14 /* GradeAtDatesView.swift */; };
 		E276A6DE26D7AB3900380C14 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DD26D7AB3900380C14 /* Date+toString.swift */; };
 		E276A6E026D7B97E00380C14 /* GradeStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DF26D7B97E00380C14 /* GradeStudent.swift */; };
@@ -199,6 +200,7 @@
 		E25FBCC426BAF781000BDD65 /* Student+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+helper.swift"; sourceTree = "<group>"; };
 		E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoursesView.swift; sourceTree = "<group>"; };
 		E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+StudentHelper.swift"; sourceTree = "<group>"; };
+		E275C0EE277E190200E5A5ED /* BackupNotificationBadgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupNotificationBadgeViewModel.swift; sourceTree = "<group>"; };
 		E276A6DB26D79D2E00380C14 /* GradeAtDatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesView.swift; sourceTree = "<group>"; };
 		E276A6DD26D7AB3900380C14 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
 		E276A6DF26D7B97E00380C14 /* GradeStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeStudent.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */,
 				6DE31A5A26EBE69800CB41C0 /* UndoRedoViewModel.swift */,
 				3915188727772441003C11E4 /* BackupSettingsViewModel.swift */,
+				E275C0EE277E190200E5A5ED /* BackupNotificationBadgeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */,
 				E25FBCB026BADAC8000BDD65 /* GradingAppData.xcdatamodeld in Sources */,
 				E25FBCB826BAE1AB000BDD65 /* CourseTabView.swift in Sources */,
+				E275C0EF277E190200E5A5ED /* BackupNotificationBadgeViewModel.swift in Sources */,
 				E2574C0526D9454400ED2CFD /* HalfYear+EnvironmentValue.swift in Sources */,
 				39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */,
 				E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */,

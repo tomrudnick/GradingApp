@@ -49,7 +49,6 @@ class BackupSettingsViewModel: ObservableObject {
     struct KeyValueConstants {
         static let backupTime = "backupTime"
         static let notifyFrequency = "notifyFrequency"
-        static let backupNotifyToggle = "backupNotifyToggle"
         static let badge = "badge"
     }
     
@@ -90,8 +89,9 @@ class BackupSettingsViewModel: ObservableObject {
     }
     
     
-    func addNotifications() {
-        if !notifyAllowed || !changeOccurred {
+    
+    func addNotifications(force: Bool = false) {
+        if (!notifyAllowed || !changeOccurred) && !force {
             return
         }
         print("ADD NOtifcations")
@@ -101,10 +101,10 @@ class BackupSettingsViewModel: ObservableObject {
         center.removeAllPendingNotificationRequests()
         switch backupNotifyInterval {
         case .test:
-                     let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
-                     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
-                     let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
-                     center.add(request)
+             let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
+             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
+             let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+             center.add(request)
         case .daily:
             let triggerDaily = Calendar.current.dateComponents([.hour,.minute], from: backupTime)
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)

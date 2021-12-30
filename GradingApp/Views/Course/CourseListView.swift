@@ -32,6 +32,7 @@ struct CourseListView: View {
     @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
     @StateObject var editCourseViewModel = CourseEditViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
+    @StateObject var backupNotificationBadgeVM = BackupNotificationBadgeViewModel()
     
     @State var firstCourseActive = false
     @State var firstCourse: Course = Course()
@@ -40,7 +41,6 @@ struct CourseListView: View {
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
     
-    @State private var canceallable: AnyCancellable?
     @State private var showNewAlert = false
     
     var body: some View {
@@ -102,26 +102,7 @@ struct CourseListView: View {
                 
         }
         .onAppear {
-            canceallable = NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)
-                .receive(on: RunLoop.main)
-                .sink(receiveValue: { value in
-                    print("Belastend:")
-                    if let dict = value.userInfo as NSDictionary? {
-                        if let values = dict[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String] {
-                            if values.contains(BackupSettingsViewModel.KeyValueConstants.badge) {
-                                if NSUbiquitousKeyValueStore.default.longLong(forKey: BackupSettingsViewModel.KeyValueConstants.badge) == 0 {
-                                    UIApplication.shared.applicationIconBadgeNumber = 0
-                                    print("Resetted badge")
-                                    NSUbiquitousKeyValueStore.default.set(1, forKey: BackupSettingsViewModel.KeyValueConstants.badge)
-                                    NSUbiquitousKeyValueStore.default.synchronize()
-                                }
-                            }
-                            print(dict)
-                        }
-                    }
-                    
-                    self.showNewAlert = true
-                })
+            backupNotificationBadgeVM.updateOnlineBadge()
             if let course = courses.first, idiom == .pad{
                 self.firstCourse = course
                 self.firstCourseActive = true

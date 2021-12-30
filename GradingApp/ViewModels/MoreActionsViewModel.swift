@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreData
-
+import Combine
 
 
 
@@ -28,6 +28,7 @@ class MoreActionsViewModel: ObservableObject {
     @Published var dateSecondHalf: Date
     @Published var half: HalfType
     @Published var backupType: BackupType = .backup
+    @Published var canceallable: AnyCancellable?
     
     var selectedHalf : Int {
         get {
@@ -54,7 +55,25 @@ class MoreActionsViewModel: ObservableObject {
         } else {
             self.dateSecondHalf = Date()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(onUbiquitousKeyValueStoreDidChangeExternally(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
+        canceallable = NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { value in
+                self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
+                
+                let df = DateFormatter()
+                df.dateFormat = KeyValueConstants.dateFormat
+                if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.firstHalf) {
+                    self.dateFirstHalf = df.date(from: date)!
+                } else {
+                    self.dateFirstHalf = Date()
+                }
+                
+                if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.secondHalf) {
+                    self.dateSecondHalf = df.date(from: date)!
+                } else {
+                    self.dateSecondHalf = Date()
+                }
+            })
     }
     
 //    func getBackupFiles(viewContext: NSManagedObjectContext) -> [Any] {
@@ -124,25 +143,5 @@ class MoreActionsViewModel: ObservableObject {
             viewContext.saveCustom()
         }
         
-    }
-    
-    
-    @objc func onUbiquitousKeyValueStoreDidChangeExternally(notification:Notification)
-    {
-        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
-        
-        let df = DateFormatter()
-        df.dateFormat = KeyValueConstants.dateFormat
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.firstHalf) {
-            self.dateFirstHalf = df.date(from: date)!
-        } else {
-            self.dateFirstHalf = Date()
-        }
-        
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.secondHalf) {
-            self.dateSecondHalf = df.date(from: date)!
-        } else {
-            self.dateSecondHalf = Date()
-        }
     }
 }
