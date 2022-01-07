@@ -32,12 +32,11 @@ struct CourseListView: View {
     @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
     @StateObject var editCourseViewModel = CourseEditViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
-    @StateObject var backupNotificationBadgeVM = BackupNotificationBadgeViewModel()
+    @StateObject var badgeViewModel = BadgeViewModel()
     
     @State var firstCourseActive = false
     @State var firstCourse: Course = Course()
     @State var alertType: AlertType = .halfYearWarning
-    @State var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
     
@@ -52,12 +51,12 @@ struct CourseListView: View {
                 }
             }
             .onAppear {
-                badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+                badgeViewModel.updateBadge()
                 selectedHalfYearVM.fetchValue()
             }//Wird aufgerufen, wenn der View neu berechnet wird
             .onChange(of: scenePhase, perform: { newPhase in
                 if newPhase == .active {
-                    badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+                    badgeViewModel.updateBadge()
                 }
             }) //Im Hintergrund laufende App wird erneut aufgerufen.
             .alert(isPresented: $showAlert, content: {
@@ -72,9 +71,9 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView().environment(\.managedObjectContext, viewContext)
+                MoreActionsView(badgeViewModel: badgeViewModel).environment(\.managedObjectContext, viewContext)
                     .onDisappear {
-                        badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+                        badgeViewModel.updateBadge()
                         selectedHalfYearVM.fetchValue()
                     }
             })
@@ -102,7 +101,6 @@ struct CourseListView: View {
                 
         }
         .onAppear {
-            backupNotificationBadgeVM.updateOnlineBadge()
             if let course = courses.first, idiom == .pad{
                 self.firstCourse = course
                 self.firstCourseActive = true
@@ -127,9 +125,11 @@ struct CourseListView: View {
         } label: {
             ZStack {
                 Image(systemName: "ellipsis.circle")
-                if badgeNumber != 0 {
-                    Text("\(badgeNumber)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
+                #if !targetEnvironment(macCatalyst)
+                if badgeViewModel.badge != 0 {
+                    Text("\(badgeViewModel.badge)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
                 }
+                #endif
             }
         }
     }

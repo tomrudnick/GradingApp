@@ -17,17 +17,19 @@ struct MoreActionsView: View {
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = MoreActionsViewModel()
     @StateObject var emailViewModel = EmailAccountViewModel()
-    @StateObject var backupSettingsViewModel = BackupSettingsViewModel()
+    @StateObject var backupSettingsViewModel: BackupSettingsViewModel
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
     @State private var showingExport = false
-    @State var badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+    @ObservedObject var badgeViewModel: BadgeViewModel
     
     var onDelete: () -> ()
     
-    init(onDelete: @escaping () -> () = { }) {
+    init(badgeViewModel: BadgeViewModel, onDelete: @escaping () -> () = { }) {
         self.onDelete = onDelete
+        self.badgeViewModel = badgeViewModel
+        self._backupSettingsViewModel = StateObject(wrappedValue: BackupSettingsViewModel(badgeViewModel: badgeViewModel))
     }
     
     
@@ -42,8 +44,8 @@ struct MoreActionsView: View {
                         ZStack {
                             Text("Backup")
                                 
-                            if badgeNumber != 0 {
-                                Text("\(badgeNumber)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 34, y: -6)
+                            if self.badgeViewModel.badge != 0 {
+                                Text("\(self.badgeViewModel.badge)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 34, y: -6)
                             }
                         }
                         
@@ -173,11 +175,11 @@ struct MoreActionsView: View {
         }
         .onChange(of: scenePhase, perform: { newPhase in
             if newPhase == .active {
-                badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+                self.badgeViewModel.updateBadge()
             }
         })
         .onAppear(perform: {
-            badgeNumber = UIApplication.shared.applicationIconBadgeNumber
+            self.badgeViewModel.updateBadge()
             backupSettingsViewModel.requestNotificationAuthorization()
         })
         .if(viewModel.backupType == .backup, transform: { view in
@@ -186,7 +188,6 @@ struct MoreActionsView: View {
                 case .success(let url):
                     print("Saved to \(url)")
                     backupSettingsViewModel.resetBadge()
-                    badgeNumber = 0
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

@@ -12,14 +12,20 @@ import UIKit
 
 class BackupSettingsViewModel: ObservableObject {
     
-    @Published var backupTime: Date
-    @Published var backupNotifyInterval: BackupNotifyInterval = .never {
+    @Published var backupTime: Date {
         didSet {
-            changeOccurred = true
+            backupTimeChanged = true
         }
     }
+    @Published var backupNotifyInterval: BackupNotifyInterval = .never {
+        didSet {
+            backupNotifyFrequencyChanged = true
+        }
+    }
+    var badgeViewModel: BadgeViewModel
     private(set) var notifyAllowed = false
-    private(set) var changeOccurred = false
+    private(set) var backupNotifyFrequencyChanged = false
+    private(set) var backupTimeChanged = false
     
     enum BackupNotifyInterval: String, CaseIterable, Identifiable {
         case test = "Test"
@@ -56,7 +62,7 @@ class BackupSettingsViewModel: ObservableObject {
    
     
     
-    init() {
+    init(badgeViewModel: BadgeViewModel) {
         if let backupTimeString =  NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.backupTime) {
             self.backupTime = isoFormatter.date(from: backupTimeString) ?? Date()
         } else {
@@ -67,17 +73,25 @@ class BackupSettingsViewModel: ObservableObject {
             self.backupNotifyInterval = backupNotifyIntervalEnum
         }
         isoFormatter.timeZone = TimeZone.current
-        changeOccurred = false
+        backupNotifyFrequencyChanged = false
+        backupTimeChanged = false
+        self.badgeViewModel = badgeViewModel
     }
     
     func save() {
-        NSUbiquitousKeyValueStore.default.set(isoFormatter.string(from: backupTime), forKey: KeyValueConstants.backupTime)
-        print("Time \(isoFormatter.string(from: backupTime))")
-        NSUbiquitousKeyValueStore.default.set(backupNotifyInterval.name, forKey: KeyValueConstants.notifyFrequency)
+        if backupTimeChanged {
+            NSUbiquitousKeyValueStore.default.set(isoFormatter.string(from: backupTime), forKey: KeyValueConstants.backupTime)
+            print("Update Time \(isoFormatter.string(from: backupTime))")
+        }
+        if backupNotifyFrequencyChanged {
+            print("Update Notify Interval")
+            NSUbiquitousKeyValueStore.default.set(backupNotifyInterval.name, forKey: KeyValueConstants.notifyFrequency)
+        }
         NSUbiquitousKeyValueStore.default.synchronize()
     }
     
     func requestNotificationAuthorization() {
+        #if !targetEnvironment(macCatalyst)
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
                 print("Notification zugelassen")
@@ -86,49 +100,62 @@ class BackupSettingsViewModel: ObservableObject {
                 print("\(error.localizedDescription) Backup Einstellungsfehler")
             }
         }
+        #endif
     }
     
     
     
     func addNotifications(force: Bool = false) {
-        if (!notifyAllowed || !changeOccurred) && !force {
-            return
-        }
-        print("ADD NOtifcations")
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.badge = 1
-        center.removeAllPendingNotificationRequests()
-        switch backupNotifyInterval {
-        case .test:
-             let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
-             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
-             let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
-             center.add(request)
-        case .daily:
-            let triggerDaily = Calendar.current.dateComponents([.hour,.minute], from: backupTime)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
-            let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
-            center.add(request)
-        case .weekly:
-            let triggerWeekly = Calendar.current.dateComponents([.weekday, .hour, .minute], from: backupTime)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
-            let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
-            center.add(request)
-        case .biweekly:
-            let triggerBiweekly = UNTimeIntervalNotificationTrigger(timeInterval: 1209600.0, repeats: true)
-            let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: triggerBiweekly)
-            center.add(request)
-        case .monthly:
-            let triggerMonthly = Calendar.current.dateComponents([.weekdayOrdinal, .hour, .minute], from: backupTime)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerMonthly, repeats: true)
-            let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
-            center.add(request)
-        case .never:
-            resetBadge()
-        }
+        #if !targetEnvironment(macCatalyst)
+            if (notifyAllowed && (backupTimeChanged || backupNotifyFrequencyChanged || force)) {
+                print("ADD NOtifcations")
+                let center = UNUserNotificationCenter.current()
+                let content = UNMutableNotificationContent()
+                content.badge = 1
+                center.removeAllPendingNotificationRequests()
+                switch backupNotifyInterval {
+                case .test:
+                     let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
+                     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
+                     let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                     center.add(request)
+                case .daily:
+                    let triggerDaily = Calendar.current.dateComponents([.hour,.minute], from: backupTime)
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
+                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                    center.add(request)
+                case .weekly:
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday, .hour, .minute], from: backupTime)
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
+                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                    center.add(request)
+                case .biweekly:
+                    let triggerBiweekly = UNTimeIntervalNotificationTrigger(timeInterval: 1209600.0, repeats: true)
+                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: triggerBiweekly)
+                    center.add(request)
+                case .monthly:
+                    let triggerMonthly = Calendar.current.dateComponents([.weekdayOrdinal, .hour, .minute], from: backupTime)
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerMonthly, repeats: true)
+                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                    center.add(request)
+                case .never:
+                    resetBadge()
+                }
+            }
+        #else
+            if(!backupNotifyFrequencyChanged && !force) {
+                    return
+            }
+            switch backupNotifyInterval {
+            case .never:
+                resetBadge()
+            default:
+                return
+            }
+        #endif
     }
     func resetBadge() {
+        badgeViewModel.badge = 0
         UIApplication.shared.applicationIconBadgeNumber = 0 //local
         NSUbiquitousKeyValueStore.default.set(0, forKey: KeyValueConstants.badge) //cloud
         NSUbiquitousKeyValueStore.default.synchronize()
