@@ -103,7 +103,24 @@ class BackupSettingsViewModel: ObservableObject {
         #endif
     }
     
+    func addNotificationsIfNeeded() {
+        #if !targetEnvironment(macCatalyst)
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (notifications) in
+            if !notifications.contains(where: { notification in notification.identifier == self.calcNotificationIdentifierString() }) {
+                print("Local Notification is different from...")
+                DispatchQueue.main.async {
+                    self.addNotifications(force: true)
+                }
+            }
+        }
+        #else
+        self.addNotifications(force: true)
+        #endif
+    }
     
+    private func calcNotificationIdentifierString() -> String{
+        return "backupNotification-\(backupNotifyInterval.name)-\(isoFormatter.string(from: backupTime))"
+    }
     
     func addNotifications(force: Bool = false) {
         #if !targetEnvironment(macCatalyst)
@@ -117,26 +134,26 @@ class BackupSettingsViewModel: ObservableObject {
                 case .test:
                      let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
                      let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
-                     let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                     let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
                     center.add(request)
                 case .daily:
                     let triggerDaily = Calendar.current.dateComponents([.hour,.minute], from: backupTime)
                     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
-                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
                     center.add(request)
                 case .weekly:
                     let triggerWeekly = Calendar.current.dateComponents([.weekday, .hour, .minute], from: backupTime)
                     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
-                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
                     center.add(request)
                 case .biweekly:
                     let triggerBiweekly = UNTimeIntervalNotificationTrigger(timeInterval: 1209600.0, repeats: true)
-                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: triggerBiweekly)
+                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: triggerBiweekly)
                     center.add(request)
                 case .monthly:
                     let triggerMonthly = Calendar.current.dateComponents([.weekdayOrdinal, .hour, .minute], from: backupTime)
                     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerMonthly, repeats: true)
-                    let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
+                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
                     center.add(request)
                 case .never:
                     resetBadge()
@@ -155,6 +172,7 @@ class BackupSettingsViewModel: ObservableObject {
         #endif
     }
     func resetBadge() {
+        print("Reset Code executed")
         badgeViewModel.badge = 0
         UIApplication.shared.applicationIconBadgeNumber = 0 //local
         NSUbiquitousKeyValueStore.default.set(0, forKey: KeyValueConstants.badge) //cloud

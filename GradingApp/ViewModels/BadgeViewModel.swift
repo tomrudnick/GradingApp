@@ -18,13 +18,19 @@ class BadgeViewModel: ObservableObject {
         print("BadgeViewModel init")
         if UIApplication.shared.applicationIconBadgeNumber != UserDefaults.standard.integer(forKey: BackupSettingsViewModel.KeyValueConstants.badge) {
             badge = UIApplication.shared.applicationIconBadgeNumber
+            print("Upload new online Badge \(badge)")
             UserDefaults.standard.set(badge, forKey: BackupSettingsViewModel.KeyValueConstants.badge)
             NSUbiquitousKeyValueStore.default.set(badge, forKey: BackupSettingsViewModel.KeyValueConstants.badge)
             NSUbiquitousKeyValueStore.default.synchronize()
         } else {
             NSUbiquitousKeyValueStore.default.synchronize()
             let onlineBadge = NSUbiquitousKeyValueStore.default.longLong(forKey: BackupSettingsViewModel.KeyValueConstants.badge)
+            print("Download online Badge: \(onlineBadge)")
+            
+            UIApplication.shared.applicationIconBadgeNumber = Int(1 - onlineBadge) //This is a weired trick to force mac to redraw the badge?!
+                                                                                   //Might not be needed on iOS
             UIApplication.shared.applicationIconBadgeNumber = Int(onlineBadge)
+            print("Application Badge Number: \(UIApplication.shared.applicationIconBadgeNumber)")
             UserDefaults.standard.set(1 - onlineBadge, forKey: BackupSettingsViewModel.KeyValueConstants.badge)
             badge = Int(onlineBadge)
         }

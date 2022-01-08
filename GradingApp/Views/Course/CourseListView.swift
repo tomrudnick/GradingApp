@@ -103,7 +103,7 @@ struct CourseListView: View {
         }
         .onAppear {
             if firstAppear {
-                BackupSettingsViewModel(badgeViewModel: badgeViewModel).addNotifications(force: true)
+                BackupSettingsViewModel(badgeViewModel: badgeViewModel).addNotificationsIfNeeded()
                 firstAppear = false
             }
             if let course = courses.first, idiom == .pad{
