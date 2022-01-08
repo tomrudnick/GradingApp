@@ -41,6 +41,7 @@ struct CourseListView: View {
     internal var didAppear: ((Self) -> Void)? // Test Reasons
     
     @State private var showNewAlert = false
+    @State private var firstAppear = true
     
     var body: some View {
         NavigationView {
@@ -101,6 +102,10 @@ struct CourseListView: View {
                 
         }
         .onAppear {
+            if firstAppear {
+                BackupSettingsViewModel(badgeViewModel: badgeViewModel).addNotifications(force: true)
+                firstAppear = false
+            }
             if let course = courses.first, idiom == .pad{
                 self.firstCourse = course
                 self.firstCourseActive = true

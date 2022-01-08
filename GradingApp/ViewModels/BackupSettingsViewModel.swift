@@ -107,7 +107,7 @@ class BackupSettingsViewModel: ObservableObject {
     
     func addNotifications(force: Bool = false) {
         #if !targetEnvironment(macCatalyst)
-            if (notifyAllowed && (backupTimeChanged || backupNotifyFrequencyChanged || force)) {
+            if (notifyAllowed && (backupTimeChanged || backupNotifyFrequencyChanged)) || force {
                 print("ADD NOtifcations")
                 let center = UNUserNotificationCenter.current()
                 let content = UNMutableNotificationContent()
@@ -118,7 +118,7 @@ class BackupSettingsViewModel: ObservableObject {
                      let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
                      let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
                      let request = UNNotificationRequest(identifier: "backupNotification", content: content, trigger: trigger)
-                     center.add(request)
+                    center.add(request)
                 case .daily:
                     let triggerDaily = Calendar.current.dateComponents([.hour,.minute], from: backupTime)
                     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)

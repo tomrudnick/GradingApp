@@ -14,6 +14,7 @@ class BadgeViewModel: ObservableObject {
     var canceallable: AnyCancellable?
     
     init() {
+        
         print("BadgeViewModel init")
         if UIApplication.shared.applicationIconBadgeNumber != UserDefaults.standard.integer(forKey: BackupSettingsViewModel.KeyValueConstants.badge) {
             badge = UIApplication.shared.applicationIconBadgeNumber
@@ -27,8 +28,6 @@ class BadgeViewModel: ObservableObject {
             UserDefaults.standard.set(1 - onlineBadge, forKey: BackupSettingsViewModel.KeyValueConstants.badge)
             badge = Int(onlineBadge)
         }
-        let backupSettingsViewModel = BackupSettingsViewModel(badgeViewModel: self)
-        backupSettingsViewModel.addNotifications(force: true)
         canceallable = NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)
             .receive(on: RunLoop.main)
             .sink(receiveValue: { value in

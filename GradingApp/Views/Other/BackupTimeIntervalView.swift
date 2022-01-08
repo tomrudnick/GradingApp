@@ -13,7 +13,7 @@ struct BackupTimeIntervalView: View {
     
     var body: some View {
         List {
-            ForEach(BackupSettingsViewModel.BackupNotifyInterval.allCases, id: \.id) { value in
+            ForEach(BackupSettingsViewModel.BackupNotifyInterval.allCases, id: \.self) { value in
                 Button {
                     selection = value
                     presentationMode.wrappedValue.dismiss()
