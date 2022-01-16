@@ -103,7 +103,10 @@ struct CourseListView: View {
         }
         .onAppear {
             if firstAppear {
-                BackupSettingsViewModel(badgeViewModel: badgeViewModel).addNotificationsIfNeeded()
+                #if targetEnvironment(macCatalyst)
+                print("Removing all Pending Mac Notifications")
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                #endif
                 firstAppear = false
             }
             if let course = courses.first, idiom == .pad{
