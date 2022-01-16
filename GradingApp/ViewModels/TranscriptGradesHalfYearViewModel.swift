@@ -26,7 +26,8 @@ class TranscriptGradesHalfYearViewModel : TranscriptGradesViewModelProtocol {
         self.course = course
         self.studentGrades = course.studentsArr.map({ student in
             GradeStudent(student: student, grade: student.transcriptGrade, value: student.transcriptGrade?.getTranscriptGradeHalfValue(half: halfYear) ?? -1)
-        }).sorted(by: {$0.student.firstName < $1.student.firstName}).sorted(by: {$0.student.lastName < $1.student.lastName })
+        }).sorted(by: {($0.student.lastName < $1.student.lastName) || ($0.student.lastName == $1.student.lastName && $0.student.firstName < $1.student.firstName) })
+
     }
     
     func setGrade(for student: Student, value: Int) {

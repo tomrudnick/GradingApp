@@ -44,7 +44,8 @@ extension Course {
     }
     
     var studentsArr: Array<Student> {
-        get { students.filter { $0.hidden == false }.sorted { $0.lastName < $1.lastName }.sorted{ $0.firstName < $1.firstName } }
+        get { students.filter { $0.hidden == false }
+            .sorted(by: {($0.lastName < $1.lastName) || ($0.lastName == $1.lastName && $0.firstName < $1.firstName) })}
     }
     
     var studentsCount: Int {
@@ -90,6 +91,12 @@ extension Course {
     }
     static func addCourse(course: CourseEditViewModel.CourseVM, context: NSManagedObjectContext){
         addCourse(courseName: course.name, courseSubject: course.subject, oralWeight: course.oralWeight, ageGroup: course.ageGroup, type: course.type, hidden: course.hidden, context: context)
+    }
+    
+    static func getAddCourse(course: CourseEditViewModel.CourseVM, context: NSManagedObjectContext) -> Course {
+        let course = Course(name: course.name, subject: course.subject, hidden: course.hidden, ageGroup: course.ageGroup, type: course.type, oralWeight: course.oralWeight, context: context)
+        context.saveCustom()
+        return course
     }
     
     static func fetchAll() -> NSFetchRequest<Course> {

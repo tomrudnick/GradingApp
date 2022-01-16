@@ -34,8 +34,7 @@ class TranscriptGradesViewModel : TranscriptGradesViewModelProtocol {
             .filter({$0.transcriptGrade != nil})
             .map({ student in
                 GradeStudent(student: student, grade: student.transcriptGrade)
-            }).sorted(by: {$0.student.firstName < $1.student.lastName})
-              .sorted(by: {$0.student.lastName < $1.student.lastName})
+            }).sorted(by: {($0.student.lastName < $1.student.lastName) || ($0.student.lastName == $1.student.lastName && $0.student.firstName < $1.student.firstName) })
     }
     
     func setGrade(for student: Student, value: Int) {

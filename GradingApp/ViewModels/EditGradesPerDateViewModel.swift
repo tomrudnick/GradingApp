@@ -52,7 +52,8 @@ class EditGradesPerDateViewModel : ObservableObject {
         course.students.filter { student in
             !studentGrades.contains(where: {$0.student == student}) && student.hidden == false
         }.forEach({tmpStudentGrades.append(GradeStudent(student: $0))})
-        self.studentGrades = tmpStudentGrades.sorted { $0.student.lastName < $1.student.lastName }.sorted{ $0.student.firstName < $1.student.firstName}
+        self.studentGrades = tmpStudentGrades.sorted(by: {($0.student.lastName < $1.student.lastName) || ($0.student.lastName == $1.student.lastName && $0.student.firstName < $1.student.firstName) })
+
         self.course = course
         
     }

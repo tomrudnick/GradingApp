@@ -36,8 +36,15 @@ class CourseEditViewModel: ObservableObject {
     }
     
     func save(context: NSManagedObjectContext) {
+        //Those are the newly created courses
         courses.filter { course in !fetchedCourses.contains(where: {$0.key == course.id})}
-        .forEach({Course.addCourse(course: $0, context: context)})
+        .forEach({
+            let course = Course.getAddCourse(course: $0, context: context)
+            //Those students have to be new and are therefore going to be created
+            $0.students.forEach { student in
+                Student.addStudent(student: student, course: course, context: context)
+            }
+        })
         
         for (id, course) in fetchedCourses {
             if let courseVM = courses.first(where: {$0.id == id}) {  // where: {course: Course in course.id == id}
