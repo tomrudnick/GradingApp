@@ -146,6 +146,10 @@ struct MoreActionsView: View {
                         
                     }
                 }
+                Section(header: Text("Version")) {
+                    Text("Version Number: \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "-")")
+                    Text("Build Number: \(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "-")")
+                }
             }
             .alert(isPresented: $showHalfWarningAlert, content: {
                 Alert(title: Text("Achtung"),
