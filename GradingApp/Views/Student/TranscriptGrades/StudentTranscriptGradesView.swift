@@ -12,7 +12,7 @@ import SwiftUI
         1. Model which is the viewModel that conforms to TranscriptGradesViewModelProtocol
         2. DetailView which is the way the Rows are displayed of the ListView and therefore how every student is displayed. It conforms to the StudentGradeDetailViewProtocol
  */
-struct StudentTranscriptGradesView<Model, DetailView>: View where Model: TranscriptGradesViewModelProtocol, DetailView: StudentGradeDetailViewProtocol {
+struct StudentTranscriptGradesView<Model, DetailView>: View where Model: TranscriptGradesViewModelProtocol, DetailView: View {
     
     @StateObject var gradePickerViewModel = GradePickerViewModel()
     

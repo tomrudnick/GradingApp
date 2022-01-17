@@ -13,7 +13,7 @@ extension TranscriptGrade {
         let transcriptGrade: TranscriptGrade?
         switch courseType {
         case .firstHalf, .secondHalf:
-            transcriptGrade = HalfYearTranscriptGrade(context: context)
+            transcriptGrade = HalfYearTranscriptGrade(context: context, half: courseType == .firstHalf ? .firstHalf : .secondHalf)
         case .holeYear:
             transcriptGrade = FullYearTranscriptGrade(context: context)
         }

@@ -25,4 +25,9 @@ public class HalfYearTranscriptGrade: TranscriptGrade {
     override func getCalculatedValue() -> Double {
         return Double(self.value)
     }
+    
+    convenience init(context: NSManagedObjectContext, half: HalfType) {
+        self.init(context: context)
+        self.half = half
+    }
 }

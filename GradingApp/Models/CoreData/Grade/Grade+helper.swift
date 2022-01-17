@@ -80,6 +80,14 @@ extension Grade {
         }
     }
     
+    static func getColor(points: String) -> Color {
+        if let points = Double(points) {
+            return getColor(points: points)
+        } else {
+            return Color.white
+        }
+    }
+    
     
     static func getGradesPerDate(grades: FetchedResults<Grade>) -> [Date : [GradeStudent<Grade>]] {
         var allDates: [Date : [GradeStudent<Grade>]] = [:]

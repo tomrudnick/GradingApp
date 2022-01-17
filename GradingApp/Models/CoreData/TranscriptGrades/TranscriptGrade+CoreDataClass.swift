@@ -26,17 +26,29 @@ public class TranscriptGrade: NSManagedObject {
     }
     
     func getTranscriptGradeHalfValueString(half: HalfType) -> String {
-        switch self.student?.course?.ageGroup {
-        case .lower:
-            return Grade.convertGradePointsToGrades(value: getTranscriptGradeHalfValue(half: half) ?? -1)
-        case .upper:
-            return String(getTranscriptGradeHalfValue(half: half) ?? -1)
-        case .none:
+        let value = getTranscriptGradeHalfValue(half: half)
+        if let value = value {
+            if value == -1 {
+                return "-"
+            }
+            switch self.student?.course?.ageGroup {
+            case .lower:
+                return Grade.convertGradePointsToGrades(value: value)
+            case .upper:
+                return String(value)
+            case .none:
+                return "-"
+            }
+        } else {
             return "-"
         }
+        
     }
     
     func getTranscriptGradeValueString() -> String {
+        if value == -1 {
+            return "-"
+        }
         switch self.student?.course?.ageGroup {
         case .lower:
             return Grade.convertGradePointsToGrades(value: Int(value))

@@ -50,7 +50,7 @@ struct StudentTranscriptDetailView: StudentGradeDetailViewProtocol{
     }
 }
 
-struct StudentDetailView: StudentGradeDetailViewProtocol {
+struct StudentDetailViewTop: StudentGradeDetailViewProtocol {
     @ObservedObject var student: Student
     @Environment(\.currentHalfYear) var halfYear
     
@@ -61,7 +61,6 @@ struct StudentDetailView: StudentGradeDetailViewProtocol {
     var noGradeText: Text {
         Text("-").foregroundColor(Grade.getColor(points: -1.0))
     }
-    
     var body: some View {
         VStack {
             HStack {
@@ -81,6 +80,24 @@ struct StudentDetailView: StudentGradeDetailViewProtocol {
                     Divider()
                 }
             }.padding(.top, -8)
+        }
+    }
+}
+
+struct StudentDetailView: StudentGradeDetailViewProtocol {
+    @ObservedObject var student: Student
+    @Environment(\.currentHalfYear) var halfYear
+    
+    init(student: Student) {
+        self.student = student
+    }
+    
+    var noGradeText: Text {
+        Text("-").foregroundColor(Grade.getColor(points: -1.0))
+    }
+    
+    var body: some View {
+        VStack {
             HStack {
                 Text("Mündlich: ")
                 if student.gradesExist(.oral, half: halfYear) {
@@ -100,6 +117,55 @@ struct StudentDetailView: StudentGradeDetailViewProtocol {
                     noGradeText
                 }
                 Spacer()
+            }
+        }
+    }
+}
+
+
+struct StudentTranscriptGradeDetailView: View {
+    @ObservedObject var transcriptGrade: TranscriptGrade
+    @Environment(\.currentHalfYear) var halfYear
+    
+    var body: some View {
+        VStack {
+            if halfYear == .firstHalf {
+                if let transcriptGrade = transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf), transcriptGrade != "-" {
+                    HStack {
+                        
+                        Text("Zeugnis: ")
+                        Text(transcriptGrade).foregroundColor(Grade.getColor(points: transcriptGrade))
+                    }
+                }
+            } else if halfYear == .secondHalf {
+                if let secondTranscriptGrade = transcriptGrade.getTranscriptGradeHalfValueString(half: .secondHalf), secondTranscriptGrade != "-" {
+                    if transcriptGrade.student!.course!.type == CourseType.secondHalf {
+                        HStack {
+                            
+                            Text("Zeugnis: ")
+                            Text(secondTranscriptGrade).foregroundColor(Grade.getColor(points: secondTranscriptGrade))
+                        }
+                        
+                    } else {
+                        HStack {
+                            
+                            Text("1. HJ: ")
+                            Text(transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf)).foregroundColor(Grade.getColor(points: transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf)))
+                        }
+                        
+                        HStack {
+                            
+                            Text("2. HJ: ")
+                            Text(secondTranscriptGrade).foregroundColor(Grade.getColor(points: secondTranscriptGrade))
+                        }
+                        
+                        HStack {
+                            
+                            Text("Zeugnis: ")
+                            Text(transcriptGrade.getTranscriptGradeValueString()).foregroundColor(Grade.getColor(points: transcriptGrade.getTranscriptGradeValueString()))
+                        }
+                    }
+                }
             }
         }
     }

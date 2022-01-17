@@ -38,7 +38,15 @@ struct StudentGradeListView: View {
                             EmptyView()
                         }
                         HStack {
-                            StudentDetailView(student: student)
+                            VStack {
+                                StudentDetailViewTop(student: student)
+                                HStack {
+                                    StudentDetailView(student: student)
+                                    if let transcriptGrade = student.transcriptGrade {
+                                        StudentTranscriptGradeDetailView(transcriptGrade: transcriptGrade)
+                                    }
+                                }
+                            }
                             Button {
                                 action = student
                             } label: {

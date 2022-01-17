@@ -15,7 +15,10 @@ struct StudentTranscriptGradesHalfYear: View {
     
     var body: some View {
         StudentTranscriptGradesView(course: course, viewModel: viewModel) { student in
-            StudentDetailView(student: student)
+            VStack {
+                StudentDetailViewTop(student: student)
+                StudentDetailView(student: student)
+            }
         }.onAppear {
             viewModel.setHalf(halfYear: halfYear)
             viewModel.fetchData(course: course)

@@ -6,15 +6,22 @@
 //
 
 import Foundation
+import Combine
 
 class SelectedHalfYearViewModel : ObservableObject {
     
     @Published private(set) var activeHalf: HalfType
+    @Published var canceallable: AnyCancellable?
     
     init() {
         self.activeHalf = NSUbiquitousKeyValueStore.default.longLong(forKey: MoreActionsViewModel.KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
         
-        NotificationCenter.default.addObserver(self, selector: #selector(onUbiquitousKeyValueStoreDidChangeExternally(notification:)), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
+        
+        canceallable = NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { _ in
+                self.fetchValue()
+            })
     }
     
     func fetchValue() {
@@ -24,8 +31,4 @@ class SelectedHalfYearViewModel : ObservableObject {
         }
     }
     
-    @objc func onUbiquitousKeyValueStoreDidChangeExternally(notification:Notification)
-    {
-        fetchValue()
-    }
 }
