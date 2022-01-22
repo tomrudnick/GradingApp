@@ -119,7 +119,7 @@ class CourseEditViewModel: ObservableObject {
             self.fetchedStudents = fetchedStudents
             self.students = self.fetchedStudents.map { (key: UUID, value: Student) in
                 Student.DataModel(id: key, firstName: value.firstName, lastName: value.lastName, email: value.email, hidden: value.hidden)
-            }.sorted(by: { $0.lastName < $1.lastName })
+            }.sorted(by: { Student.compareStudents($0, $1) })
         }
         
         func deleteStudentCoursesEdit(atOffsets indexSet: IndexSet)  {

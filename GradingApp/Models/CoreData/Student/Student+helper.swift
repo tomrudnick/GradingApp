@@ -52,6 +52,12 @@ extension Student {
     static func addStudent(student: DataModel,course: Course, context: NSManagedObjectContext){
         addStudent(firstName: student.firstName, lastName: student.lastName, email: student.email, hidden: student.hidden, course: course, context: context)
     }
+    
+    static func compareStudents(_ s1: StudentName, _ s2: StudentName) -> Bool {
+        let german = Locale(identifier: "de")
+        return (s1.lastName.compare(s2.lastName, options: .caseInsensitive, locale: german) == .orderedAscending)
+            || (s1.lastName.lowercased() == s2.lastName.lowercased() && s1.firstName.compare(s2.firstName, options: .caseInsensitive, locale: german) == .orderedAscending)
+    }
 }
 
 

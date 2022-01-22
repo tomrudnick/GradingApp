@@ -134,7 +134,7 @@ struct StudentTranscriptGradeDetailView: View {
                     HStack {
                         
                         Text("Zeugnis: ")
-                        Text(transcriptGrade).foregroundColor(Grade.getColor(points: transcriptGrade))
+                        Text(transcriptGrade).foregroundColor(Grade.getColor(points: Double(self.transcriptGrade.getTranscriptGradeHalfValue(half: .firstHalf)!)))
                     }
                 }
             } else if halfYear == .secondHalf {
@@ -143,26 +143,26 @@ struct StudentTranscriptGradeDetailView: View {
                         HStack {
                             
                             Text("Zeugnis: ")
-                            Text(secondTranscriptGrade).foregroundColor(Grade.getColor(points: secondTranscriptGrade))
+                            Text(secondTranscriptGrade).foregroundColor(Grade.getColor(points: Double(self.transcriptGrade.getTranscriptGradeHalfValue(half: .secondHalf)!)))
                         }
                         
                     } else {
                         HStack {
                             
                             Text("1. HJ: ")
-                            Text(transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf)).foregroundColor(Grade.getColor(points: transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf)))
+                            Text(transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf)).foregroundColor(Grade.getColor(points: Double(self.transcriptGrade.getTranscriptGradeHalfValue(half: .firstHalf)!)))
                         }
                         
                         HStack {
                             
                             Text("2. HJ: ")
-                            Text(secondTranscriptGrade).foregroundColor(Grade.getColor(points: secondTranscriptGrade))
+                            Text(secondTranscriptGrade).foregroundColor(Grade.getColor(points: Double(self.transcriptGrade.getTranscriptGradeHalfValue(half: .secondHalf)!)))
                         }
                         
                         HStack {
                             
                             Text("Zeugnis: ")
-                            Text(transcriptGrade.getTranscriptGradeValueString()).foregroundColor(Grade.getColor(points: transcriptGrade.getTranscriptGradeValueString()))
+                            Text(transcriptGrade.getTranscriptGradeValueString()).foregroundColor(Grade.getColor(points: Double(self.transcriptGrade.getCalculatedValue())))
                         }
                     }
                 }

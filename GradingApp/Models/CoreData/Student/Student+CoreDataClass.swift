@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Student)
-public class Student: NSManagedObject, Codable {
+public class Student: NSManagedObject, Codable, StudentName {
     
     private enum CodingKeys: String, CodingKey { case  firstName, lastName, email, hidden, grades}
     
@@ -35,4 +35,9 @@ public class Student: NSManagedObject, Codable {
         try container.encode(grades, forKey: .grades)
     }
 
+}
+
+protocol StudentName {
+    var firstName: String {get}
+    var lastName: String {get}
 }

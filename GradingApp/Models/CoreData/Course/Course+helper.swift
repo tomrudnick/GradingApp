@@ -44,8 +44,12 @@ extension Course {
     }
     
     var studentsArr: Array<Student> {
-        get { students.filter { $0.hidden == false }
-            .sorted(by: {($0.lastName < $1.lastName) || ($0.lastName == $1.lastName && $0.firstName < $1.firstName) })}
+        get {
+            students.filter { $0.hidden == false }
+            .sorted { s1, s2 in
+                Student.compareStudents(s1, s2)
+            }
+        }
     }
     
     var studentsCount: Int {

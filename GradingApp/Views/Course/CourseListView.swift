@@ -35,7 +35,7 @@ struct CourseListView: View {
     @StateObject var badgeViewModel = BadgeViewModel()
     
     @State var firstCourseActive = false
-    @State var firstCourse: Course = Course()
+    @State var firstCourse: Course?
     @State var alertType: AlertType = .halfYearWarning
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
@@ -98,8 +98,9 @@ struct CourseListView: View {
                 }
                 
             }
-            NavigationLink("", destination: CourseTabView(course: firstCourse).navigationBarBackButtonHidden(true), isActive: $firstCourseActive)
-                
+            if let course = firstCourse {
+                NavigationLink("", destination: CourseTabView(course: course).navigationBarBackButtonHidden(true), isActive: $firstCourseActive)
+            }
         }
         .onAppear {
             if firstAppear {

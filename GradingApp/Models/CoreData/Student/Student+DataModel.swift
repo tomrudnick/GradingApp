@@ -9,7 +9,7 @@ import Foundation
 
 
 extension Student {
-    struct DataModel : Identifiable {
+    struct DataModel : Identifiable, StudentName {
         var id: UUID
         var firstName: String
         var lastName: String
