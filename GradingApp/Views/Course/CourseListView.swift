@@ -114,7 +114,11 @@ struct CourseListView: View {
                 self.firstCourse = course
                 self.firstCourseActive = true
             }
+            print("Students count: \(PersistenceController.fetchData(context: viewContext, fetchRequest: Student.fetchAll()).count)")
+            print("Grades count:   \(PersistenceController.fetchData(context: viewContext, fetchRequest: Grade.fetchAll()).count)")
+            
             self.didAppear?(self)
+            
         }
         .environment(\.currentHalfYear, selectedHalfYearVM.activeHalf)
     }

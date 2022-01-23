@@ -48,6 +48,22 @@ struct PersistenceController {
         }
     }
     
+    static func resetAllCoreData() {
+         // get all entities and loop over them
+        let entityNames = shared.container.managedObjectModel.entities.map({ $0.name!})
+         entityNames.forEach { entityName in
+            let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+
+            do {
+                try shared.container.viewContext.execute(deleteRequest)
+                try shared.container.viewContext.save()
+            } catch {
+                print("Error Deleting something")
+            }
+        }
+    }
+    
     static let empty: PersistenceController = {
         return PersistenceController(inMemory: true)
     }()

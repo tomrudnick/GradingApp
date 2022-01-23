@@ -183,4 +183,10 @@ extension Grade {
         request.predicate = predicate
         return request
     }
+    
+    static func fetchAll() -> NSFetchRequest<Grade> {
+        let request = NSFetchRequest<Grade>(entityName: "Grade")
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        return request
+    }
 }

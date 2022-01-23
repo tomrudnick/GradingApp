@@ -58,6 +58,12 @@ extension Student {
         return (s1.lastName.compare(s2.lastName, options: .caseInsensitive, locale: german) == .orderedAscending)
             || (s1.lastName.lowercased() == s2.lastName.lowercased() && s1.firstName.compare(s2.firstName, options: .caseInsensitive, locale: german) == .orderedAscending)
     }
+    
+    static func fetchAll() -> NSFetchRequest<Student> {
+        let request = NSFetchRequest<Student>(entityName: "Student")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Student.lastName_, ascending: true)]
+        return request
+    }
 }
 
 

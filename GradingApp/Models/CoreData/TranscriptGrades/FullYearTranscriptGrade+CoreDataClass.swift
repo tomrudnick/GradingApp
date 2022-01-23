@@ -11,6 +11,9 @@ import CoreData
 
 @objc(FullYearTranscriptGrade)
 public class FullYearTranscriptGrade: TranscriptGrade {
+    
+    private enum CodingKeys: String, CodingKey {case firstValue, secondValue, value}
+    
     override func getTranscriptGradeHalfValue(half: HalfType) -> Int?{
         return half == .firstHalf ? Int(firstValue) : Int(secondValue)
     }
@@ -33,5 +36,18 @@ public class FullYearTranscriptGrade: TranscriptGrade {
             return (Double(firstValue) + Double(secondValue)) / 2.0
         }
     }
+    override public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(value, forKey: .value)
+        try container.encode(firstValue, forKey: .firstValue)
+        try container.encode(secondValue, forKey: .secondValue)
+    }
     
+    required public convenience init(from decoder: Decoder) throws {
+        self.init(context: PersistenceController.shared.container.viewContext)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        value = try! container.decode(Int32.self, forKey: .value)
+        firstValue = try! container.decode(Int32.self, forKey: .firstValue)
+        secondValue = try! container.decode(Int32.self, forKey: .secondValue)
+    }
 }
