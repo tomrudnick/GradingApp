@@ -137,6 +137,12 @@ class MoreActionsViewModel: ObservableObject {
     }
     
     func deleteAllCourses(viewContext: NSManagedObjectContext) {
-        PersistenceController.resetAllCoreData() //Delete everything
+        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
+        for course in fetchedCourses {
+            viewContext.delete(course)
+            viewContext.saveCustom()
+        }
+        //Just to be sure delete everything else //This should be optimized in the future
+        PersistenceController.resetAllCoreData()
     }
 }

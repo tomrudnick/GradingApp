@@ -15,8 +15,8 @@ public class Grade: NSManagedObject, Codable {
     private enum CodingKeys: String, CodingKey { case date, type, value, comment, half, multiplier }
     
     required public convenience init(from decoder: Decoder) throws {
-            self.init(context: PersistenceController.shared.container.viewContext)
-            let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(context: PersistenceController.shared.container.viewContext)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         date = try! container.decode(Date.self, forKey: .date)
         type = try! container.decode(GradeType.self, forKey: .type)
         value = try! container.decode(Int32.self, forKey: .value)
