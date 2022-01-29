@@ -34,6 +34,8 @@ struct CourseListView: View {
     @StateObject var undoRedoVM = UndoRedoViewModel()
     @StateObject var badgeViewModel = BadgeViewModel()
     
+    @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
+    
     @State var firstCourseActive = false
     @State var firstCourse: Course?
     @State var alertType: AlertType = .halfYearWarning
@@ -42,6 +44,7 @@ struct CourseListView: View {
     
     @State private var showNewAlert = false
     @State private var firstAppear = true
+
     
     var body: some View {
         NavigationView {
@@ -72,7 +75,7 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView(badgeViewModel: badgeViewModel).environment(\.managedObjectContext, viewContext)
+                MoreActionsView(badgeViewModel: badgeViewModel, externalScreenHideViewModel: externalScreenHideViewModel).environment(\.managedObjectContext, viewContext)
                     .onDisappear {
                         badgeViewModel.updateBadge()
                         selectedHalfYearVM.fetchValue()
@@ -170,11 +173,11 @@ struct CourseListView: View {
     
     //----------------------------Preview-------------------------------
     
-    struct ContentView_Previews: PreviewProvider {
+    /*struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             CourseListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         }
-    }
+    }*/
 
 
 struct WelcomeViewIpad: View {

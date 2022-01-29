@@ -23,12 +23,14 @@ struct MoreActionsView: View {
     @State private var showingRestore = false
     @State private var showingExport = false
     @ObservedObject var badgeViewModel: BadgeViewModel
+    @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
     
     var onDelete: () -> ()
     
-    init(badgeViewModel: BadgeViewModel, onDelete: @escaping () -> () = { }) {
+    init(badgeViewModel: BadgeViewModel, externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }) {
         self.onDelete = onDelete
         self.badgeViewModel = badgeViewModel
+        self.externalScreenHideViewModel = externalScreenHideViewModel
         self._backupSettingsViewModel = StateObject(wrappedValue: BackupSettingsViewModel(badgeViewModel: badgeViewModel))
     }
     
@@ -103,6 +105,10 @@ struct MoreActionsView: View {
                         Text("2. Halbjahr").tag(1)
                     }.pickerStyle(SegmentedPickerStyle())
                     
+                }
+                
+                Section(header: Text("Externe Bildschirme blockieren")) {
+                    Toggle("Verstecken:", isOn: $externalScreenHideViewModel.notHide.not)
                 }
                 
                 Section(header: Text("Email Einstellungen")) {
