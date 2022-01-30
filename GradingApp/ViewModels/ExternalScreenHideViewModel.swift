@@ -39,6 +39,7 @@ class ExternalScreenHideViewModel: ObservableObject {
     }
     
     init() {
+        print("Init External Screen hide View Model")
         self.notHide = UserDefaults.standard.bool(forKey: hideUserDefaults)
     }
     

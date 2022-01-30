@@ -10,18 +10,17 @@ import Combine
 
 @main
 struct GradingApp: App {
-    let persistenceController = PersistenceController.shared
     @StateObject var externalScreenhideViewModel = ExternalScreenHideViewModel()
-
+    @StateObject var selectedHalfYearViewModel = SelectedHalfYearViewModel()
 
     var body: some Scene {
         WindowGroup {
             #if targetEnvironment(macCatalyst)
-            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, selectedHalfYearVM: selectedHalfYearViewModel)
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
             #else
-            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, selectedHalfYearVM: selectedHalfYearViewModel)
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
                 .onReceive(
                     externalScreenhideViewModel.screenDidConnectPublisher,
                     perform: externalScreenhideViewModel.screenDidConnectNotification

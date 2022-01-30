@@ -114,6 +114,13 @@ extension Course {
         request.predicate = NSPredicate(format: "hidden == NO")
         return request
     }
+    
+    static func fetchHalfNonHidden(half: HalfType) -> NSFetchRequest<Course> {
+        let request = fetchAll()
+        let courseType = half == .firstHalf ? CourseType.firstHalf : CourseType.secondHalf
+        request.predicate = NSPredicate(format: "hidden == NO AND type_ == %d OR type_ == %d", courseType.rawValue, CourseType.holeYear.rawValue)
+        return request
+    }
 }
 
 extension Course {

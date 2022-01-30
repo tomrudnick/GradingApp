@@ -109,6 +109,13 @@ struct CourseTabView: View {
             
         }
         .onAppear {
+            let apparence = UITabBarAppearance()
+            apparence.configureWithOpaqueBackground()
+            if #available(iOS 15.0, *) {
+                UITabBar.appearance().scrollEdgeAppearance = apparence
+                
+            }
+
             self.sendEmailViewModel.fetchData(course: course, half: halfYear)
         }
         .sheet(isPresented: $showSendEmailSheet, content: {

@@ -14,6 +14,7 @@ struct PersistenceController {
     
 
     init(inMemory: Bool = false) {
+        print("INIT COntainer")
         container = NSPersistentCloudKitContainer(name: "GradingAppData")
         let description = container.persistentStoreDescriptions.first
         description?.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)

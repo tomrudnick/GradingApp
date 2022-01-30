@@ -29,10 +29,11 @@ struct CourseListView: View {
     @State var showMoreActions = false
     @State var activeLink: ObjectIdentifier? = nil
     @State var showAlert = !MoreActionsViewModel().halfCorrect()
-    @StateObject var selectedHalfYearVM = SelectedHalfYearViewModel()
+    @ObservedObject var selectedHalfYearVM: SelectedHalfYearViewModel
     @StateObject var editCourseViewModel = CourseEditViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
     @StateObject var badgeViewModel = BadgeViewModel()
+    
     
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
     
@@ -45,6 +46,11 @@ struct CourseListView: View {
     @State private var showNewAlert = false
     @State private var firstAppear = true
 
+    init(externalScreenHideViewModel: ExternalScreenHideViewModel, selectedHalfYearVM: SelectedHalfYearViewModel) {
+        self.selectedHalfYearVM = selectedHalfYearVM
+        self.externalScreenHideViewModel = externalScreenHideViewModel
+        self._courses = FetchRequest(fetchRequest: Course.fetchHalfNonHidden(half: selectedHalfYearVM.activeHalf), animation: .default)
+    }
     
     var body: some View {
         NavigationView {
@@ -119,6 +125,7 @@ struct CourseListView: View {
             }
             print("Students count: \(PersistenceController.fetchData(context: viewContext, fetchRequest: Student.fetchAll()).count)")
             print("Grades count:   \(PersistenceController.fetchData(context: viewContext, fetchRequest: Grade.fetchAll()).count)")
+            /*print("NULL Students count: \(PersistenceController.fetchData(context: viewContext, fetchRequest: Student.fetchAllNullCourse()).count)")*/
             
             self.didAppear?(self)
             
