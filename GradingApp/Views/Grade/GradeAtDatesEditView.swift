@@ -133,7 +133,7 @@ struct GradeAtDatesEditView : View{
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    editGradesPerDateVM.save(viewContext: viewContext)
+                    editGradesPerDateVM.save(viewContext: viewContext, halfYear: halfYear)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Speichern")

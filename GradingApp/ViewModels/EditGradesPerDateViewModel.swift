@@ -62,7 +62,7 @@ class EditGradesPerDateViewModel : ObservableObject {
         GradeStudent<Grade>.setGrade(studentGrades: &studentGrades, for: student, value: value)
     }
     
-    func save(viewContext: NSManagedObjectContext) -> Void {
+    func save(viewContext: NSManagedObjectContext, halfYear: HalfType) -> Void {
         for studentGrade in studentGrades {
             if let grade = studentGrade.grade {
                 if studentGrade.value == -1 {
@@ -85,7 +85,7 @@ class EditGradesPerDateViewModel : ObservableObject {
                 }
                 viewContext.saveCustom()
             } else if studentGrade.value != -1 {
-                Grade.addGrade(value: studentGrade.value, date: date, half: .firstHalf, type: gradeType, comment: comment ?? "", multiplier: gradeMultiplier ?? 1.0, student: studentGrade.student, context: viewContext)
+                Grade.addGrade(value: studentGrade.value, date: date, half: halfYear, type: gradeType, comment: comment ?? "", multiplier: gradeMultiplier ?? 1.0, student: studentGrade.student, context: viewContext)
             }
         }
     }
