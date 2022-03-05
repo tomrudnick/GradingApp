@@ -38,10 +38,15 @@ struct SingleCourse: View {
             Form {
                 Section{
                     HStack{
-                        Picker("Fach", selection: $courseSubject) {
-                            ForEach(subjects, id: \.self) { subject in
-                                Text(subject)
+                        NavigationLink {
+                            SubjectListView(subject: $courseSubject)
+                        } label: {
+                            HStack{
+                                Text("Fach")
+                                Spacer()
+                                Text(courseSubject)
                             }
+                            
                         }
                         TextField("Kurs z.B. 11D", text: $courseName)
                             .frame(width: 100)
