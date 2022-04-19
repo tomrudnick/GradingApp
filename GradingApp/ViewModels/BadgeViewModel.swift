@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-class BadgeViewModel: ObservableObject {
+/*class BadgeViewModel: ObservableObject {
     @Published var badge: Int
     var canceallable: AnyCancellable?
     
@@ -68,6 +68,6 @@ class BadgeViewModel: ObservableObject {
         }
        
     }
-}
+}*/
 
 

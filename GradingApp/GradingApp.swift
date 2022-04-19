@@ -10,6 +10,9 @@ import Combine
 
 @main
 struct GradingApp: App {
+    
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    
     @StateObject var externalScreenhideViewModel = ExternalScreenHideViewModel()
     @StateObject var selectedHalfYearViewModel = SelectedHalfYearViewModel()
 

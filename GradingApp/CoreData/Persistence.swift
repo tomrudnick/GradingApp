@@ -49,9 +49,18 @@ struct PersistenceController {
         }
     }
     
+    static func deleteAllCourses(viewContext: NSManagedObjectContext) {
+        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
+        for course in fetchedCourses {
+            viewContext.delete(course)
+            viewContext.saveCustom()
+        }
+    }
+    
     static func resetAllCoreData() {
          // get all entities and loop over them
         let entityNames = shared.container.managedObjectModel.entities.map({ $0.name!})
+        print("Delete \(entityNames.count) Objects")
          entityNames.forEach { entityName in
             let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)

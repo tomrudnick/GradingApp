@@ -22,7 +22,6 @@ class BackupSettingsViewModel: ObservableObject {
             backupNotifyFrequencyChanged = true
         }
     }
-    var badgeViewModel: BadgeViewModel
     private(set) var notifyAllowed = false
     private(set) var backupNotifyFrequencyChanged = false
     private(set) var backupTimeChanged = false
@@ -55,14 +54,13 @@ class BackupSettingsViewModel: ObservableObject {
     struct KeyValueConstants {
         static let backupTime = "backupTime"
         static let notifyFrequency = "notifyFrequency"
-        static let badge = "badge"
     }
     
     let isoFormatter = ISO8601DateFormatter()
    
     
     
-    init(badgeViewModel: BadgeViewModel) {
+    init() {
         if let backupTimeString =  NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.backupTime) {
             self.backupTime = isoFormatter.date(from: backupTimeString) ?? Date()
         } else {
@@ -75,7 +73,6 @@ class BackupSettingsViewModel: ObservableObject {
         isoFormatter.timeZone = TimeZone.current
         backupNotifyFrequencyChanged = false
         backupTimeChanged = false
-        self.badgeViewModel = badgeViewModel
     }
     
     func save() {
@@ -88,6 +85,48 @@ class BackupSettingsViewModel: ObservableObject {
             NSUbiquitousKeyValueStore.default.set(backupNotifyInterval.name, forKey: KeyValueConstants.notifyFrequency)
         }
         NSUbiquitousKeyValueStore.default.synchronize()
+        if backupTimeChanged || backupNotifyFrequencyChanged {
+            sendRequestToServer()
+        }
+        
+    }
+    
+    private func sendRequestToServer() {
+        guard let deviceKey = AppDelegate.deviceKey else { return }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "y-MM-dd HH:mm:ss"
+        let dateString = formatter.string(from: backupTime)
+        var json: [String: Any] = [:]
+        
+        if backupNotifyInterval == .never {
+            json = ["device_key" : deviceKey,
+                    "remove" : "true"]
+        } else {
+            json = ["device_key" : deviceKey,
+                   "time" : dateString,
+                   "frequency" : backupNotifyInterval.name]
+        }
+        
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        let url = URL(string: "http://185.244.192.189:8080")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
+                }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
+            }
+        }
+        task.resume()
     }
     
     func requestNotificationAuthorization() {
@@ -103,79 +142,48 @@ class BackupSettingsViewModel: ObservableObject {
         #endif
     }
     
-    func addNotificationsIfNeeded() {
-        #if !targetEnvironment(macCatalyst)
-        UNUserNotificationCenter.current().getPendingNotificationRequests { (notifications) in
-            if !notifications.contains(where: { notification in notification.identifier == self.calcNotificationIdentifierString() }) {
-                print("Local Notification is different from...")
-                DispatchQueue.main.async {
-                    self.addNotifications(force: true)
+    static func doBackup() {
+        if let containerUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
+            if !FileManager.default.fileExists(atPath: containerUrl.path, isDirectory: nil) {
+                do {
+                    try FileManager.default.createDirectory(at: containerUrl, withIntermediateDirectories: true, attributes: nil)
                 }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd_MM_YYYY"
+            let date = dateFormatter.string(from: Date())
+            print("Filename: \(date)")
+            let fileUrl = containerUrl.appendingPathComponent(date)
+            do {
+                let fetchedCourses = PersistenceController.fetchData(context: PersistenceController.shared.container.viewContext, fetchRequest: Course.fetchAll())
+                let jsonData = try JSONEncoder().encode(fetchedCourses)
+                let jsonString = String(data: jsonData, encoding: .utf8)!
+                try jsonString.write(to: fileUrl, atomically: true, encoding: .utf8)
+            } catch {
+                print("Error fetching data from CoreData", error)
             }
         }
-        #else
-        self.addNotifications(force: true)
-        #endif
+    }
+    //returns -1 if an Error occured
+    static func countBackupFiles() -> Int{
+        if let containerUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
+            
+            let dirContents = try? FileManager.default.contentsOfDirectory(at: containerUrl, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            let count = dirContents?.count
+            return count ?? -1
+        }
+        return -1
     }
     
-    private func calcNotificationIdentifierString() -> String{
-        return "backupNotification-\(backupNotifyInterval.name)-\(isoFormatter.string(from: backupTime))"
-    }
-    
-    func addNotifications(force: Bool = false) {
-        #if !targetEnvironment(macCatalyst)
-            if (notifyAllowed && (backupTimeChanged || backupNotifyFrequencyChanged)) || force {
-                print("ADD NOtifcations")
-                let center = UNUserNotificationCenter.current()
-                let content = UNMutableNotificationContent()
-                content.badge = 1
-                center.removeAllPendingNotificationRequests()
-                switch backupNotifyInterval {
-                case .test:
-                     let triggerTest = Calendar.current.dateComponents([.second], from: backupTime)
-                     let trigger = UNCalendarNotificationTrigger(dateMatching: triggerTest, repeats: true)
-                     let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
-                    center.add(request)
-                case .daily:
-                    let triggerDaily = Calendar.current.dateComponents([.hour,.minute], from: backupTime)
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
-                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
-                    center.add(request)
-                case .weekly:
-                    let triggerWeekly = Calendar.current.dateComponents([.weekday, .hour, .minute], from: backupTime)
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
-                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
-                    center.add(request)
-                case .biweekly:
-                    let triggerBiweekly = UNTimeIntervalNotificationTrigger(timeInterval: 1209600.0, repeats: true)
-                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: triggerBiweekly)
-                    center.add(request)
-                case .monthly:
-                    let triggerMonthly = Calendar.current.dateComponents([.weekdayOrdinal, .hour, .minute], from: backupTime)
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: triggerMonthly, repeats: true)
-                    let request = UNNotificationRequest(identifier: calcNotificationIdentifierString(), content: content, trigger: trigger)
-                    center.add(request)
-                case .never:
-                    resetBadge()
-                }
-            }
-        #else
-            if(!backupNotifyFrequencyChanged && !force) {
-                    return
-            }
-            switch backupNotifyInterval {
-            case .never:
-                resetBadge()
-            default:
-                return
-            }
-        #endif
-    }
-    func resetBadge() {
-        print("Reset Code executed")
-        badgeViewModel.badge = 0
-        UIApplication.shared.applicationIconBadgeNumber = 0 //local
-        NSUbiquitousKeyValueStore.default.set(0, forKey: KeyValueConstants.badge) //cloud
-        NSUbiquitousKeyValueStore.default.synchronize()
+    static func getBackupFiles() -> [URL] {
+        if let containerUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
+            
+            let dirContents = try? FileManager.default.contentsOfDirectory(at: containerUrl, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            return dirContents ?? []
+        }
+        return []
     }
 }

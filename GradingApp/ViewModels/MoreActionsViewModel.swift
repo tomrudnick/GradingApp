@@ -86,7 +86,7 @@ class MoreActionsViewModel: ObservableObject {
 //    }
     
 
-    func getOneJsonFile(viewContext: NSManagedObjectContext) -> JSONFile {
+    static func getOneJsonFile(viewContext: NSManagedObjectContext) -> JSONFile {
         var jsonData: Data = Data()
         do {
             let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())

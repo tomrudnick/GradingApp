@@ -32,7 +32,6 @@ struct CourseListView: View {
     @ObservedObject var selectedHalfYearVM: SelectedHalfYearViewModel
     @StateObject var editCourseViewModel = CourseEditViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
-    @StateObject var badgeViewModel = BadgeViewModel()
     
     
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
@@ -61,14 +60,8 @@ struct CourseListView: View {
                 }
             }
             .onAppear {
-                badgeViewModel.updateBadge()
                 selectedHalfYearVM.fetchValue()
-            }//Wird aufgerufen, wenn der View neu berechnet wird
-            .onChange(of: scenePhase, perform: { newPhase in
-                if newPhase == .active {
-                    badgeViewModel.updateBadge()
-                }
-            }) //Im Hintergrund laufende App wird erneut aufgerufen.
+            }//Im Hintergrund laufende App wird erneut aufgerufen.
             .alert(isPresented: $showAlert, content: {
                 if alertType == .halfYearWarning {
                     return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
@@ -81,9 +74,8 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView(badgeViewModel: badgeViewModel, externalScreenHideViewModel: externalScreenHideViewModel).environment(\.managedObjectContext, viewContext)
+                MoreActionsView(externalScreenHideViewModel: externalScreenHideViewModel).environment(\.managedObjectContext, viewContext)
                     .onDisappear {
-                        badgeViewModel.updateBadge()
                         selectedHalfYearVM.fetchValue()
                     }
             })
@@ -148,11 +140,11 @@ struct CourseListView: View {
         } label: {
             ZStack {
                 Image(systemName: "ellipsis.circle")
-                #if !targetEnvironment(macCatalyst)
+                /*#if !targetEnvironment(macCatalyst)
                 if badgeViewModel.badge != 0 {
                     Text("\(badgeViewModel.badge)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
                 }
-                #endif
+                #endif*/
             }
         }
     }

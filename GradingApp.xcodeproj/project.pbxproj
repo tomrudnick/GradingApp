@@ -93,6 +93,8 @@
 		E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A20B0526D41910005FA240 /* StudentGradeListView.swift */; };
 		E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E2A20B0826D43777005FA240 /* SwiftUICharts */; };
 		E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */; };
+		E2A3211E280C522E00EDBF89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211D280C522E00EDBF89 /* AppDelegate.swift */; };
+		E2A32120280D769700EDBF89 /* BackupRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */; };
 		E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */; };
 		E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */; };
 		E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055DF26BD5029004F0087 /* Grade+helper.swift */; };
@@ -216,6 +218,8 @@
 		E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGradesPerDateViewModel.swift; sourceTree = "<group>"; };
 		E2A20B0526D41910005FA240 /* StudentGradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeListView.swift; sourceTree = "<group>"; };
 		E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelTest.swift; sourceTree = "<group>"; };
+		E2A3211D280C522E00EDBF89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRestoreView.swift; sourceTree = "<group>"; };
 		E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+DataModel.swift"; sourceTree = "<group>"; };
 		E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMultipleGradesView.swift; sourceTree = "<group>"; };
 		E2B055DF26BD5029004F0087 /* Grade+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+helper.swift"; sourceTree = "<group>"; };
@@ -372,6 +376,7 @@
 				E24AF9CC26D82DDF000F2313 /* MoreActionsView.swift */,
 				6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */,
 				391518892777248E003C11E4 /* BackupTimeIntervalView.swift */,
+				E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 			children = (
 				E24AF9D226D8DD3E000F2313 /* GradingApp.entitlements */,
 				E25FBCA326BADAC6000BDD65 /* GradingApp.swift */,
+				E2A3211D280C522E00EDBF89 /* AppDelegate.swift */,
 				E20C5E3626CD4B2B00F860C6 /* Extensions */,
 				E2C5138826BBE10D0069D340 /* Models */,
 				E2C5138726BBE0FA0069D340 /* CoreData */,
@@ -748,6 +754,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A3211E280C522E00EDBF89 /* AppDelegate.swift in Sources */,
 				E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */,
 				6DE3E8B926E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift in Sources */,
 				E232978D27CFFF0A007EC630 /* CustomContextView.swift in Sources */,
@@ -816,6 +823,7 @@
 				E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */,
 				E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */,
 				E20C5E3826CD4B3F00F860C6 /* View+IfModifier.swift in Sources */,
+				E2A32120280D769700EDBF89 /* BackupRestoreView.swift in Sources */,
 				E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */,
 				6D3BD29926E7CBD70060DB0D /* TextAlert.swift in Sources */,
 				E2CE907127A05AD900366DB1 /* ExternalScreenHideViewModel.swift in Sources */,
@@ -1046,7 +1054,6 @@
 				INFOPLIST_FILE = GradingApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1074,7 +1081,6 @@
 				INFOPLIST_FILE = GradingApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

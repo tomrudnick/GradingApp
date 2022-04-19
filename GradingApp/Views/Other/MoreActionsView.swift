@@ -22,16 +22,15 @@ struct MoreActionsView: View {
     @State private var showingBackup = false
     @State private var showingRestore = false
     @State private var showingExport = false
-    @ObservedObject var badgeViewModel: BadgeViewModel
+    @State private var showingRestoreFromiCloud = false
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
     
     var onDelete: () -> ()
     
-    init(badgeViewModel: BadgeViewModel, externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }) {
+    init(externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }) {
         self.onDelete = onDelete
-        self.badgeViewModel = badgeViewModel
         self.externalScreenHideViewModel = externalScreenHideViewModel
-        self._backupSettingsViewModel = StateObject(wrappedValue: BackupSettingsViewModel(badgeViewModel: badgeViewModel))
+        self._backupSettingsViewModel = StateObject(wrappedValue: BackupSettingsViewModel())
     }
     
     
@@ -46,9 +45,9 @@ struct MoreActionsView: View {
                         ZStack {
                             Text("Backup")
                                 
-                            if self.badgeViewModel.badge != 0 {
+                            /*if self.badgeViewModel.badge != 0 {
                                 Text("\(self.badgeViewModel.badge)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 34, y: -6)
-                            }
+                            }*/
                         }
                         
                     }
@@ -75,6 +74,16 @@ struct MoreActionsView: View {
                         self.showingRestore = true
                     } label: {
                         Text("Import")
+                    }
+                    HStack {
+                        Text("iCloud Backups: \(BackupSettingsViewModel.countBackupFiles())")
+                        Spacer()
+                        Button {
+                            self.showingRestoreFromiCloud = true
+                        } label: {
+                            Text("Wiederherstellen")
+                        }
+
                     }
                 }
                 //This is only for development code
@@ -174,7 +183,6 @@ struct MoreActionsView: View {
                         done()
                         emailViewModel.save()
                         backupSettingsViewModel.save()
-                        backupSettingsViewModel.addNotifications()
                     } label: {
                         Text("Schließen")
                     }
@@ -183,21 +191,17 @@ struct MoreActionsView: View {
             }
             
         }
-        .onChange(of: scenePhase, perform: { newPhase in
-            if newPhase == .active {
-                self.badgeViewModel.updateBadge()
-            }
+        .sheet(isPresented: $showingRestoreFromiCloud, content: {
+            BackupRestoreView().environment(\.managedObjectContext, viewContext)
         })
         .onAppear(perform: {
-            self.badgeViewModel.updateBadge()
             backupSettingsViewModel.requestNotificationAuthorization()
         })
         .if(viewModel.backupType == .backup, transform: { view in
-            view.fileExporter(isPresented: $showingBackup, document: viewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
+            view.fileExporter(isPresented: $showingBackup, document: MoreActionsViewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
                 switch result {
                 case .success(let url):
                     print("Saved to \(url)")
-                    backupSettingsViewModel.resetBadge()
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
