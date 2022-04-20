@@ -1,0 +1,4 @@
+AUTH.py
+*.p8
+.idea/*
+test.db
