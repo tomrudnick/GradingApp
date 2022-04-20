@@ -18,6 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         registerForPushNotifications()
         
         print("Count of Documents: \(BackupSettingsViewModel.countBackupFiles())")
+        application.applicationIconBadgeNumber = 0
         return true
     }
     
