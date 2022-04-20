@@ -1,0 +1,1282 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3915188827772441003C11E4 /* BackupSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915188727772441003C11E4 /* BackupSettingsViewModel.swift */; };
+		3915188A2777248E003C11E4 /* BackupTimeIntervalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391518892777248E003C11E4 /* BackupTimeIntervalView.swift */; };
+		3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */; };
+		3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */; };
+		3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */; };
+		394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 394D7C4F26BDC7DB00892BD4 /* CSV */; };
+		395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */; };
+		39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39607B5026CD0A9D007DFD63 /* SingleStudent.swift */; };
+		39B3775126E3F14B0005A390 /* JSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B3775026E3F14B0005A390 /* JSONFile.swift */; };
+		39BCE45C26E4C7B900FB2680 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */; };
+		39BCE45E26E4C7B900FB2680 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */; };
+		39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F09BB426D00801007B6E8A /* CostumGradeView.swift */; };
+		6D26BB9F26EB7B520077AC73 /* StudentListViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D26BB9E26EB7B520077AC73 /* StudentListViewTest.swift */; };
+		6D26BBA226EB7CF10077AC73 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 6D26BBA126EB7CF10077AC73 /* ViewInspector */; };
+		6D26BBA426EB96BB0077AC73 /* CourseListViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D26BBA326EB96BB0077AC73 /* CourseListViewTest.swift */; };
+		6D26BBB626EBA9F20077AC73 /* SimpleUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D26BBA526EBA9360077AC73 /* SimpleUITest.swift */; };
+		6D3BD29926E7CBD70060DB0D /* TextAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3BD29826E7CBD70060DB0D /* TextAlert.swift */; };
+		6D3EECD626E3D29B00E9D290 /* EmailAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECD526E3D29B00E9D290 /* EmailAccountViewModel.swift */; };
+		6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECD826E3D2CC00E9D290 /* KeychainAccess */; };
+		6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECDB26E3D32100E9D290 /* SwiftSMTP */; };
+		6D3EECDE26E3E0CE00E9D290 /* SendEmailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */; };
+		6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */; };
+		6DBCF24126E372C1009F4167 /* GradePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */; };
+		6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */; };
+		6DD327B726E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD327B626E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift */; };
+		6DE31A5B26EBE69800CB41C0 /* UndoRedoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE31A5A26EBE69800CB41C0 /* UndoRedoViewModel.swift */; };
+		6DE3E8B126E554B9004212D3 /* SendMultipleEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */; };
+		6DE3E8B326E554FF004212D3 /* SendMultipleEmailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModel.swift */; };
+		6DE3E8B526E5551C004212D3 /* EmailKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B426E5551C004212D3 /* EmailKeys.swift */; };
+		6DE3E8B726E55533004212D3 /* SendMultipleEmailsCourseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B626E55533004212D3 /* SendMultipleEmailsCourseViewModel.swift */; };
+		6DE3E8B926E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */; };
+		6DE3E8BB26E55623004212D3 /* EmailEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */; };
+		6DE3E8BD26E56865004212D3 /* SendSingleEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */; };
+		E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */; };
+		E200846326DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845D26DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift */; };
+		E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845E26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift */; };
+		E200846526DE99330098D981 /* HalfYearTranscriptGrade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200845F26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataProperties.swift */; };
+		E200846626DE99330098D981 /* TranscriptGrade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200846026DE99330098D981 /* TranscriptGrade+CoreDataClass.swift */; };
+		E200846726DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200846126DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift */; };
+		E200846A26DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200846926DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift */; };
+		E200846C26DED7D70098D981 /* TranscriptGrade+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200846B26DED7D70098D981 /* TranscriptGrade+helper.swift */; };
+		E200846E26DEE4EF0098D981 /* TranscriptGradesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200846D26DEE4EF0098D981 /* TranscriptGradesViewModel.swift */; };
+		E200847026DEE7D40098D981 /* StudentTranscriptGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200846F26DEE7D40098D981 /* StudentTranscriptGradesView.swift */; };
+		E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */; };
+		E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */; };
+		E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */; };
+		E20C5E3826CD4B3F00F860C6 /* View+IfModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20C5E3726CD4B3F00F860C6 /* View+IfModifier.swift */; };
+		E210AEE926C1190D00DF2D85 /* SingleCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210AEE826C1190C00DF2D85 /* SingleCourse.swift */; };
+		E210AEEB26C11C1300DF2D85 /* EditCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210AEEA26C11C1300DF2D85 /* EditCourseView.swift */; };
+		E2234A4526E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2234A4426E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift */; };
+		E2234A4726E02F65002CCC07 /* StudentGradeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */; };
+		E232978D27CFFF0A007EC630 /* CustomContextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E232978C27CFFF0A007EC630 /* CustomContextView.swift */; };
+		E232979127D00AF6007EC630 /* Subject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E232978F27D00AF6007EC630 /* Subject+CoreDataClass.swift */; };
+		E232979527D01158007EC630 /* SubjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E232979427D01158007EC630 /* SubjectListView.swift */; };
+		E24AF9CD26D82DDF000F2313 /* MoreActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CC26D82DDF000F2313 /* MoreActionsView.swift */; };
+		E24AF9CF26D83306000F2313 /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CE26D83306000F2313 /* CSVFile.swift */; };
+		E24AF9D126D84AD2000F2313 /* MoreActionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9D026D84AD2000F2313 /* MoreActionsViewModel.swift */; };
+		E24AF9D526D8DD62000F2313 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24AF9D426D8DD62000F2313 /* CloudKit.framework */; };
+		E24BFEF12785F1DC00EF2E5A /* BadgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24BFEF02785F1DC00EF2E5A /* BadgeViewModel.swift */; };
+		E2574C0326D92F6E00ED2CFD /* SelectedHalfYearViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2574C0226D92F6E00ED2CFD /* SelectedHalfYearViewModel.swift */; };
+		E2574C0526D9454400ED2CFD /* HalfYear+EnvironmentValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2574C0426D9454400ED2CFD /* HalfYear+EnvironmentValue.swift */; };
+		E2574C1626DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2574C1526DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift */; };
+		E25A7CDA26CA9BDA00508EEE /* EditStudentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */; };
+		E25A7CDC26CA9D0A00508EEE /* EditStudentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A7CDB26CA9D0A00508EEE /* EditStudentDetailView.swift */; };
+		E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCA326BADAC6000BDD65 /* GradingApp.swift */; };
+		E25FBCA626BADAC6000BDD65 /* CourseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCA526BADAC6000BDD65 /* CourseListView.swift */; };
+		E25FBCA826BADAC8000BDD65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25FBCA726BADAC8000BDD65 /* Assets.xcassets */; };
+		E25FBCAB26BADAC8000BDD65 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E25FBCAA26BADAC8000BDD65 /* Preview Assets.xcassets */; };
+		E25FBCAD26BADAC8000BDD65 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCAC26BADAC8000BDD65 /* Persistence.swift */; };
+		E25FBCB026BADAC8000BDD65 /* GradingAppData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */; };
+		E25FBCB826BAE1AB000BDD65 /* CourseTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCB726BAE1AB000BDD65 /* CourseTabView.swift */; };
+		E25FBCBA26BAE1EC000BDD65 /* StudentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCB926BAE1EC000BDD65 /* StudentListView.swift */; };
+		E25FBCBC26BAE7FF000BDD65 /* AddCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCBB26BAE7FF000BDD65 /* AddCourse.swift */; };
+		E25FBCBF26BAE976000BDD65 /* Course+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCBE26BAE976000BDD65 /* Course+helper.swift */; };
+		E25FBCC126BAF24D000BDD65 /* StudentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC026BAF24D000BDD65 /* StudentView.swift */; };
+		E25FBCC326BAF6E6000BDD65 /* AddStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */; };
+		E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC426BAF781000BDD65 /* Student+helper.swift */; };
+		E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */; };
+		E26ACC9926CE70F2004468AB /* Course+StudentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */; };
+		E276A6DC26D79D2E00380C14 /* GradeAtDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DB26D79D2E00380C14 /* GradeAtDatesView.swift */; };
+		E276A6DE26D7AB3900380C14 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DD26D7AB3900380C14 /* Date+toString.swift */; };
+		E276A6E026D7B97E00380C14 /* GradeStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DF26D7B97E00380C14 /* GradeStudent.swift */; };
+		E276A6E226D7BB4B00380C14 /* EditGradesPerDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */; };
+		E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A20B0526D41910005FA240 /* StudentGradeListView.swift */; };
+		E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E2A20B0826D43777005FA240 /* SwiftUICharts */; };
+		E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */; };
+		E2A3211E280C522E00EDBF89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211D280C522E00EDBF89 /* AppDelegate.swift */; };
+		E2A32120280D769700EDBF89 /* BackupRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */; };
+		E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */; };
+		E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */; };
+		E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055DF26BD5029004F0087 /* Grade+helper.swift */; };
+		E2B055E226BD5842004F0087 /* AddSingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */; };
+		E2B7451526BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451426BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift */; };
+		E2B7451726C00E09002D0B4C /* ViewContext+SaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451626C00E09002D0B4C /* ViewContext+SaveHelper.swift */; };
+		E2B7451F26C01C4F002D0B4C /* GradingAppDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */; };
+		E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */; };
+		E2CE907127A05AD900366DB1 /* ExternalScreenHideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CE907027A05AD900366DB1 /* ExternalScreenHideViewModel.swift */; };
+		E2CE907327A065D800366DB1 /* BindingNot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CE907227A065D800366DB1 /* BindingNot.swift */; };
+		E2D99F2C280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D99F2B280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift */; };
+		E2E2D0E026D4EC5B00C62887 /* GradeAtDatesSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesSelectionView.swift */; };
+		E2E2D0E226D5453400C62887 /* GradeAtDatesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */; };
+		E2E2D0E426D67EB500C62887 /* Student+GradeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0E326D67EB500C62887 /* Student+GradeHelper.swift */; };
+		E2EA7AA226BEF23C0036048E /* GradeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */; };
+		E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA326BEF6260036048E /* SingleGradeView.swift */; };
+		E2EA7AA626BEF9E50036048E /* EditSingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6D26BBB126EBA9DE0077AC73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E25FBC9826BADAC6000BDD65 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E25FBC9F26BADAC6000BDD65;
+			remoteInfo = GradingApp;
+		};
+		E2B7452126C01C4F002D0B4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E25FBC9826BADAC6000BDD65 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E25FBC9F26BADAC6000BDD65;
+			remoteInfo = GradingApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3915188727772441003C11E4 /* BackupSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupSettingsViewModel.swift; sourceTree = "<group>"; };
+		391518892777248E003C11E4 /* BackupTimeIntervalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupTimeIntervalView.swift; sourceTree = "<group>"; };
+		3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseDetailView.swift; sourceTree = "<group>"; };
+		3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldView.swift; sourceTree = "<group>"; };
+		3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
+		3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GradingAppDataModel.xcdatamodel; sourceTree = "<group>"; };
+		395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerator.swift; sourceTree = "<group>"; };
+		39607B5026CD0A9D007DFD63 /* SingleStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStudent.swift; sourceTree = "<group>"; };
+		396182542774B1B7009596F3 /* HighlightedTextEditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HighlightedTextEditor; sourceTree = "<group>"; };
+		39B3775026E3F14B0005A390 /* JSONFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFile.swift; sourceTree = "<group>"; };
+		39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass.swift"; sourceTree = "<group>"; };
+		39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
+		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
+		6D26BB9E26EB7B520077AC73 /* StudentListViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListViewTest.swift; sourceTree = "<group>"; };
+		6D26BBA326EB96BB0077AC73 /* CourseListViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewTest.swift; sourceTree = "<group>"; };
+		6D26BBA526EBA9360077AC73 /* SimpleUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleUITest.swift; sourceTree = "<group>"; };
+		6D26BBAB26EBA9DE0077AC73 /* GradingAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradingAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D3BD29826E7CBD70060DB0D /* TextAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlert.swift; sourceTree = "<group>"; };
+		6D3EECD526E3D29B00E9D290 /* EmailAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAccountViewModel.swift; sourceTree = "<group>"; };
+		6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmailsView.swift; sourceTree = "<group>"; };
+		6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradePickerViewModel.swift; sourceTree = "<group>"; };
+		6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetSingleGradePicker.swift; sourceTree = "<group>"; };
+		6DD327B626E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGradesPerDateViewModelTest.swift; sourceTree = "<group>"; };
+		6DE31A5A26EBE69800CB41C0 /* UndoRedoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoRedoViewModel.swift; sourceTree = "<group>"; };
+		6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmails.swift; sourceTree = "<group>"; };
+		6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsViewModel.swift; sourceTree = "<group>"; };
+		6DE3E8B426E5551C004212D3 /* EmailKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailKeys.swift; sourceTree = "<group>"; };
+		6DE3E8B626E55533004212D3 /* SendMultipleEmailsCourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsCourseViewModel.swift; sourceTree = "<group>"; };
+		6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultileEmailsSelectedGradeViewModel.swift; sourceTree = "<group>"; };
+		6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailEditorView.swift; sourceTree = "<group>"; };
+		6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSingleEmailViewModel.swift; sourceTree = "<group>"; };
+		E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E200845D26DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullYearTranscriptGrade+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E200845E26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HalfYearTranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E200845F26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HalfYearTranscriptGrade+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E200846026DE99330098D981 /* TranscriptGrade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TranscriptGrade+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E200846126DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TranscriptGrade+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E200846926DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptGradesHalfYearViewModel.swift; sourceTree = "<group>"; };
+		E200846B26DED7D70098D981 /* TranscriptGrade+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TranscriptGrade+helper.swift"; sourceTree = "<group>"; };
+		E200846D26DEE4EF0098D981 /* TranscriptGradesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptGradesViewModel.swift; sourceTree = "<group>"; };
+		E200846F26DEE7D40098D981 /* StudentTranscriptGradesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTranscriptGradesView.swift; sourceTree = "<group>"; };
+		E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomsheetView.swift; sourceTree = "<group>"; };
+		E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E20C5E3726CD4B3F00F860C6 /* View+IfModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+IfModifier.swift"; sourceTree = "<group>"; };
+		E210AEE826C1190C00DF2D85 /* SingleCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleCourse.swift; sourceTree = "<group>"; };
+		E210AEEA26C11C1300DF2D85 /* EditCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseView.swift; sourceTree = "<group>"; };
+		E2234A4426E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTranscriptGradesFullYearView.swift; sourceTree = "<group>"; };
+		E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeDetailView.swift; sourceTree = "<group>"; };
+		E232978C27CFFF0A007EC630 /* CustomContextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomContextView.swift; sourceTree = "<group>"; };
+		E232978E27D008BB007EC630 /* GradingAppDataModel v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v2.xcdatamodel"; sourceTree = "<group>"; };
+		E232978F27D00AF6007EC630 /* Subject+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E232979427D01158007EC630 /* SubjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListView.swift; sourceTree = "<group>"; };
+		E24AF9CC26D82DDF000F2313 /* MoreActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreActionsView.swift; sourceTree = "<group>"; };
+		E24AF9CE26D83306000F2313 /* CSVFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVFile.swift; sourceTree = "<group>"; };
+		E24AF9D026D84AD2000F2313 /* MoreActionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreActionsViewModel.swift; sourceTree = "<group>"; };
+		E24AF9D226D8DD3E000F2313 /* GradingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GradingApp.entitlements; sourceTree = "<group>"; };
+		E24AF9D426D8DD62000F2313 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		E24BFEF02785F1DC00EF2E5A /* BadgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViewModel.swift; sourceTree = "<group>"; };
+		E2574C0226D92F6E00ED2CFD /* SelectedHalfYearViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedHalfYearViewModel.swift; sourceTree = "<group>"; };
+		E2574C0426D9454400ED2CFD /* HalfYear+EnvironmentValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HalfYear+EnvironmentValue.swift"; sourceTree = "<group>"; };
+		E2574C1526DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTranscriptGradesHalfYear.swift; sourceTree = "<group>"; };
+		E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentsView.swift; sourceTree = "<group>"; };
+		E25A7CDB26CA9D0A00508EEE /* EditStudentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentDetailView.swift; sourceTree = "<group>"; };
+		E25FBCA026BADAC6000BDD65 /* GradingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E25FBCA326BADAC6000BDD65 /* GradingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingApp.swift; sourceTree = "<group>"; };
+		E25FBCA526BADAC6000BDD65 /* CourseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListView.swift; sourceTree = "<group>"; };
+		E25FBCA726BADAC8000BDD65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E25FBCAA26BADAC8000BDD65 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E25FBCAC26BADAC8000BDD65 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataTest.xcdatamodel; sourceTree = "<group>"; };
+		E25FBCB126BADAC8000BDD65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E25FBCB726BAE1AB000BDD65 /* CourseTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseTabView.swift; sourceTree = "<group>"; };
+		E25FBCB926BAE1EC000BDD65 /* StudentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListView.swift; sourceTree = "<group>"; };
+		E25FBCBB26BAE7FF000BDD65 /* AddCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourse.swift; sourceTree = "<group>"; };
+		E25FBCBE26BAE976000BDD65 /* Course+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+helper.swift"; sourceTree = "<group>"; };
+		E25FBCC026BAF24D000BDD65 /* StudentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentView.swift; sourceTree = "<group>"; };
+		E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudent.swift; sourceTree = "<group>"; };
+		E25FBCC426BAF781000BDD65 /* Student+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+helper.swift"; sourceTree = "<group>"; };
+		E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoursesView.swift; sourceTree = "<group>"; };
+		E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+StudentHelper.swift"; sourceTree = "<group>"; };
+		E276A6DB26D79D2E00380C14 /* GradeAtDatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesView.swift; sourceTree = "<group>"; };
+		E276A6DD26D7AB3900380C14 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
+		E276A6DF26D7B97E00380C14 /* GradeStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeStudent.swift; sourceTree = "<group>"; };
+		E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGradesPerDateViewModel.swift; sourceTree = "<group>"; };
+		E2A20B0526D41910005FA240 /* StudentGradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeListView.swift; sourceTree = "<group>"; };
+		E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModelTest.swift; sourceTree = "<group>"; };
+		E2A3211D280C522E00EDBF89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRestoreView.swift; sourceTree = "<group>"; };
+		E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+DataModel.swift"; sourceTree = "<group>"; };
+		E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMultipleGradesView.swift; sourceTree = "<group>"; };
+		E2B055DF26BD5029004F0087 /* Grade+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+helper.swift"; sourceTree = "<group>"; };
+		E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSingleGradeView.swift; sourceTree = "<group>"; };
+		E2B7451426BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetMultipleGradesPicker.swift; sourceTree = "<group>"; };
+		E2B7451626C00E09002D0B4C /* ViewContext+SaveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewContext+SaveHelper.swift"; sourceTree = "<group>"; };
+		E2B7451C26C01C4F002D0B4C /* GradingAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradingAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingAppDatabaseTests.swift; sourceTree = "<group>"; };
+		E2B7452026C01C4F002D0B4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseViewModel.swift; sourceTree = "<group>"; };
+		E2CE907027A05AD900366DB1 /* ExternalScreenHideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalScreenHideViewModel.swift; sourceTree = "<group>"; };
+		E2CE907227A065D800366DB1 /* BindingNot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingNot.swift; sourceTree = "<group>"; };
+		E2D99F2B280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCalculatedTranscriptGrades.swift; sourceTree = "<group>"; };
+		E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesSelectionView.swift; sourceTree = "<group>"; };
+		E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesEditView.swift; sourceTree = "<group>"; };
+		E2E2D0E326D67EB500C62887 /* Student+GradeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+GradeHelper.swift"; sourceTree = "<group>"; };
+		E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeDetailView.swift; sourceTree = "<group>"; };
+		E2EA7AA326BEF6260036048E /* SingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGradeView.swift; sourceTree = "<group>"; };
+		E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSingleGradeView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6D26BBA826EBA9DE0077AC73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E25FBC9D26BADAC6000BDD65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E24AF9D526D8DD62000F2313 /* CloudKit.framework in Frameworks */,
+				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
+				6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */,
+				E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */,
+				6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */,
+				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B7451926C01C4F002D0B4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D26BBA226EB7CF10077AC73 /* ViewInspector in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3936EA8126BEA7BC00A37B95 /* SharedViews */ = {
+			isa = PBXGroup;
+			children = (
+				3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */,
+				E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */,
+				3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */,
+				E2B7451426BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift */,
+				E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */,
+				6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */,
+				6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */,
+				E232978C27CFFF0A007EC630 /* CustomContextView.swift */,
+			);
+			path = SharedViews;
+			sourceTree = "<group>";
+		};
+		39FFC8A726CC1C8500CE433A /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */,
+				E25A7CDB26CA9D0A00508EEE /* EditStudentDetailView.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		39FFC8A826CC1CB000CE433A /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */,
+				3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */,
+				E210AEEA26C11C1300DF2D85 /* EditCourseView.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		39FFC8A926CC1CC400CE433A /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		6D26BBAC26EBA9DE0077AC73 /* GradingAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6D26BBA526EBA9360077AC73 /* SimpleUITest.swift */,
+			);
+			path = GradingAppUITests;
+			sourceTree = "<group>";
+		};
+		6DE3E8AF26E5549B004212D3 /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				6D3EECD526E3D29B00E9D290 /* EmailAccountViewModel.swift */,
+				6DE3E8B226E554FF004212D3 /* SendMultipleEmailsViewModel.swift */,
+				6DE3E8B626E55533004212D3 /* SendMultipleEmailsCourseViewModel.swift */,
+				6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */,
+				6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */,
+				6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */,
+				6DE3E8B426E5551C004212D3 /* EmailKeys.swift */,
+			);
+			path = Email;
+			sourceTree = "<group>";
+		};
+		E200846826DE993C0098D981 /* TranscriptGrades */ = {
+			isa = PBXGroup;
+			children = (
+				E200845C26DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift */,
+				E200845D26DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift */,
+				E200845E26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift */,
+				E200845F26DE99330098D981 /* HalfYearTranscriptGrade+CoreDataProperties.swift */,
+				E200846026DE99330098D981 /* TranscriptGrade+CoreDataClass.swift */,
+				E200846126DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift */,
+				E200846B26DED7D70098D981 /* TranscriptGrade+helper.swift */,
+			);
+			path = TranscriptGrades;
+			sourceTree = "<group>";
+		};
+		E20C5E3626CD4B2B00F860C6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E20C5E3726CD4B3F00F860C6 /* View+IfModifier.swift */,
+				E276A6DD26D7AB3900380C14 /* Date+toString.swift */,
+				E2574C0426D9454400ED2CFD /* HalfYear+EnvironmentValue.swift */,
+				6D3BD29826E7CBD70060DB0D /* TextAlert.swift */,
+				E2CE907227A065D800366DB1 /* BindingNot.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E232979327D00B0A007EC630 /* Subject */ = {
+			isa = PBXGroup;
+			children = (
+				E232978F27D00AF6007EC630 /* Subject+CoreDataClass.swift */,
+			);
+			path = Subject;
+			sourceTree = "<group>";
+		};
+		E24AF9CB26D82DC5000F2313 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				E24AF9CC26D82DDF000F2313 /* MoreActionsView.swift */,
+				6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */,
+				391518892777248E003C11E4 /* BackupTimeIntervalView.swift */,
+				E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		E24AF9D326D8DD62000F2313 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E24AF9D426D8DD62000F2313 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2574C0626DA636100ED2CFD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E232979327D00B0A007EC630 /* Subject */,
+				E200846826DE993C0098D981 /* TranscriptGrades */,
+				E2574C1126DA650900ED2CFD /* Course */,
+				E2574C1026DA64FF00ED2CFD /* Student */,
+				E2574C0F26DA64F000ED2CFD /* Grade */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E2574C0F26DA64F000ED2CFD /* Grade */ = {
+			isa = PBXGroup;
+			children = (
+				E2B055DF26BD5029004F0087 /* Grade+helper.swift */,
+				E20BBE0926BEC6A700ED7BEF /* Grade+CoreDataProperties.swift */,
+				E20BBE0826BEC6A700ED7BEF /* Grade+CoreDataClass.swift */,
+			);
+			path = Grade;
+			sourceTree = "<group>";
+		};
+		E2574C1026DA64FF00ED2CFD /* Student */ = {
+			isa = PBXGroup;
+			children = (
+				E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */,
+				E2E2D0E326D67EB500C62887 /* Student+GradeHelper.swift */,
+				39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */,
+				E25FBCC426BAF781000BDD65 /* Student+helper.swift */,
+			);
+			path = Student;
+			sourceTree = "<group>";
+		};
+		E2574C1126DA650900ED2CFD /* Course */ = {
+			isa = PBXGroup;
+			children = (
+				E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */,
+				39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */,
+				E25FBCBE26BAE976000BDD65 /* Course+helper.swift */,
+			);
+			path = Course;
+			sourceTree = "<group>";
+		};
+		E2574C1426DA756E00ED2CFD /* TranscriptGrades */ = {
+			isa = PBXGroup;
+			children = (
+				E2574C1526DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift */,
+				E200846F26DEE7D40098D981 /* StudentTranscriptGradesView.swift */,
+				E2234A4426E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift */,
+				E2D99F2B280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift */,
+			);
+			path = TranscriptGrades;
+			sourceTree = "<group>";
+		};
+		E25FBC9726BADAC6000BDD65 = {
+			isa = PBXGroup;
+			children = (
+				396182542774B1B7009596F3 /* HighlightedTextEditor */,
+				E25FBCA226BADAC6000BDD65 /* GradingApp */,
+				E2B7451D26C01C4F002D0B4C /* GradingAppTests */,
+				6D26BBAC26EBA9DE0077AC73 /* GradingAppUITests */,
+				E25FBCA126BADAC6000BDD65 /* Products */,
+				E24AF9D326D8DD62000F2313 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E25FBCA126BADAC6000BDD65 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E25FBCA026BADAC6000BDD65 /* GradingApp.app */,
+				E2B7451C26C01C4F002D0B4C /* GradingAppTests.xctest */,
+				6D26BBAB26EBA9DE0077AC73 /* GradingAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E25FBCA226BADAC6000BDD65 /* GradingApp */ = {
+			isa = PBXGroup;
+			children = (
+				E24AF9D226D8DD3E000F2313 /* GradingApp.entitlements */,
+				E25FBCA326BADAC6000BDD65 /* GradingApp.swift */,
+				E2A3211D280C522E00EDBF89 /* AppDelegate.swift */,
+				E20C5E3626CD4B2B00F860C6 /* Extensions */,
+				E2C5138826BBE10D0069D340 /* Models */,
+				E2C5138726BBE0FA0069D340 /* CoreData */,
+				E25FBCBD26BAE951000BDD65 /* Views */,
+				E2C5138426BBD3EB0069D340 /* ViewModels */,
+				E25FBCA726BADAC8000BDD65 /* Assets.xcassets */,
+				E25FBCB126BADAC8000BDD65 /* Info.plist */,
+				E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */,
+				E25FBCA926BADAC8000BDD65 /* Preview Content */,
+			);
+			path = GradingApp;
+			sourceTree = "<group>";
+		};
+		E25FBCA926BADAC8000BDD65 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E25FBCAA26BADAC8000BDD65 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E25FBCBD26BAE951000BDD65 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E24AF9CB26D82DC5000F2313 /* Other */,
+				3936EA8126BEA7BC00A37B95 /* SharedViews */,
+				E2B055E526BD5897004F0087 /* Grade */,
+				E2B055E426BD5864004F0087 /* Student */,
+				E2B055E326BD585D004F0087 /* Course */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E2B055E326BD585D004F0087 /* Course */ = {
+			isa = PBXGroup;
+			children = (
+				39FFC8A826CC1CB000CE433A /* Edit */,
+				E25FBCB726BAE1AB000BDD65 /* CourseTabView.swift */,
+				E25FBCA526BADAC6000BDD65 /* CourseListView.swift */,
+				E25FBCBB26BAE7FF000BDD65 /* AddCourse.swift */,
+				E210AEE826C1190C00DF2D85 /* SingleCourse.swift */,
+				E232979427D01158007EC630 /* SubjectListView.swift */,
+			);
+			path = Course;
+			sourceTree = "<group>";
+		};
+		E2B055E426BD5864004F0087 /* Student */ = {
+			isa = PBXGroup;
+			children = (
+				E2574C1426DA756E00ED2CFD /* TranscriptGrades */,
+				39FFC8A726CC1C8500CE433A /* Edit */,
+				E25FBCB926BAE1EC000BDD65 /* StudentListView.swift */,
+				E2A20B0526D41910005FA240 /* StudentGradeListView.swift */,
+				E25FBCC026BAF24D000BDD65 /* StudentView.swift */,
+				E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */,
+				39607B5026CD0A9D007DFD63 /* SingleStudent.swift */,
+			);
+			path = Student;
+			sourceTree = "<group>";
+		};
+		E2B055E526BD5897004F0087 /* Grade */ = {
+			isa = PBXGroup;
+			children = (
+				39FFC8A926CC1CC400CE433A /* Edit */,
+				E2B055E126BD5842004F0087 /* AddSingleGradeView.swift */,
+				E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */,
+				E2EA7AA326BEF6260036048E /* SingleGradeView.swift */,
+				E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */,
+				39F09BB426D00801007B6E8A /* CostumGradeView.swift */,
+				E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesSelectionView.swift */,
+				E276A6DB26D79D2E00380C14 /* GradeAtDatesView.swift */,
+				E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */,
+			);
+			path = Grade;
+			sourceTree = "<group>";
+		};
+		E2B7451D26C01C4F002D0B4C /* GradingAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */,
+				E2B7451E26C01C4F002D0B4C /* GradingAppDatabaseTests.swift */,
+				6DD327B626E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift */,
+				6D26BB9E26EB7B520077AC73 /* StudentListViewTest.swift */,
+				6D26BBA326EB96BB0077AC73 /* CourseListViewTest.swift */,
+				E2B7452026C01C4F002D0B4C /* Info.plist */,
+			);
+			path = GradingAppTests;
+			sourceTree = "<group>";
+		};
+		E2C5138426BBD3EB0069D340 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				6DE3E8AF26E5549B004212D3 /* Email */,
+				E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */,
+				E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */,
+				E24AF9D026D84AD2000F2313 /* MoreActionsViewModel.swift */,
+				E2574C0226D92F6E00ED2CFD /* SelectedHalfYearViewModel.swift */,
+				E200846926DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift */,
+				E200846D26DEE4EF0098D981 /* TranscriptGradesViewModel.swift */,
+				6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */,
+				6DE31A5A26EBE69800CB41C0 /* UndoRedoViewModel.swift */,
+				3915188727772441003C11E4 /* BackupSettingsViewModel.swift */,
+				E24BFEF02785F1DC00EF2E5A /* BadgeViewModel.swift */,
+				E2CE907027A05AD900366DB1 /* ExternalScreenHideViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E2C5138726BBE0FA0069D340 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E25FBCAC26BADAC8000BDD65 /* Persistence.swift */,
+				E2B7451626C00E09002D0B4C /* ViewContext+SaveHelper.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E2C5138826BBE10D0069D340 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E2574C0626DA636100ED2CFD /* CoreData */,
+				395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */,
+				E276A6DF26D7B97E00380C14 /* GradeStudent.swift */,
+				E24AF9CE26D83306000F2313 /* CSVFile.swift */,
+				39B3775026E3F14B0005A390 /* JSONFile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6D26BBAA26EBA9DE0077AC73 /* GradingAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D26BBB326EBA9DE0077AC73 /* Build configuration list for PBXNativeTarget "GradingAppUITests" */;
+			buildPhases = (
+				6D26BBA726EBA9DE0077AC73 /* Sources */,
+				6D26BBA826EBA9DE0077AC73 /* Frameworks */,
+				6D26BBA926EBA9DE0077AC73 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6D26BBB226EBA9DE0077AC73 /* PBXTargetDependency */,
+			);
+			name = GradingAppUITests;
+			productName = GradingAppUITests;
+			productReference = 6D26BBAB26EBA9DE0077AC73 /* GradingAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E25FBC9F26BADAC6000BDD65 /* GradingApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E25FBCB426BADAC8000BDD65 /* Build configuration list for PBXNativeTarget "GradingApp" */;
+			buildPhases = (
+				E25FBC9C26BADAC6000BDD65 /* Sources */,
+				E25FBC9D26BADAC6000BDD65 /* Frameworks */,
+				E25FBC9E26BADAC6000BDD65 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GradingApp;
+			packageProductDependencies = (
+				394D7C4F26BDC7DB00892BD4 /* CSV */,
+				E2A20B0826D43777005FA240 /* SwiftUICharts */,
+				6D3EECD826E3D2CC00E9D290 /* KeychainAccess */,
+				6D3EECDB26E3D32100E9D290 /* SwiftSMTP */,
+				6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */,
+			);
+			productName = CoreDataTest;
+			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E2B7451B26C01C4F002D0B4C /* GradingAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2B7452326C01C4F002D0B4C /* Build configuration list for PBXNativeTarget "GradingAppTests" */;
+			buildPhases = (
+				E2B7451826C01C4F002D0B4C /* Sources */,
+				E2B7451926C01C4F002D0B4C /* Frameworks */,
+				E2B7451A26C01C4F002D0B4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E2B7452226C01C4F002D0B4C /* PBXTargetDependency */,
+			);
+			name = GradingAppTests;
+			packageProductDependencies = (
+				6D26BBA126EB7CF10077AC73 /* ViewInspector */,
+			);
+			productName = GradingAppTests;
+			productReference = E2B7451C26C01C4F002D0B4C /* GradingAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E25FBC9826BADAC6000BDD65 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					6D26BBAA26EBA9DE0077AC73 = {
+						CreatedOnToolsVersion = 13.0;
+						TestTargetID = E25FBC9F26BADAC6000BDD65;
+					};
+					E25FBC9F26BADAC6000BDD65 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					E2B7451B26C01C4F002D0B4C = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = E25FBC9F26BADAC6000BDD65;
+					};
+				};
+			};
+			buildConfigurationList = E25FBC9B26BADAC6000BDD65 /* Build configuration list for PBXProject "GradingApp" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E25FBC9726BADAC6000BDD65;
+			packageReferences = (
+				394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */,
+				E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */,
+				6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
+				6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
+				6D26BBA026EB7CF10077AC73 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
+			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E25FBC9F26BADAC6000BDD65 /* GradingApp */,
+				E2B7451B26C01C4F002D0B4C /* GradingAppTests */,
+				6D26BBAA26EBA9DE0077AC73 /* GradingAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6D26BBA926EBA9DE0077AC73 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E25FBC9E26BADAC6000BDD65 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E25FBCAB26BADAC8000BDD65 /* Preview Assets.xcassets in Resources */,
+				E25FBCA826BADAC8000BDD65 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B7451A26C01C4F002D0B4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6D26BBA726EBA9DE0077AC73 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D26BBB626EBA9F20077AC73 /* SimpleUITest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E25FBC9C26BADAC6000BDD65 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A3211E280C522E00EDBF89 /* AppDelegate.swift in Sources */,
+				E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */,
+				6DE3E8B926E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift in Sources */,
+				E232978D27CFFF0A007EC630 /* CustomContextView.swift in Sources */,
+				E25A7CDC26CA9D0A00508EEE /* EditStudentDetailView.swift in Sources */,
+				E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */,
+				E2574C0326D92F6E00ED2CFD /* SelectedHalfYearViewModel.swift in Sources */,
+				E2E2D0E026D4EC5B00C62887 /* GradeAtDatesSelectionView.swift in Sources */,
+				E276A6DC26D79D2E00380C14 /* GradeAtDatesView.swift in Sources */,
+				3915188A2777248E003C11E4 /* BackupTimeIntervalView.swift in Sources */,
+				E276A6DE26D7AB3900380C14 /* Date+toString.swift in Sources */,
+				E25FBCBF26BAE976000BDD65 /* Course+helper.swift in Sources */,
+				E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */,
+				3915188827772441003C11E4 /* BackupSettingsViewModel.swift in Sources */,
+				E24AF9CF26D83306000F2313 /* CSVFile.swift in Sources */,
+				6DE3E8BD26E56865004212D3 /* SendSingleEmailViewModel.swift in Sources */,
+				E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */,
+				E210AEEB26C11C1300DF2D85 /* EditCourseView.swift in Sources */,
+				E200846A26DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift in Sources */,
+				6D3EECDE26E3E0CE00E9D290 /* SendEmailsView.swift in Sources */,
+				E232979527D01158007EC630 /* SubjectListView.swift in Sources */,
+				E2D99F2C280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift in Sources */,
+				3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */,
+				E25FBCB026BADAC8000BDD65 /* GradingAppData.xcdatamodeld in Sources */,
+				E25FBCB826BAE1AB000BDD65 /* CourseTabView.swift in Sources */,
+				E2574C0526D9454400ED2CFD /* HalfYear+EnvironmentValue.swift in Sources */,
+				39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */,
+				E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */,
+				E24AF9CD26D82DDF000F2313 /* MoreActionsView.swift in Sources */,
+				6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */,
+				E2EA7AA226BEF23C0036048E /* GradeDetailView.swift in Sources */,
+				E276A6E226D7BB4B00380C14 /* EditGradesPerDateViewModel.swift in Sources */,
+				E210AEE926C1190D00DF2D85 /* SingleCourse.swift in Sources */,
+				E200846526DE99330098D981 /* HalfYearTranscriptGrade+CoreDataProperties.swift in Sources */,
+				E25A7CDA26CA9BDA00508EEE /* EditStudentsView.swift in Sources */,
+				E2B7451726C00E09002D0B4C /* ViewContext+SaveHelper.swift in Sources */,
+				E2EA7AA626BEF9E50036048E /* EditSingleGradeView.swift in Sources */,
+				E276A6E026D7B97E00380C14 /* GradeStudent.swift in Sources */,
+				6DE3E8BB26E55623004212D3 /* EmailEditorView.swift in Sources */,
+				39B3775126E3F14B0005A390 /* JSONFile.swift in Sources */,
+				E26ACC9926CE70F2004468AB /* Course+StudentHelper.swift in Sources */,
+				E25FBCBA26BAE1EC000BDD65 /* StudentListView.swift in Sources */,
+				6D3EECD626E3D29B00E9D290 /* EmailAccountViewModel.swift in Sources */,
+				6DE3E8B726E55533004212D3 /* SendMultipleEmailsCourseViewModel.swift in Sources */,
+				E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */,
+				3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */,
+				E200846726DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift in Sources */,
+				E2CE907327A065D800366DB1 /* BindingNot.swift in Sources */,
+				E25FBCAD26BADAC8000BDD65 /* Persistence.swift in Sources */,
+				6DE3E8B326E554FF004212D3 /* SendMultipleEmailsViewModel.swift in Sources */,
+				6DE3E8B126E554B9004212D3 /* SendMultipleEmails.swift in Sources */,
+				E25FBCA626BADAC6000BDD65 /* CourseListView.swift in Sources */,
+				E2B7451526BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift in Sources */,
+				6DE3E8B526E5551C004212D3 /* EmailKeys.swift in Sources */,
+				E200846E26DEE4EF0098D981 /* TranscriptGradesViewModel.swift in Sources */,
+				E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */,
+				E200846C26DED7D70098D981 /* TranscriptGrade+helper.swift in Sources */,
+				E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */,
+				39BCE45E26E4C7B900FB2680 /* Course+CoreDataClass.swift in Sources */,
+				E2574C1626DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift in Sources */,
+				E2234A4526E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift in Sources */,
+				E232979127D00AF6007EC630 /* Subject+CoreDataClass.swift in Sources */,
+				E200846326DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift in Sources */,
+				39BCE45C26E4C7B900FB2680 /* Student+CoreDataClass.swift in Sources */,
+				6DBCF24126E372C1009F4167 /* GradePickerViewModel.swift in Sources */,
+				E24AF9D126D84AD2000F2313 /* MoreActionsViewModel.swift in Sources */,
+				3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */,
+				E20BBE0726BE779800ED7BEF /* BottomsheetView.swift in Sources */,
+				E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */,
+				E20C5E3826CD4B3F00F860C6 /* View+IfModifier.swift in Sources */,
+				E2A32120280D769700EDBF89 /* BackupRestoreView.swift in Sources */,
+				E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */,
+				6D3BD29926E7CBD70060DB0D /* TextAlert.swift in Sources */,
+				E2CE907127A05AD900366DB1 /* ExternalScreenHideViewModel.swift in Sources */,
+				E200846626DE99330098D981 /* TranscriptGrade+CoreDataClass.swift in Sources */,
+				E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */,
+				39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */,
+				E25FBCC126BAF24D000BDD65 /* StudentView.swift in Sources */,
+				E2E2D0E426D67EB500C62887 /* Student+GradeHelper.swift in Sources */,
+				E24BFEF12785F1DC00EF2E5A /* BadgeViewModel.swift in Sources */,
+				395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */,
+				E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */,
+				E200847026DEE7D40098D981 /* StudentTranscriptGradesView.swift in Sources */,
+				E2234A4726E02F65002CCC07 /* StudentGradeDetailView.swift in Sources */,
+				E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */,
+				E2B055E226BD5842004F0087 /* AddSingleGradeView.swift in Sources */,
+				E25FBCBC26BAE7FF000BDD65 /* AddCourse.swift in Sources */,
+				E25FBCC326BAF6E6000BDD65 /* AddStudent.swift in Sources */,
+				6DE31A5B26EBE69800CB41C0 /* UndoRedoViewModel.swift in Sources */,
+				E2E2D0E226D5453400C62887 /* GradeAtDatesEditView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2B7451826C01C4F002D0B4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D26BBA426EB96BB0077AC73 /* CourseListViewTest.swift in Sources */,
+				E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */,
+				E2B7451F26C01C4F002D0B4C /* GradingAppDatabaseTests.swift in Sources */,
+				6D26BB9F26EB7B520077AC73 /* StudentListViewTest.swift in Sources */,
+				6DD327B726E8D081000FFBF1 /* EditGradesPerDateViewModelTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6D26BBB226EBA9DE0077AC73 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E25FBC9F26BADAC6000BDD65 /* GradingApp */;
+			targetProxy = 6D26BBB126EBA9DE0077AC73 /* PBXContainerItemProxy */;
+		};
+		E2B7452226C01C4F002D0B4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E25FBC9F26BADAC6000BDD65 /* GradingApp */;
+			targetProxy = E2B7452126C01C4F002D0B4C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6D26BBB426EBA9DE0077AC73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomrudnick.GradingAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GradingApp;
+			};
+			name = Debug;
+		};
+		6D26BBB526EBA9DE0077AC73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomrudnick.GradingAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GradingApp;
+			};
+			name = Release;
+		};
+		E25FBCB226BADAC8000BDD65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E25FBCB326BADAC8000BDD65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E25FBCB526BADAC8000BDD65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GradingApp/GradingApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"GradingApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = GradingApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomrudnick.GradingApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E25FBCB626BADAC8000BDD65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GradingApp/GradingApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"GradingApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = GradingApp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tomrudnick.GradingApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E2B7452426C01C4F002D0B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				INFOPLIST_FILE = GradingAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudnick.GradingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GradingApp.app/GradingApp";
+			};
+			name = Debug;
+		};
+		E2B7452526C01C4F002D0B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				INFOPLIST_FILE = GradingAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rudnick.GradingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GradingApp.app/GradingApp";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6D26BBB326EBA9DE0077AC73 /* Build configuration list for PBXNativeTarget "GradingAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D26BBB426EBA9DE0077AC73 /* Debug */,
+				6D26BBB526EBA9DE0077AC73 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E25FBC9B26BADAC6000BDD65 /* Build configuration list for PBXProject "GradingApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E25FBCB226BADAC8000BDD65 /* Debug */,
+				E25FBCB326BADAC8000BDD65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E25FBCB426BADAC8000BDD65 /* Build configuration list for PBXNativeTarget "GradingApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E25FBCB526BADAC8000BDD65 /* Debug */,
+				E25FBCB626BADAC8000BDD65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2B7452326C01C4F002D0B4C /* Build configuration list for PBXNativeTarget "GradingAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2B7452426C01C4F002D0B4C /* Debug */,
+				E2B7452526C01C4F002D0B4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yaslab/CSV.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.3;
+			};
+		};
+		6D26BBA026EB7CF10077AC73 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.1;
+			};
+		};
+		6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+		6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-SMTP";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.200;
+			};
+		};
+		6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kyle-n/HighlightedTextEditor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+		E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = exactVersion;
+				version = "2.0.0-beta.1";
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		394D7C4F26BDC7DB00892BD4 /* CSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */;
+			productName = CSV;
+		};
+		6D26BBA126EB7CF10077AC73 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D26BBA026EB7CF10077AC73 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+		6D3EECD826E3D2CC00E9D290 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		6D3EECDB26E3D32100E9D290 /* SwiftSMTP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
+			productName = SwiftSMTP;
+		};
+		6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */;
+			productName = HighlightedTextEditor;
+		};
+		E2A20B0826D43777005FA240 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E232978E27D008BB007EC630 /* GradingAppDataModel v2.xcdatamodel */,
+				3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */,
+				E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */,
+			);
+			currentVersion = E232978E27D008BB007EC630 /* GradingAppDataModel v2.xcdatamodel */;
+			path = GradingAppData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = E25FBC9826BADAC6000BDD65 /* Project object */;
+}
