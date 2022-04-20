@@ -110,7 +110,7 @@ class BackupSettingsViewModel: ObservableObject {
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        let url = URL(string: "http://185.244.192.189:8080")!
+        let url = URL(string: "https://tomrudnick.de:8080")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = jsonData

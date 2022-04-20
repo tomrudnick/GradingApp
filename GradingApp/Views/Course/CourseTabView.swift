@@ -30,6 +30,7 @@ struct CourseTabView: View {
     @State var showTranscriptSheet = false
     @State var showSendEmailSheet = false
     @State var showUndoRedoAlert = false
+    @State var showCalculatedTranscriptSheet = false
     
     @State var studentGrade: [Student:Int] = [:]
     
@@ -67,6 +68,13 @@ struct CourseTabView: View {
                         Text("Email verschicken...")
                     }).disabled(!sendEmailViewModel.emailAccountViewModel.emailAccountUsed)
                     if course.type == .holeYear {
+                        if halfYear == .secondHalf {
+                            Button {
+                                self.showCalculatedTranscriptSheet.toggle()
+                            } label: {
+                                Text("Aktuellen Zeugnisstand anzeigen")
+                            }
+                        }
                         Button {
                             self.showTranscriptHalfYearSheet.toggle()
                         } label: {
@@ -131,6 +139,9 @@ struct CourseTabView: View {
             .fullScreenCover(isPresented: $showTranscriptSheet, content: {
                 StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
             })
+            .fullScreenCover(isPresented: $showCalculatedTranscriptSheet) {
+                StudentCalculatedTranscriptGrades(course: course)
+            }
     }
         
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .pad) { view in
@@ -143,6 +154,9 @@ struct CourseTabView: View {
             .sheet(isPresented: $showTranscriptSheet, content: {
                 StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
             })
+            .sheet(isPresented: $showCalculatedTranscriptSheet) {
+                StudentCalculatedTranscriptGrades(course: course)
+            }
         }
         
     }
