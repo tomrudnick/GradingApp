@@ -1,12 +1,13 @@
 from http.server import BaseHTTPRequestHandler
 import logging
 import json
+from scheduler import Scheduler
 
 
 class S(BaseHTTPRequestHandler):
 
     def __init__(self, scheduler):
-        self.scheduler = scheduler
+        self.scheduler: Scheduler = scheduler
         # self.db = self.scheduler.db
 
     def __call__(self, *args, **kwargs):
@@ -36,10 +37,11 @@ class S(BaseHTTPRequestHandler):
         data = json.loads(post_data)
         if len(data) == 4 and 'user_id' in data and 'device_key' in data and 'time' in data and 'frequency' in data:
             logging.info("Inserting data into DB")
+            user_id = data['user_id']
             device_key = data['device_key']
             time = data['time']
             frequency = data['frequency']
-            self.scheduler.add_job(device_key, time, frequency)
+            self.scheduler.add_device_key(user_id, device_key, time, frequency)
         elif len(data) == 2 and 'user_id' in data and 'remove' in data:
             logging.info("Removing data")
             user_id = data['user_id']

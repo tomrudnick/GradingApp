@@ -16,7 +16,7 @@ import Combine
     init() {
         
         print("BadgeViewModel init")
-        if UIApplication.shared.applicationIconBadgeNumber != UserDefaults.standard.integer(forKey: BackupSettingsViewModel.KeyValueConstants.badge) {
+        if UIApplication.shared.applicationIconBadgeNumber != UserDefaults.standard.integer(forKey: BackupViewModel.KeyValueConstants.badge) {
             badge = UIApplication.shared.applicationIconBadgeNumber
             print("Upload new online Badge \(badge)")
             UserDefaults.standard.set(badge, forKey: BackupSettingsViewModel.KeyValueConstants.badge)

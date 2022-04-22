@@ -17,7 +17,7 @@ struct MoreActionsView: View {
     @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = MoreActionsViewModel()
     @StateObject var emailViewModel = EmailAccountViewModel()
-    @StateObject var backupSettingsViewModel: BackupSettingsViewModel
+    @StateObject var backupSettingsViewModel: BackupViewModel
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
@@ -30,7 +30,7 @@ struct MoreActionsView: View {
     init(externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }) {
         self.onDelete = onDelete
         self.externalScreenHideViewModel = externalScreenHideViewModel
-        self._backupSettingsViewModel = StateObject(wrappedValue: BackupSettingsViewModel())
+        self._backupSettingsViewModel = StateObject(wrappedValue: BackupViewModel())
     }
     
     
@@ -76,7 +76,7 @@ struct MoreActionsView: View {
                         Text("Import")
                     }
                     HStack {
-                        Text("iCloud Backups: \(BackupSettingsViewModel.countBackupFiles())")
+                        Text("iCloud Backups: \(BackupViewModel.countBackupFiles())")
                         Spacer()
                         Button {
                             self.showingRestoreFromiCloud = true
@@ -194,9 +194,7 @@ struct MoreActionsView: View {
         .sheet(isPresented: $showingRestoreFromiCloud, content: {
             BackupRestoreView().environment(\.managedObjectContext, viewContext)
         })
-        .onAppear(perform: {
-            backupSettingsViewModel.requestNotificationAuthorization()
-        })
+        
         .if(viewModel.backupType == .backup, transform: { view in
             view.fileExporter(isPresented: $showingBackup, document: MoreActionsViewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
                 switch result {

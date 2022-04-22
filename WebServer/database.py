@@ -1,6 +1,21 @@
 import sqlite3
 from sqlite3 import Error
 import logging
+from dataclasses import dataclass
+from typing import List
+@dataclass
+class User:
+    user_id: str
+    frequency: str
+    time: str
+
+
+    def __hash__(self):
+        return hash(self.user_id)
+
+    def __eq__(self, other):
+        return self.user_id == other.user_id
+
 
 
 class Database:
@@ -36,24 +51,30 @@ class Database:
             print(e)
 
     def insert(self, user_id, device_key, time, frequency):
+        self.insert_user(user_id, time, frequency)
+        self.insert_device_key(user_id, device_key)
+
+    def insert_device_key(self, user_id, device_key):
+        c = self.conn.cursor()
+        try:
+            cmd = """INSERT INTO deviceUsers (device_key, user_id)
+                           VALUES (?, ?);"""
+            c.execute(cmd, (device_key, user_id,))
+            self.conn.commit()
+        except Error:
+            logging.info("This device_key already exists")
+
+    def insert_user(self, user_id, time, frequency):
         c = self.conn.cursor()
         try:
             cmd = """INSERT INTO users (user_id, time, frequency)
-                     VALUES (?, ?, ?);"""
-            c.execute(cmd, (user_id, time, frequency, ))
+                             VALUES (?, ?, ?);"""
+            c.execute(cmd, (user_id, time, frequency,))
             self.conn.commit()
         except Error:
             logging.info("This item already exists...")
             logging.info("Updating item for: " + user_id)
             self.update_user(user_id, time, frequency)
-
-        try:
-            cmd = """INSERT INTO deviceUsers (device_key, user_id)
-                     VALUES (?, ?);"""
-            c.execute(cmd, (device_key, user_id, ))
-            self.conn.commit()
-        except Error:
-            logging.info("This device_key already exists")
 
     def update_user(self, user_id, time, frequency):
         try:
@@ -79,8 +100,37 @@ class Database:
     def get_all(self):
         try:
             c = self.conn.cursor()
-            c.execute("Select d.device_key, u.time, u.frequency from deviceUsers as d "
-                      "join users as u on d.user_id = u.user_id;")
+            c.execute("Select * from users;")
+            rows = c.fetchall()
+            users = []
+            for row in rows:
+                user_id = row[0]
+                time = row[1]
+                frequency = row[2]
+                users.append(User(user_id, frequency, time))
+            return users
+
+        except Error as e:
+            print(e)
+            return []
+
+    def get_device_keys(self, user_id):
+        try:
+            c = self.conn.cursor()
+            c.execute("""Select d.device_key from users as u
+                      join deviceUsers as d on u.user_id = d.user_id
+                      where u.user_id = ?;""", (user_id, ))
+            rows = c.fetchall()
+            device_keys = [device_key[0] for device_key in rows]
+            return device_keys
+        except Error as e:
+            print(e)
+            return []
+
+    def get_all_users(self):
+        try:
+            c = self.conn.cursor()
+            c.execute("Select * from users;")
             rows = c.fetchall()
             return rows
         except Error as e:

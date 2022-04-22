@@ -9,11 +9,11 @@ import SwiftUI
 
 struct BackupTimeIntervalView: View {
     @Environment(\.presentationMode) var presentationMode
-    @Binding var selection: BackupSettingsViewModel.BackupNotifyInterval
+    @Binding var selection: BackupViewModel.BackupNotifyInterval
     
     var body: some View {
         List {
-            ForEach(BackupSettingsViewModel.BackupNotifyInterval.allCases, id: \.self) { value in
+            ForEach(BackupViewModel.BackupNotifyInterval.allCases, id: \.self) { value in
                 Button {
                     selection = value
                     presentationMode.wrappedValue.dismiss()

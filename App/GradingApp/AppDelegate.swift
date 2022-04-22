@@ -13,11 +13,12 @@ import UserNotifications
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     static var deviceKey: String?
+    static var notificationsAllowed = false
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         registerForPushNotifications()
         
-        print("Count of Documents: \(BackupSettingsViewModel.countBackupFiles())")
+        print("Count of Documents: \(BackupViewModel.countBackupFiles())")
         application.applicationIconBadgeNumber = 0
         
         return true
@@ -29,6 +30,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let token = tokenParts.joined()
         AppDelegate.deviceKey = token
         print("Device Token: \(token)")
+        let _ = BackupViewModel()
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -43,7 +45,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         if aps["content-available"] as? Int == 1 {
             print("Silent Push Notification")
-            BackupSettingsViewModel.doBackup()
+            BackupViewModel.doBackup()
             completionHandler(.newData)
         } else {
             print("Normal Push Notification")
@@ -57,6 +59,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             options: [.alert, .sound, .badge]) { [weak self] granted, _ in
             print("Permission granted: \(granted)")
             guard granted else { return }
+            AppDelegate.notificationsAllowed = true
             self?.getNotificationSettings()
           }
     }

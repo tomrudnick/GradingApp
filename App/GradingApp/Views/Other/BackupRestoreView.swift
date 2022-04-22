@@ -15,7 +15,7 @@ struct BackupRestoreView: View {
     
     @State private var showingAlert = false
     @State private var selectedURL: URL?
-    @State private var urls = BackupSettingsViewModel.getBackupFiles()
+    @State private var urls = BackupViewModel.getBackupFiles()
     var body: some View {
         VStack {
             HStack {
@@ -45,7 +45,7 @@ struct BackupRestoreView: View {
                     indexSet.map { self.urls[$0] }.forEach { url in
                         try? FileManager.default.removeItem(at: url)
                     }
-                    urls = BackupSettingsViewModel.getBackupFiles()
+                    urls = BackupViewModel.getBackupFiles()
                 }
             }
         }.alert("Möchtest du die Daten wirklich von diesem Backup wiederherstellen?", isPresented: $showingAlert) {

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3915188827772441003C11E4 /* BackupSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915188727772441003C11E4 /* BackupSettingsViewModel.swift */; };
+		3915188827772441003C11E4 /* BackupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915188727772441003C11E4 /* BackupViewModel.swift */; };
 		3915188A2777248E003C11E4 /* BackupTimeIntervalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391518892777248E003C11E4 /* BackupTimeIntervalView.swift */; };
 		3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */; };
 		3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */; };
@@ -132,7 +132,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3915188727772441003C11E4 /* BackupSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupSettingsViewModel.swift; sourceTree = "<group>"; };
+		3915188727772441003C11E4 /* BackupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewModel.swift; sourceTree = "<group>"; };
 		391518892777248E003C11E4 /* BackupTimeIntervalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupTimeIntervalView.swift; sourceTree = "<group>"; };
 		3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseDetailView.swift; sourceTree = "<group>"; };
 		3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldView.swift; sourceTree = "<group>"; };
@@ -574,7 +574,7 @@
 				E200846D26DEE4EF0098D981 /* TranscriptGradesViewModel.swift */,
 				6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */,
 				6DE31A5A26EBE69800CB41C0 /* UndoRedoViewModel.swift */,
-				3915188727772441003C11E4 /* BackupSettingsViewModel.swift */,
+				3915188727772441003C11E4 /* BackupViewModel.swift */,
 				E24BFEF02785F1DC00EF2E5A /* BadgeViewModel.swift */,
 				E2CE907027A05AD900366DB1 /* ExternalScreenHideViewModel.swift */,
 			);
@@ -770,7 +770,7 @@
 				E276A6DE26D7AB3900380C14 /* Date+toString.swift in Sources */,
 				E25FBCBF26BAE976000BDD65 /* Course+helper.swift in Sources */,
 				E20BBE0B26BEC6A700ED7BEF /* Grade+CoreDataProperties.swift in Sources */,
-				3915188827772441003C11E4 /* BackupSettingsViewModel.swift in Sources */,
+				3915188827772441003C11E4 /* BackupViewModel.swift in Sources */,
 				E24AF9CF26D83306000F2313 /* CSVFile.swift in Sources */,
 				6DE3E8BD26E56865004212D3 /* SendSingleEmailViewModel.swift in Sources */,
 				E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */,

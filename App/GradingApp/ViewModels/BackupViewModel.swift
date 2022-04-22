@@ -8,9 +8,9 @@
 import Foundation
 import UserNotifications
 import UIKit
+import CloudKit
 
-
-class BackupSettingsViewModel: ObservableObject {
+class BackupViewModel: ObservableObject {
     
     @Published var backupTime: Date {
         didSet {
@@ -22,9 +22,11 @@ class BackupSettingsViewModel: ObservableObject {
             backupNotifyFrequencyChanged = true
         }
     }
+    
     private(set) var notifyAllowed = false
     private(set) var backupNotifyFrequencyChanged = false
     private(set) var backupTimeChanged = false
+    private(set) var doingBackup = true
     
     enum BackupNotifyInterval: String, CaseIterable, Identifiable {
         case test = "Test"
@@ -54,6 +56,8 @@ class BackupSettingsViewModel: ObservableObject {
     struct KeyValueConstants {
         static let backupTime = "backupTime"
         static let notifyFrequency = "notifyFrequency"
+        static let doingBackup = "doingBackup"
+        static let lastBackup = "lastBackup"
     }
     
     let isoFormatter = ISO8601DateFormatter()
@@ -73,6 +77,14 @@ class BackupSettingsViewModel: ObservableObject {
         isoFormatter.timeZone = TimeZone.current
         backupNotifyFrequencyChanged = false
         backupTimeChanged = false
+        let defaults = UserDefaults.standard
+        doingBackup = defaults.bool(forKey: KeyValueConstants.doingBackup)
+        if !doingBackup && backupNotifyInterval != .never {
+            sendRequestToServer()
+        } else if doingBackup && backupNotifyInterval == .never {
+            self.doingBackup = false
+            defaults.set(self.doingBackup, forKey: KeyValueConstants.doingBackup)
+        }
     }
     
     func save() {
@@ -91,45 +103,57 @@ class BackupSettingsViewModel: ObservableObject {
         
     }
     
+    
     private func sendRequestToServer() {
+        if !AppDelegate.notificationsAllowed { return }
         guard let deviceKey = AppDelegate.deviceKey else { return }
         let formatter = DateFormatter()
         formatter.dateFormat = "y-MM-dd HH:mm:ss"
         let dateString = formatter.string(from: backupTime)
         var json: [String: Any] = [:]
         
-        if backupNotifyInterval == .never {
-            json = ["device_key" : deviceKey,
-                    "remove" : "true"]
-        } else {
-            json = ["device_key" : deviceKey,
-                   "time" : dateString,
-                   "frequency" : backupNotifyInterval.name]
-        }
-        
-        
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        let url = URL(string: "https://tomrudnick.de:8080")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = jsonData
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                    print(error?.localizedDescription ?? "No data")
-                    return
+        CKContainer(identifier: "iCloud.tomrudnick.GradingApp").fetchUserRecordID(completionHandler: { (recordId, error) in
+            if let name = recordId?.recordName {
+                if self.backupNotifyInterval == .never {
+                    json = ["user_id" : name,
+                            "remove" : "true"]
+                } else {
+                    json = ["user_id" : name,
+                           "device_key" : deviceKey,
+                           "time" : dateString,
+                           "frequency" : self.backupNotifyInterval.name]
                 }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
+                
+                
+                let jsonData = try? JSONSerialization.data(withJSONObject: json)
+                
+                let url = URL(string: "https://tomrudnick.de:8080")!
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                request.httpBody = jsonData
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    guard let data = data, error == nil else {
+                            print(error?.localizedDescription ?? "No data")
+                            return
+                        }
+                    self.doingBackup = true
+                    UserDefaults.standard.set(self.doingBackup, forKey: KeyValueConstants.doingBackup)
+                    let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                    if let responseJSON = responseJSON as? [String: Any] {
+                        print(responseJSON)
+                    }
+                }
+                task.resume()
             }
-        }
-        task.resume()
+            else if let error = error {
+               print(error.localizedDescription)
+            }
+        })
     }
-    
-    func requestNotificationAuthorization() {
+    //Still not sure if this should be here or in App Delegate
+    /*func requestNotificationAuthorization() {
         #if !targetEnvironment(macCatalyst)
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
@@ -140,9 +164,15 @@ class BackupSettingsViewModel: ObservableObject {
             }
         }
         #endif
-    }
+    }*/
     
     static func doBackup() {
+        let lastBackupDate = NSUbiquitousKeyValueStore.default.object(forKey: KeyValueConstants.lastBackup) as? Date
+        if let lastBackupDate = lastBackupDate, Calendar.current.isDateInToday(lastBackupDate) {
+            print("There allready exists a backup for today")
+            return
+        }
+        
         if let containerUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
             if !FileManager.default.fileExists(atPath: containerUrl.path, isDirectory: nil) {
                 do {
@@ -162,6 +192,8 @@ class BackupSettingsViewModel: ObservableObject {
                 let jsonData = try JSONEncoder().encode(fetchedCourses)
                 let jsonString = String(data: jsonData, encoding: .utf8)!
                 try jsonString.write(to: fileUrl, atomically: true, encoding: .utf8)
+                NSUbiquitousKeyValueStore.default.set(Date(), forKey: KeyValueConstants.lastBackup)
+                NSUbiquitousKeyValueStore.default.synchronize()
             } catch {
                 print("Error fetching data from CoreData", error)
             }
