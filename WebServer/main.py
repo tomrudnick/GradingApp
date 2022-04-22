@@ -13,7 +13,11 @@ import ssl
 
 
 def run(handler_class=S, port=8080, https=False):
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s %(levelname)s %(module)s - %(funcName)s: %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+    )
     logging.info("Database starting...")
     db = Database("test.db")
     scheduler = Scheduler(db)
