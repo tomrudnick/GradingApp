@@ -19,6 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         print("Count of Documents: \(BackupSettingsViewModel.countBackupFiles())")
         application.applicationIconBadgeNumber = 0
+        
         return true
     }
     

@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 import Combine
-
+import CloudKit
 
 
 class MoreActionsViewModel: ObservableObject {
@@ -40,6 +40,14 @@ class MoreActionsViewModel: ObservableObject {
     }
     
     init() {
+        CKContainer(identifier: "iCloud.tomrudnick.GradingApp").fetchUserRecordID(completionHandler: { (recordId, error) in
+            if let name = recordId?.recordName {
+               print("iCloud ID: " + name)
+            }
+            else if let error = error {
+               print(error.localizedDescription)
+            }
+        })
         self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
         
         let df = DateFormatter()

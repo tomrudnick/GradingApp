@@ -4,11 +4,16 @@ import logging
 
 
 class Database:
-    table = """CREATE TABLE IF NOT EXISTS users(
-                device_key string PRIMARY KEY,
+    table_user = """CREATE TABLE IF NOT EXISTS users(
+                user_id string PRIMARY KEY,
                 time string NOT NULL,
                 frequency string NOT NULL
             );"""
+
+    table_device = """CREATE TABLE deviceUsers(
+                device_key string PRIMARY KEY,
+                user_id string,
+                FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE);"""
 
     def __init__(self, filepath):
         self.conn = None
@@ -25,39 +30,48 @@ class Database:
     def __create_tables(self):
         try:
             c = self.conn.cursor()
-            c.execute(self.table)
+            c.execute(self.table_user)
+            c.execute(self.table_device)
         except Error as e:
             print(e)
 
-    def insert(self, device_key, time, frequency):
+    def insert(self, user_id, device_key, time, frequency):
+        c = self.conn.cursor()
         try:
-            c = self.conn.cursor()
-            cmd = """INSERT INTO users (device_key, time, frequency)
+            cmd = """INSERT INTO users (user_id, time, frequency)
                      VALUES (?, ?, ?);"""
-            c.execute(cmd, (device_key, time, frequency, ))
+            c.execute(cmd, (user_id, time, frequency, ))
             self.conn.commit()
         except Error:
-            logging.info("This item allready exists...")
-            logging.info("Updating item for: " + device_key)
-            self.update(device_key, time, frequency)
+            logging.info("This item already exists...")
+            logging.info("Updating item for: " + user_id)
+            self.update_user(user_id, time, frequency)
 
-    def update(self, device_key, time, frequency):
+        try:
+            cmd = """INSERT INTO deviceUsers (device_key, user_id)
+                     VALUES (?, ?);"""
+            c.execute(cmd, (device_key, user_id, ))
+            self.conn.commit()
+        except Error:
+            logging.info("This device_key already exists")
+
+    def update_user(self, user_id, time, frequency):
         try:
             c = self.conn.cursor()
             cmd = """UPDATE users
                      SET time = ?, frequency = ?
-                     WHERE device_key = ?;"""
-            c.execute(cmd, (time, frequency, device_key, ))
+                     WHERE user_id = ?;"""
+            c.execute(cmd, (time, frequency, user_id, ))
             self.conn.commit()
         except Error as e:
             print(e)
 
-    def remove(self, device_key):
+    def remove(self, user_id):
         try:
             c = self.conn.cursor()
             cmd = """DELETE FROM users
-                    WHERE device_key = ?;"""
-            c.execute(cmd, (device_key, ))
+                    WHERE user_id = ?;"""
+            c.execute(cmd, (user_id, ))
             self.conn.commit()
         except Error as e:
             print(e)
@@ -65,7 +79,8 @@ class Database:
     def get_all(self):
         try:
             c = self.conn.cursor()
-            c.execute("SELECT * FROM users")
+            c.execute("Select d.device_key, u.time, u.frequency from deviceUsers as d "
+                      "join users as u on d.user_id = u.user_id;")
             rows = c.fetchall()
             return rows
         except Error as e:

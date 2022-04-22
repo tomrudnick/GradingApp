@@ -34,13 +34,13 @@ class S(BaseHTTPRequestHandler):
         self.wfile.write(b'Received: ')
         self.wfile.write(post_data)
         data = json.loads(post_data)
-        if len(data) == 3 and 'device_key' in data and 'time' in data and 'frequency' in data:
+        if len(data) == 4 and 'user_id' in data and 'device_key' in data and 'time' in data and 'frequency' in data:
             logging.info("Inserting data into DB")
             device_key = data['device_key']
             time = data['time']
             frequency = data['frequency']
             self.scheduler.add_job(device_key, time, frequency)
-        elif len(data) == 2 and 'device_key' in data and 'remove' in data:
+        elif len(data) == 2 and 'user_id' in data and 'remove' in data:
             logging.info("Removing data")
-            device_key = data['device_key']
-            self.scheduler.remove_job(device_key)
+            user_id = data['user_id']
+            self.scheduler.remove_job(user_id)

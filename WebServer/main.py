@@ -12,7 +12,7 @@ from httpServer import S
 import ssl
 
 
-def run(handler_class=S, port=80, https=False):
+def run(handler_class=S, port=8080, https=False):
     logging.basicConfig(level=logging.INFO)
     logging.info("Database starting...")
     db = Database("test.db")
