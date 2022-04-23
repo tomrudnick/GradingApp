@@ -7,6 +7,7 @@ from threading import Lock
 from apns2.client import APNsClient
 from apns2.payload import Payload
 from apns2.credentials import TokenCredentials
+from apns2.errors import BadDeviceToken
 from database import User, Database
 import AUTH
 
@@ -23,7 +24,7 @@ class Scheduler:
         self.token_credentials = TokenCredentials(auth_key_path=AUTH.auth_key_path,
                                                   auth_key_id=AUTH.auth_key_id,
                                                   team_id=AUTH.team_id)
-        self.client = APNsClient(credentials=self.token_credentials, use_sandbox=True)
+        self.client = APNsClient(credentials=self.token_credentials, use_sandbox=False)
         self.users = self.db.get_all()
         self.add_jobs()
 
@@ -85,7 +86,13 @@ class Scheduler:
     def job_exec(self, user):
         print("JOB EXEC: " + user.user_id)
         for device_key in self.db.get_device_keys(user.user_id):
-            self.client.send_notification(device_key, self.payload, self.topic)
+            try:
+                self.client.send_notification(device_key, self.payload, self.topic)
+            except BadDeviceToken:
+                logging.info("Device Token is invalid")
+                self.mutex.acquire()
+                self.db.remove_device_key(device_key)
+                self.mutex.release()
         self.add_job(user)
 
     def remove_job(self, user_id):

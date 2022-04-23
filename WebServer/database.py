@@ -97,6 +97,17 @@ class Database:
         except Error as e:
             print(e)
 
+    def remove_device_key(self, device_key):
+        logging.info("Removing Device key: " + device_key)
+        try:
+            c = self.conn.cursor()
+            cmd = """DELETE FROM deviceUsers
+                     WHERE device_key = ?;"""
+            c.execute(cmd, (device_key, ))
+            self.conn.commit()
+        except Error as e:
+            print(e)
+
     def get_all(self):
         try:
             c = self.conn.cursor()

@@ -40,6 +40,14 @@ struct BackupRestoreView: View {
                             Spacer()
                             Image(systemName: "chevron.right")
                         }
+                    }.contextMenu {
+                        Button {
+                            try? FileManager.default.removeItem(at: url)
+                            urls = BackupViewModel.getBackupFiles()
+                        } label: {
+                            Text("Löschen")
+                        }
+
                     }
                 }.onDelete { indexSet in
                     indexSet.map { self.urls[$0] }.forEach { url in

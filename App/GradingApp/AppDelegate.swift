@@ -30,7 +30,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let token = tokenParts.joined()
         AppDelegate.deviceKey = token
         print("Device Token: \(token)")
-        let _ = BackupViewModel()
+        let vm = BackupViewModel() 
+        if vm.backupNotifyInterval != .never {
+            vm.sendRequestToServer()
+        }
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

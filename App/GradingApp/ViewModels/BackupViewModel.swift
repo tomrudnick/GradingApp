@@ -26,8 +26,7 @@ class BackupViewModel: ObservableObject {
     private(set) var notifyAllowed = false
     private(set) var backupNotifyFrequencyChanged = false
     private(set) var backupTimeChanged = false
-    private(set) var doingBackup = true
-    
+ 
     enum BackupNotifyInterval: String, CaseIterable, Identifiable {
         case test = "Test"
         case never = "Niemals"
@@ -77,14 +76,7 @@ class BackupViewModel: ObservableObject {
         isoFormatter.timeZone = TimeZone.current
         backupNotifyFrequencyChanged = false
         backupTimeChanged = false
-        let defaults = UserDefaults.standard
-        doingBackup = defaults.bool(forKey: KeyValueConstants.doingBackup)
-        if !doingBackup && backupNotifyInterval != .never {
-            sendRequestToServer()
-        } else if doingBackup && backupNotifyInterval == .never {
-            self.doingBackup = false
-            defaults.set(self.doingBackup, forKey: KeyValueConstants.doingBackup)
-        }
+       
     }
     
     func save() {
@@ -104,7 +96,7 @@ class BackupViewModel: ObservableObject {
     }
     
     
-    private func sendRequestToServer() {
+    public func sendRequestToServer() {
         if !AppDelegate.notificationsAllowed { return }
         guard let deviceKey = AppDelegate.deviceKey else { return }
         let formatter = DateFormatter()
@@ -138,8 +130,6 @@ class BackupViewModel: ObservableObject {
                             print(error?.localizedDescription ?? "No data")
                             return
                         }
-                    self.doingBackup = true
-                    UserDefaults.standard.set(self.doingBackup, forKey: KeyValueConstants.doingBackup)
                     let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
                     if let responseJSON = responseJSON as? [String: Any] {
                         print(responseJSON)
