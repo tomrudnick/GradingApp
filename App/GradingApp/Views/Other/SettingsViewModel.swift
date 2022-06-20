@@ -11,7 +11,7 @@ import MobileCoreServices
 import UIKit
 
 
-struct MoreActionsView: View {
+struct SettingsViewModel: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.scenePhase) var scenePhase

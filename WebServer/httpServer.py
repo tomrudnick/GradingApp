@@ -44,3 +44,5 @@ class S(BaseHTTPRequestHandler):
             logging.info("Removing data")
             user_id = data['user_id']
             self.scheduler.remove_job(user_id)
+        elif len(data) == 2 and 'user_id' in data and 'device_key' in data:
+            logging.info("Adding or updating device_key")

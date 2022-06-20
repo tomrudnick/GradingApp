@@ -72,10 +72,11 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                                 showAddGradeSheet = true
                                 proxy.scrollTo(selectedStudent?.id, anchor: .top)
                             }.id(studentGrade.student.id)
-
+                            
                         }
                         Spacer().frame(height: geometry.size.height * 0.5)
                     }
+
                 }
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet, selectedStudent: $selectedStudent, course: course, viewModel: gradePickerViewModel, geometry: geometry, scrollProxy: proxy) { grade in
                     if let selectedStudent = selectedStudent {

@@ -96,7 +96,7 @@ class BackupViewModel: ObservableObject {
     }
     
     
-    public func sendRequestToServer() {
+    public func sendRequestToServer(deviceKeyOnly: Bool = false) {
         if !AppDelegate.notificationsAllowed { return }
         guard let deviceKey = AppDelegate.deviceKey else { return }
         let formatter = DateFormatter()
@@ -106,7 +106,10 @@ class BackupViewModel: ObservableObject {
         
         CKContainer(identifier: "iCloud.tomrudnick.GradingApp").fetchUserRecordID(completionHandler: { (recordId, error) in
             if let name = recordId?.recordName {
-                if self.backupNotifyInterval == .never {
+                if deviceKeyOnly {
+                    json = ["user_id" : name,
+                            "device_key" : deviceKey]
+                } else if self.backupNotifyInterval == .never {
                     json = ["user_id" : name,
                             "remove" : "true"]
                 } else {
@@ -141,6 +144,10 @@ class BackupViewModel: ObservableObject {
                print(error.localizedDescription)
             }
         })
+    }
+    
+    public func sendDeviceKeyToServer() {
+        sendRequestToServer(deviceKeyOnly: true)
     }
     //Still not sure if this should be here or in App Delegate
     /*func requestNotificationAuthorization() {

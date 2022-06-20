@@ -51,5 +51,11 @@ struct GradeStudent<G: GradeValue> : Identifiable {
             studentGrades[studentIndex].value = value
         }
     }
+    
+    static func getGradeAverage<G: GradeValue>(studentGrades: [GradeStudent<G>]) -> Double {
+        let nonNilStudentGrades = studentGrades.filter {$0.grade != nil}
+        let sum = nonNilStudentGrades.reduce(0.0) {$0 + Double($1.grade?.value ?? 0)}
+        return sum / Double(nonNilStudentGrades.count)
+    }
 }
 

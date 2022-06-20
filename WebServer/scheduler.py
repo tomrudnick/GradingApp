@@ -12,6 +12,7 @@ from database import User, Database
 import AUTH
 
 
+
 class Scheduler:
     topic = 'com.tomrudnick.GradingApp'
 
@@ -27,6 +28,13 @@ class Scheduler:
         self.client = APNsClient(credentials=self.token_credentials, use_sandbox=False)
         self.users = self.db.get_all()
         self.add_jobs()
+
+    def add_device_key(self, user_id, device_key):
+        user_ids = [user.user_id for user in self.users]
+        if user_id in user_ids:
+            self.db.insert_device_key(user_id, device_key)
+        else:
+            logging.info("For this device key does not exist a user_id")
 
     def add_device_key(self, user_id, device_key, time, frequency):
         try:

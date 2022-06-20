@@ -32,7 +32,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         print("Device Token: \(token)")
         let vm = BackupViewModel() 
         if vm.backupNotifyInterval != .never {
-            vm.sendRequestToServer()
+            vm.sendDeviceKeyToServer()
         }
     }
     

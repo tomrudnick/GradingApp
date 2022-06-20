@@ -101,6 +101,23 @@ extension Grade {
         return allDates
     }
     
+    static func getGradesPerDatePerMonth(grades: FetchedResults<Grade>) -> [DateComponents: [Date: [GradeStudent<Grade>]]]{
+        var allDatesPerMonth: [DateComponents: [Date : [GradeStudent<Grade>]]] = [:]
+        for grade in grades {
+            let monthYear = Calendar.current.dateComponents([.year, .month], from: grade.date!)
+            if let _ = allDatesPerMonth[monthYear] {
+                if let _ = allDatesPerMonth[monthYear]![grade.date!] {
+                    allDatesPerMonth[monthYear]![grade.date!]?.append(GradeStudent(student: grade.student!, grade: grade))
+                } else {
+                    allDatesPerMonth[monthYear]![grade.date!] = [GradeStudent(student: grade.student!, grade: grade)]
+                }
+            } else {
+                allDatesPerMonth[monthYear] = [grade.date! : [GradeStudent(student: grade.student!, grade: grade)]]
+            }
+        }
+        return allDatesPerMonth
+    }
+    
     static func getGradesPerDate(grades: [Grade]) -> [Date : [GradeStudent<Grade>]] {
         var allDates: [Date : [GradeStudent<Grade>]] = [:]
         for grade in grades {

@@ -74,7 +74,7 @@ struct CourseListView: View {
             .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                MoreActionsView(externalScreenHideViewModel: externalScreenHideViewModel).environment(\.managedObjectContext, viewContext)
+                SettingsViewModel(externalScreenHideViewModel: externalScreenHideViewModel).environment(\.managedObjectContext, viewContext)
                     .onDisappear {
                         selectedHalfYearVM.fetchValue()
                     }

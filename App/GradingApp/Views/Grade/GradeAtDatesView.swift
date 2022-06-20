@@ -30,44 +30,60 @@ struct GradeAtDatesView: View {
         let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d AND student.hidden = NO", gradeType == .oral ? 0 : 1, course, half == .firstHalf ? 0 : 1))
         
         self._grades = FetchRequest(fetchRequest: request)
+        
     }
     
     
     var body: some View {
         List {
-            ForEach(Grade.getGradesPerDate(grades: grades).sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
-                NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value), tag: key, selection: $selectedStudentGradeNavLink) {
-                    HStack {
-                        Text(key.asString(format: "dd MMM HH:mm"))
-                        Spacer()
-                        Text(Grade.getComment(studentGrades: value) ?? "ver. Kommentare")
-                        Spacer()
-                        if value.count == 1 {
-                            let student = value.first!.student
-                            if let firstLetter = student.lastName.first {
-                                Text("\(student.firstName) \(String(firstLetter))")
-                            } else {
-                                Text("\(student.firstName)")
+            ForEach(Grade.getGradesPerDatePerMonth(grades: grades).sorted(by: {Calendar.current.date(from: $0.key)! < Calendar.current.date(from: $1.key)!}), id: \.key) { key, value in
+                
+                Section("\(Calendar.current.date(from: key)!.asString(format: "MMM yyyy"))") {
+                    ForEach(value.sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
+                        NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value), tag: key, selection: $selectedStudentGradeNavLink) {
+                            HStack {
+                                Text(key.asString(format: "dd MMM HH:mm"))
+                                Spacer()
+                                Text(Grade.getComment(studentGrades: value) ?? "ver. Kommentare")
+                                Spacer()
+                                
+                                if value.count == 1 {
+                          
+                                    Image(systemName: "person")
+                                    let student = value.first!.student
+                                    if let firstLetter = student.lastName.first {
+                                        Text("\(student.firstName) \(String(firstLetter))")
+                                    } else {
+                                        Text("\(student.firstName)")
+                                    }
+                                    
+                                } else {
+                                    Image(systemName: "person.3.sequence")
+                                    Text("\(value.count) / \(course.studentsCount)")
+                                }
+                                Image(systemName: "sum")
+                                GradeText(ageGroup: self.course.ageGroup, grade: GradeStudent<Grade>.getGradeAverage(studentGrades: value))
+                                    .frame(minWidth: 40)
+                                    .padding(5.0)
+                                    .background(.gray)
+                                    .cornerRadius(5.0)
                             }
-                            
-                        } else {
-                            Text("\(value.count) / \(course.studentsCount)")
                         }
+                        .onChange(of: selectedStudentGradeNavLink, perform: { value in
+                            if value == nil {
+                                viewContext.saveCustom()
+                            }
+                        })
+                        .contextMenu(menuItems: {
+                            Button(action: {
+                                sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
+                                self.showEmailSheet = true
+                            }, label: {
+                                Text("Ausgewählte Noten als E-Mail verschicken")
+                            }).disabled(!sendGradeEmailViewModel.emailAccountViewModel.emailAccountUsed)
+                        })
                     }
-                }
-                .onChange(of: selectedStudentGradeNavLink, perform: { value in
-                    if value == nil {
-                        viewContext.saveCustom()
-                    }
-                })
-                .contextMenu(menuItems: {
-                    Button(action: {
-                        sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
-                        self.showEmailSheet = true
-                    }, label: {
-                        Text("Ausgewählte Noten als E-Mail verschicken")
-                    }).disabled(!sendGradeEmailViewModel.emailAccountViewModel.emailAccountUsed)
-                })
+                }.headerProminence(.increased)
             }
         }.sheet(isPresented: $showEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendGradeEmailViewModel)
