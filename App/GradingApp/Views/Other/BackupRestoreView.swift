@@ -56,6 +56,16 @@ struct BackupRestoreView: View {
                     urls = BackupViewModel.getBackupFiles()
                 }
             }
+            
+            HStack {
+                Button {
+                    for url in urls {
+                        try? FileManager.default.removeItem(at: url)
+                    }
+                } label: {
+                    Text("Alle Backups löschen").foregroundColor(.red).padding()
+                }
+            }
         }.alert("Möchtest du die Daten wirklich von diesem Backup wiederherstellen?", isPresented: $showingAlert) {
             Button("Abbrechen", role: .cancel) { }
             Button("Ja!") {

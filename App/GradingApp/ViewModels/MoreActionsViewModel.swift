@@ -106,12 +106,16 @@ class MoreActionsViewModel: ObservableObject {
         dateFormatter.dateFormat = "dd_MM_YYYY"
         let fileDate = dateFormatter.string(from: date)
         for course in fetchedCourses {
+            // Oral marks
             let oralRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 0, course))
             let oralGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: oralRequest)
             files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: oralGrades, fileName: "\(course.title)_muendlich_" + fileDate))
+            // Written marks
             let writtenRequest  = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@", 1, course))
             let writtenGrades = PersistenceController.fetchData(context: viewContext, fetchRequest: writtenRequest)
             files.append(CSVFile.generateCSVFileOFCourse(course: course, grades: writtenGrades, fileName: "\(course.title)_schriftlich_" + fileDate))
+            // Transscript marks
+            files.append(CSVFile.generateCSVFileOfCourseTranscriptGrade(course: course, fileName: "\(course.title)_zeugnis_" + fileDate))
         }
         return files
         

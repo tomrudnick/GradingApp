@@ -89,6 +89,36 @@ struct CSVFile: FileDocument {
         return CSVFile(data: data, fileName: fileName)
     }
     
+    static func generateCSVFileOfCourseTranscriptGrade(course: Course, fileName: String) -> CSVFile {
+        let csv = try! CSVWriter(stream: OutputStream.toMemory())
+        var headerRow = ["Kurs", "Vorname", "Nachname"]
+        switch course.type {
+        case .firstHalf: headerRow.append("1. Halbjahr")
+        case .secondHalf: headerRow.append("2. Halbjahr")
+        case .holeYear: headerRow.append(contentsOf: ["1. Halbjahr", "2. Halbjahr", "Gesamtnote"])
+        }
+        
+        try! csv.write(row: headerRow)
+        
+        
+        for student in course.studentsArr {
+            csv.beginNewRow()
+            try! csv.write(field: course.title)
+            try! csv.write(field: student.firstName)
+            try! csv.write(field: student.lastName)
+            switch course.type {
+            case .firstHalf: try! csv.write(field: student.transcriptGrade?.getTranscriptGradeHalfValueString(half: .firstHalf) ?? "")
+            case .secondHalf: try! csv.write(field: student.transcriptGrade?.getTranscriptGradeHalfValueString(half: .secondHalf) ?? "")
+            case .holeYear: try! csv.write(field: student.transcriptGrade?.getTranscriptGradeHalfValueString(half: .firstHalf) ?? "")
+                            try! csv.write(field: student.transcriptGrade?.getTranscriptGradeHalfValueString(half: .secondHalf) ?? "")
+                            try! csv.write(field: student.transcriptGrade?.getTranscriptGradeValueString() ?? "")
+            }
+        }
+        
+        let data = String(data: csv.stream.property(forKey: .dataWrittenToMemoryStreamKey) as! Data, encoding: .utf8)!
+        return CSVFile(data: data, fileName: fileName)
+    }
+    
     static func generateCSVCourseData(courses: [Course]) ->  CSVFile {
         let csv = try! CSVWriter(stream: OutputStream.toMemory())
         for course in courses {
