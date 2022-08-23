@@ -19,6 +19,7 @@ struct AddStudent: View {
     @State var email = ""
     @State var fileName = ""
     @State var openFile = false
+    @State var showHelpSheed = false
     
     var body: some View {
         VStack {
@@ -40,12 +41,21 @@ struct AddStudent: View {
             CustomButtonView(label: "Hinzufügen", action: self.saveButtonPressed , buttonColor: .accentColor)
                 .disabled(studentFirstName.isEmpty || studentLastName.isEmpty)
                 Divider()
-            CustomButtonView(label: "csv-Import (UTF-8 mit Headerrow)", action: {openFile.toggle()}, buttonColor: .red)
+            HStack {
+                CustomButtonView(label: "csv-Import", action: {openFile.toggle()}, buttonColor: .red)
+                Button {
+                    self.showHelpSheed.toggle()
+                } label: {
+                    Image(systemName: "questionmark.circle").imageScale(.large)
+                }.padding(.trailing)
+            }
             Spacer()
         }
         .fileImporter(isPresented: $openFile, allowedContentTypes: [.plainText, .commaSeparatedText]) { res in
             course.addCSVStudent(res: res)
             self.presentationMode.wrappedValue.dismiss()
+        }.sheet(isPresented: $showHelpSheed, onDismiss: {}) {
+            CSVImportExampleView()
         }
     }
  

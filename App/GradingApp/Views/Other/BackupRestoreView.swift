@@ -14,6 +14,7 @@ struct BackupRestoreView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State private var showingAlert = false
+    @State private var showingAlertDeleteAllBackup = false
     @State private var selectedURL: URL?
     @State private var urls = BackupViewModel.getBackupFiles()
     var body: some View {
@@ -59,9 +60,7 @@ struct BackupRestoreView: View {
             
             HStack {
                 Button {
-                    for url in urls {
-                        try? FileManager.default.removeItem(at: url)
-                    }
+                    self.showingAlertDeleteAllBackup = true
                 } label: {
                     Text("Alle Backups löschen").foregroundColor(.red).padding()
                 }
@@ -80,6 +79,14 @@ struct BackupRestoreView: View {
                 } catch {
                     print("Something went wrong while resotring data")
                 }
+            }
+        }.alert("Möchtest Du wirklich alle Backups löschen?", isPresented: $showingAlertDeleteAllBackup){
+            Button("Abbrechen", role: .cancel){}
+            Button("Alles löschen!", role: .destructive){
+                for url in urls {
+                    try? FileManager.default.removeItem(at: url)
+                }
+                urls = BackupViewModel.getBackupFiles()
             }
         }
     }

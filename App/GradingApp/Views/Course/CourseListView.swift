@@ -88,7 +88,7 @@ struct CourseListView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     editButton
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     moreActionsButton
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -139,7 +139,7 @@ struct CourseListView: View {
             showMoreActions = true
         } label: {
             ZStack {
-                Image(systemName: "ellipsis.circle")
+                Image(systemName: "gearshape.2")
                 /*#if !targetEnvironment(macCatalyst)
                 if badgeViewModel.badge != 0 {
                     Text("\(badgeViewModel.badge)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
