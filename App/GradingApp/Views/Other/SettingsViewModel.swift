@@ -116,6 +116,16 @@ struct SettingsViewModel: View {
                     
                 }
                 
+                Section(header: Text("Schuljahr")) {
+                    NavigationLink(destination: SchoolYearsView()){
+                        HStack {
+                            Text("Schuljahr 22/21")
+                            Spacer()
+                            Text("Schuljahr wählen")
+                        }
+                    }
+                }
+                
                 Section(header: Text("Externe Bildschirme blockieren")) {
                     Toggle("Verstecken:", isOn: $externalScreenHideViewModel.notHide.not)
                 }

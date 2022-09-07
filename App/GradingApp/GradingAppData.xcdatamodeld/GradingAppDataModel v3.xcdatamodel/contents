@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Course" representedClassName="Course" syncable="YES" codeGenerationType="category">
+        <attribute name="ageGroup_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
+        <attribute name="subject_" optional="YES" attributeType="String"/>
+        <attribute name="type_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weight_" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="schoolyear" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SchoolYear" inverseName="course" inverseEntity="SchoolYear"/>
+        <relationship name="students_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
+    </entity>
+    <entity name="FullYearTranscriptGrade" representedClassName="FullYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">
+        <attribute name="firstValue" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="secondValue" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Grade" representedClassName="Grade" syncable="YES">
+        <attribute name="comment" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="half" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="multiplier" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="grades_" inverseEntity="Student"/>
+    </entity>
+    <entity name="HalfYearTranscriptGrade" representedClassName="HalfYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">
+        <attribute name="half_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="SchoolYear" representedClassName="SchoolYear" syncable="YES" codeGenerationType="class">
+        <attribute name="name_" optional="YES" attributeType="String"/>
+        <relationship name="course" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="schoolyear" inverseEntity="Course"/>
+    </entity>
+    <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="category">
+        <attribute name="email_" optional="YES" attributeType="String"/>
+        <attribute name="firstName_" optional="YES" attributeType="String"/>
+        <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="lastName_" optional="YES" attributeType="String"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="students_" inverseEntity="Course"/>
+        <relationship name="grades_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Grade" inverseName="student" inverseEntity="Grade"/>
+        <relationship name="transcriptGrade" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TranscriptGrade" inverseName="student" inverseEntity="TranscriptGrade"/>
+    </entity>
+    <entity name="Subject" representedClassName="Subject" syncable="YES" codeGenerationType="category">
+        <attribute name="name_" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="TranscriptGrade" representedClassName="TranscriptGrade" isAbstract="YES" syncable="YES">
+        <attribute name="value" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="transcriptGrade" inverseEntity="Student"/>
+    </entity>
+    <elements>
+        <element name="Course" positionX="-664.6640625" positionY="-235.5625" width="128" height="163"/>
+        <element name="FullYearTranscriptGrade" positionX="-168.828125" positionY="128.79296875" width="128" height="73"/>
+        <element name="Grade" positionX="-64.5625" positionY="-200.4296875" width="128" height="148"/>
+        <element name="HalfYearTranscriptGrade" positionX="-549.14453125" positionY="137.4140625" width="128" height="58"/>
+        <element name="Student" positionX="-283.54296875" positionY="-186.58984375" width="128" height="134"/>
+        <element name="Subject" positionX="-487.5859375" positionY="-18.15625" width="128" height="44"/>
+        <element name="TranscriptGrade" positionX="-363.9140625" positionY="35.37890625" width="128" height="73"/>
+        <element name="SchoolYear" positionX="-1094.93359375" positionY="-228.8671875" width="128" height="73"/>
+    </elements>
+</model>
