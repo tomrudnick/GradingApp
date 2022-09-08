@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct SchoolYearsView: View {
+    
+    
+    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @State private var showAddSchoolYear = false
+
+    
+    
     var body: some View {
         VStack{
             List{
-                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
                 Text("Hello, World!")
                 Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
                 Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
@@ -23,10 +31,13 @@ struct SchoolYearsView: View {
                 addButton
             }
         })
+        .sheet(isPresented: $showAddSchoolYear) {
+            AddSchoolYear()
+        }
     }
     var addButton : some View {
                      Button {
-                         
+                         showAddSchoolYear = true
                      } label: {
                          Image(systemName: "plus.circle").font(.largeTitle)
                      }
