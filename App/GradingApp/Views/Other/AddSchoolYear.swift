@@ -38,7 +38,7 @@ struct AddSchoolYear: View {
     }
  
     func saveButtonPressed() {
-        
+        SchoolYear.addSchoolYear(name: schoolYear, context: viewContext)
         presentationMode.wrappedValue.dismiss()
     }
 }
