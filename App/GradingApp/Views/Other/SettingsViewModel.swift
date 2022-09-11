@@ -18,6 +18,7 @@ struct SettingsViewModel: View {
     @StateObject var viewModel = MoreActionsViewModel()
     @StateObject var emailViewModel = EmailAccountViewModel()
     @StateObject var backupSettingsViewModel: BackupViewModel
+    @StateObject var schoolYearVM = SchoolYearViewModel()
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
@@ -117,9 +118,9 @@ struct SettingsViewModel: View {
                 }
                 
                 Section(header: Text("Schuljahr")) {
-                    NavigationLink(destination: SchoolYearsView()){
+                    NavigationLink(destination: SchoolYearsView(schoolYearVM: schoolYearVM)){
                         HStack {
-                            Text("Schuljahr 22/21")
+                            Text("Schuljahr \(schoolYearVM.schoolYear ?? "-")")
                             Spacer()
                             Text("Schuljahr wählen")
                         }

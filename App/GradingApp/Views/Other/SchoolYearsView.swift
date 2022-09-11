@@ -17,14 +17,23 @@ struct SchoolYearsView: View {
     
     @State private var showAddSchoolYear = false
     
+    @ObservedObject var schoolYearVM : SchoolYearViewModel
     
     
     var body: some View {
         VStack{
             List {
                 ForEach(schoolYear, id: \.self) { schoolYear in
-                    HStack {
-                        Text("\(schoolYear.name)")
+                    Button {
+                        schoolYearVM.update(newSchoolYear: schoolYear.name)
+                    } label: {
+                        HStack {
+                            Text("\(schoolYear.name)")
+                            Spacer()
+                            if schoolYearVM.schoolYear == schoolYear.name {
+                                Image(systemName: "checkmark")
+                            }
+                        }
                     }
                 }
             }
@@ -48,8 +57,13 @@ struct SchoolYearsView: View {
     }
 }
 
-struct SchoolYearsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SchoolYearsView()
-    }
-}
+//struct SchoolYearsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SchoolYearsView()
+//    }
+//}
+
+
+//HStack {
+//    Text("\(schoolYear.name)")
+//}
