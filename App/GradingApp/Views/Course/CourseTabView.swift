@@ -179,14 +179,14 @@ struct CourseTabView: View {
     }
 }
 
-struct CourseTabView_Previews: PreviewProvider {
-    
-    static let course = previewData(context: PersistenceController.preview.container.viewContext).first!
-    
-    static var previews: some View {
-        NavigationView {
-            CourseTabView(course: course)
-        }
-    }
-}
+//struct CourseTabView_Previews: PreviewProvider {
+//    
+//    static let course = previewData(context: PersistenceController.preview.container.viewContext).first!
+//    
+//    static var previews: some View {
+//        NavigationView {
+//            CourseTabView(course: course)
+//        }
+//    }
+//}
 

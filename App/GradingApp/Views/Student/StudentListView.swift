@@ -32,13 +32,13 @@ struct StudentListView: View {
 
 
 //----------------------------Preview-------------------------------
-struct StudentListView_Previews: PreviewProvider {
-    
-    static let course = previewData(context: PersistenceController.preview.container.viewContext).first!
-    
-    static var previews: some View {
-        
-            StudentListView(course: course)
-        
-    }
-}
+//struct StudentListView_Previews: PreviewProvider {
+//
+//    static let course = previewData(context: PersistenceController.preview.container.viewContext).first!
+//
+//    static var previews: some View {
+//
+//            StudentListView(course: course)
+//
+//    }
+//}

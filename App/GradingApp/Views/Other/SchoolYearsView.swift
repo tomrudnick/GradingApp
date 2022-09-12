@@ -9,13 +9,15 @@ import SwiftUI
 
 struct SchoolYearsView: View {
     
-    
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default)
+    
     private var schoolYear: FetchedResults<SchoolYear>
+    @State private var selectedSchoolYear : SchoolYear? = nil
     
     @State private var showAddSchoolYear = false
+
     
     @ObservedObject var schoolYearVM : SchoolYearViewModel
     
@@ -29,11 +31,25 @@ struct SchoolYearsView: View {
                     } label: {
                         HStack {
                             Text("\(schoolYear.name)")
+                            
                             Spacer()
                             if schoolYearVM.schoolYear == schoolYear.name {
                                 Image(systemName: "checkmark")
                             }
                         }
+                    }
+                    .swipeActions(allowsFullSwipe: false) {
+                        Button {
+                            selectedSchoolYear = schoolYear
+                        } label: {
+                            Label("Bearbeiten", systemImage: "pencil")
+                        }.tint(Color.accentColor)
+                        Button(role: .destructive) {
+                            viewContext.delete(schoolYear)
+                            viewContext.saveCustom()
+                        } label: {
+                           Label("Löschen", systemImage: "trash")
+                        }.disabled(schoolYearVM.schoolYear! == schoolYear.name)
                     }
                 }
             }
@@ -43,8 +59,11 @@ struct SchoolYearsView: View {
                     addButton
                 }
             })
+            .sheet(item: $selectedSchoolYear, content: { schoolYear in
+                EditSchoolYearsView(oldSchoolYear: schoolYear, schoolYearVM: schoolYearVM)
+            })
             .sheet(isPresented: $showAddSchoolYear) {
-                AddSchoolYear()
+                AddSchoolYearsView()
             }
         }
     }
@@ -57,13 +76,10 @@ struct SchoolYearsView: View {
     }
 }
 
+
 //struct SchoolYearsView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        SchoolYearsView()
 //    }
 //}
 
-
-//HStack {
-//    Text("\(schoolYear.name)")
-//}

@@ -22,6 +22,10 @@ extension SchoolYear{
         let _ = SchoolYear(name: name, context: context)
         context.saveCustom()
     }
+    func updateSchoolYearName(name: String, context: NSManagedObjectContext){
+        self.name = name
+        context.saveCustom()
+    }
     static func fetchAll() -> NSFetchRequest<SchoolYear> {
         let request = NSFetchRequest<SchoolYear>(entityName: "SchoolYear")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \SchoolYear.name_, ascending: true)]

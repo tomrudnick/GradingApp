@@ -130,13 +130,13 @@ struct GradeGridViewDisplay: View {
 
 
 
-struct StudentView_Previews: PreviewProvider {
-    
-    static let student = previewData(context: PersistenceController.preview.container.viewContext).first!.studentsArr.first!
-    
-    static var previews: some View {
-        NavigationView{
-            StudentView(student: student)
-        }
-    }
-}
+//struct StudentView_Previews: PreviewProvider {
+//    
+//    static let student = previewData(context: PersistenceController.preview.container.viewContext).first!.studentsArr.first!
+//    
+//    static var previews: some View {
+//        NavigationView{
+//            StudentView(student: student)
+//        }
+//    }
+//}

@@ -8,7 +8,7 @@
 import SwiftUI
 import CSV
 
-struct AddSchoolYear: View {
+struct AddSchoolYearsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     
