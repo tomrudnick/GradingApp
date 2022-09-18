@@ -12,8 +12,8 @@ struct EditSchoolYearsView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @ObservedObject var oldSchoolYear: SchoolYear
-    @ObservedObject var schoolYearVM: SchoolYearViewModel
     @State var newSchoolYearName: String = ""
+    @Binding var activeSchoolYear: String?
     
     
     var body: some View {
@@ -38,8 +38,8 @@ struct EditSchoolYearsView: View {
     }
  
     func saveButtonPressed() {
-        if oldSchoolYear.name == schoolYearVM.schoolYear! {
-            schoolYearVM.update(newSchoolYear: newSchoolYearName)
+        if oldSchoolYear.name == activeSchoolYear {
+            activeSchoolYear = newSchoolYearName
         }
         oldSchoolYear.updateSchoolYearName(name: newSchoolYearName, context: viewContext)
         presentationMode.wrappedValue.dismiss()

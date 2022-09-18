@@ -9,6 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import MobileCoreServices
 import UIKit
+import CloudStorage
 
 
 struct SettingsViewModel: View {
@@ -18,13 +19,15 @@ struct SettingsViewModel: View {
     @StateObject var viewModel = MoreActionsViewModel()
     @StateObject var emailViewModel = EmailAccountViewModel()
     @StateObject var backupSettingsViewModel: BackupViewModel
-    @StateObject var schoolYearVM = SchoolYearViewModel()
+    
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
     @State private var showingExport = false
     @State private var showingRestoreFromiCloud = false
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
+    
+    @CloudStorage("Schuljahr") var activeSchoolYear: String?
     
     var onDelete: () -> ()
     
@@ -118,9 +121,9 @@ struct SettingsViewModel: View {
                 }
                 
                 Section(header: Text("Schuljahr")) {
-                    NavigationLink(destination: SchoolYearsView(schoolYearVM: schoolYearVM)){
+                    NavigationLink(destination: SchoolYearsView(activeSchoolYear: $activeSchoolYear)){
                         HStack {
-                            Text("Schuljahr \(schoolYearVM.schoolYear ?? "-")")
+                            Text("Schuljahr \(activeSchoolYear ?? "-")")
                             Spacer()
                             Text("Schuljahr wählen")
                         }

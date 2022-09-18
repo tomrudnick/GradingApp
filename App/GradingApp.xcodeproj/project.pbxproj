@@ -11,7 +11,6 @@
 		3915188A2777248E003C11E4 /* BackupTimeIntervalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391518892777248E003C11E4 /* BackupTimeIntervalView.swift */; };
 		39185AE028CD09D700BC6E33 /* SchoolYear+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39185ADF28CD09D700BC6E33 /* SchoolYear+Helper.swift */; };
 		391E26FD28CF85F100547A27 /* EditSchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391E26FC28CF85F100547A27 /* EditSchoolYearsView.swift */; };
-		392607B628CE38680056FE25 /* SchoolYearViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392607B528CE38680056FE25 /* SchoolYearViewModel.swift */; };
 		3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */; };
 		3936EA8326BEA83000A37B95 /* CustomTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */; };
 		3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */; };
@@ -94,6 +93,7 @@
 		E276A6DE26D7AB3900380C14 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DD26D7AB3900380C14 /* Date+toString.swift */; };
 		E276A6E026D7B97E00380C14 /* GradeStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DF26D7B97E00380C14 /* GradeStudent.swift */; };
 		E276A6E226D7BB4B00380C14 /* EditGradesPerDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */; };
+		E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E282BE3028D7D2280014ACFE /* CloudStorage */; };
 		E295971B285FDEF0008FD8B5 /* GradeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295971A285FDEF0008FD8B5 /* GradeText.swift */; };
 		E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A20B0526D41910005FA240 /* StudentGradeListView.swift */; };
 		E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E2A20B0826D43777005FA240 /* SwiftUICharts */; };
@@ -141,7 +141,6 @@
 		391518892777248E003C11E4 /* BackupTimeIntervalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupTimeIntervalView.swift; sourceTree = "<group>"; };
 		39185ADF28CD09D700BC6E33 /* SchoolYear+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchoolYear+Helper.swift"; sourceTree = "<group>"; };
 		391E26FC28CF85F100547A27 /* EditSchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSchoolYearsView.swift; sourceTree = "<group>"; };
-		392607B528CE38680056FE25 /* SchoolYearViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolYearViewModel.swift; sourceTree = "<group>"; };
 		3936EA7F26BE931A00A37B95 /* EditCourseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCourseDetailView.swift; sourceTree = "<group>"; };
 		3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfieldView.swift; sourceTree = "<group>"; };
 		3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
@@ -268,6 +267,7 @@
 				E24AF9D526D8DD62000F2313 /* CloudKit.framework in Frameworks */,
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
 				6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */,
+				E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */,
 				E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */,
 				6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */,
 				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
@@ -591,7 +591,6 @@
 				6DE3E8AF26E5549B004212D3 /* Email */,
 				E2C5138526BBD3FF0069D340 /* EditCourseViewModel.swift */,
 				E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */,
-				392607B528CE38680056FE25 /* SchoolYearViewModel.swift */,
 				E24AF9D026D84AD2000F2313 /* MoreActionsViewModel.swift */,
 				E2574C0226D92F6E00ED2CFD /* SelectedHalfYearViewModel.swift */,
 				E200846926DECCE50098D981 /* TranscriptGradesHalfYearViewModel.swift */,
@@ -666,6 +665,7 @@
 				6D3EECD826E3D2CC00E9D290 /* KeychainAccess */,
 				6D3EECDB26E3D32100E9D290 /* SwiftSMTP */,
 				6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */,
+				E282BE3028D7D2280014ACFE /* CloudStorage */,
 			);
 			productName = CoreDataTest;
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
@@ -730,6 +730,7 @@
 				6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
 				6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 				6D26BBA026EB7CF10077AC73 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+				E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */,
 			);
 			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
 			projectDirPath = "";
@@ -827,7 +828,6 @@
 				6DE3E8B726E55533004212D3 /* SendMultipleEmailsCourseViewModel.swift in Sources */,
 				E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */,
 				3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */,
-				392607B628CE38680056FE25 /* SchoolYearViewModel.swift in Sources */,
 				E200846726DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift in Sources */,
 				E2CE907327A065D800366DB1 /* BindingNot.swift in Sources */,
 				E25FBCAD26BADAC8000BDD65 /* Persistence.swift in Sources */,
@@ -1253,6 +1253,14 @@
 				minimumVersion = 2.0.2;
 			};
 		};
+		E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tomlokhorst/CloudStorage";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
@@ -1288,6 +1296,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */;
 			productName = HighlightedTextEditor;
+		};
+		E282BE3028D7D2280014ACFE /* CloudStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */;
+			productName = CloudStorage;
 		};
 		E2A20B0826D43777005FA240 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
