@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct HalfYearDateKeys {
+    static let firstHalf = "dateFirstHalf"
+    static let secondHalf = "dateSecondHalf"
+    static let selectedHalf = "selectedHalf"
+}
