@@ -11,9 +11,9 @@ struct SchoolYearsView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default)
+    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default) private var schoolYear: FetchedResults<SchoolYear>
     
-    private var schoolYear: FetchedResults<SchoolYear>
+    
     @State private var selectedSchoolYear : SchoolYear? = nil
     
     @State private var showAddSchoolYear = false
@@ -49,7 +49,7 @@ struct SchoolYearsView: View {
                             viewContext.saveCustom()
                         } label: {
                            Label("Löschen", systemImage: "trash")
-                        }.disabled(schoolYearVM.schoolYear! == schoolYear.name)
+                        }.disabled(schoolYearVM.schoolYear == schoolYear.name)
                     }
                 }
             }
@@ -82,4 +82,5 @@ struct SchoolYearsView: View {
 //        SchoolYearsView()
 //    }
 //}
+
 

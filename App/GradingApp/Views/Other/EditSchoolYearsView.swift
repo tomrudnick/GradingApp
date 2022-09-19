@@ -38,7 +38,7 @@ struct EditSchoolYearsView: View {
     }
  
     func saveButtonPressed() {
-        if oldSchoolYear.name == schoolYearVM.schoolYear! {
+        if oldSchoolYear.name == schoolYearVM.schoolYear {
             schoolYearVM.update(newSchoolYear: newSchoolYearName)
         }
         oldSchoolYear.updateSchoolYearName(name: newSchoolYearName, context: viewContext)
