@@ -12,9 +12,7 @@ struct AddSchoolYearsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) var dismiss
     
-    
     @State var schoolYear = ""
-    
     
     var body: some View {
         VStack {

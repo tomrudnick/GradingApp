@@ -15,7 +15,6 @@ struct EditSchoolYearsView: View {
     @State var newSchoolYearName: String = ""
     @Binding var activeSchoolYear: String?
     
-    
     var body: some View {
         VStack {
             HStack{

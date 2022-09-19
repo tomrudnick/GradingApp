@@ -17,6 +17,7 @@ struct BackupRestoreView: View {
     @State private var showingAlertDeleteAllBackup = false
     @State private var selectedURL: URL?
     @State private var urls = BackupViewModel.getBackupFiles()
+    
     var body: some View {
         VStack {
             HStack {

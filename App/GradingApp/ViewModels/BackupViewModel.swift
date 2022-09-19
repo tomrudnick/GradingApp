@@ -9,6 +9,7 @@ import Foundation
 import UserNotifications
 import UIKit
 import CloudKit
+import CoreData
 
 class BackupViewModel: ObservableObject {
     

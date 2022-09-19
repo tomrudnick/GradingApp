@@ -11,16 +11,13 @@ struct SchoolYearsView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default) private var schoolYear: FetchedResults<SchoolYear>
-    
-    
+    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default)
+    private var schoolYear: FetchedResults<SchoolYear>
+        
     @State private var selectedSchoolYear : SchoolYear? = nil
-    
     @State private var showAddSchoolYear = false
 
-    
     @Binding var activeSchoolYear: String?
-    
     
     var body: some View {
         VStack{

@@ -20,7 +20,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
     @State var showErrorAlert = false
     @State var errorMessage = ""
     
-    private var title: String
+    private let title: String
 
     
     init(title: String, emailViewModel: Model) {
