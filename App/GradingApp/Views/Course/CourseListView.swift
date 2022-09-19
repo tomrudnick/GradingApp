@@ -10,6 +10,7 @@ import CoreData
 //import ViewInspector
 import UIKit
 import Combine
+import CloudStorage
 
 
 struct CourseListView: View {
@@ -28,8 +29,8 @@ struct CourseListView: View {
     @State var showEditCourses = false
     @State var showMoreActions = false
     @State var activeLink: ObjectIdentifier? = nil
-    @State var showAlert = !MoreActionsViewModel().halfCorrect()
-    @ObservedObject var selectedHalfYearVM: SelectedHalfYearViewModel
+    @State var showAlert = false
+    @Binding var activeHalf: HalfType
     @StateObject var editCourseViewModel = CourseEditViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
     
@@ -44,11 +45,14 @@ struct CourseListView: View {
     
     @State private var showNewAlert = false
     @State private var firstAppear = true
+    
+    @CloudStorage(MoreActionsViewModel.KeyValueConstants.firstHalf) var dateFirstHalf: Date = Date()
+    @CloudStorage(MoreActionsViewModel.KeyValueConstants.secondHalf) var dateSecondHalf: Date = Date()
 
-    init(externalScreenHideViewModel: ExternalScreenHideViewModel, selectedHalfYearVM: SelectedHalfYearViewModel) {
-        self.selectedHalfYearVM = selectedHalfYearVM
+    init(externalScreenHideViewModel: ExternalScreenHideViewModel, activeHalf: Binding<HalfType>) {
+        self._activeHalf = activeHalf
         self.externalScreenHideViewModel = externalScreenHideViewModel
-        self._courses = FetchRequest(fetchRequest: Course.fetchHalfNonHidden(half: selectedHalfYearVM.activeHalf), animation: .default)
+        self._courses = FetchRequest(fetchRequest: Course.fetchHalfNonHidden(half: activeHalf.wrappedValue), animation: .default)
     }
     
     var body: some View {
@@ -59,9 +63,6 @@ struct CourseListView: View {
                     Text("(" + String(course.studentsCount) + ")").font(.footnote)
                 }
             }
-            .onAppear {
-                selectedHalfYearVM.fetchValue()
-            }//Im Hintergrund laufende App wird erneut aufgerufen.
             .alert(isPresented: $showAlert, content: {
                 if alertType == .halfYearWarning {
                     return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
@@ -71,13 +72,10 @@ struct CourseListView: View {
                 
             })
             .padding(.top)
-            .navigationTitle(Text("Kurse \(selectedHalfYearVM.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
+            .navigationTitle(Text("Kurse \(activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .listStyle(PlainListStyle())
             .fullScreenCover(isPresented: $showMoreActions, content: {
-                SettingsViewModel(externalScreenHideViewModel: externalScreenHideViewModel).environment(\.managedObjectContext, viewContext)
-                    .onDisappear {
-                        selectedHalfYearVM.fetchValue()
-                    }
+                SettingsView(externalScreenHideViewModel: externalScreenHideViewModel, selectedHalf: $activeHalf).environment(\.managedObjectContext, viewContext)
             })
             .fullScreenCover(isPresented: $showEditCourses) {
                 NavigationView {
@@ -110,6 +108,7 @@ struct CourseListView: View {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                 #endif
                 firstAppear = false
+                halfCorrect()
             }
             if let course = courses.first, idiom == .pad{
                 self.firstCourse = course
@@ -122,7 +121,7 @@ struct CourseListView: View {
             self.didAppear?(self)
             
         }
-        .environment(\.currentHalfYear, selectedHalfYearVM.activeHalf)
+        .environment(\.currentHalfYear, activeHalf)
     }
     
     var editButton : some View {
@@ -138,14 +137,7 @@ struct CourseListView: View {
         Button {
             showMoreActions = true
         } label: {
-            ZStack {
-                Image(systemName: "gearshape.2")
-                /*#if !targetEnvironment(macCatalyst)
-                if badgeViewModel.badge != 0 {
-                    Text("\(badgeViewModel.badge)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 14, y: -10)
-                }
-                #endif*/
-            }
+            Image(systemName: "gearshape.2")
         }
     }
     
@@ -166,6 +158,13 @@ struct CourseListView: View {
             self.showAlert = true
         } label: {
             Image(systemName: "arrow.uturn.forward")
+        }
+    }
+    
+    func halfCorrect() {
+        if !(activeHalf == .firstHalf && Date() >= dateFirstHalf || activeHalf == .secondHalf && Date() >= dateSecondHalf) {
+            alertType = .halfYearWarning
+            showAlert = true
         }
     }
 }

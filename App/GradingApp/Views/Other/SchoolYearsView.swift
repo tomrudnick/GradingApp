@@ -19,7 +19,7 @@ struct SchoolYearsView: View {
     @State private var showAddSchoolYear = false
 
     
-    @ObservedObject var schoolYearVM : SchoolYearViewModel
+    @Binding var activeSchoolYear: String?
     
     
     var body: some View {
@@ -27,13 +27,13 @@ struct SchoolYearsView: View {
             List {
                 ForEach(schoolYear, id: \.self) { schoolYear in
                     Button {
-                        schoolYearVM.update(newSchoolYear: schoolYear.name)
+                        activeSchoolYear = schoolYear.name
                     } label: {
                         HStack {
                             Text("\(schoolYear.name)")
                             
                             Spacer()
-                            if schoolYearVM.schoolYear == schoolYear.name {
+                            if activeSchoolYear == schoolYear.name {
                                 Image(systemName: "checkmark")
                             }
                         }
@@ -49,7 +49,11 @@ struct SchoolYearsView: View {
                             viewContext.saveCustom()
                         } label: {
                            Label("Löschen", systemImage: "trash")
+<<<<<<< HEAD
                         }.disabled(schoolYearVM.schoolYear == schoolYear.name)
+=======
+                        }.disabled(activeSchoolYear == schoolYear.name)
+>>>>>>> CloudStorageDev
                     }
                 }
             }
@@ -60,7 +64,7 @@ struct SchoolYearsView: View {
                 }
             })
             .sheet(item: $selectedSchoolYear, content: { schoolYear in
-                EditSchoolYearsView(oldSchoolYear: schoolYear, schoolYearVM: schoolYearVM)
+                EditSchoolYearsView(oldSchoolYear: schoolYear, activeSchoolYear: $activeSchoolYear)
             })
             .sheet(isPresented: $showAddSchoolYear) {
                 AddSchoolYearsView()

@@ -19,72 +19,6 @@ class MoreActionsViewModel: ObservableObject {
         static let selectedHalf = "selectedHalf"
     }
     
-    enum BackupType {
-        case backup
-        case export
-    }
-    
-    @Published var dateFirstHalf: Date
-    @Published var dateSecondHalf: Date
-    @Published var half: HalfType
-    @Published var backupType: BackupType = .backup
-    @Published var canceallable: AnyCancellable?
-    
-    var selectedHalf : Int {
-        get {
-            half == .firstHalf ? 0 : 1
-        }
-        set {
-            half = newValue == 0 ? .firstHalf : .secondHalf
-        }
-    }
-    
-    init() {
-        self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
-        
-        let df = DateFormatter()
-        df.dateFormat = KeyValueConstants.dateFormat
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.firstHalf) {
-            self.dateFirstHalf = df.date(from: date)!
-        } else {
-            self.dateFirstHalf = Date()
-        }
-        
-        if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.secondHalf) {
-            self.dateSecondHalf = df.date(from: date)!
-        } else {
-            self.dateSecondHalf = Date()
-        }
-        canceallable = NotificationCenter.default.publisher(for: NSUbiquitousKeyValueStore.didChangeExternallyNotification)
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: { value in
-                self.half = NSUbiquitousKeyValueStore.default.longLong(forKey: KeyValueConstants.selectedHalf) == 0 ? .firstHalf : .secondHalf
-                
-                let df = DateFormatter()
-                df.dateFormat = KeyValueConstants.dateFormat
-                if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.firstHalf) {
-                    self.dateFirstHalf = df.date(from: date)!
-                } else {
-                    self.dateFirstHalf = Date()
-                }
-                
-                if let date = NSUbiquitousKeyValueStore.default.string(forKey: KeyValueConstants.secondHalf) {
-                    self.dateSecondHalf = df.date(from: date)!
-                } else {
-                    self.dateSecondHalf = Date()
-                }
-            })
-    }
-    
-//    func getBackupFiles(viewContext: NSManagedObjectContext) -> [Any] {
-//        switch backupType {
-//        case .backup:
-//            return getOneJsonFile(viewContext: viewContext)
-//        case .export:
-//            return getSingleCSVFiles(viewContext: viewContext)
-//        }
-//    }
-    
 
     static func getOneJsonFile(viewContext: NSManagedObjectContext) -> JSONFile {
         var jsonData: Data = Data()
@@ -98,7 +32,7 @@ class MoreActionsViewModel: ObservableObject {
         return JSONFile.generateJSONBackupFile(jsonData: String(data: jsonData, encoding: .utf8)!)
     }
     
-    func getSingleCSVFiles(viewContext: NSManagedObjectContext) -> [CSVFile] {
+    static func getSingleCSVFiles(viewContext: NSManagedObjectContext) -> [CSVFile] {
         let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
         var files: [CSVFile] = []
         let date = Date()
@@ -119,34 +53,5 @@ class MoreActionsViewModel: ObservableObject {
         }
         return files
         
-    }
-
-    func done() {
-        let df = DateFormatter()
-        df.dateFormat = KeyValueConstants.dateFormat
-        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateFirstHalf), forKey: KeyValueConstants.firstHalf)
-        NSUbiquitousKeyValueStore.default.set(df.string(from:self.dateSecondHalf), forKey: KeyValueConstants.secondHalf)
-        NSUbiquitousKeyValueStore.default.set(self.half == .firstHalf ? 0 : 1, forKey: KeyValueConstants.selectedHalf)
-        NSUbiquitousKeyValueStore.default.synchronize()
-    }
-    
-    func halfCorrect() -> Bool {
-        if half == .firstHalf && Date() >= dateFirstHalf {
-            return true
-        } else if half == .secondHalf && Date() >= dateSecondHalf {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func deleteAllCourses(viewContext: NSManagedObjectContext) {
-        let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
-        for course in fetchedCourses {
-            viewContext.delete(course)
-            viewContext.saveCustom()
-        }
-        //Just to be sure delete everything else //This should be optimized in the future
-        PersistenceController.resetAllCoreData()
     }
 }

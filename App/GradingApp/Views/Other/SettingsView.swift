@@ -9,29 +9,42 @@ import SwiftUI
 import UniformTypeIdentifiers
 import MobileCoreServices
 import UIKit
+import CloudStorage
 
+enum BackupType {
+    case backup
+    case export
+}
 
-struct SettingsViewModel: View {
+struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.scenePhase) var scenePhase
-    @StateObject var viewModel = MoreActionsViewModel()
+    
     @StateObject var emailViewModel = EmailAccountViewModel()
     @StateObject var backupSettingsViewModel: BackupViewModel
-    @StateObject var schoolYearVM = SchoolYearViewModel()
+    
     @State var showHalfWarningAlert = false
     @State private var showingBackup = false
     @State private var showingRestore = false
     @State private var showingExport = false
     @State private var showingRestoreFromiCloud = false
+    @State private var backupType: BackupType = .backup
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
+    
+    @CloudStorage("Schuljahr") var activeSchoolYear: String?
+    @CloudStorage(MoreActionsViewModel.KeyValueConstants.firstHalf) var dateFirstHalf: Date = Date()
+    @CloudStorage(MoreActionsViewModel.KeyValueConstants.secondHalf) var dateSecondHalf: Date = Date()
+    
+    @Binding var selectedHalf: HalfType
     
     var onDelete: () -> ()
     
-    init(externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }) {
+    init(externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }, selectedHalf: Binding<HalfType>) {
         self.onDelete = onDelete
         self.externalScreenHideViewModel = externalScreenHideViewModel
         self._backupSettingsViewModel = StateObject(wrappedValue: BackupViewModel())
+        self._selectedHalf = selectedHalf
     }
     
     
@@ -41,20 +54,15 @@ struct SettingsViewModel: View {
                 Section(header: Text("Backup / Export")) {
                     Button {
                         self.showingBackup = true
-                        viewModel.backupType = .backup
+                        backupType = .backup
                     } label: {
                         ZStack {
                             Text("Backup")
-                                
-                            /*if self.badgeViewModel.badge != 0 {
-                                Text("\(self.badgeViewModel.badge)").padding(6).background(Color.red).clipShape(Circle()).foregroundColor(.white).offset(x: 34, y: -6)
-                            }*/
                         }
-                        
                     }
                     Button {
                         self.showingExport = true
-                        viewModel.backupType = .export
+                        backupType = .export
                     } label: {
                         Text("Export")
                     }
@@ -101,26 +109,29 @@ struct SettingsViewModel: View {
                 
                 Section(header: Text("Halbjahres Einstellung")) {
                     
-                    DatePicker("Start 1. Halbjahr", selection: $viewModel.dateFirstHalf, displayedComponents: [.date])
-                        .id(viewModel.dateFirstHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
+                    DatePicker("Start 1. Halbjahr", selection: $dateFirstHalf, displayedComponents: [.date])
+                        .id(dateFirstHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
                         .environment(\.locale, Locale.init(identifier: "de"))
                     
                     
-                    DatePicker("Start 2. Halbjahr", selection: $viewModel.dateSecondHalf, displayedComponents: [.date])
-                        .id(viewModel.dateSecondHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
+                    DatePicker("Start 2. Halbjahr", selection: $dateSecondHalf, displayedComponents: [.date])
+                        .id(dateSecondHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
                         .environment(\.locale, Locale.init(identifier: "de"))
                     
-                    Picker(selection: $viewModel.selectedHalf, label: Text("")) {
-                        Text("1. Halbjahr").tag(0)
-                        Text("2. Halbjahr").tag(1)
+                    Picker(selection: $selectedHalf, label: Text("")) {
+                        Text("1. Halbjahr").tag(HalfType.firstHalf)
+                        Text("2. Halbjahr").tag(HalfType.secondHalf)
                     }.pickerStyle(SegmentedPickerStyle())
+                        .onChange(of: selectedHalf) { newValue in
+                            showHalfWarningAlert = !halfCorrect()
+                        }
                     
                 }
                 
                 Section(header: Text("Schuljahr")) {
-                    NavigationLink(destination: SchoolYearsView(schoolYearVM: schoolYearVM)){
+                    NavigationLink(destination: SchoolYearsView(activeSchoolYear: $activeSchoolYear)){
                         HStack {
-                            Text("Schuljahr \(schoolYearVM.schoolYear ?? "-")")
+                            Text("Schuljahr \(activeSchoolYear ?? "-")")
                             Spacer()
                             Text("Schuljahr wählen")
                         }
@@ -180,20 +191,17 @@ struct SettingsViewModel: View {
             .alert(isPresented: $showHalfWarningAlert, content: {
                 Alert(title: Text("Achtung"),
                       message: Text("Das ausgewählte Halbjahr stimmt nicht mit den eingestellten Daten überein"),
-                      primaryButton: Alert.Button.default(Text("Ok!"),
-                                                          action: {
-                                                            save()
-                                                          }),
-                      secondaryButton: Alert.Button.cancel()
+                      primaryButton: Alert.Button.default(Text("Ok!"), action: { }),
+                      secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { self.selectedHalf = self.selectedHalf == .firstHalf ? .secondHalf : .firstHalf })
                 )
             })
             .navigationBarTitle("Weiteres...", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                     Button {
-                        done()
                         emailViewModel.save()
                         backupSettingsViewModel.save()
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Schließen")
                     }
@@ -206,7 +214,7 @@ struct SettingsViewModel: View {
             BackupRestoreView().environment(\.managedObjectContext, viewContext)
         })
         
-        .if(viewModel.backupType == .backup, transform: { view in
+        .if(backupType == .backup, transform: { view in
             view.fileExporter(isPresented: $showingBackup, document: MoreActionsViewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
                 switch result {
                 case .success(let url):
@@ -216,8 +224,8 @@ struct SettingsViewModel: View {
                 }
 
             }
-        }).if(viewModel.backupType == .export, transform: { view in
-            view.fileExporter(isPresented: $showingExport, documents: viewModel.getSingleCSVFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
+        }).if(backupType == .export, transform: { view in
+            view.fileExporter(isPresented: $showingExport, documents: MoreActionsViewModel.getSingleCSVFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
                 switch result {
                 case .success(let url):
                     print("Saved to \(url)")
@@ -236,7 +244,8 @@ struct SettingsViewModel: View {
                 guard let selectedFileURL: URL = try result.get().first else { return }
                 if selectedFileURL.startAccessingSecurityScopedResource() {
                     let selectedFileData = try Data(contentsOf: selectedFileURL)
-                    viewModel.deleteAllCourses(viewContext: viewContext)
+                    PersistenceController.deleteAllCourses(viewContext: viewContext)
+                    PersistenceController.resetAllCoreData()
                     let _ = try! JSONDecoder().decode([Course].self, from: selectedFileData)
                     viewContext.saveCustom()
                     selectedFileURL.stopAccessingSecurityScopedResource()
@@ -248,18 +257,14 @@ struct SettingsViewModel: View {
         }
     }
     
-    
-    func done() {
-        if !viewModel.halfCorrect() {
-            self.showHalfWarningAlert = true
+    func halfCorrect() -> Bool {
+        if selectedHalf == .firstHalf && Date() >= dateFirstHalf {
+            return true
+        } else if selectedHalf == .secondHalf && Date() >= dateSecondHalf {
+            return true
         } else {
-            save()
+            return false
         }
-    }
-    
-    func save() {
-        viewModel.done()
-        presentationMode.wrappedValue.dismiss()
     }
 }
 

@@ -325,6 +325,10 @@
       "idiom" : "watch-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
+    },
+    {
+      "idiom" : "mac",
+      "size" : "1024x1024"
     }
   ],
   "info" : {
