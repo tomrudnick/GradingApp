@@ -49,11 +49,7 @@ struct SchoolYearsView: View {
                             viewContext.saveCustom()
                         } label: {
                            Label("Löschen", systemImage: "trash")
-<<<<<<< HEAD
-                        }.disabled(schoolYearVM.schoolYear == schoolYear.name)
-=======
                         }.disabled(activeSchoolYear == schoolYear.name)
->>>>>>> CloudStorageDev
                     }
                 }
             }
