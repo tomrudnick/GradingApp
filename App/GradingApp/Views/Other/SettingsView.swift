@@ -33,8 +33,8 @@ struct SettingsView: View {
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
     
     @CloudStorage("Schuljahr") var activeSchoolYear: String?
-    @CloudStorage(MoreActionsViewModel.KeyValueConstants.firstHalf) var dateFirstHalf: Date = Date()
-    @CloudStorage(MoreActionsViewModel.KeyValueConstants.secondHalf) var dateSecondHalf: Date = Date()
+    @CloudStorage(HalfYearDateKeys.firstHalf) var dateFirstHalf: Date = Date()
+    @CloudStorage(HalfYearDateKeys.secondHalf) var dateSecondHalf: Date = Date()
     
     @Binding var selectedHalf: HalfType
     
@@ -215,7 +215,7 @@ struct SettingsView: View {
         })
         
         .if(backupType == .backup, transform: { view in
-            view.fileExporter(isPresented: $showingBackup, document: MoreActionsViewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
+            view.fileExporter(isPresented: $showingBackup, document: BackupViewModel.getOneJsonFile(viewContext: viewContext), contentType: .json) { result in
                 switch result {
                 case .success(let url):
                     print("Saved to \(url)")
@@ -225,7 +225,7 @@ struct SettingsView: View {
 
             }
         }).if(backupType == .export, transform: { view in
-            view.fileExporter(isPresented: $showingExport, documents: MoreActionsViewModel.getSingleCSVFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
+            view.fileExporter(isPresented: $showingExport, documents: BackupViewModel.getSingleCSVFiles(viewContext: viewContext), contentType: .commaSeparatedText) { result in
                 switch result {
                 case .success(let url):
                     print("Saved to \(url)")

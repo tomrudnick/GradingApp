@@ -15,7 +15,7 @@ struct GradingApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
     @StateObject var externalScreenhideViewModel = ExternalScreenHideViewModel()
-    @CloudStorage(MoreActionsViewModel.KeyValueConstants.selectedHalf) var activeHalf: HalfType = .firstHalf
+    @CloudStorage(HalfYearDateKeys.selectedHalf) var activeHalf: HalfType = .firstHalf
 
     var body: some Scene {
         WindowGroup {

@@ -46,8 +46,8 @@ struct CourseListView: View {
     @State private var showNewAlert = false
     @State private var firstAppear = true
     
-    @CloudStorage(MoreActionsViewModel.KeyValueConstants.firstHalf) var dateFirstHalf: Date = Date()
-    @CloudStorage(MoreActionsViewModel.KeyValueConstants.secondHalf) var dateSecondHalf: Date = Date()
+    @CloudStorage(HalfYearDateKeys.firstHalf) var dateFirstHalf: Date = Date()
+    @CloudStorage(HalfYearDateKeys.secondHalf) var dateSecondHalf: Date = Date()
 
     init(externalScreenHideViewModel: ExternalScreenHideViewModel, activeHalf: Binding<HalfType>) {
         self._activeHalf = activeHalf
