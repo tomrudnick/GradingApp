@@ -18,7 +18,7 @@ enum BackupType {
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Environment(\.scenePhase) var scenePhase
     
     @StateObject var emailViewModel = EmailAccountViewModel()
@@ -201,7 +201,7 @@ struct SettingsView: View {
                     Button {
                         emailViewModel.save()
                         backupSettingsViewModel.save()
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     } label: {
                         Text("Schließen")
                     }

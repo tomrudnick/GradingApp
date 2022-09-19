@@ -10,7 +10,7 @@ import SwiftUICharts
 
 struct StudentView: View {
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     

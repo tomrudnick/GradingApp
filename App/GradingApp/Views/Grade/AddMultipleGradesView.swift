@@ -14,7 +14,7 @@ struct AddMultipleGradesView: View {
     @ObservedObject var course: Course
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Environment(\.currentHalfYear) var halfYear
     
     @State private var gradeDate: Date = Date()
@@ -35,7 +35,7 @@ struct AddMultipleGradesView: View {
                 VStack {
                     HStack {
                         Button(action: {
-                            self.presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }, label: {
                             Text("Abbrechen")
                         })
@@ -148,7 +148,7 @@ struct AddMultipleGradesView: View {
             }
         }
         studentGrade.removeAll()
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 

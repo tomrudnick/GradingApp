@@ -10,7 +10,7 @@ import CSV
 
 struct AddSchoolYearsView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     
     @State var schoolYear = ""
@@ -22,7 +22,7 @@ struct AddSchoolYearsView: View {
                 Text("Neues Schuljahr").font(.headline)
             Spacer()
                 Button {
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Abbrechen")
                 }
@@ -39,7 +39,7 @@ struct AddSchoolYearsView: View {
  
     func saveButtonPressed() {
         SchoolYear.addSchoolYear(name: schoolYear, context: viewContext)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 

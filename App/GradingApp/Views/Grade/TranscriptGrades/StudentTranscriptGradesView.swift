@@ -18,7 +18,7 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
     
     @Environment(\.currentHalfYear) private var halfYear
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @State private var showAddGradeSheet: Bool = false
     @State private var selectedStudent: Student?
@@ -40,7 +40,7 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                 VStack {
                     HStack {
                         Button(action: {
-                            self.presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }, label: {
                             Text("Abbrechen")
                         })
@@ -92,7 +92,7 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
     }
     func save() {
         viewModel.save(viewContext: viewContext)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 

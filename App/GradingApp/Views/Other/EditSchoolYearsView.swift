@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditSchoolYearsView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @ObservedObject var oldSchoolYear: SchoolYear
     @State var newSchoolYearName: String = ""
@@ -22,7 +22,7 @@ struct EditSchoolYearsView: View {
                 Text("Schuljahr umbenennen").font(.headline)
             Spacer()
                 Button {
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Abbrechen")
                 }
@@ -42,7 +42,7 @@ struct EditSchoolYearsView: View {
             activeSchoolYear = newSchoolYearName
         }
         oldSchoolYear.updateSchoolYearName(name: newSchoolYearName, context: viewContext)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 

@@ -11,7 +11,7 @@ struct AddSingleGradeView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.currentHalfYear) var halfYear
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @ObservedObject var student: Student
     

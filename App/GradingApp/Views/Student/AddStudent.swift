@@ -10,7 +10,7 @@ import CSV
 
 struct AddStudent: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @ObservedObject var course: CourseEditViewModel.CourseVM
     
@@ -27,7 +27,7 @@ struct AddStudent: View {
                 Text("Neuer Schüler").font(.headline)
             Spacer()
                 Button {
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Abbrechen")
                 }
@@ -53,7 +53,7 @@ struct AddStudent: View {
         }
         .fileImporter(isPresented: $openFile, allowedContentTypes: [.plainText, .commaSeparatedText]) { res in
             course.addCSVStudent(res: res)
-            self.presentationMode.wrappedValue.dismiss()
+            dismiss()
         }.sheet(isPresented: $showHelpSheed, onDismiss: {}) {
             CSVImportExampleView()
         }
@@ -61,7 +61,7 @@ struct AddStudent: View {
  
     func saveButtonPressed() {
         course.addStudent(firstName: studentFirstName, lastName: studentLastName, email: email)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 

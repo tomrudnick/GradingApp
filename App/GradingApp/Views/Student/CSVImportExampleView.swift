@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct CSVImportExampleView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
                 Button {
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Fertig")
                 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GradeAtDatesEditView : View{
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.currentHalfYear) private var halfYear
     
@@ -119,7 +119,7 @@ struct GradeAtDatesEditView : View{
                 message: Text("Möchten sie diese Noten wirklich löschen?"),
                 primaryButton: .destructive(Text("Ja")) {
                     editGradesPerDateVM.delete(viewContext: viewContext)
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 },
                 secondaryButton: .cancel()
             )
@@ -134,7 +134,7 @@ struct GradeAtDatesEditView : View{
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     editGradesPerDateVM.save(viewContext: viewContext, halfYear: halfYear)
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Speichern")
                 }

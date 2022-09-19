@@ -11,7 +11,7 @@ struct SingleGradeView: View {
     
     @StateObject var viewModel = GradePickerViewModel()
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @ObservedObject var student: Student
     
@@ -57,7 +57,7 @@ struct SingleGradeView: View {
                 if showSaveCancelButtons {
                     HStack {
                         Button {
-                            self.presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         } label: {
                             Text("Abbrechen")
                         }
@@ -158,7 +158,7 @@ struct SingleGradeView: View {
             multiplier = 1.0
         }
         saveHandler(currentGrade, type, multiplier, gradeDate, comment)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
     
     

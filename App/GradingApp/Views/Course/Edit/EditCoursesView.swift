@@ -10,7 +10,7 @@ import CoreData
 
 struct EditCoursesView: View {
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     
     @ObservedObject var editVM: CourseEditViewModel
@@ -104,7 +104,7 @@ struct EditCoursesView: View {
         .alert(isPresented: $showSaveAlert) {
             Alert(title: Text("Achtung!"), message: Text("Möchten sie wirklich speichern?"), primaryButton: .default(Text("Speichern"), action: {
                 editVM.save(context: viewContext)
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }), secondaryButton: .cancel())
         }
         .sheet(item: $selectedCourse, content: { course in
@@ -146,7 +146,7 @@ struct EditCoursesView: View {
     
     var cancelButton: some View {
         Button {
-            presentationMode.wrappedValue.dismiss()
+            dismiss()
         } label: {
             Text("Abbrechen")
         }

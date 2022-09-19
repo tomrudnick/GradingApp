@@ -10,7 +10,7 @@ import SwiftUI
 struct EditCourseView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @ObservedObject var course: CourseEditViewModel.CourseVM
     

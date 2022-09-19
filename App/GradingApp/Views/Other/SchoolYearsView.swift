@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SchoolYearsView: View {
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default) private var schoolYear: FetchedResults<SchoolYear>
     

@@ -12,7 +12,7 @@ import HighlightedTextEditor
 struct SendEmailsView<Model: SendEmailProtocol>: View {
     
     @Environment(\.currentHalfYear) var halfYear
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @ObservedObject var emailViewModel: Model
     @State var showProgressbar = false
@@ -41,7 +41,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                 .toolbar(content: {
                     ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                         Button(action: {
-                            self.presentationMode.wrappedValue.dismiss()
+                            dismiss()
                         }, label: {
                             Text("Abbrechen")
                         })
@@ -58,7 +58,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                             } completionHandler: { failed in
                                 self.showProgressbar = false
                                 if failed.count == 0 {
-                                    self.presentationMode.wrappedValue.dismiss()
+                                    dismiss()
                                 } else {
                                     self.showErrorAlert.toggle()
                                     if failed.count == 1 {

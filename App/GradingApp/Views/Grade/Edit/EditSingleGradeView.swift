@@ -11,7 +11,7 @@ struct EditSingleGradeView: View {
     
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @ObservedObject var student: Student
     @ObservedObject var grade: Grade

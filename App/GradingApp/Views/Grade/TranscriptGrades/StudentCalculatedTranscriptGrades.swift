@@ -10,7 +10,7 @@ import SwiftUI
 struct StudentCalculatedTranscriptGrades: View {
     
     @ObservedObject var course: Course
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     var noGradeText: Text {
         Text("-").foregroundColor(Grade.getColor(points: -1.0))
@@ -51,7 +51,7 @@ struct StudentCalculatedTranscriptGrades: View {
         VStack {
             HStack {
                 Button {
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Schließen")
                 }

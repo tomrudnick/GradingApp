@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SingleStudent: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     let viewTitle: String
     @State var student: Student.DataModel
@@ -30,7 +30,7 @@ struct SingleStudent: View {
                     Text(viewTitle).font(.headline)
                 Spacer()
                     Button {
-                        self.presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     } label: {
                         Text("Abbrechen")
                     }
@@ -48,7 +48,7 @@ struct SingleStudent: View {
         
     func saveButtonPressed() {
         saveHandler(student)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 

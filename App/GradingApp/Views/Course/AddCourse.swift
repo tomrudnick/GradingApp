@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddCourse: View {
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var editVM: CourseEditViewModel
     
     var body: some View {

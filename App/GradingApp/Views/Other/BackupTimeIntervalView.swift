@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BackupTimeIntervalView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Binding var selection: BackupViewModel.BackupNotifyInterval
     
     var body: some View {
@@ -16,7 +16,7 @@ struct BackupTimeIntervalView: View {
             ForEach(BackupViewModel.BackupNotifyInterval.allCases, id: \.self) { value in
                 Button {
                     selection = value
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     HStack {
                         Text(value.rawValue)

@@ -10,7 +10,7 @@ import CoreData
 
 struct SubjectListView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @FetchRequest(fetchRequest: Subject.fetchAll(), animation: .default)
     private var subjects: FetchedResults<Subject>
     
@@ -22,7 +22,7 @@ struct SubjectListView: View {
             ForEach(subjects, id: \.self) { subject in
                 Button {
                     self.subject = subject.name
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     HStack {
                         Text("\(subject.name)")
@@ -75,7 +75,7 @@ struct SubjectListView: View {
 
 struct AddSubjectView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @State var subjectName = ""
     
@@ -83,7 +83,7 @@ struct AddSubjectView: View {
         VStack {
             HStack {
                 Button {
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Abbrechen")
                 }.padding(.leading)
@@ -94,7 +94,7 @@ struct AddSubjectView: View {
             TextField("Z.B. Mathe", text: $subjectName).padding()
             CustomButtonView(label: "Hinzufügen", action: {
                 Subject.addSubject(name: subjectName, context: viewContext)
-                self.presentationMode.wrappedValue.dismiss()
+                dismiss()
             }, buttonColor: .accentColor).disabled(subjectName.isEmpty)
             Spacer()
         }

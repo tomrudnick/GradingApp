@@ -11,7 +11,7 @@ import SwiftUI
 struct BackupRestoreView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @State private var showingAlert = false
     @State private var showingAlertDeleteAllBackup = false
@@ -21,7 +21,7 @@ struct BackupRestoreView: View {
         VStack {
             HStack {
                 Button {
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } label: {
                     Text("Abbrechen")
                 }
@@ -75,7 +75,7 @@ struct BackupRestoreView: View {
                     let _ = try! JSONDecoder().decode([Course].self, from: selectedFileData)
                     viewContext.saveCustom()
                     print("Restore Process complete")
-                    self.presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 } catch {
                     print("Something went wrong while resotring data")
                 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SingleCourse: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @State var courseName: String
     @State private var courseSubject: String
@@ -89,7 +89,7 @@ struct SingleCourse: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     } label: {
                         Text("Abbrechen")
                     }
@@ -100,7 +100,7 @@ struct SingleCourse: View {
     
     func saveButtonPressed() {
         saveHandler(courseName, courseSubject, selectedWeight, selectedAgeGroup, selectedType)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 
