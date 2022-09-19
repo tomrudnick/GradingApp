@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CloudStorage
 
 @main
 struct GradingApp: App {
@@ -14,15 +15,15 @@ struct GradingApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
     @StateObject var externalScreenhideViewModel = ExternalScreenHideViewModel()
-    @StateObject var selectedHalfYearViewModel = SelectedHalfYearViewModel()
+    @CloudStorage(MoreActionsViewModel.KeyValueConstants.selectedHalf) var activeHalf: HalfType = .firstHalf
 
     var body: some Scene {
         WindowGroup {
             #if targetEnvironment(macCatalyst)
-            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, selectedHalfYearVM: selectedHalfYearViewModel)
+            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, activeHalf: $activeHalf)
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
             #else
-            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, selectedHalfYearVM: selectedHalfYearViewModel)
+            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, activeHalf: $activeHalf)
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
                 .onReceive(
                     externalScreenhideViewModel.screenDidConnectPublisher,
