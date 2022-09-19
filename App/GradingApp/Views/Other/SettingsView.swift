@@ -32,9 +32,9 @@ struct SettingsView: View {
     @State private var backupType: BackupType = .backup
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
     
-    @CloudStorage("Schuljahr") var activeSchoolYear: String?
-    @CloudStorage(HalfYearDateKeys.firstHalf) var dateFirstHalf: Date = Date()
-    @CloudStorage(HalfYearDateKeys.secondHalf) var dateSecondHalf: Date = Date()
+    @CloudStorage("Schuljahr")                  var activeSchoolYear:   String?
+    @CloudStorage(HalfYearDateKeys.firstHalf)   var dateFirstHalf:      Date = Date()
+    @CloudStorage(HalfYearDateKeys.secondHalf)  var dateSecondHalf:     Date = Date()
     
     @Binding var selectedHalf: HalfType
     

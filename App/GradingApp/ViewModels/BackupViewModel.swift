@@ -149,20 +149,7 @@ class BackupViewModel: ObservableObject {
     public func sendDeviceKeyToServer() {
         sendRequestToServer(deviceKeyOnly: true)
     }
-    //Still not sure if this should be here or in App Delegate
-    /*func requestNotificationAuthorization() {
-        #if !targetEnvironment(macCatalyst)
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-            if success {
-                print("Notification zugelassen")
-                self.notifyAllowed = true
-            } else if let error = error {
-                print("\(error.localizedDescription) Backup Einstellungsfehler")
-            }
-        }
-        #endif
-    }*/
-    
+
     static func doBackup() {
         let lastBackupDate = NSUbiquitousKeyValueStore.default.object(forKey: KeyValueConstants.lastBackup) as? Date
         if let lastBackupDate = lastBackupDate, Calendar.current.isDateInToday(lastBackupDate) {
@@ -196,15 +183,15 @@ class BackupViewModel: ObservableObject {
             }
         }
     }
-    //returns -1 if an Error occured
+    //returns 0 if an Error occured
     static func countBackupFiles() -> Int{
         if let containerUrl = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
             
             let dirContents = try? FileManager.default.contentsOfDirectory(at: containerUrl, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
             let count = dirContents?.count
-            return count ?? -1
+            return count ?? 0
         }
-        return -1
+        return 0
     }
     
     static func getBackupFiles() -> [URL] {
