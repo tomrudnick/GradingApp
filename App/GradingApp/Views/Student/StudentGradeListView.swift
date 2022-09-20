@@ -6,37 +6,34 @@
 //
 
 import SwiftUI
-import SwiftUICharts
+import Charts
 
 struct StudentGradeListView: View {
     @ObservedObject var course: Course
     @Environment(\.currentHalfYear) var halfYear
-    @State private var action: Student? = nil
-    let mixedColorStyle = ChartStyle(backgroundColor: .white, foregroundColor: [
-            ColorGradient(Color(red: 0.173, green: 0.894, blue: 0.455), Color(red: 0.173, green: 0.894, blue: 0.455)),
-            ColorGradient(Color(red: 0.803, green: 0.941, blue: 0.229), Color(red: 0.803, green: 0.941, blue: 0.229)),
-            ColorGradient(Color(red: 1.0, green: 0.898, blue: 0.0), Color(red: 1.0, green: 0.898, blue: 0.0)),
-            ColorGradient(Color(red: 1.0, green: 0.592, blue: 0.0), Color(red: 1.0, green: 0.592, blue: 0.0)),
-            ColorGradient(Color(red: 1.0, green: 0.224, blue: 0.141), Color(red: 1.0, green: 0.224, blue: 0.141)),
-            ColorGradient(Color(red: 0.737, green: 0.067, blue: 0.0), Color(red: 0.737, green: 0.067, blue: 0.0))
-        ])
+    
     var body: some View {
-        
         ScrollView {
             VStack {
-                CardView {
-                    ChartLabel("Notenverteilung", type: .legend)
-                    BarChart()
+                if #available(iOS 16.0, macCatalyst 16.0, *){
+                    Chart {
+                        BarMark(x: .value("Grade", "1"), y: .value("Count", course.getNumberOfGrades(for: 13...15, half: halfYear)))
+                            .foregroundStyle(Color(red: 0.173, green: 0.894, blue: 0.455))
+                        BarMark(x: .value("Grade", "2"), y: .value("Count", course.getNumberOfGrades(for: 10...12, half: halfYear)))
+                            .foregroundStyle(Color(red: 0.803, green: 0.941, blue: 0.229))
+                        BarMark(x: .value("Grade", "3"), y: .value("Count", course.getNumberOfGrades(for: 7...9, half: halfYear)))
+                            .foregroundStyle(Color(red: 1.0, green: 0.898, blue: 0.0))
+                        BarMark(x: .value("Grade", "4"), y: .value("Count", course.getNumberOfGrades(for: 4...6, half: halfYear)))
+                            .foregroundStyle(Color(red: 1.0, green: 0.592, blue: 0.0))
+                        BarMark(x: .value("Grade", "5"), y: .value("Count", course.getNumberOfGrades(for: 1...3, half: halfYear)))
+                            .foregroundStyle(Color(red: 1.0, green: 0.224, blue: 0.141))
+                        BarMark(x: .value("Grade", "6"), y: .value("Count", course.getNumberOfGrades(for: 0...0, half: halfYear)))
+                            .foregroundStyle(Color(red: 0.737, green: 0.067, blue: 0.0))
+                    }.padding()
                 }
-                .data(course.getChartDataNumbers(half: halfYear))
-                .chartStyle(mixedColorStyle)
-                .frame(height: 240)
-                .padding()
+                
                 ForEach(course.studentsArr) { student in
                     VStack {
-                        NavigationLink(destination: StudentView(student: student), tag: student, selection: $action) {
-                            EmptyView()
-                        }
                         HStack {
                             VStack {
                                 StudentDetailViewTop(student: student)
@@ -47,9 +44,8 @@ struct StudentGradeListView: View {
                                     }
                                 }
                             }
-                            Button {
-                                action = student
-                            } label: {
+                            
+                            NavigationLink(destination: StudentView(student: student)) {
                                 Image(systemName: "exclamationmark.circle").font(.system(size: 20))
                             }.padding(.leading)
                         }.padding()
@@ -64,16 +60,6 @@ struct StudentGradeListView: View {
     }
 }
 
-
-
-struct Line: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: 0, y: 0))
-        path.addLine(to: CGPoint(x: rect.width, y: 0))
-        return path
-    }
-}
 
 /*struct CourseListGradeView_Previews: PreviewProvider {
     static var previews: some View {

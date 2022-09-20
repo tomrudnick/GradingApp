@@ -92,6 +92,6 @@ class EditGradesPerDateViewModel : ObservableObject {
     
     func delete(viewContext: NSManagedObjectContext) {
         self.studentGrades.forEach({if let grade = $0.grade { viewContext.delete(grade)}})
-        //viewContext.saveCustom()
+        viewContext.saveCustom()
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftUICharts
+import Charts
 
 struct StudentView: View {
     
@@ -54,14 +54,11 @@ struct StudentView: View {
                 }.disabled(!sendEmailViewModel.emailAccountViewModel.emailAccountUsed)
                 
             }
-            CardView {
-                ChartLabel("Mündlich", type: .subTitle)
-                LineChart()
+            if #available(iOS 16.0, macCatalyst 16.0, *) {
+                Chart(student.gradesArr.filter({$0.type == .oral && $0.half == halfYear})) { grade in
+                    LineMark(x: .value("Count", student.gradesArr.filter({$0.type == .oral && $0.half == halfYear}).firstIndex(of: grade) ?? 0), y: .value("Grade", grade.value)).interpolationMethod(.catmullRom)
+                }
             }
-            .data(student.gradesArr.filter({$0.type == .oral && $0.half == halfYear}).map({Double(Int($0.value))}))
-            .chartStyle(ChartStyle(backgroundColor: .white, foregroundColor: [ColorGradient(.purple, .blue)]))
-            .padding()
-            //LineChartView(data: student.gradesArr.filter({$0.type == .oral}).map({Double(Int($0.value))}), title: "Mündlich", form: ChartForm.extraLarge)
             Spacer()
         }
         .padding()

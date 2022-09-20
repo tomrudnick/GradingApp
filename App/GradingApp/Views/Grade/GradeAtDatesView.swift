@@ -19,7 +19,8 @@ struct GradeAtDatesView: View {
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @State var showEmailSheet = false
-    @State var selectedStudentGradeNavLink: Date? = nil
+    
+    
     
     let gradeType: GradeType
     let course: Course
@@ -40,7 +41,7 @@ struct GradeAtDatesView: View {
                 
                 Section("\(Calendar.current.date(from: key)!.asString(format: "MMM yyyy"))") {
                     ForEach(value.sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
-                        NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value), tag: key, selection: $selectedStudentGradeNavLink) {
+                        NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value)) {
                             HStack {
                                 Text(key.asString(format: "dd MMM HH:mm"))
                                 Spacer()
@@ -69,11 +70,6 @@ struct GradeAtDatesView: View {
                                     .cornerRadius(5.0)
                             }
                         }
-                        .onChange(of: selectedStudentGradeNavLink, perform: { value in
-                            if value == nil {
-                                viewContext.saveCustom()
-                            }
-                        })
                         .contextMenu(menuItems: {
                             Button(action: {
                                 sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)

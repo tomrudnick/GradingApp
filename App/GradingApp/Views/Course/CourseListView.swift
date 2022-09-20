@@ -45,6 +45,7 @@ struct CourseListView: View {
     
     @State private var showNewAlert = false
     @State private var firstAppear = true
+    @State private var selectedCourse: Course?
     
     @CloudStorage(HalfYearDateKeys.firstHalf) var dateFirstHalf: Date = Date()
     @CloudStorage(HalfYearDateKeys.secondHalf) var dateSecondHalf: Date = Date()
@@ -56,32 +57,14 @@ struct CourseListView: View {
     }
     
     var body: some View {
-        NavigationView {
-            List(courses) { course in
-                NavigationLink(destination: CourseTabView(course: course), tag: course.id, selection: $activeLink) {
+        NavigationSplitView {
+            List(courses, selection: $selectedCourse) { course in
+                NavigationLink(value: course) {
                     Text(course.title).font(.title2)
                     Text("(" + String(course.studentsCount) + ")").font(.footnote)
                 }
             }
-            .alert(isPresented: $showAlert, content: {
-                if alertType == .halfYearWarning {
-                    return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
-                } else {
-                    return undoRedoVM.getAlert(viewContext: viewContext)
-                }
-                
-            })
-            .padding(.top)
             .navigationTitle(Text("Kurse \(activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
-            .listStyle(PlainListStyle())
-            .fullScreenCover(isPresented: $showMoreActions, content: {
-                SettingsView(externalScreenHideViewModel: externalScreenHideViewModel, selectedHalf: $activeHalf).environment(\.managedObjectContext, viewContext)
-            })
-            .fullScreenCover(isPresented: $showEditCourses) {
-                NavigationView {
-                    EditCoursesView(editVM: editCourseViewModel).environment(\.managedObjectContext, viewContext)
-                }
-            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     editButton
@@ -97,8 +80,29 @@ struct CourseListView: View {
                 }
                 
             }
-            if let course = firstCourse {
-                NavigationLink("", destination: CourseTabView(course: course).navigationBarBackButtonHidden(true), isActive: $firstCourseActive)
+            .alert(isPresented: $showAlert, content: {
+                if alertType == .halfYearWarning {
+                    return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
+                } else {
+                    return undoRedoVM.getAlert(viewContext: viewContext)
+                }
+                
+            })
+        } detail: {
+            if let selectedCourse {
+                CourseTabView(course: selectedCourse)
+            } else {
+                WelcomeViewIpad()
+            }
+            
+        }
+       
+        .fullScreenCover(isPresented: $showMoreActions, content: {
+            SettingsView(externalScreenHideViewModel: externalScreenHideViewModel, selectedHalf: $activeHalf).environment(\.managedObjectContext, viewContext)
+        })
+        .fullScreenCover(isPresented: $showEditCourses) {
+            NavigationView {
+                EditCoursesView(editVM: editCourseViewModel).environment(\.managedObjectContext, viewContext)
             }
         }
         .onAppear {
