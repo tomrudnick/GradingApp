@@ -29,11 +29,11 @@ struct StudentView: View {
                 GradeGridViewDisplay(title: "Gesamt     ", gradeRounded: student.getRoundedGradeAverage(half: halfYear), grade: student.getGradeAverage(half: halfYear), color: Grade.getColor(points: student.totalGradeAverage(half: halfYear)))
                 
                 
-                NavigationLink(destination: GradeDetailView(student: student, gradeType: .oral)) {
+                NavigationLink(value: Route.GradeDetail(student, .oral)) {
                     GradeGridViewDisplay(title: "Mündlich   ", gradeRounded: student.getRoundedGradeAverage(.oral, half: halfYear), grade: student.getGradeAverage(.oral, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .oral, half: halfYear)))
                 }
                 
-                NavigationLink(destination: GradeDetailView(student: student, gradeType: .written)) {
+                NavigationLink(value: Route.GradeDetail(student, .written)) {
                     GradeGridViewDisplay(title: "Schriftlich", gradeRounded: student.getRoundedGradeAverage(.written, half: halfYear), grade: student.getGradeAverage(.written, half: halfYear), color: Grade.getColor(points: student.gradeAverage(type: .written, half: halfYear)))
                 }
                 

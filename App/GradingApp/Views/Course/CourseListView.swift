@@ -12,6 +12,27 @@ import UIKit
 import Combine
 import CloudStorage
 
+enum Route: Hashable {
+
+    case student(Student)
+    case GradeAtDates(Course, [GradeStudent<Grade>])
+    case GradeDetail(Student, GradeType)
+    case editGrade(Student, Grade)
+    
+    func getString() -> String {
+        switch self {
+        case .student(_):
+            return "StudentView"
+        case .GradeAtDates(_, _):
+            return "GradesAtDatesView"
+        case .GradeDetail(_, _):
+            return "GradeDetailView"
+        case .editGrade(_, _):
+            return "EditGradeView"
+        }
+    }
+
+}
 
 struct CourseListView: View {
     
@@ -49,6 +70,9 @@ struct CourseListView: View {
     
     @CloudStorage(HalfYearDateKeys.firstHalf) var dateFirstHalf: Date = Date()
     @CloudStorage(HalfYearDateKeys.secondHalf) var dateSecondHalf: Date = Date()
+    
+    @State private var path: [Route] = []
+    @State private var selectedTab: String = "StudentListView"
 
     init(externalScreenHideViewModel: ExternalScreenHideViewModel, activeHalf: Binding<HalfType>) {
         self._activeHalf = activeHalf
@@ -63,7 +87,9 @@ struct CourseListView: View {
                     Text(course.title).font(.title2)
                     Text("(" + String(course.studentsCount) + ")").font(.footnote)
                 }
-            }
+            }.onChange(of: selectedCourse, perform: { _ in
+                selectedTab = "StudentListView"
+            })
             .navigationTitle(Text("Kurse \(activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -90,9 +116,22 @@ struct CourseListView: View {
             })
         } detail: {
             if let selectedCourse {
-                CourseTabView(course: selectedCourse)
+                NavigationStack(path: $path) {
+                    CourseTabView(course: selectedCourse, selectedTab: $selectedTab)
+                }.navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case let .student(Student):
+                        StudentView(student: Student)
+                    case let .GradeAtDates(course, GradeStudent):
+                        GradeAtDatesEditView(course: course, studentGrades: GradeStudent)
+                    case let .GradeDetail(student, type):
+                        GradeDetailView(student: student, gradeType: type)
+                    case let .editGrade(student, grade):
+                        EditSingleGradeView(student: student, grade: grade)
+                    }
+                }
             } else {
-                WelcomeViewIpad()
+               WelcomeViewIpad()
             }
             
         }
@@ -186,7 +225,7 @@ struct WelcomeViewIpad: View {
     var body: some View {
         Text("Willkommen zurück Matthias!")
             .font(.largeTitle)
-            .navigationBarHidden(true)
+            //.navigationBarHidden(true)
     }
 }
 

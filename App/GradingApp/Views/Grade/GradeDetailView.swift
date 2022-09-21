@@ -21,7 +21,7 @@ struct GradeDetailView: View {
             List {
                 ForEach(student.gradesArr) { grade in
                     if grade.type == gradeType && grade.half == halfYear {
-                        NavigationLink(destination: EditSingleGradeView(student: student, grade: grade)) {
+                        NavigationLink(value: Route.editGrade(student, grade)) {
                             HStack {
                                 if grade.multiplier != 1.0 {
                                     VStack {

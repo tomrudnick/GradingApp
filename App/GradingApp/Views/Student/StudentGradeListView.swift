@@ -45,7 +45,7 @@ struct StudentGradeListView: View {
                                 }
                             }
                             
-                            NavigationLink(destination: StudentView(student: student)) {
+                            NavigationLink(value: Route.student(student)) {
                                 Image(systemName: "exclamationmark.circle").font(.system(size: 20))
                             }.padding(.leading)
                         }.padding()

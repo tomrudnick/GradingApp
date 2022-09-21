@@ -10,7 +10,7 @@ import Foundation
 // This Model should be a simple way to associate a specific grade to a specific student
 // Furthermore the variable value is the grade.value in order to change it without editing the grade directly
 
-protocol GradeValue {
+protocol GradeValue: Hashable {
     var value: Int32 { get set }
 }
 
@@ -22,7 +22,7 @@ extension TranscriptGrade : GradeValue {
     
 }
 
-struct GradeStudent<G: GradeValue> : Identifiable {
+struct GradeStudent<G: GradeValue> : Identifiable, Hashable {
     var id: UUID = UUID()
     let student: Student
     let grade: G?
@@ -56,6 +56,12 @@ struct GradeStudent<G: GradeValue> : Identifiable {
         let nonNilStudentGrades = studentGrades.filter {$0.grade != nil}
         let sum = nonNilStudentGrades.reduce(0.0) {$0 + Double($1.grade?.value ?? 0)}
         return sum / Double(nonNilStudentGrades.count)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(student)
+        hasher.combine(grade)
+        hasher.combine(value)
     }
 }
 

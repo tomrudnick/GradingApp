@@ -34,90 +34,92 @@ struct CourseTabView: View {
     
     @State var studentGrade: [Student:Int] = [:]
     
+    @Binding var selectedTab: String
+    
     var body: some View {
-        NavigationStack {
-            TabView {
-                StudentListView(course: course)
-                    .tabItem {
-                        Image(systemName:"person.3.fill")
-                        Text("Kurs")
-                    }
-                StudentGradeListView(course: course)
-                    .tabItem {
-                        Image(systemName:"graduationcap")
-                        Text("Leistungsübersicht")
-                    }
-                
-                GradeAtDatesSelectionView(course: course)
-                    .tabItem{
-                        Image(systemName:"calendar")
-                        Text("Daten")
-                    }
-                
-            }
-            //.edgesIgnoringSafeArea(.top)
-            .navigationBarTitle("\(course.title) - \(halfYear == .firstHalf ? "1. HJ" : "2. HJ")", displayMode: .inline)
-            .toolbar(content: {
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
-                    Text("")
-                }
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Menu {
-                        Button(action: {
-                            self.showSendEmailSheet.toggle()
-                        }, label: {
-                            Text("Email verschicken...")
-                        }).disabled(!sendEmailViewModel.emailAccountViewModel.emailAccountUsed)
-                        if course.type == .holeYear {
-                            if halfYear == .secondHalf {
-                                Button {
-                                    self.showCalculatedTranscriptSheet.toggle()
-                                } label: {
-                                    Text("Aktuellen Zeugnisstand anzeigen")
-                                }
-                            }
-                            Button {
-                                self.showTranscriptHalfYearSheet.toggle()
-                            } label: {
-                                Text("Zeugnisnoten \(halfYear == .firstHalf ? "1. " : "2. ") HJ einstellen")
-                            }
-                            Button {
-                                self.showTranscriptSheet.toggle()
-                            } label: {
-                                Text("Gesamtzeugnisnote einstellen")
-                            }
-                        } else {
-                            Button {
-                                self.showTranscriptHalfYearSheet.toggle()
-                            } label: {
-                                Text("Zeugnisnote einstellen")
-                            }
-                        }
-                        undoButton
-                        redoButton
-
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
-                            .imageScale(.large)
-                    }
-                }
-                ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                    Button(action: {
-                        if studentGrade.isEmpty {
-                            studentGrade = Dictionary(uniqueKeysWithValues: course.students.map({($0, -1)}))
-                        }
-                        showAddMultipleGrades = true
-                    }, label: {
-                        Image(systemName: "plus.circle")
-                    })
-                    
-                }
-            })
-            .alert(isPresented: $showUndoRedoAlert) {
-                return undoRedoVM.getAlert(viewContext: viewContext)
-                
-            }
+        
+        TabView(selection: $selectedTab) {
+            StudentListView(course: course)
+                .tabItem {
+                    Image(systemName:"person.3.fill")
+                    Text("Kurs")
+                }.tag("StudentListView")
+            StudentGradeListView(course: course)
+                .tabItem {
+                    Image(systemName:"graduationcap")
+                    Text("Leistungsübersicht")
+                }.tag("StudentGradeListView")
+            
+            GradeAtDatesSelectionView(course: course)
+                .tabItem{
+                    Image(systemName:"calendar")
+                    Text("Daten")
+                }.tag("GradeAtDatesSelectionView")
+            
         }
+        //.edgesIgnoringSafeArea(.top)
+        .navigationBarTitle("\(course.title) - \(halfYear == .firstHalf ? "1. HJ" : "2. HJ")", displayMode: .inline)
+        .toolbar(content: {
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                Text("")
+            }
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                Menu {
+                    Button(action: {
+                        self.showSendEmailSheet.toggle()
+                    }, label: {
+                        Text("Email verschicken...")
+                    }).disabled(!sendEmailViewModel.emailAccountViewModel.emailAccountUsed)
+                    if course.type == .holeYear {
+                        if halfYear == .secondHalf {
+                            Button {
+                                self.showCalculatedTranscriptSheet.toggle()
+                            } label: {
+                                Text("Aktuellen Zeugnisstand anzeigen")
+                            }
+                        }
+                        Button {
+                            self.showTranscriptHalfYearSheet.toggle()
+                        } label: {
+                            Text("Zeugnisnoten \(halfYear == .firstHalf ? "1. " : "2. ") HJ einstellen")
+                        }
+                        Button {
+                            self.showTranscriptSheet.toggle()
+                        } label: {
+                            Text("Gesamtzeugnisnote einstellen")
+                        }
+                    } else {
+                        Button {
+                            self.showTranscriptHalfYearSheet.toggle()
+                        } label: {
+                            Text("Zeugnisnote einstellen")
+                        }
+                    }
+                    undoButton
+                    redoButton
+
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .imageScale(.large)
+                }
+            }
+            ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                Button(action: {
+                    if studentGrade.isEmpty {
+                        studentGrade = Dictionary(uniqueKeysWithValues: course.students.map({($0, -1)}))
+                    }
+                    showAddMultipleGrades = true
+                }, label: {
+                    Image(systemName: "plus.circle")
+                })
+                
+            }
+        })
+        .alert(isPresented: $showUndoRedoAlert) {
+            return undoRedoVM.getAlert(viewContext: viewContext)
+            
+        }
+        
         
         .onAppear {
             let apparence = UITabBarAppearance()

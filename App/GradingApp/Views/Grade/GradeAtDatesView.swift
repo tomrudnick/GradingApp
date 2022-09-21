@@ -41,7 +41,7 @@ struct GradeAtDatesView: View {
                 
                 Section("\(Calendar.current.date(from: key)!.asString(format: "MMM yyyy"))") {
                     ForEach(value.sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
-                        NavigationLink(destination: GradeAtDatesEditView(course: course, studentGrades: value)) {
+                        NavigationLink(value: Route.GradeAtDates(course, value)) {
                             HStack {
                                 Text(key.asString(format: "dd MMM HH:mm"))
                                 Spacer()
