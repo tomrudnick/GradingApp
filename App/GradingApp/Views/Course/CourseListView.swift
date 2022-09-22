@@ -118,17 +118,18 @@ struct CourseListView: View {
             if let selectedCourse {
                 NavigationStack(path: $path) {
                     CourseTabView(course: selectedCourse, selectedTab: $selectedTab)
-                }.navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case let .student(Student):
-                        StudentView(student: Student)
-                    case let .GradeAtDates(course, GradeStudent):
-                        GradeAtDatesEditView(course: course, studentGrades: GradeStudent)
-                    case let .GradeDetail(student, type):
-                        GradeDetailView(student: student, gradeType: type)
-                    case let .editGrade(student, grade):
-                        EditSingleGradeView(student: student, grade: grade)
-                    }
+                        .navigationDestination(for: Route.self) { route in
+                            switch route {
+                            case let .student(Student):
+                                StudentView(student: Student)
+                            case let .GradeAtDates(course, GradeStudent):
+                                GradeAtDatesEditView(course: course, studentGrades: GradeStudent)
+                            case let .GradeDetail(student, type):
+                                GradeDetailView(student: student, gradeType: type)
+                            case let .editGrade(student, grade):
+                                EditSingleGradeView(student: student, grade: grade)
+                            }
+                        }
                 }
             } else {
                WelcomeViewIpad()
