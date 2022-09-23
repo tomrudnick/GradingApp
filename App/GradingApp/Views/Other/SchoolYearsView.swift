@@ -67,6 +67,7 @@ struct SchoolYearsView: View {
         }
     }
     
+    //We use the same view for contextMenu and SwipeActions which is the reason for extracting it into this method
     @ViewBuilder //this is needed in order to omit return statements and to simplify that we return two buttons (It is just for convenience)
     func getSwipeContextMenu(schoolYear: SchoolYear) -> some View {
         Button {
