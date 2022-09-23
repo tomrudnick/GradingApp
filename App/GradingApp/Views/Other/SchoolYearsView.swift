@@ -56,6 +56,7 @@ struct SchoolYearsView: View {
             .sheet(isPresented: $showAddSchoolYear) {
                 AddSchoolYearsView()
             }
+            Spacer()
         }
     }
     var addButton : some View {
