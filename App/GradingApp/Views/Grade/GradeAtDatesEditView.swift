@@ -81,13 +81,14 @@ struct GradeAtDatesEditView : View{
                                     .background(Color.accentColor)
                                     .cornerRadius(10)
                                     
-                            }.if(studentGrade.student == selectedStudent) { view in
-                                view.border(Color.red)
                             }
+                            .border(studentGrade.student == selectedStudent ? Color.red : Color.clear)
                             .onTapGesture {
                                 selectedStudent = studentGrade.student
                                 showAddGradeSheet = true
-                                proxy.scrollTo(selectedStudent?.id, anchor: .top)
+                                withAnimation {
+                                    proxy.scrollTo(selectedStudent?.id, anchor: .top)
+                                }
                             }.id(studentGrade.student.id)
                         }
                         CustomButtonView(label: "Löschen", action: {

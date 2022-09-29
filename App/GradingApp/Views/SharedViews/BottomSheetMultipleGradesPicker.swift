@@ -70,10 +70,12 @@ struct BottomSheetMultipleGradesPicker: View {
     }
     
     func scrollToNext() {
-        if selectedStudent == nil {
-            self.showAddGradeSheet = false
-        } else {
-            scrollProxy.scrollTo(selectedStudent?.id, anchor: .top)
+        withAnimation {
+            if selectedStudent == nil {
+                self.showAddGradeSheet = false
+            } else {
+                scrollProxy.scrollTo(selectedStudent?.id, anchor: .top)
+            }
         }
     }
 }

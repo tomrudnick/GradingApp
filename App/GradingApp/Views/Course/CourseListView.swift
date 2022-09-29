@@ -57,9 +57,6 @@ struct CourseListView: View {
     
     
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
-    
-    @State var firstCourseActive = false
-    @State var firstCourse: Course?
     @State var alertType: AlertType = .halfYearWarning
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
@@ -115,8 +112,9 @@ struct CourseListView: View {
                 
             })
         } detail: {
-            if let selectedCourse {
-                NavigationStack(path: $path) {
+           
+            NavigationStack(path: $path) {
+                if let selectedCourse {
                     CourseTabView(course: selectedCourse, selectedTab: $selectedTab)
                         .navigationDestination(for: Route.self) { route in
                             switch route {
@@ -130,9 +128,9 @@ struct CourseListView: View {
                                 EditSingleGradeView(student: student, grade: grade)
                             }
                         }
+                } else {
+                    WelcomeViewIpad()
                 }
-            } else {
-               WelcomeViewIpad()
             }
             
         }
@@ -153,10 +151,6 @@ struct CourseListView: View {
                 #endif
                 firstAppear = false
                 halfCorrect()
-            }
-            if let course = courses.first, idiom == .pad{
-                self.firstCourse = course
-                self.firstCourseActive = true
             }
             print("Students count: \(PersistenceController.fetchData(context: viewContext, fetchRequest: Student.fetchAll()).count)")
             print("Grades count:   \(PersistenceController.fetchData(context: viewContext, fetchRequest: Grade.fetchAll()).count)")

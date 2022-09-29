@@ -97,19 +97,19 @@ struct AddMultipleGradesView: View {
                                             .cornerRadius(10)
                                         
                                         
-                                    }.if(student.key == selectedStudent, transform: { view in
-                                        view.border(Color.red)
-                                    })
+                                    }
+                                    .border(student.key == selectedStudent ? Color.red : Color.clear)
                                     .onTapGesture {
                                         selectedStudent = student.key
                                         showAddGradeSheet = true
-                                        proxy.scrollTo(selectedStudent?.id, anchor: .top)
+                                        withAnimation {
+                                            proxy.scrollTo(selectedStudent?.id, anchor: .top)
+                                        }
                                     }.id(student.key.id)
                                 }
                             }
-                            Spacer().frame(height: geometry.size.height * 0.5)
+                            Spacer().frame(height: geometry.size.height)
                         }
-                       
                     }
                 }
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet,
