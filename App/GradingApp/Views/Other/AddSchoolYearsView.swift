@@ -11,6 +11,9 @@ import CSV
 struct AddSchoolYearsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) var dismiss
+    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default) private var existingSchoolYear: FetchedResults<SchoolYear>
+    
+   
     
     @State var schoolYear = "21/22"
     
@@ -33,9 +36,13 @@ struct AddSchoolYearsView: View {
                        }
                        .pickerStyle(WheelPickerStyle())
             
-            CustomButtonView(label: "Hinzufügen", action: self.saveButtonPressed , buttonColor: .accentColor)
-                .disabled(schoolYear.isEmpty)
-                Divider()
+            if existingSchoolYear.contains(where: { s in s.name == schoolYear }){
+                CustomButtonView(label: "Schuljahr exisitiert bereits", action: self.saveButtonPressed , buttonColor: .accentColor)
+                    .disabled(true)
+            } else {
+                CustomButtonView(label: "Hinzufügen", action: self.saveButtonPressed , buttonColor: .accentColor)
+            }
+            Divider()
         }
         
     }

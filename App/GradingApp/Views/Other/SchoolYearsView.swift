@@ -27,7 +27,7 @@ struct SchoolYearsView: View {
                         activeSchoolYear = schoolYear.name
                     } label: {
                         HStack {
-                            Text("\(schoolYear.name)")
+                            Text("Schuljahr \(schoolYear.name)")
                             
                             Spacer()
                             if activeSchoolYear == schoolYear.name {
