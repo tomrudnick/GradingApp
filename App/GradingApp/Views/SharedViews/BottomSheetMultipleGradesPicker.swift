@@ -19,9 +19,11 @@ struct BottomSheetMultipleGradesPicker: View {
     var scrollProxy: ScrollViewProxy
     let buttonHandler: (_ grade: Int) -> ()
     
+    let heightMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.3 : 0.5
+    
     var body: some View {
         BottomSheetView(isOpen: $showAddGradeSheet,
-                        maxHeight: geometry.size.height * 0.5) {
+                        maxHeight: geometry.size.height * heightMultiplier) {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], content: {
                 ForEach(viewModel.pickerValues, id: \.self) { grade in
                     Button(action: {

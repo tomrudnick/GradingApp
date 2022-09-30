@@ -166,6 +166,12 @@ extension Course {
           return Grade.lowerSchoolGrades
         }
     }
+    
+    func getSurnameBeginLetters() -> [Character] {
+        var surnameLetterSet: Set<Character> = []
+        self.students.forEach { if let letter = $0.lastName.lowercased().first { surnameLetterSet.insert(letter) } }
+        return surnameLetterSet.sorted()
+    }
 }
 
 

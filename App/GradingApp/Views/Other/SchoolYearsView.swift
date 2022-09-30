@@ -55,6 +55,7 @@ struct SchoolYearsView: View {
             })
             .sheet(isPresented: $showAddSchoolYear) {
                 AddSchoolYearsView()
+                    .presentationDetents([.medium])
             }
             Spacer()
         }
