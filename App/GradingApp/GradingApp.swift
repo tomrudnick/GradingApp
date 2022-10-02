@@ -35,6 +35,14 @@ struct GradingApp: App {
                 )
             #endif
         }
+        
+        WindowGroup("Note hinzufügen", for: Course.ID.self) { $courseID in
+            if let courseID = courseID,
+               let course = try? PersistenceController.shared.container.viewContext.fetch(Course.fetchRequest(forID: courseID)).first {
+                AddMultipleGradesView(course: course)
+                    .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            }
+        }
     }
 }
 

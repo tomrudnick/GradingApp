@@ -17,6 +17,7 @@ struct CourseTabView: View {
     
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.openWindow) private var openWindow
     
     @StateObject var sendEmailViewModel = SendMultipleEmailsCourseViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
@@ -108,7 +109,11 @@ struct CourseTabView: View {
                     if studentGrade.isEmpty {
                         studentGrade = Dictionary(uniqueKeysWithValues: course.students.map({($0, -1)}))
                     }
-                    showAddMultipleGrades = true
+                    #if targetEnvironment(macCatalyst)
+                        openWindow(value: course.id)
+                    #else
+                        showAddMultipleGrades = true
+                    #endif
                 }, label: {
                     Image(systemName: "plus.circle")
                 })
@@ -139,7 +144,7 @@ struct CourseTabView: View {
                 StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
             })
             .fullScreenCover(isPresented: $showAddMultipleGrades, content: {
-                AddMultipleGradesView(course: course, studentGrade: $studentGrade)
+                AddMultipleGradesView(course: course)
             })
             .fullScreenCover(isPresented: $showTranscriptSheet, content: {
                 StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
@@ -151,7 +156,7 @@ struct CourseTabView: View {
         
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .pad) { view in
             view.sheet(isPresented: $showAddMultipleGrades, content: {
-                AddMultipleGradesView(course: course, studentGrade: $studentGrade)
+                AddMultipleGradesView(course: course)
             })
             .sheet(isPresented: $showTranscriptHalfYearSheet) {
                 StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)

@@ -23,11 +23,15 @@ struct AddMultipleGradesView: View {
     @State private var comment: String = ""
     @State private var showAddGradeSheet: Bool = false
     @State private var selectedStudent: Student? = nil
-    @Binding var studentGrade: [Student:Int]
+    @State var studentGrade: [Student:Int] = [:]
     #if !targetEnvironment(macCatalyst)
     @FocusState private var focusTextField: Bool
     #endif
     
+    let heightMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.3 : 0.5
+    let scrollMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.4 : 0.2
+    
+    let minHeightForStudent = 70.0
     
     var body: some View {
         ScrollViewReader(content: { proxy in
@@ -79,7 +83,7 @@ struct AddMultipleGradesView: View {
                                 #endif
                         }
                         
-                            
+                        
                         Section(header: Text("Noten")) {
                             ForEach(course.studentsArr) { student in
                                 if let student = studentGrade.first { (key: Student, value: Int) in key == student }{
@@ -99,11 +103,12 @@ struct AddMultipleGradesView: View {
                                         
                                     }
                                     .border(student.key == selectedStudent ? Color.red : Color.clear)
+                                    .frame(minHeight: minHeightForStudent)
                                     .onTapGesture {
                                         selectedStudent = student.key
                                         showAddGradeSheet = true
                                         withAnimation {
-                                            proxy.scrollTo(selectedStudent?.id, anchor: .top)
+                                            perfectScroll(geo: geometry, scroll: proxy, student: selectedStudent)
                                         }
                                     }.id(student.key.id)
                                 }
@@ -112,17 +117,24 @@ struct AddMultipleGradesView: View {
                         }
                     }
                 }
+
                 BottomSheetMultipleGradesPicker(showAddGradeSheet: $showAddGradeSheet,
-                                           selectedStudent: $selectedStudent,
-                                           course: course,
-                                           viewModel: viewModel,
-                                           geometry: geometry,
-                                           scrollProxy: proxy) { grade in
+                                                selectedStudent: $selectedStudent,
+                                                course: course,
+                                                viewModel: viewModel,
+                                                geometry: geometry,
+                                                scrollProxy: proxy)
+                { grade in
                     if let selectedStudent = selectedStudent {
                         studentGrade[selectedStudent] = grade
                         self.selectedStudent = course.nextStudent(after: selectedStudent)
                     }
+                } scrollHandler: {
+                    withAnimation {
+                        perfectScroll(geo: geometry, scroll: proxy, student: selectedStudent)
+                    }
                 }
+
                 #if !targetEnvironment(macCatalyst)
                .onChange(of: showAddGradeSheet) { value in
                     if value {
@@ -133,8 +145,29 @@ struct AddMultipleGradesView: View {
             }
         })
         .onAppear {
+            studentGrade = Dictionary(uniqueKeysWithValues: course.students.map({($0, -1)}))
             viewModel.setup(courseType: course.ageGroup, options: .normal)
         }
+    }
+    
+    func perfectScroll(geo: GeometryProxy, scroll: ScrollViewProxy, student: Student?) {
+        let indexOfStudent = course.studentsArr.firstIndex(where: {$0 == student})
+        if let indexOfStudent {
+            let difference = (geo.size.height * scrollMultiplier) - ((CGFloat(indexOfStudent) * minHeightForStudent) + minHeightForStudent)
+            if difference > 0 {
+                if let id = course.studentsArr.first?.id {
+                    scroll.scrollTo(id, anchor: .top)
+                }
+            } else {
+                let new_index = min(abs(Int(round(difference / minHeightForStudent))), course.studentsArr.count - 1)
+                scroll.scrollTo(course.studentsArr[new_index].id, anchor: .top)
+                //print("New_Index \(abs(Int(round(difference / 80.0))))")
+            }
+            print(geo.size.height * 0.5)
+            print( CGFloat(indexOfStudent) * 80.0 + 80.0)
+            print("Difference \(difference)")
+        }
+       
     }
     
     

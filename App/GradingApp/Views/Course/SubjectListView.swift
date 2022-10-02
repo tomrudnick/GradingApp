@@ -52,12 +52,11 @@ struct SubjectListView: View {
                 }
             }.onDelete(perform: removeSubject)
         }.toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                Spacer()
+            ToolbarItemGroup(placement: .automatic) {
                 Button {
                     self.showAddSheet = true
                 } label: {
-                    Image(systemName: "plus.circle").font(.largeTitle)
+                    Image(systemName: "plus.circle")
                 }
             }
         }.sheet(isPresented: $showAddSheet) {

@@ -24,6 +24,11 @@ struct GradeAtDatesEditView : View{
     @FocusState private var focusTextField: Bool
     #endif
     
+    let heightMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.3 : 0.5
+    let scrollMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.4 : 0.2
+    
+    let minHeightForStudent = 70.0
+    
     init(course: Course, studentGrades: [GradeStudent<Grade>]) {
         self._editGradesPerDateVM = StateObject(wrappedValue: EditGradesPerDateViewModel(studentGrades: studentGrades, course: course))
     }
@@ -83,11 +88,12 @@ struct GradeAtDatesEditView : View{
                                     
                             }
                             .border(studentGrade.student == selectedStudent ? Color.red : Color.clear)
+                            .frame(minHeight: minHeightForStudent)
                             .onTapGesture {
                                 selectedStudent = studentGrade.student
                                 showAddGradeSheet = true
                                 withAnimation {
-                                    proxy.scrollTo(selectedStudent?.id, anchor: .top)
+                                    perfectScroll(geo: geometry, scroll: proxy, student: selectedStudent)
                                 }
                             }.id(studentGrade.student.id)
                         }
@@ -104,6 +110,10 @@ struct GradeAtDatesEditView : View{
                         self.selectedStudent = editGradesPerDateVM.course.nextStudent(after: selectedStudent)
                     }
                     
+                } scrollHandler: {
+                    withAnimation {
+                        perfectScroll(geo: geometry, scroll: proxy, student: selectedStudent)
+                    }
                 }
                 #if !targetEnvironment(macCatalyst)
                 .onChange(of: showAddGradeSheet) { value in
@@ -144,6 +154,29 @@ struct GradeAtDatesEditView : View{
         })
         .navigationTitle(Text(editGradesPerDateVM.date.asString(format: "dd MMM")))
         
+    }
+    
+    
+    func perfectScroll(geo: GeometryProxy, scroll: ScrollViewProxy, student: Student?) {
+        let indexOfStudent = editGradesPerDateVM.studentGrades.firstIndex { gradeStudent in
+            gradeStudent.student == student
+        }
+        if let indexOfStudent {
+            let difference = (geo.size.height * scrollMultiplier) - ((CGFloat(indexOfStudent) * minHeightForStudent) + minHeightForStudent)
+            if difference > 0 {
+                if let id = editGradesPerDateVM.studentGrades.first?.id {
+                    scroll.scrollTo(id, anchor: .top)
+                }
+            } else {
+                let new_index = min(abs(Int(round(difference / minHeightForStudent))), editGradesPerDateVM.studentGrades.count - 1)
+                scroll.scrollTo(editGradesPerDateVM.studentGrades[new_index].student.id, anchor: .top)
+                //print("New_Index \(abs(Int(round(difference / 80.0))))")
+            }
+            print(geo.size.height * 0.5)
+            print( CGFloat(indexOfStudent) * 80.0 + 80.0)
+            print("Difference \(difference)")
+        }
+       
     }
     
 }

@@ -10,6 +10,21 @@ import CoreData
 
 extension Course {
     
+    public var id: UUID {
+        get {
+            if let id_ {
+                return id_
+            } else {
+                id_ = UUID()
+                return id_!
+            }
+        }
+        
+        set {
+            id_ = newValue
+        }
+    }
+    
     var name: String {
         get { name_ ?? "" }
         set { name_ = newValue}
@@ -75,6 +90,7 @@ public enum CourseType: Int16, Codable {
 extension Course {
     convenience init(name: String, subject: String, hidden: Bool = false, context: NSManagedObjectContext) {
         self.init(context: context)
+        self.id = UUID()
         self.name = name
         self.subject = subject
         self.hidden = hidden
@@ -101,6 +117,12 @@ extension Course {
         let course = Course(name: course.name, subject: course.subject, hidden: course.hidden, ageGroup: course.ageGroup, type: course.type, oralWeight: course.oralWeight, context: context)
         context.saveCustom()
         return course
+    }
+    
+    static func fetchRequest(forID id: UUID) -> NSFetchRequest<Course> {
+        let request = fetchAll()
+        request.predicate = NSPredicate(format: "id_ = %@", id as CVarArg)
+        return request
     }
     
     static func fetchAll() -> NSFetchRequest<Course> {

@@ -52,6 +52,7 @@ struct SchoolYearsView: View {
             })
             .sheet(item: $selectedSchoolYear, content: { schoolYear in
                 EditSchoolYearsView(oldSchoolYear: schoolYear, activeSchoolYear: $activeSchoolYear)
+                    .presentationDetents([.medium])
             })
             .sheet(isPresented: $showAddSchoolYear) {
                 AddSchoolYearsView()

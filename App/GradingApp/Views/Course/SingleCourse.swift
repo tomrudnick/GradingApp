@@ -48,6 +48,7 @@ struct SingleCourse: View {
                             }
                             
                         }
+                        
                         TextField("Kurs z.B. 11D", text: $courseName)
                             .frame(width: 100)
                     }

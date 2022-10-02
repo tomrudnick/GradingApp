@@ -28,6 +28,11 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
     
     let detailStudentView: (_ student: Student) -> DetailView
     
+    let heightMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.3 : 0.5
+    let scrollMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.35 : 0.2
+    
+    let minHeightForStudent = 80.0
+    
     init(course: Course, viewModel: Model, @ViewBuilder detailView: @escaping (_ student: Student) -> DetailView) {
         self.course = course
         self.viewModel = viewModel
@@ -65,12 +70,15 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                                     .background(Color.accentColor)
                                     .cornerRadius(10)
                                     .shadow(radius: 5.0)
-                            }.if(studentGrade.student == selectedStudent) { view in
-                                view.border(Color.red)
-                            }.onTapGesture {
+                            }
+                            .border(studentGrade.student == selectedStudent ? Color.red : Color.clear)
+                            .frame(minHeight: minHeightForStudent)
+                            .onTapGesture {
                                 selectedStudent = studentGrade.student
                                 showAddGradeSheet = true
-                                proxy.scrollTo(selectedStudent?.id, anchor: .top)
+                                withAnimation {
+                                    perfectScroll(geo: geometry, scroll: proxy, student: selectedStudent)
+                                }
                             }.id(studentGrade.student.id)
                             
                         }
@@ -84,12 +92,37 @@ struct StudentTranscriptGradesView<Model, DetailView>: View where Model: Transcr
                         self.selectedStudent = viewModel.course!.nextStudent(after: selectedStudent)
                     }
                     
+                } scrollHandler: {
+                    withAnimation {
+                        perfectScroll(geo: geometry, scroll: proxy, student: selectedStudent)
+                    }
                 }
             }
         }.onAppear {
             gradePickerViewModel.setup(courseType: course.ageGroup, options: .transcript)
         }
     }
+    
+    func perfectScroll(geo: GeometryProxy, scroll: ScrollViewProxy, student: Student?) {
+        let indexOfStudent = course.studentsArr.firstIndex(where: {$0 == student})
+        if let indexOfStudent {
+            let difference = (geo.size.height * scrollMultiplier) - ((CGFloat(indexOfStudent) * minHeightForStudent) + minHeightForStudent)
+            if difference > 0 {
+                if let id = course.studentsArr.first?.id {
+                    scroll.scrollTo(id, anchor: .top)
+                }
+            } else {
+                let new_index = min(abs(Int(round(difference / minHeightForStudent))), course.studentsArr.count - 1)
+                scroll.scrollTo(course.studentsArr[new_index].id, anchor: .top)
+                //print("New_Index \(abs(Int(round(difference / 80.0))))")
+            }
+            print(geo.size.height * 0.5)
+            print( CGFloat(indexOfStudent) * 80.0 + 80.0)
+            print("Difference \(difference)")
+        }
+       
+    }
+    
     func save() {
         viewModel.save(viewContext: viewContext)
         dismiss()

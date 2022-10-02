@@ -18,8 +18,11 @@ struct BottomSheetMultipleGradesPicker: View {
     var geometry: GeometryProxy
     var scrollProxy: ScrollViewProxy
     let buttonHandler: (_ grade: Int) -> ()
+    let scrollHandler: () -> ()
     
     let heightMultiplier = UIDevice.current.userInterfaceIdiom == .pad ? 0.3 : 0.5
+
+   
     
     var body: some View {
         BottomSheetView(isOpen: $showAddGradeSheet,
@@ -72,12 +75,10 @@ struct BottomSheetMultipleGradesPicker: View {
     }
     
     func scrollToNext() {
-        withAnimation {
-            if selectedStudent == nil {
-                self.showAddGradeSheet = false
-            } else {
-                scrollProxy.scrollTo(selectedStudent?.id, anchor: .top)
-            }
+        if selectedStudent == nil {
+            self.showAddGradeSheet = false
+        } else {
+            scrollHandler()
         }
     }
 }
