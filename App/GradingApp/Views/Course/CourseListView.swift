@@ -87,7 +87,7 @@ struct CourseListView: View {
             }.onChange(of: selectedCourse, perform: { _ in
                 selectedTab = "StudentListView"
             })
-            .navigationTitle(Text("Kurse \(appSettings.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
+            .navigationTitle(Text("Kurse \(appSettings.activeHalf == .firstHalf ? "1. " : "2. ") HJ, \(appSettings.activeSchoolYear?.name ?? "")"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     editButton
