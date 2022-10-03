@@ -35,16 +35,12 @@ class AppSettings : ObservableObject {
             context.perform { [self] in
                 activeSchoolYear = try? context.fetch(SchoolYear.fetchSchoolYear(id: activeSchoolYearUUID)).first
                 
-                if activeSchoolYear == nil {
-                    activeSchoolYear = SchoolYear(name: "TEMP", context: PersistenceController.shared.container.viewContext)
-                    self.activeSchoolYearUD = activeSchoolYear?.id.uuidString
-                    context.saveCustom()
+                if activeSchoolYear == nil { //In theory this should never happen but while developing this might happen and this will prevent that the app crashes
+                    createDefaultSchoolYear()
                 }
             }
         } else { //THIS means that probably no schoolYear exists
-            activeSchoolYear = SchoolYear(name: "TEMP", context: PersistenceController.shared.container.viewContext)
-            activeSchoolYearUD = activeSchoolYear?.id.uuidString
-            context.saveCustom()
+            createDefaultSchoolYear()
         }
     }
     
@@ -60,6 +56,15 @@ class AppSettings : ObservableObject {
             return Course.fetchHalfNonHidden(half: activeHalf)
         }
         
+    }
+    
+    func createDefaultSchoolYear() {
+        let context = PersistenceController.shared.container.viewContext
+        let year = Calendar.current.component(.year, from: Date()) % 100
+        let scholYearName = String(format: "%02d", year)+"/"+String(format: "%02d", year+1)
+        activeSchoolYear = SchoolYear(name: scholYearName, context: PersistenceController.shared.container.viewContext)
+        activeSchoolYearUD = activeSchoolYear?.id.uuidString
+        context.saveCustom()
     }
     
 }
