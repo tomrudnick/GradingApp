@@ -35,12 +35,6 @@ enum Route: Hashable {
 }
 
 struct CourseListView: View {
-    
-    enum AlertType {
-        case undoRedo
-        case halfYearWarning
-    }
-    
     @EnvironmentObject var appSettings: AppSettings
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -58,7 +52,6 @@ struct CourseListView: View {
     
     
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
-    @State var alertType: AlertType = .halfYearWarning
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
     
@@ -104,13 +97,11 @@ struct CourseListView: View {
                 
             }
             .alert(isPresented: $showAlert, content: {
-                if alertType == .halfYearWarning {
-                    return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
-                } else {
-                    return undoRedoVM.getAlert(viewContext: viewContext)
-                }
-                
+                return undoRedoVM.getAlert(viewContext: viewContext)
             })
+            .alert(isPresented: $appSettings.correctHalf.not) {
+                return Alert(title: Text("Achtung!"), message: Text("Sie sind möglicherweise im falschen Halbjahr"), dismissButton: .default(Text("Ok")))
+            }
         } detail: {
            
             NavigationStack(path: $path) {
@@ -154,7 +145,6 @@ struct CourseListView: View {
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                 #endif
                 firstAppear = false
-                halfCorrect()
             }
             self.didAppear?(self)
         }
@@ -180,7 +170,6 @@ struct CourseListView: View {
     
     var undoButton: some View {
         Button {
-            self.alertType = .undoRedo
             self.undoRedoVM.undoManagerAction = .undo
             self.showAlert = true
         } label: {
@@ -190,18 +179,10 @@ struct CourseListView: View {
     
     var redoButton: some View {
         Button {
-            self.alertType = .undoRedo
             self.undoRedoVM.undoManagerAction = .redo
             self.showAlert = true
         } label: {
             Image(systemName: "arrow.uturn.forward")
-        }
-    }
-    
-    func halfCorrect() {
-        if !appSettings.correctHalf {
-            alertType = .halfYearWarning
-            showAlert = true
         }
     }
 }

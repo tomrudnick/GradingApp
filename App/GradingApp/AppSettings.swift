@@ -11,7 +11,11 @@ import CoreData
 import Combine
 
 class AppSettings : ObservableObject {
-    @CloudStorage(HalfYearDateKeys.selectedHalf)    var activeHalf            :     HalfType = .firstHalf
+    @CloudStorage(HalfYearDateKeys.selectedHalf)    var activeHalf            :     HalfType = .firstHalf {
+        didSet {
+            correctHalf = (activeHalf == .firstHalf && Date() >= dateFirstHalf || activeHalf == .secondHalf && Date() >= dateSecondHalf)
+        }
+    }
     @CloudStorage(HalfYearDateKeys.firstHalf)       var dateFirstHalf         :     Date = Date()
     @CloudStorage(HalfYearDateKeys.secondHalf)      var dateSecondHalf        :     Date = Date()
     @CloudStorage("Schuljahr")                      var activeSchoolYearUD    :     String? {
@@ -26,6 +30,7 @@ class AppSettings : ObservableObject {
         }
     }
     @Published var activeSchoolYear : SchoolYear?
+    @Published var correctHalf: Bool = true
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -42,11 +47,10 @@ class AppSettings : ObservableObject {
         } else { //THIS means that probably no schoolYear exists
             createDefaultSchoolYear()
         }
+        
+        correctHalf = (activeHalf == .firstHalf && Date() >= dateFirstHalf || activeHalf == .secondHalf && Date() >= dateSecondHalf)
     }
     
-    var correctHalf: Bool {
-        (activeHalf == .firstHalf && Date() >= dateFirstHalf || activeHalf == .secondHalf && Date() >= dateSecondHalf)
-    }
     
     func courseFetchRequest() -> NSFetchRequest<Course> {
         if let activeSchoolYear {
@@ -58,7 +62,7 @@ class AppSettings : ObservableObject {
         
     }
     
-    func createDefaultSchoolYear() {
+    private func createDefaultSchoolYear() {
         let context = PersistenceController.shared.container.viewContext
         let year = Calendar.current.component(.year, from: Date()) % 100
         let scholYearName = String(format: "%02d", year)+"/"+String(format: "%02d", year+1)
