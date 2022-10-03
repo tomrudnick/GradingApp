@@ -41,6 +41,8 @@ struct CourseListView: View {
         case halfYearWarning
     }
     
+    @EnvironmentObject var appSettings: AppSettings
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.scenePhase) var scenePhase
     @FetchRequest(fetchRequest: Course.fetchAllNonHidden(), animation: .default )
@@ -51,7 +53,6 @@ struct CourseListView: View {
     @State var showMoreActions = false
     @State var activeLink: ObjectIdentifier? = nil
     @State var showAlert = false
-    @Binding var activeHalf: HalfType
     @StateObject var editCourseViewModel = CourseEditViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
     
@@ -71,10 +72,9 @@ struct CourseListView: View {
     @State private var path: [Route] = []
     @State private var selectedTab: String = "StudentListView"
 
-    init(externalScreenHideViewModel: ExternalScreenHideViewModel, activeHalf: Binding<HalfType>) {
-        self._activeHalf = activeHalf
+    init(externalScreenHideViewModel: ExternalScreenHideViewModel, fetchRequest: NSFetchRequest<Course>) {
         self.externalScreenHideViewModel = externalScreenHideViewModel
-        self._courses = FetchRequest(fetchRequest: Course.fetchHalfNonHidden(half: activeHalf.wrappedValue), animation: .default)
+        self._courses = FetchRequest(fetchRequest: fetchRequest, animation: .default)
     }
     
     var body: some View {
@@ -87,7 +87,7 @@ struct CourseListView: View {
             }.onChange(of: selectedCourse, perform: { _ in
                 selectedTab = "StudentListView"
             })
-            .navigationTitle(Text("Kurse \(activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
+            .navigationTitle(Text("Kurse \(appSettings.activeHalf == .firstHalf ? "1. " : "2. ") Halbjahr"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     editButton
@@ -136,11 +136,15 @@ struct CourseListView: View {
         }
        
         .fullScreenCover(isPresented: $showMoreActions, content: {
-            SettingsView(externalScreenHideViewModel: externalScreenHideViewModel, selectedHalf: $activeHalf).environment(\.managedObjectContext, viewContext)
+            SettingsView(externalScreenHideViewModel: externalScreenHideViewModel)
+                .environment(\.managedObjectContext, viewContext)
+                .environmentObject(appSettings)
         })
         .fullScreenCover(isPresented: $showEditCourses) {
             NavigationView {
-                EditCoursesView(editVM: editCourseViewModel).environment(\.managedObjectContext, viewContext)
+                EditCoursesView(editVM: editCourseViewModel)
+                    .environment(\.managedObjectContext, viewContext)
+                    .environmentObject(appSettings)
             }
         }
         .onAppear {
@@ -152,19 +156,14 @@ struct CourseListView: View {
                 firstAppear = false
                 halfCorrect()
             }
-            print("Students count: \(PersistenceController.fetchData(context: viewContext, fetchRequest: Student.fetchAll()).count)")
-            print("Grades count:   \(PersistenceController.fetchData(context: viewContext, fetchRequest: Grade.fetchAll()).count)")
-            /*print("NULL Students count: \(PersistenceController.fetchData(context: viewContext, fetchRequest: Student.fetchAllNullCourse()).count)")*/
-            
             self.didAppear?(self)
-            
         }
-        .environment(\.currentHalfYear, activeHalf)
+        .environmentObject(appSettings)
     }
     
     var editButton : some View {
         Button {
-            editCourseViewModel.fetchCourses(context: viewContext)
+            editCourseViewModel.fetchCourses(schoolYear: appSettings.activeSchoolYear!, context: viewContext)
             showEditCourses = true
         } label: {
             Image(systemName: "pencil.circle")
@@ -200,7 +199,7 @@ struct CourseListView: View {
     }
     
     func halfCorrect() {
-        if !(activeHalf == .firstHalf && Date() >= dateFirstHalf || activeHalf == .secondHalf && Date() >= dateSecondHalf) {
+        if !appSettings.correctHalf {
             alertType = .halfYearWarning
             showAlert = true
         }

@@ -17,6 +17,8 @@ enum BackupType {
 }
 
 struct SettingsView: View {
+    @EnvironmentObject var appSettings: AppSettings
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) var dismiss
     @Environment(\.scenePhase) var scenePhase
@@ -32,19 +34,14 @@ struct SettingsView: View {
     @State private var backupType: BackupType = .backup
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
     
-    @CloudStorage("Schuljahr")                  var activeSchoolYear:   String?
-    @CloudStorage(HalfYearDateKeys.firstHalf)   var dateFirstHalf:      Date = Date()
-    @CloudStorage(HalfYearDateKeys.secondHalf)  var dateSecondHalf:     Date = Date()
     
-    @Binding var selectedHalf: HalfType
     
     var onDelete: () -> ()
     
-    init(externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }, selectedHalf: Binding<HalfType>) {
+    init(externalScreenHideViewModel: ExternalScreenHideViewModel, onDelete: @escaping () -> () = { }) {
         self.onDelete = onDelete
         self.externalScreenHideViewModel = externalScreenHideViewModel
         self._backupSettingsViewModel = StateObject(wrappedValue: BackupViewModel())
-        self._selectedHalf = selectedHalf
     }
     
     
@@ -109,29 +106,29 @@ struct SettingsView: View {
                 
                 Section(header: Text("Halbjahres Einstellung")) {
                     
-                    DatePicker("Start 1. Halbjahr", selection: $dateFirstHalf, displayedComponents: [.date])
-                        .id(dateFirstHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
+                    DatePicker("Start 1. Halbjahr", selection: $appSettings.dateFirstHalf, displayedComponents: [.date])
+                        .id(appSettings.dateFirstHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
                         .environment(\.locale, Locale.init(identifier: "de"))
                     
                     
-                    DatePicker("Start 2. Halbjahr", selection: $dateSecondHalf, displayedComponents: [.date])
-                        .id(dateSecondHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
+                    DatePicker("Start 2. Halbjahr", selection: $appSettings.dateSecondHalf, displayedComponents: [.date])
+                        .id(appSettings.dateSecondHalf) //Erzwingt den Datepicker einen rebuild des Views zu machen
                         .environment(\.locale, Locale.init(identifier: "de"))
                     
-                    Picker(selection: $selectedHalf, label: Text("")) {
+                    Picker(selection: $appSettings.activeHalf, label: Text("")) {
                         Text("1. Halbjahr").tag(HalfType.firstHalf)
                         Text("2. Halbjahr").tag(HalfType.secondHalf)
                     }.pickerStyle(SegmentedPickerStyle())
-                        .onChange(of: selectedHalf) { newValue in
-                            showHalfWarningAlert = !halfCorrect()
+                        .onChange(of: appSettings.activeHalf) { newValue in
+                            showHalfWarningAlert = !appSettings.correctHalf
                         }
                     
                 }
                 
                 Section(header: Text("Schuljahr")) {
-                    NavigationLink(destination: SchoolYearsView(activeSchoolYear: $activeSchoolYear)){
+                    NavigationLink(destination: SchoolYearsView()){
                         HStack {
-                            Text("Schuljahr \(activeSchoolYear ?? "-")")
+                            Text("Schuljahr \(appSettings.activeSchoolYear?.name ?? "-")")
                             Spacer()
                             Text("Schuljahr wählen")
                         }
@@ -192,7 +189,7 @@ struct SettingsView: View {
                 Alert(title: Text("Achtung"),
                       message: Text("Das ausgewählte Halbjahr stimmt nicht mit den eingestellten Daten überein"),
                       primaryButton: Alert.Button.default(Text("Ok!"), action: { }),
-                      secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { self.selectedHalf = self.selectedHalf == .firstHalf ? .secondHalf : .firstHalf })
+                      secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { self.appSettings.activeHalf = self.appSettings.activeHalf == .firstHalf ? .secondHalf : .firstHalf })
                 )
             })
             .navigationBarTitle("Weiteres...", displayMode: .inline)
@@ -254,16 +251,6 @@ struct SettingsView: View {
             } catch {
                 print("Something went wrong")
             }
-        }
-    }
-    
-    func halfCorrect() -> Bool {
-        if selectedHalf == .firstHalf && Date() >= dateFirstHalf {
-            return true
-        } else if selectedHalf == .secondHalf && Date() >= dateSecondHalf {
-            return true
-        } else {
-            return false
         }
     }
 }

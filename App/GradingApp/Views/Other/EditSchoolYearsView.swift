@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct EditSchoolYearsView: View {
+    @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) var dismiss
     
     @ObservedObject var oldSchoolYear: SchoolYear
     @State var newSchoolYearName: String = ""
-    @Binding var activeSchoolYear: String?
     
     var body: some View {
         VStack {
@@ -37,10 +37,10 @@ struct EditSchoolYearsView: View {
     }
  
     func saveButtonPressed() {
-        if oldSchoolYear.name == activeSchoolYear {
-            activeSchoolYear = newSchoolYearName
-        }
         oldSchoolYear.updateSchoolYearName(name: newSchoolYearName, context: viewContext)
+        if oldSchoolYear == appSettings.activeSchoolYear {
+            appSettings.objectWillChange.send()
+        }
         dismiss()
     }
 }

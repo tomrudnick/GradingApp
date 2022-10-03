@@ -104,17 +104,25 @@ extension Course {
         self.oralWeight = oralWeight
     }
     
+    convenience init(name: String, subject: String, hidden: Bool = false, ageGroup: AgeGroup, type: CourseType, oralWeight: Float, schoolYear: SchoolYear, context: NSManagedObjectContext) {
+        self.init(name: name, subject: subject, hidden: hidden, context: context)
+        self.type = type
+        self.ageGroup = ageGroup
+        self.oralWeight = oralWeight
+        self.schoolyear = schoolYear
+    }
     
-    static func addCourse(courseName: String, courseSubject: String, oralWeight: Float, ageGroup: AgeGroup, type: CourseType, hidden: Bool = false, context: NSManagedObjectContext) {
-        _ = Course(name: courseName, subject: courseSubject, hidden: hidden, ageGroup: ageGroup, type: type, oralWeight: oralWeight, context: context)
+    
+    static func addCourse(courseName: String, courseSubject: String, oralWeight: Float, ageGroup: AgeGroup, type: CourseType, hidden: Bool = false, schoolYear: SchoolYear, context: NSManagedObjectContext) {
+        _ = Course(name: courseName, subject: courseSubject, hidden: hidden, ageGroup: ageGroup, type: type, oralWeight: oralWeight, schoolYear: schoolYear, context: context)
         context.saveCustom()
     }
     static func addCourse(course: CourseEditViewModel.CourseVM, context: NSManagedObjectContext){
-        addCourse(courseName: course.name, courseSubject: course.subject, oralWeight: course.oralWeight, ageGroup: course.ageGroup, type: course.type, hidden: course.hidden, context: context)
+        addCourse(courseName: course.name, courseSubject: course.subject, oralWeight: course.oralWeight, ageGroup: course.ageGroup, type: course.type, hidden: course.hidden, schoolYear: course.schoolYear, context: context)
     }
     
     static func getAddCourse(course: CourseEditViewModel.CourseVM, context: NSManagedObjectContext) -> Course {
-        let course = Course(name: course.name, subject: course.subject, hidden: course.hidden, ageGroup: course.ageGroup, type: course.type, oralWeight: course.oralWeight, context: context)
+        let course = Course(name: course.name, subject: course.subject, hidden: course.hidden, ageGroup: course.ageGroup, type: course.type, oralWeight: course.oralWeight, schoolYear: course.schoolYear, context: context)
         context.saveCustom()
         return course
     }
@@ -140,7 +148,20 @@ extension Course {
     static func fetchHalfNonHidden(half: HalfType) -> NSFetchRequest<Course> {
         let request = fetchAll()
         let courseType = half == .firstHalf ? CourseType.firstHalf : CourseType.secondHalf
-        request.predicate = NSPredicate(format: "hidden == NO AND type_ == %d OR type_ == %d", courseType.rawValue, CourseType.holeYear.rawValue)
+        request.predicate = NSPredicate(format: "hidden == NO AND (type_ == %d OR type_ == %d)", courseType.rawValue, CourseType.holeYear.rawValue)
+        return request
+    }
+    
+    static func fetchHalfNonHiddenSchoolYear(half: HalfType, schoolYear: SchoolYear) -> NSFetchRequest<Course>{
+        let request = fetchAll()
+        let courseType = half == .firstHalf ? CourseType.firstHalf : CourseType.secondHalf
+        request.predicate = NSPredicate(format: "schoolyear == %@ AND hidden == NO AND (type_ == %d OR type_ == %d)", schoolYear, courseType.rawValue, CourseType.holeYear.rawValue)
+        return request
+    }
+    
+    static func fetchSchoolYear(schoolYear: SchoolYear) -> NSFetchRequest<Course> {
+        let request = fetchAll()
+        request.predicate = NSPredicate(format: "schoolyear == %@", schoolYear)
         return request
     }
 }

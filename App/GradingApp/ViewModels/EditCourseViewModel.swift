@@ -26,12 +26,12 @@ class CourseEditViewModel: ObservableObject {
     @Published var courses: [CourseVM] = []
     private var fetchedCourses: [UUID : Course] = [:] // SHOULD NEVER BE ACCESSIBLE FROM THE OUTSIDE
     
-    func fetchCourses(context: NSManagedObjectContext) {
-        let fetchedData = PersistenceController.fetchData(context: context, fetchRequest: Course.fetchAll())
+    func fetchCourses(schoolYear: SchoolYear, context: NSManagedObjectContext) {
+        let fetchedData = PersistenceController.fetchData(context: context, fetchRequest: Course.fetchSchoolYear(schoolYear: schoolYear))
         self.fetchedCourses = Dictionary(uniqueKeysWithValues: fetchedData.map {(UUID(), $0)})
         self.courses = fetchedCourses.map({ (key: UUID, value: Course) in
             CourseVM(id: key, name: value.name, subject: value.subject, hidden: value.hidden, ageGroup: value.ageGroup, oralWeight: value.oralWeight, type: value.type, deleted: false,
-                     fetchedStudents: Dictionary(uniqueKeysWithValues: value.students.map {(UUID(), $0)}))
+                     fetchedStudents: Dictionary(uniqueKeysWithValues: value.students.map {(UUID(), $0)}), schoolYear: value.schoolyear!)
         }).sorted(by: { $0.name < $1.name })
     }
     
@@ -57,6 +57,7 @@ class CourseEditViewModel: ObservableObject {
                     course.ageGroup = courseVM.ageGroup
                     course.oralWeight = courseVM.oralWeight
                     course.type = courseVM.type
+                    course.schoolyear = courseVM.schoolYear
                     //maybe extract this part into CourseVM Model
                     for (id, student) in courseVM.fetchedStudents {
                         if let studentModel = courseVM.students.first(where: {$0.id == id}) { //this should probably never fail (untested) (maybe replace with guard)
@@ -102,12 +103,13 @@ class CourseEditViewModel: ObservableObject {
         @Published var oralWeight: Float
         @Published var ageGroup: AgeGroup
         @Published var type: CourseType
+        @Published var schoolYear: SchoolYear
         var title: String {
             subject + " " + name
         }
         private(set) var fetchedStudents: [UUID : Student] // SHOULD NEVER BE WRITABLE FROM THE OUTSIDE
         @Published var students: [Student.DataModel]
-        init(id: UUID = UUID(), name: String, subject: String, hidden: Bool, ageGroup: AgeGroup, oralWeight: Float, type: CourseType, deleted: Bool, fetchedStudents: [UUID : Student]) {
+        init(id: UUID = UUID(), name: String, subject: String, hidden: Bool, ageGroup: AgeGroup, oralWeight: Float, type: CourseType, deleted: Bool, fetchedStudents: [UUID : Student], schoolYear: SchoolYear) {
             self.id = id
             self.name = name
             self.subject = subject
@@ -120,6 +122,7 @@ class CourseEditViewModel: ObservableObject {
             self.students = self.fetchedStudents.map { (key: UUID, value: Student) in
                 Student.DataModel(id: key, firstName: value.firstName, lastName: value.lastName, email: value.email, hidden: value.hidden)
             }.sorted(by: { Student.compareStudents($0, $1) })
+            self.schoolYear = schoolYear
         }
         
         func deleteStudentCoursesEdit(atOffsets indexSet: IndexSet)  {

@@ -93,7 +93,6 @@
 		E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E282BE3028D7D2280014ACFE /* CloudStorage */; };
 		E295971B285FDEF0008FD8B5 /* GradeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295971A285FDEF0008FD8B5 /* GradeText.swift */; };
 		E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A20B0526D41910005FA240 /* StudentGradeListView.swift */; };
-		E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = E2A20B0826D43777005FA240 /* SwiftUICharts */; };
 		E2A23E2C26C04420007A9217 /* EditViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A23E2B26C04420007A9217 /* EditViewModelTest.swift */; };
 		E2A3211E280C522E00EDBF89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211D280C522E00EDBF89 /* AppDelegate.swift */; };
 		E2A32120280D769700EDBF89 /* BackupRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */; };
@@ -116,6 +115,7 @@
 		E2EA7AA226BEF23C0036048E /* GradeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */; };
 		E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA326BEF6260036048E /* SingleGradeView.swift */; };
 		E2EA7AA626BEF9E50036048E /* EditSingleGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */; };
+		E2F409F328EAEC74006BA662 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F409F228EAEC74006BA662 /* AppSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +248,7 @@
 		E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeDetailView.swift; sourceTree = "<group>"; };
 		E2EA7AA326BEF6260036048E /* SingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGradeView.swift; sourceTree = "<group>"; };
 		E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSingleGradeView.swift; sourceTree = "<group>"; };
+		E2F409F228EAEC74006BA662 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,7 +267,6 @@
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
 				6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */,
 				E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */,
-				E2A20B0926D43777005FA240 /* SwiftUICharts in Frameworks */,
 				6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */,
 				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
 			);
@@ -494,6 +494,7 @@
 				E24AF9D226D8DD3E000F2313 /* GradingApp.entitlements */,
 				E25FBCA326BADAC6000BDD65 /* GradingApp.swift */,
 				E2A3211D280C522E00EDBF89 /* AppDelegate.swift */,
+				E2F409F228EAEC74006BA662 /* AppSettings.swift */,
 				E20C5E3626CD4B2B00F860C6 /* Extensions */,
 				E2C5138826BBE10D0069D340 /* Models */,
 				E2C5138726BBE0FA0069D340 /* CoreData */,
@@ -658,7 +659,6 @@
 			name = GradingApp;
 			packageProductDependencies = (
 				394D7C4F26BDC7DB00892BD4 /* CSV */,
-				E2A20B0826D43777005FA240 /* SwiftUICharts */,
 				6D3EECD826E3D2CC00E9D290 /* KeychainAccess */,
 				6D3EECDB26E3D32100E9D290 /* SwiftSMTP */,
 				6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */,
@@ -722,7 +722,6 @@
 			mainGroup = E25FBC9726BADAC6000BDD65;
 			packageReferences = (
 				394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */,
-				E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */,
 				6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
 				6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
@@ -802,6 +801,7 @@
 				3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */,
 				E25FBCB026BADAC8000BDD65 /* GradingAppData.xcdatamodeld in Sources */,
 				E25FBCB826BAE1AB000BDD65 /* CourseTabView.swift in Sources */,
+				E2F409F328EAEC74006BA662 /* AppSettings.swift in Sources */,
 				E2574C0526D9454400ED2CFD /* HalfYear+EnvironmentValue.swift in Sources */,
 				E2BBEBDF28D8902C0094D0E9 /* CloudStorage+Ext.swift in Sources */,
 				39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */,
@@ -1257,14 +1257,6 @@
 				kind = branch;
 			};
 		};
-		E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView";
-			requirement = {
-				kind = exactVersion;
-				version = "2.0.0-beta.1";
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1297,11 +1289,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */;
 			productName = CloudStorage;
-		};
-		E2A20B0826D43777005FA240 /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E2A20B0726D43777005FA240 /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 

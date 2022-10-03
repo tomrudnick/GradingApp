@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SchoolYearsView: View {
+    @EnvironmentObject var appSettings: AppSettings
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) private var viewContext
@@ -17,20 +18,20 @@ struct SchoolYearsView: View {
     @State private var selectedSchoolYear : SchoolYear? = nil
     @State private var showAddSchoolYear = false
 
-    @Binding var activeSchoolYear: String?
+    
     
     var body: some View {
         VStack{
             List {
                 ForEach(schoolYear, id: \.self) { schoolYear in
                     Button {
-                        activeSchoolYear = schoolYear.name
+                        appSettings.activeSchoolYearUD = schoolYear.id.uuidString
                     } label: {
                         HStack {
                             Text("Schuljahr \(schoolYear.name)")
                             
                             Spacer()
-                            if activeSchoolYear == schoolYear.name {
+                            if appSettings.activeSchoolYear?.name == schoolYear.name {
                                 Image(systemName: "checkmark")
                             }
                         }
@@ -51,7 +52,8 @@ struct SchoolYearsView: View {
                 }
             })
             .sheet(item: $selectedSchoolYear, content: { schoolYear in
-                EditSchoolYearsView(oldSchoolYear: schoolYear, activeSchoolYear: $activeSchoolYear)
+                EditSchoolYearsView(oldSchoolYear: schoolYear)
+                    .environmentObject(appSettings)
                     .presentationDetents([.medium])
             })
             .sheet(isPresented: $showAddSchoolYear) {
@@ -82,7 +84,7 @@ struct SchoolYearsView: View {
             viewContext.saveCustom()
         } label: {
            Label("Löschen", systemImage: "trash")
-        }.disabled(activeSchoolYear == schoolYear.name)
+        }.disabled(appSettings.activeSchoolYear == schoolYear)
     }
 }
 

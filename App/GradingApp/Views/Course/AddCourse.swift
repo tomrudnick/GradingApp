@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct AddCourse: View {
+    @EnvironmentObject var appSettings: AppSettings
     
     @Environment(\.dismiss) var dismiss
     @ObservedObject var editVM: CourseEditViewModel
     
     var body: some View {
         SingleCourse(viewTitle: "Neuer Kurs") { (name, subject, weight, ageGroup, type) in
-            editVM.addCourse(course: CourseEditViewModel.CourseVM(name: name, subject: subject, hidden: false, ageGroup: ageGroup, oralWeight: weight, type: type, deleted: false, fetchedStudents:[:]))
+            if let activeSchoolYear = appSettings.activeSchoolYear {
+                editVM.addCourse(course: CourseEditViewModel.CourseVM(name: name, subject: subject, hidden: false, ageGroup: ageGroup, oralWeight: weight, type: type, deleted: false, fetchedStudents:[:], schoolYear: activeSchoolYear))
+            }
         }
     }
 }

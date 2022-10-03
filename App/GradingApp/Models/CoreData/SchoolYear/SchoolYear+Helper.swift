@@ -14,8 +14,14 @@ extension SchoolYear{
         set { name_ = newValue }
     }
     
+    public var id: UUID {
+        get { id_ ?? UUID() }
+        set { id_ = newValue }
+    }
+    
     public convenience init(name: String, context: NSManagedObjectContext) {
         self.init(context: context)
+        self.id = UUID()
         self.name = name
     }
     static func addSchoolYear(name: String, context: NSManagedObjectContext) {
@@ -29,6 +35,20 @@ extension SchoolYear{
     static func fetchAll() -> NSFetchRequest<SchoolYear> {
         let request = NSFetchRequest<SchoolYear>(entityName: "SchoolYear")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \SchoolYear.name_, ascending: true)]
+        return request
+    }
+    
+    static func fetchSchoolYear(name: String) -> NSFetchRequest<SchoolYear> {
+        let request = NSFetchRequest<SchoolYear>(entityName: "SchoolYear")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \SchoolYear.name_, ascending: true)]
+        request.predicate = NSPredicate(format: "name_ == %@", name)
+        return request
+    }
+    
+    static func fetchSchoolYear(id: UUID) -> NSFetchRequest<SchoolYear> {
+        let request = NSFetchRequest<SchoolYear>(entityName: "SchoolYear")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \SchoolYear.name_, ascending: true)]
+        request.predicate = NSPredicate(format: "id_ = %@", id as CVarArg)
         return request
     }
 }

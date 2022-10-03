@@ -15,16 +15,19 @@ struct GradingApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
     @StateObject var externalScreenhideViewModel = ExternalScreenHideViewModel()
+    @StateObject var appSettings = AppSettings()
     @CloudStorage(HalfYearDateKeys.selectedHalf) var activeHalf: HalfType = .firstHalf
 
     var body: some Scene {
         WindowGroup {
             #if targetEnvironment(macCatalyst)
-            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, activeHalf: $activeHalf)
+            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, fetchRequest: appSettings.courseFetchRequest())
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                .environmentObject(appSettings)
             #else
-            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, activeHalf: $activeHalf)
+            CourseListView(externalScreenHideViewModel: externalScreenhideViewModel, fetchRequest: appSettings.courseFetchRequest())
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                .environmentObject(appSettings)
                 .onReceive(
                     externalScreenhideViewModel.screenDidConnectPublisher,
                     perform: externalScreenhideViewModel.screenDidConnectNotification
