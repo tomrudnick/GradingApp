@@ -11,7 +11,9 @@ import CSV
 struct AddSchoolYearsView: View {
     
     var body: some View {
-        ChangeSchoolYearsView(title: "Neues Schuljahr", schoolYearName: "21/22")
+        //TODO: Pass the save Handler
+        //The Method should create a new Schoolyear and save it
+        ChangeSchoolYearsView(title: "Neues Schuljahr")
     }
 }
 

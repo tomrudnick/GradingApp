@@ -11,17 +11,14 @@ struct ChangeSchoolYearsView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) var dismiss
-    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default) private var existingSchoolYear: FetchedResults<SchoolYear>
+    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default)
+    private var existingSchoolYears: FetchedResults<SchoolYear>
     
+    @State var schoolYearName = "21/22"
     var title: String
-    @State var schoolYearName = ""
     
-    
-    
-    init(title: String, schoolYearName: String){
-        self.title = title
-        self.schoolYearName = schoolYearName
-    }
+    //TODO: Add the decleration of the function it should probably have one argument and no return values
+    //This method should be called when the save button is pressed
     
     var body: some View {
         VStack {
@@ -41,7 +38,7 @@ struct ChangeSchoolYearsView: View {
                            }
                        }
                        .pickerStyle(WheelPickerStyle())
-            if existingSchoolYear.contains(where: { s in s.name == schoolYearName }){
+            if existingSchoolYears.contains(where: { s in s.name == schoolYearName }){
                 CustomButtonView(label: "Schuljahr exisitiert bereits", action: self.saveButtonPressed, buttonColor: .accentColor)
                     .disabled(true)
             } else {
@@ -49,17 +46,10 @@ struct ChangeSchoolYearsView: View {
             }
             Divider()
         }
-        //.onAppear{schoolYearName = oldSchoolYear.name}
-        Spacer()
     }
     
     func saveButtonPressed() {
-        if title == "Neues Schuljahr" {
-            SchoolYear.addSchoolYear(name: schoolYearName, context: viewContext)
-        }
-        else {
-            //schoolYear.updateSchoolYearName(name: schoolYearName, context: viewContext)
-        }
+        //TODO: Call Save handler
         dismiss()
     }
     
