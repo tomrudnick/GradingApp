@@ -207,8 +207,8 @@ class BackupViewModel: ObservableObject {
     static func getOneJsonFile(viewContext: NSManagedObjectContext) -> JSONFile {
         var jsonData: Data = Data()
         do {
-            let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
-            jsonData = try JSONEncoder().encode(fetchedCourses)
+            let fetchedSchoolYears = PersistenceController.fetchData(context: viewContext, fetchRequest: SchoolYear.fetchAll())
+            jsonData = try JSONEncoder().encode(fetchedSchoolYears)
                 
         } catch {
             print("Error fetching data from CoreData", error)
