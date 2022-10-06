@@ -11,9 +11,10 @@ struct EditSchoolYearsView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) var dismiss
+    @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default) private var existingSchoolYear: FetchedResults<SchoolYear>
     
     @ObservedObject var oldSchoolYear: SchoolYear
-    @State var newSchoolYearName: String = ""
+    @State var schoolYearName: String
     
     var body: some View {
         VStack {
@@ -27,21 +28,34 @@ struct EditSchoolYearsView: View {
                 }
             }
             .padding()
-            CustomTextfieldView(label: oldSchoolYear.name, input: $newSchoolYearName)
-            
-            CustomButtonView(label: "Übernehmen", action: self.saveButtonPressed , buttonColor: .accentColor)
-                .disabled(newSchoolYearName.isEmpty)
-                Divider()
+            Picker("Neues Schuljahr auswählen", selection: $schoolYearName) {
+                           ForEach(generateSchoolYear(), id: \.self) { schoolYear in
+                               Text("Schuljahr \(schoolYear)")
+                           }
+                       }
+                       .pickerStyle(WheelPickerStyle())
+            if existingSchoolYear.contains(where: { s in s.name == schoolYearName }){
+                CustomButtonView(label: "Schuljahr exisitiert bereits", action: self.saveButtonPressed, buttonColor: .accentColor)
+                    .disabled(true)
+            } else {
+                CustomButtonView(label: "Übernehmen", action: self.saveButtonPressed , buttonColor: .accentColor)
+            }
+            Divider()
         }
         Spacer()
     }
  
     func saveButtonPressed() {
-        oldSchoolYear.updateSchoolYearName(name: newSchoolYearName, context: viewContext)
-        if oldSchoolYear == appSettings.activeSchoolYear {
-            appSettings.objectWillChange.send()
-        }
+        oldSchoolYear.updateSchoolYearName(name: schoolYearName, context: viewContext)
         dismiss()
+    }
+    func generateSchoolYear()->[String]{
+        var allSchoolYears = [String]()
+        for i in 0 ... 49 {
+            allSchoolYears.append(String(format: "%02d", i)+"/"+String(format: "%02d", i+1))
+
+        }
+        return allSchoolYears
     }
 }
 
