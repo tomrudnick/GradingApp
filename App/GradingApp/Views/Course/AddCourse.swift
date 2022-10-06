@@ -16,7 +16,15 @@ struct AddCourse: View {
     var body: some View {
         SingleCourse(viewTitle: "Neuer Kurs") { (name, subject, weight, ageGroup, type) in
             if let activeSchoolYear = appSettings.activeSchoolYear {
-                editVM.addCourse(course: CourseEditViewModel.CourseVM(name: name, subject: subject, hidden: false, ageGroup: ageGroup, oralWeight: weight, type: type, deleted: false, fetchedStudents:[:], schoolYear: activeSchoolYear))
+                editVM.addCourse(course: CourseEditViewModel.CourseVM(
+                    name: name,
+                    subject: subject,
+                    hidden: false,
+                    ageGroup: ageGroup,
+                    oralWeight: weight,
+                    type: type, deleted: false,
+                    fetchedStudents:[:],
+                    schoolYear: activeSchoolYear))
             }
         }
     }

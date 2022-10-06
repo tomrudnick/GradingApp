@@ -24,7 +24,8 @@ struct SingleCourse: View {
     let saveHandler: (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup, _ type: CourseType) -> ()
     
     
-    init(viewTitle: String, courseName: String = "", courseSubject: String = "", courseAgeGroup: AgeGroup = .lower, courseType: CourseType = .holeYear, courseOralWeight: Float = 50, saveHandler : @escaping (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup, _ type: CourseType) -> ()) {
+    init(viewTitle: String, courseName: String = "", courseSubject: String = "", courseAgeGroup: AgeGroup = .lower, courseType: CourseType = .holeYear, courseOralWeight: Float = 50, saveHandler : @escaping (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup, _ type: CourseType) -> ())
+    {
         self.viewTitle = viewTitle
         self.saveHandler = saveHandler
         self._courseName = State(initialValue: courseName)
@@ -33,6 +34,7 @@ struct SingleCourse: View {
         self._selectedWeight = State(initialValue: courseOralWeight)
         self._selectedType = State(initialValue: courseType)
     }
+    
     var body: some View {
         NavigationView {
             Form {

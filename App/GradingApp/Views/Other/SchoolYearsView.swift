@@ -52,7 +52,7 @@ struct SchoolYearsView: View {
                 }
             })
             .sheet(item: $selectedSchoolYear, content: { schoolYear in
-                EditSchoolYearsView(oldSchoolYear: schoolYear, schoolYearName: schoolYear.name)
+                EditSchoolYearsView(oldSchoolYear: schoolYear)
                     .environmentObject(appSettings)
                     .presentationDetents([.medium])
             })
