@@ -243,7 +243,7 @@ struct SettingsView: View {
                     let selectedFileData = try Data(contentsOf: selectedFileURL)
                     PersistenceController.deleteAllCourses(viewContext: viewContext)
                     PersistenceController.resetAllCoreData()
-                    let _ = try! JSONDecoder().decode([Course].self, from: selectedFileData)
+                    let _ = try! JSONDecoder().decode([SchoolYear].self, from: selectedFileData)
                     viewContext.saveCustom()
                     selectedFileURL.stopAccessingSecurityScopedResource()
                 }

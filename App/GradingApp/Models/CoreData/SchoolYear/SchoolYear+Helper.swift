@@ -19,6 +19,11 @@ extension SchoolYear{
         set { id_ = newValue }
     }
     
+    var courses: Set<Course> {
+        get { courses_ as? Set<Course> ?? [] }
+        set { courses_ = newValue as NSSet}
+    }
+    
     public convenience init(name: String, context: NSManagedObjectContext) {
         self.init(context: context)
         self.id = UUID()
