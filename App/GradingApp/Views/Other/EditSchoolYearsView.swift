@@ -15,9 +15,9 @@ struct EditSchoolYearsView: View {
         //TODO: Pass the Save handler
         //In this Method you should update the attributes of the oldSchoolYear (line 12)
         //And also save it to the database
-        ChangeSchoolYearsView(title: "Schuljahr umbennen")
+        ChangeSchoolYearsView(schoolYearName_: oldSchoolYear.name, title: "Schuljahr umbennen")
         //it might look similar to this..
-        /*ChangeSchoolYearsView(title: "Schuljahr umbenennen") { parameter in
+        /*ChangeSchoolYearsView(schoolYearName_: oldname, title: "Schuljahr umbenennen") { parameter in
             //This is the Body of the function
             //update oldSchoolYear accordingly using the parameter
         }*/

@@ -14,7 +14,9 @@ struct ChangeSchoolYearsView: View {
     @FetchRequest(fetchRequest: SchoolYear.fetchAll(), animation: .default)
     private var existingSchoolYears: FetchedResults<SchoolYear>
     
-    @State var schoolYearName = "21/22"
+    @State var schoolYearName: String = ""
+    
+    var schoolYearName_: String
     var title: String
     
     //TODO: Add the decleration of the function it should probably have one argument and no return values
@@ -45,6 +47,8 @@ struct ChangeSchoolYearsView: View {
                 CustomButtonView(label: "Übernehmen", action: self.saveButtonPressed , buttonColor: .accentColor)
             }
             Divider()
+        }.onAppear {
+            schoolYearName = schoolYearName_
         }
     }
     
