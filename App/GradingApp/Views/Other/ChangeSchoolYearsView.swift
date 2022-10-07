@@ -40,7 +40,7 @@ struct ChangeSchoolYearsView: View {
                            }
                        }
                        .pickerStyle(WheelPickerStyle())
-            if existingSchoolYears.contains(where: { s in s.name == schoolYearName }){
+            if existingSchoolYears.contains {$0.name == schoolYearName }{
                 CustomButtonView(label: "Schuljahr exisitiert bereits", action: self.saveButtonPressed, buttonColor: .accentColor)
                     .disabled(true)
             } else {
