@@ -32,6 +32,7 @@ struct CourseTabView: View {
     @State var showSendEmailSheet = false
     @State var showUndoRedoAlert = false
     @State var showCalculatedTranscriptSheet = false
+    @State var showNewExamSheet = false
     
     @State var studentGrade: [Student:Int] = [:]
     
@@ -66,6 +67,12 @@ struct CourseTabView: View {
             }
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Menu {
+                    Button {
+                        self.showNewExamSheet.toggle()
+                    } label: {
+                        Text("Neue Klassenarbeit")
+                    }
+
                     Button(action: {
                         self.showSendEmailSheet.toggle()
                     }, label: {
@@ -136,6 +143,9 @@ struct CourseTabView: View {
 
             self.sendEmailViewModel.fetchData(course: course, half: halfYear)
         }
+        .fullScreenCover(isPresented: $showNewExamSheet, content: {
+            NewExam(course: course)
+        })
         .sheet(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel)
         })
