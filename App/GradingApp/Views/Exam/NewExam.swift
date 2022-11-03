@@ -51,6 +51,7 @@ struct NewExam: View {
             switch selection ?? .dashboard {
             case .dashboard: ExamDashboard(examVM: examVM)
             case .participants: ExamParticipantsView(examVM: examVM)
+            case .exercise(let exerciseVM): ExerciseView(examVM: examVM, exercise: exerciseVM)
             default: Text("Nothing yet")
             }
         }
