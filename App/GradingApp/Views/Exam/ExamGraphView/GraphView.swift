@@ -201,18 +201,6 @@ class GraphView: UIView {
         drawStaticPath()
         drawResizablePath()
         
-        // Add Origin Label
-        if(originLabelText != nil && firstSetup) {
-            let originLabel = UILabel()
-            originLabel.text = originLabelText
-            originLabel.textAlignment = .center
-            originLabel.font = labelFont
-            originLabel.textColor = originLabelColor
-            originLabel.backgroundColor = backgroundColor
-            originLabel.frame = CGRect(x: -2, y: graphHeight + 20, width: 40, height: 20)
-            addSubview(originLabel)
-        }
-        
         firstSetup = false
     }
     
