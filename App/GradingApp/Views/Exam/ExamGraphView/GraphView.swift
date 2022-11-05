@@ -47,12 +47,13 @@ class GraphView: UIView {
     var xAxisColorDarkMode = UIColor.white
     var yAxisColorDarkMode = UIColor.white
     
-    var xMargin         : CGFloat = 20
+    var xMargin         : CGFloat = 25
     var originLabelText : String?
     var originLabelColor = UIColor.black
     
    
     var yStepSize = 10
+    var yPadding = 20.0
     
     var delegate: GraphViewDelegate!
     
@@ -155,9 +156,9 @@ class GraphView: UIView {
 
         // Graph size
         graphWidth = (rect.size.width - padding) - 10
-        graphHeight = rect.size.height - 40
+        graphHeight = rect.size.height - 40 - yPadding
         axisWidth = rect.size.width - 10
-        axisHeight = (rect.size.height - padding) - 10
+        axisHeight = (rect.size.height - padding) - 10 - yPadding
         
         everest = 100 ///Since we always want a scale from 0 to 100% this value is fixed
         
@@ -172,7 +173,7 @@ class GraphView: UIView {
         
         // Draw graph Y-AXIS
         let yAxisPath = CGMutablePath()
-        yAxisPath.move(to: CGPoint(x: padding, y: 10))
+        yAxisPath.move(to: CGPoint(x: padding, y: 10 + yPadding))
         yAxisPath.addLine(to: CGPoint(x: padding, y: rect.size.height - 31))
         context!.addPath(yAxisPath)
         
@@ -201,6 +202,7 @@ class GraphView: UIView {
         drawStaticPath()
         drawResizablePath()
         
+        
         firstSetup = false
     }
     
@@ -222,7 +224,7 @@ class GraphView: UIView {
         let firstPoint = delegate.data[0].value
         let initialY : CGFloat = ceil((CGFloat(firstPoint) * (axisHeight / everest))) - 10
         let initialX : CGFloat = padding + xMargin
-        pointPath.move(to: CGPoint(x: initialX, y: graphHeight - initialY))
+        pointPath.move(to: CGPoint(x: initialX, y: graphHeight + yPadding - initialY))
         
         // Loop over the remaining values
         for (_, value) in delegate.data.enumerated() {
@@ -243,7 +245,7 @@ class GraphView: UIView {
         let firstPoint = delegate.staticData[0].value
         let initialY : CGFloat = ceil((CGFloat(firstPoint) * (axisHeight / everest))) - 10
         let initialX : CGFloat = padding + xMargin
-        pointPath.move(to: CGPoint(x: initialX, y: graphHeight - initialY))
+        pointPath.move(to: CGPoint(x: initialX, y: graphHeight + yPadding - initialY))
         
         // Loop over the remaining values
         for (_, value) in delegate.staticData.enumerated() {
@@ -286,22 +288,24 @@ class GraphView: UIView {
         let xposition = CGFloat(interval * index) + padding + xMargin
         
         // Draw line to this value
-        path.addLine(to: CGPoint(x: xposition, y: graphHeight - yposition))
+        path.addLine(to: CGPoint(x: xposition, y: graphHeight + yPadding - yposition))
         
         if !staticPath {
-            drawText(in: context!, at: CGPoint(x: xposition, y: graphHeight + 20), text: point.label, size: 10.0)
+            drawText(in: context!, at: CGPoint(x: xposition, y: graphHeight + yPadding + 20), text: point.label, size: 10.0)
         }
         
         if !staticPath {
             drawText(in: context!,
-                     at: CGPoint(x: xposition - 30.0, y: graphHeight - yposition + 8),
-                     text: String(format: "%.2f",point.value))
+                     at: CGPoint(x: xposition - 30.0, y: graphHeight + yPadding - yposition + 8),
+                     text: String(format: "%.2f",point.value),
+                     size: 20.0)
         } else {
             drawText(in: context!,
                      at: CGPoint(x: xposition - 30.0, y: 0.0),
-                     text: String(format: "%.2f",point.value))
+                     text: String(format: "%.2f",point.value),
+                     size: 20.0)
         }
         
-        return CGRect(x: xposition - 8, y: CGFloat(ceil(graphHeight - yposition) - 8), width: 16, height: 16)
+        return CGRect(x: xposition - 8, y: CGFloat(ceil(graphHeight + yPadding - yposition) - 8), width: 16, height: 16)
     }
 }
