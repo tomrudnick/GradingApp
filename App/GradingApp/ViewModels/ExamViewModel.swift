@@ -57,7 +57,7 @@ class ExamViewModel: ObservableObject {
     }
     
     func getTotalPoints(for student: Student) -> Double {
-        return exercises.flatMap { $0.participations.filter { $0.student == student } }.reduce(0.0) { $0 + $1.points }
+        return exercises.flatMap { $0.participations.filter { $0.student == student } }.compactMap { $0.points }.reduce(0.0) { $0 + $1 }
     }
     
     func getMaxPointsPossible() -> Double {
@@ -162,19 +162,24 @@ class ExamViewModel: ObservableObject {
     class ExerciseParticipationVM: ObservableObject {
         var student: Student
         
-        var points: Double {
+        var points: Double? {
             get {
-                Double(pointsText) ?? 0.0
+                Double(pointsText)
             }
             
             set {
-                pointsText = String(format: "%.2f", newValue)
+                if let newValue {
+                    pointsText = String(format: "%.2f", newValue)
+                } else {
+                    pointsText = "-"
+                }
+                
             }
         }
         
-        @Published var pointsText: String = "0" {
+        @Published var pointsText: String = "-" {
             didSet {
-                let filtered = pointsText.filter { "0123456789.".contains($0) }
+                let filtered = pointsText.filter { "0123456789.-".contains($0) }
                 if filtered != pointsText {
                     self.pointsText = filtered
                 }
@@ -188,9 +193,9 @@ class ExamViewModel: ObservableObject {
         
         func checkMax(maxPoints: Double) {
             print("Check Max: \(maxPoints) for current Value \(self.pointsText)")
-            guard let convertedValue = Double(self.pointsText) else { self.pointsText = "0"; return }
+            guard let convertedValue = Double(self.pointsText) else { self.pointsText = "-"; return }
             if convertedValue > maxPoints {
-                self.pointsText = String(format: "%.2f", maxPoints)
+                self.pointsText = "-"
             }
         }
     }

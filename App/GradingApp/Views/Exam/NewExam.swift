@@ -57,7 +57,6 @@ struct NewExam: View {
             case .gradingScheme: ExamGradingSchemeView(examVM: examVM)
             case .participants: ExamParticipantsView(examVM: examVM)
             case .exercise(let exerciseVM): ExerciseView(examVM: examVM, exercise: exerciseVM)
-            default: Text("Nothing yet")
             }
         }
         .onAppear {
