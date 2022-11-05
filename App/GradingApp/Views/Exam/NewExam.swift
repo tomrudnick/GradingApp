@@ -29,7 +29,11 @@ struct NewExam: View {
                 Section("Aufgaben") {
                     ForEach(examVM.exercises, id: \.id) { exercise in
                         NavigationLink(value: ExamRoute.exercise(exercise)) {
-                            Text(exercise.title)
+                            HStack {
+                                Text(exercise.title)
+                                Spacer()
+                                Text(exercise.maxPointsText).foregroundColor(Color.gray)
+                            }
                         }
                     }
                     .onDelete(perform: examVM.delete)
@@ -50,6 +54,7 @@ struct NewExam: View {
         } detail: {
             switch selection ?? .dashboard {
             case .dashboard: ExamDashboard(examVM: examVM)
+            case .gradingScheme: ExamGradingSchemeView(examVM: examVM)
             case .participants: ExamParticipantsView(examVM: examVM)
             case .exercise(let exerciseVM): ExerciseView(examVM: examVM, exercise: exerciseVM)
             default: Text("Nothing yet")
