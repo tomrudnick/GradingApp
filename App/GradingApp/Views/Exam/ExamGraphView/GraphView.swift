@@ -10,13 +10,13 @@ import QuartzCore
 
 protocol GraphViewDelegate {
     var data: [GraphData] { get set }
+    var staticData: [GraphData] { get }
     func valueChanged(label: String)
 }
 
 class GraphView: UIView {
     
     private var oldTouchPostion: CGPoint = CGPoint(x: 0.0, y: 0.0)
-    
     private var dataPositions = [String: CGRect]()
     private var selectedData: String?
     
@@ -28,25 +28,34 @@ class GraphView: UIView {
     private var axisWidth   : CGFloat = 0
     private var axisHeight  : CGFloat = 0
     private var everest     : CGFloat = 0
+    private var firstSetup = true
     
     // Graph Styles
     var showLines   = true
     var showPoints  = true
     var linesColor  = UIColor.lightGray
     var graphColor  = UIColor.black
+    var graphColorDarkMode = UIColor.white
+    
+    var staticGraphColor = UIColor.green
+    
     var labelFont   = UIFont.systemFont(ofSize: 10)
     var labelColor  = UIColor.black
+    
     var xAxisColor  = UIColor.black
     var yAxisColor  = UIColor.black
+    var xAxisColorDarkMode = UIColor.white
+    var yAxisColorDarkMode = UIColor.white
     
     var xMargin         : CGFloat = 20
     var originLabelText : String?
     var originLabelColor = UIColor.black
     
-    var firstSetup = true
+   
     var yStepSize = 10
     
     var delegate: GraphViewDelegate!
+    
     
     required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
@@ -60,8 +69,7 @@ class GraphView: UIView {
         
         super.init(frame: frame)
         backgroundColor = UIColor.clear
-        self.delegate = delegate
-        
+        self.delegate = delegate        
     }
     
     func getDataForSelectedPoints(point: CGPoint) -> String? {
@@ -74,20 +82,40 @@ class GraphView: UIView {
         return nil
     }
     
+    private func calcMinValue(for index: Int) -> CGFloat {
+        index == 0 ? 0.0 : delegate.data[index - 1].value
+    }
+    
+    private func calcMaxValue(for index: Int) -> CGFloat {
+        index == delegate.data.count - 1 ? 100.0 : delegate.data[index + 1].value
+    }
+    
+    private func getGraphColor() -> CGColor {
+        if traitCollection.userInterfaceStyle == .dark {
+            return graphColorDarkMode.cgColor
+        } else {
+            return graphColor.cgColor
+        }
+    }
+    
+    private func getStaticGraphColor() -> CGColor {
+        return staticGraphColor.cgColor
+    }
+    
+    private func getXAxisColor() -> CGColor {
+        return traitCollection.userInterfaceStyle == .dark ? xAxisColorDarkMode.cgColor : xAxisColor.cgColor
+    }
+    
+    private func getYAxisColor() -> CGColor {
+        return traitCollection.userInterfaceStyle == .dark ? yAxisColorDarkMode.cgColor : yAxisColor.cgColor
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let currentPoint = touch.location(in: self)
         self.oldTouchPostion = currentPoint
         self.selectedData = getDataForSelectedPoints(point: currentPoint)
         print("Selected: Point \(selectedData ?? "none")")
-    }
-    
-    func calcMinValue(for index: Int) -> CGFloat {
-        index == 0 ? 0.0 : delegate.data[index - 1].value
-    }
-    
-    func calcMaxValue(for index: Int) -> CGFloat {
-        index == delegate.data.count - 1 ? 100.0 : delegate.data[index + 1].value
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -119,7 +147,6 @@ class GraphView: UIView {
         setNeedsDisplay()
     }
     
-
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
@@ -140,7 +167,7 @@ class GraphView: UIView {
         xAxisPath.addLine(to: CGPoint(x: axisWidth, y: rect.size.height - 31))
         context!.addPath(xAxisPath)
         
-        context!.setStrokeColor(xAxisColor.cgColor)
+        context!.setStrokeColor(getXAxisColor())
         context!.strokePath()
         
         // Draw graph Y-AXIS
@@ -149,7 +176,7 @@ class GraphView: UIView {
         yAxisPath.addLine(to: CGPoint(x: padding, y: rect.size.height - 31))
         context!.addPath(yAxisPath)
         
-        context!.setStrokeColor(yAxisColor.cgColor)
+        context!.setStrokeColor(getYAxisColor())
         context!.strokePath()
         
         // Draw y axis labels and lines
@@ -170,27 +197,9 @@ class GraphView: UIView {
             }
         }
         
-        // Lets move to the first point
-        let pointPath = CGMutablePath()
-        let firstPoint = delegate.data[0].value
-        let initialY : CGFloat = ceil((CGFloat(firstPoint) * (axisHeight / everest))) - 10
-        let initialX : CGFloat = padding + xMargin
-        pointPath.move(to: CGPoint(x: initialX, y: graphHeight - initialY))
         
-        // Loop over the remaining values
-        for (_, value) in delegate.data.enumerated() {
-            let pointPos = plotPoint(point: value, path: pointPath)
-            dataPositions[value.label] = pointPos
-            context?.addEllipse(in: pointPos)
-            context?.drawPath(using: .fillStroke)
-            context?.strokePath()
-        }
-        
-        // Set stroke colours and stroke the values path
-        context!.addPath(pointPath)
-        context!.setLineWidth(2)
-        context!.setStrokeColor(graphColor.cgColor)
-        context!.strokePath()
+        drawStaticPath()
+        drawResizablePath()
         
         // Add Origin Label
         if(originLabelText != nil && firstSetup) {
@@ -210,17 +219,70 @@ class GraphView: UIView {
     func drawText(in ctx: CGContext, at pos: CGPoint, text: String, size: CGFloat = 25.0) {
         ctx.saveGState()
         let font = UIFont.systemFont(ofSize: size)
-        let string = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
+        let string = NSAttributedString(string: text,
+                                        attributes: [
+                                                    NSAttributedString.Key.font: font,
+                                                    NSAttributedString.Key.foregroundColor: UIColor(cgColor: getGraphColor())
+                                                    ]
+                                        )
         string.draw(at: pos)
         ctx.restoreGState()
     }
     
+    private func drawResizablePath() {
+        let pointPath = CGMutablePath()
+        let firstPoint = delegate.data[0].value
+        let initialY : CGFloat = ceil((CGFloat(firstPoint) * (axisHeight / everest))) - 10
+        let initialX : CGFloat = padding + xMargin
+        pointPath.move(to: CGPoint(x: initialX, y: graphHeight - initialY))
+        
+        // Loop over the remaining values
+        for (_, value) in delegate.data.enumerated() {
+            // Draw every point
+            let pointPos = plotPoint(point: value, data: delegate.data, path: pointPath)
+            dataPositions[value.label] = pointPos
+            context?.addEllipse(in: pointPos)
+            context?.setStrokeColor(getGraphColor())
+            context?.setFillColor(getGraphColor())
+            context?.drawPath(using: .fillStroke)
+            context?.strokePath()
+        }
+        drawPath(path: pointPath, color: getGraphColor())
+    }
+    
+    private func drawStaticPath() {
+        let pointPath = CGMutablePath()
+        let firstPoint = delegate.staticData[0].value
+        let initialY : CGFloat = ceil((CGFloat(firstPoint) * (axisHeight / everest))) - 10
+        let initialX : CGFloat = padding + xMargin
+        pointPath.move(to: CGPoint(x: initialX, y: graphHeight - initialY))
+        
+        // Loop over the remaining values
+        for (_, value) in delegate.staticData.enumerated() {
+            // Draw every point
+            let pointPos = plotPoint(point: value, data: delegate.staticData, path: pointPath, staticPath: true)
+            context?.addEllipse(in: pointPos)
+            context?.setStrokeColor(getStaticGraphColor())
+            context?.setFillColor(getStaticGraphColor())
+            context?.drawPath(using: .fillStroke)
+            context?.strokePath()
+        }
+        drawPath(path: pointPath, color: getStaticGraphColor())
+    }
+    
+    private func drawPath(path: CGMutablePath, color: CGColor) {
+        context!.addPath(path)
+        context!.setLineWidth(2)
+        context!.setStrokeColor(color)
+        context!.strokePath()
+    }
+    
     
     // Plot a point on the graph
-    func plotPoint(point : GraphData, path: CGMutablePath) -> CGRect {
+    func plotPoint(point : GraphData, data: [GraphData], path: CGMutablePath, staticPath: Bool = false) -> CGRect {
         
         // work out the distance to draw the remaining points at
-        let interval = Int(graphWidth - xMargin * 2) / (delegate.data.count - 1);
+        let interval = Int(graphWidth - xMargin * 2) / (data.count - 1);
         
         let pointValue = point.value
         
@@ -228,7 +290,7 @@ class GraphView: UIView {
         let yposition : CGFloat = ceil((CGFloat(pointValue) * (axisHeight / everest))) - 10
     
         var index = 0
-        for (ind, graphData) in delegate.data.enumerated() {
+        for (ind, graphData) in data.enumerated() {
             if point.value == graphData.value && point.label == graphData.label {
                 index = ind
             }
@@ -238,48 +300,20 @@ class GraphView: UIView {
         // Draw line to this value
         path.addLine(to: CGPoint(x: xposition, y: graphHeight - yposition))
         
-
-        drawText(in: context!, at: CGPoint(x: xposition, y: graphHeight + 20), text: point.label, size: 10.0)
+        if !staticPath {
+            drawText(in: context!, at: CGPoint(x: xposition, y: graphHeight + 20), text: point.label, size: 10.0)
+        }
         
-        if point.label == selectedData {
+        if !staticPath {
             drawText(in: context!,
                      at: CGPoint(x: xposition - 30.0, y: graphHeight - yposition + 8),
+                     text: String(format: "%.2f",point.value))
+        } else {
+            drawText(in: context!,
+                     at: CGPoint(x: xposition - 30.0, y: 0.0),
                      text: String(format: "%.2f",point.value))
         }
         
         return CGRect(x: xposition - 8, y: CGFloat(ceil(graphHeight - yposition) - 8), width: 16, height: 16)
     }
-    
-    
-    // Returns an axis label
-    func axisLabel(title: String) -> UILabel {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = title as String
-        label.font = labelFont
-        label.textColor = labelColor
-        label.backgroundColor = backgroundColor
-        label.textAlignment = NSTextAlignment.right
-        
-        return label
-    }
-    
-    
-    // Returns a point for plotting
-    func valueMarker() -> CALayer {
-        let pointMarker = CALayer()
-        pointMarker.backgroundColor = backgroundColor?.cgColor
-        pointMarker.cornerRadius = 8
-        pointMarker.masksToBounds = true
-        
-        let markerInner = CALayer()
-        markerInner.frame = CGRect(x: 3, y: 3, width: 10, height: 10)
-        markerInner.cornerRadius = 5
-        markerInner.masksToBounds = true
-        markerInner.backgroundColor = graphColor.cgColor
-        
-        pointMarker.addSublayer(markerInner)
-        
-        return pointMarker
-    }
-    
 }

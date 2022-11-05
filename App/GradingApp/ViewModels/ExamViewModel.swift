@@ -17,6 +17,8 @@ class ExamViewModel: ObservableObject {
     @Published var exercises: [ExerciseVM] = []
     @Published var participants: [Student : Bool] = [:]
     
+    private(set) var standardGradeScheme: [GraphData] = []
+    
     var sortedParticipants: [(student: Student, participant: Bool)] {
         participants.sorted { s1, s2 in
             Student.compareStudents(s1.key, s2.key)
@@ -32,6 +34,7 @@ class ExamViewModel: ObservableObject {
         self.course = course
         self.participants = Dictionary(uniqueKeysWithValues: course.students.map { ($0, true) })
         resetToDefaultGradeSchema()
+        self.standardGradeScheme = gradeSchema
     }
     
     func addExercise(title: String? = nil, maxPoints: Double) {
@@ -107,7 +110,7 @@ class ExamViewModel: ObservableObject {
                             GraphData(label: "3", value: 64.0),
                             GraphData(label: "4", value: 51.0),
                             GraphData(label: "5", value: 32.0),
-                            GraphData(label: "6", value: 20.0)].reversed()
+                            GraphData(label: "6", value: 0.0)].reversed()
     }
 
     

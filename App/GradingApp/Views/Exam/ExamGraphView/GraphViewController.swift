@@ -17,9 +17,11 @@ class GraphViewController: UIViewController, GraphViewDelegate {
     var delegate: GraphViewControllerDelegate?
    
     var data: [GraphData] = []
-
-    func setupData(data: [GraphData]) {
+    var staticData: [GraphData] = []
+    
+    func setupData(data: [GraphData], staticData: [GraphData]) {
         self.data = data
+        self.staticData = staticData
         graphView?.setNeedsDisplay()
     }
     

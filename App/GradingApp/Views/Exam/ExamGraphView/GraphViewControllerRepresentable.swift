@@ -17,7 +17,7 @@ struct GraphViewControllerReprestable: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> GraphViewController {
         let vc = GraphViewController()
-        vc.setupData(data: examVM.gradeSchema)
+        vc.setupData(data: examVM.gradeSchema, staticData: examVM.standardGradeScheme)
         vc.delegate = context.coordinator
         return vc
     }
@@ -28,7 +28,7 @@ struct GraphViewControllerReprestable: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: GraphViewController, context: Context) {
         print("update called")
-        uiViewController.setupData(data: examVM.gradeSchema)
+        uiViewController.setupData(data: examVM.gradeSchema, staticData: examVM.standardGradeScheme)
         uiViewController.graphView?.setNeedsDisplay()
     }
     
