@@ -17,6 +17,7 @@ struct NewExam: View {
     }
     
     var course: Course
+    @Environment(\.dismiss) var dismiss
     @StateObject var examVM = ExamViewModel()
     @State var selection: ExamRoute? = .dashboard
     
@@ -41,16 +42,7 @@ struct NewExam: View {
                 }
             }
             .navigationTitle("Exam: \(examVM.title)")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        examVM.addExercise(maxPoints: 0.0)
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-                ToolbarItem(placement: .secondaryAction) { EditButton() }
-            }
+            .toolbar { toolbar }
         } detail: {
             switch selection ?? .dashboard {
             case .dashboard: ExamDashboard(examVM: examVM)
@@ -63,6 +55,24 @@ struct NewExam: View {
             examVM.initVM(course: course)
         }
 
+    }
+    
+    @ToolbarContentBuilder var toolbar: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button {
+                examVM.addExercise(maxPoints: 0.0)
+            } label: {
+                Image(systemName: "plus")
+            }
+        }
+        ToolbarItem(placement: .secondaryAction) { EditButton() }
+        ToolbarItem(placement: .cancellationAction) {
+            Button {
+                dismiss()
+            } label: {
+                Text("Abbrechen")
+            }
+        }
     }
 }
 

@@ -11,6 +11,7 @@ import Combine
 struct ExamDashboard: View {
     
     @ObservedObject var examVM: ExamViewModel
+    @State var showGradeToPoints = true
     
     var body: some View {
         VStack {
@@ -37,16 +38,47 @@ struct ExamDashboard: View {
                         Text(String(format: "%.2f", examVM.getAverage())).bold()
                         Spacer()
                         Text("Bestanden: ")
+                        Text("\(Double(examVM.getNumberOfGrades(for: examVM.passedGrades)))")
                         if examVM.participants.filter(\.value).count > 0 {
-                            Gauge(value: Double(examVM.getNumberOfGrades(for: [1,2,3,4])), in: 1...Double(examVM.participants.filter(\.value).count)) {
+                            Gauge(value: Double(examVM.getNumberOfGrades(for: examVM.passedGrades)),
+                                  in: 0...Double(examVM.participants.filter(\.value).count)
+                            ) {
                                 Text("")
                             } currentValueLabel: {
-                                Text(String(format: "%.2f", examVM.getPercentageOfGrades(for: [1,2,3,4])))
+                                Text(String(format: "%.2f", examVM.getPercentageOfPassed()))
                             }.gaugeStyle(.accessoryCircularCapacity)
                                 .tint(.purple)
                         }
                     }
                 }
+                Section {
+                    if showGradeToPoints {
+                        List {
+                            ForEach(examVM.getPointsToGrade(), id: \.grade) { elem in
+                                HStack {
+                                    Text("\(elem.grade)")
+                                    Spacer()
+                                    Text("\(elem.range.description)")
+                                }
+                            }
+                        }
+                    }
+                } header: {
+                    HStack {
+                        Text("Notenschlüssel")
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                self.showGradeToPoints.toggle()
+                            }
+                        } label: {
+                            Image(systemName: "chevron.right")
+                                .rotationEffect(.degrees(showGradeToPoints ? 90 : 0))
+                        }
+
+                    }
+                }
+
                 Section("Exam Aufgaben Übersicht") {
                     Table(examVM.sortedParticipatingStudents) {
                         TableColumn("Vorname", value: \.firstName)
