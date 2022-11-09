@@ -49,6 +49,29 @@ struct PersistenceController {
         }
     }
     
+    func childViewContext() -> NSManagedObjectContext {
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.parent = container.viewContext
+        return context
+    }
+    
+    static func copyForEditing<T: NSManagedObject>(of object: T,
+                                                   in context: NSManagedObjectContext) -> T {
+        guard let object = (try? context.existingObject(with: object.objectID)) as? T else {
+            fatalError("Requested copy of managed object that doesn't exist")
+        }
+        return object
+    }
+    
+    static func persist(_ object: NSManagedObject) {
+        object.managedObjectContext?.saveCustom()
+        object.managedObjectContext?.parent?.saveCustom()
+    }
+    
+    static func newTemporaryInstance<T: NSManagedObject>(in context: NSManagedObjectContext) -> T {
+        return T(context: context)
+    }
+    
     static func deleteAllCourses(viewContext: NSManagedObjectContext) {
         let fetchedCourses = PersistenceController.fetchData(context: viewContext, fetchRequest: Course.fetchAll())
         for course in fetchedCourses {
