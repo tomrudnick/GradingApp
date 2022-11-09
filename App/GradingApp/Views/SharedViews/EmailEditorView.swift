@@ -44,6 +44,11 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                                     value == false
                                 }) ? "Alle Schüler" : "\(self.emailViewModel.recipients.filter{$0.1}.count) Schüler")
                                 Spacer()
+                                if senderMenuExpanded {
+                                    toggleAllRecpientsButton
+                                        .foregroundColor(Color.black)
+                                        .buttonStyle(.bordered)
+                                }
                                 Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down").onTapGesture {
                                     senderMenuExpanded.toggle()
                                 }
@@ -51,19 +56,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                             
                             if senderMenuExpanded {
                                 List {
-                                    ForEach(emailViewModel.recipients.sorted(by: {$0.0.lastName < $1.0.lastName}), id: \.key) { key, value in
-                                        HStack {
-                                            Text("\(key.firstName) \(key.lastName)")
-                                            Spacer()
-                                            Image(systemName: (self.emailViewModel.recipients[key] ?? false) ? "checkmark.circle.fill" : "circle")
-                                                .font(.title)
-                                                .onTapGesture {
-                                                    if let value = self.emailViewModel.recipients[key] {
-                                                        self.emailViewModel.recipients[key] = !value
-                                                    }
-                                                }
-                                        }.padding(.bottom)	
-                                    }
+                                    allRecipientsList
                                 }
                             }
                         }
@@ -73,51 +66,99 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                     TextField("Subject....", text: $emailViewModel.subject)
                 }
                 Section(header: Text("Tags")) {
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 20) {
-                            ForEach(emailViewModel.emailKeys.map( {string in string[string.range(of: "\\$")!.upperBound...]}), id: \.self) { key in
-                                Button(action: {
-                                    if let selectionRange = selectionRange{
-                                        print("From: \(selectionRange.lowerBound) to \(selectionRange.upperBound)")
-                                        let lowerIndex = emailViewModel.emailText.index(emailViewModel.emailText.startIndex, offsetBy: selectionRange.lowerBound)
-                                        let upperIndex = emailViewModel.emailText.index(emailViewModel.emailText.startIndex, offsetBy: selectionRange.upperBound)
-                                        emailViewModel.emailText.replaceSubrange(lowerIndex..<upperIndex, with: "$\(key)")
-                                        self.selectionRange = NSMakeRange(selectionRange.lowerBound + key.count + 1, selectionRange.upperBound - selectionRange.lowerBound)
-                                    }
-                                }, label: {
-                                    Text(key)
-                                        .padding()
-                                        .foregroundColor(.white)
-                                        .background(Color.blue)
-                                        .cornerRadius(10.0)
-                                })
-                            }
-                        }
-                        .padding()
-                    }
+                    tagScrollView
                 }
                 
                 Section(header: Text("Email Text")) {
-                    HighlightedTextEditor(text: $emailViewModel.emailText, highlightRules: rules)
-                    .onCommit { print("commited") }
-                    .onEditingChanged { print("editing changed") }
-                    .onTextChange { print("latest text value", $0) }
-                    .onSelectionChange { (range: NSRange) in
-                        print(range)
-                        self.selectionRange = range
-                        print(emailViewModel.regexString)
-                    }
-                    .introspect { editor in
-                        editor.textView.autocorrectionType = .no
-                        if let range = selectionRange,  let lowerPosition = editor.textView.position(from: editor.textView.beginningOfDocument, offset: range.lowerBound) {
-                            editor.textView.selectedTextRange = editor.textView.textRange(from: lowerPosition, to: lowerPosition)
-                        }
-                    }.frame(height: 500)
+                    textEditor
                 }
             }
             
             
         }
+    }
+    
+    func toggleAllRecipients() {
+        if !self.emailViewModel.recipients.contains(where: { $0.value == false }) {
+            for key in self.emailViewModel.recipients.keys {
+                self.emailViewModel.recipients[key] = false
+            }
+        } else {
+            for key in self.emailViewModel.recipients.keys {
+                self.emailViewModel.recipients[key] = true
+            }
+        }
+    }
+    
+    var allRecipientsList: some View {
+        ForEach(emailViewModel.recipients.sorted(by: {$0.0.lastName < $1.0.lastName}), id: \.key) { key, value in
+            HStack {
+                Text("\(key.firstName) \(key.lastName)")
+                Spacer()
+                Image(systemName: (self.emailViewModel.recipients[key] ?? false) ? "checkmark.circle.fill" : "circle")
+                    .font(.title)
+                    .onTapGesture {
+                        if let value = self.emailViewModel.recipients[key] {
+                            self.emailViewModel.recipients[key] = !value
+                        }
+                    }
+            }.padding(.bottom)
+        }
+    }
+    
+    var toggleAllRecpientsButton: some View {
+        Button {
+           toggleAllRecipients()
+        } label: {
+            if !self.emailViewModel.recipients.contains { $0.value == false } {
+                Text("Alle abwählen")
+            } else {
+                Text("Alle auswählen")
+            }
+        }
+    }
+    
+    var tagScrollView: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 20) {
+                ForEach(emailViewModel.emailKeys.map( {string in string[string.range(of: "\\$")!.upperBound...]}), id: \.self) { key in
+                    Button(action: {
+                        if let selectionRange = selectionRange{
+                            print("From: \(selectionRange.lowerBound) to \(selectionRange.upperBound)")
+                            let lowerIndex = emailViewModel.emailText.index(emailViewModel.emailText.startIndex, offsetBy: selectionRange.lowerBound)
+                            let upperIndex = emailViewModel.emailText.index(emailViewModel.emailText.startIndex, offsetBy: selectionRange.upperBound)
+                            emailViewModel.emailText.replaceSubrange(lowerIndex..<upperIndex, with: "$\(key)")
+                            self.selectionRange = NSMakeRange(selectionRange.lowerBound + key.count + 1, selectionRange.upperBound - selectionRange.lowerBound)
+                        }
+                    }, label: {
+                        Text(key)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.blue)
+                            .cornerRadius(10.0)
+                    })
+                }
+            }
+            .padding()
+        }
+    }
+    
+    var textEditor: some View {
+        HighlightedTextEditor(text: $emailViewModel.emailText, highlightRules: rules)
+        .onCommit { print("commited") }
+        .onEditingChanged { print("editing changed") }
+        .onTextChange { print("latest text value", $0) }
+        .onSelectionChange { (range: NSRange) in
+            print(range)
+            self.selectionRange = range
+            print(emailViewModel.regexString)
+        }
+        .introspect { editor in
+            editor.textView.autocorrectionType = .no
+            if let range = selectionRange,  let lowerPosition = editor.textView.position(from: editor.textView.beginningOfDocument, offset: range.lowerBound) {
+                editor.textView.selectedTextRange = editor.textView.textRange(from: lowerPosition, to: lowerPosition)
+            }
+        }.frame(height: 500)
     }
 }
 

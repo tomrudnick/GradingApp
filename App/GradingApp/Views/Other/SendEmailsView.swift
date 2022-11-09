@@ -18,6 +18,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
     @State var showProgressbar = false
     @State var doubleValue = 0.0
     @State var showErrorAlert = false
+    @State var showSuccessAlert = false
     @State var errorMessage = ""
     
     private var title: String
@@ -37,6 +38,13 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                 .alert(isPresented: $showErrorAlert, content: {
                     Alert(title: Text("Fehler"), message: Text(errorMessage), dismissButton: .default(Text("Ok!")))
                 })
+                .alert("Alle Emails wurden versendet", isPresented: $showSuccessAlert) {
+                    Button("Ok") {
+                        self.emailViewModel.subject = ""
+                        self.emailViewModel.emailText = ""
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                }
                 .navigationBarTitle(Text("Mail an: \(title)"), displayMode: .inline)
                 .toolbar(content: {
                     ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -58,7 +66,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                             } completionHandler: { failed in
                                 self.showProgressbar = false
                                 if failed.count == 0 {
-                                    self.presentationMode.wrappedValue.dismiss()
+                                    self.showSuccessAlert.toggle()
                                 } else {
                                     self.showErrorAlert.toggle()
                                     if failed.count == 1 {

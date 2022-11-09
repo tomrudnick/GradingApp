@@ -153,7 +153,7 @@ struct SettingsViewModel: View {
                         }
                         
                         HStack {
-                            Text("Password")
+                            Text("Passwort: ")
                             Spacer()
                             SecureField("*******", text: $emailViewModel.password)
                         }
