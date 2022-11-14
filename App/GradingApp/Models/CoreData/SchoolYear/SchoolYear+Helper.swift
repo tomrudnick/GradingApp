@@ -29,13 +29,6 @@ extension SchoolYear{
         self.id = UUID()
         self.name = name
     }
-    
-    public convenience init(name: String, context: NSManagedObjectContext, uuid: UUID) {
-        self.init(context: context)
-        self.id = uuid
-        self.name = name
-    }
-    
     static func addSchoolYear(name: String, context: NSManagedObjectContext) {
         let _ = SchoolYear(name: name, context: context)
         context.saveCustom()
