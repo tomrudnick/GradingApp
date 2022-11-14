@@ -128,7 +128,7 @@ struct SettingsView: View {
                 Section(header: Text("Schuljahr")) {
                     NavigationLink(destination: SchoolYearsView()){
                         HStack {
-                            Text("Schuljahr \(appSettings.activeSchoolYear?.name ?? "-")")
+                            Text("Schuljahr \(appSettings.activeSchoolYearName ?? "-")")
                             Spacer()
                             Text("Schuljahr wählen")
                         }

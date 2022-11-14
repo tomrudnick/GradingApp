@@ -80,7 +80,7 @@ struct CourseListView: View {
             }.onChange(of: selectedCourse, perform: { _ in
                 selectedTab = "StudentListView"
             })
-            .navigationTitle(Text("Kurse \(appSettings.activeHalf == .firstHalf ? "1. " : "2. ") HJ, \(appSettings.activeSchoolYear?.name ?? "")"))
+            .navigationTitle(Text("Kurse \(appSettings.activeHalf == .firstHalf ? "1. " : "2. ") HJ, \(appSettings.activeSchoolYearName ?? "")"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     editButton
@@ -140,6 +140,9 @@ struct CourseListView: View {
         }
         .onAppear {
             if firstAppear {
+                Task {
+                    await delayMerge()
+                }
                 #if targetEnvironment(macCatalyst)
                 print("Removing all Pending Mac Notifications")
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -185,6 +188,14 @@ struct CourseListView: View {
             Image(systemName: "arrow.uturn.forward")
         }
     }
+    
+    private func delayMerge() async {
+        try? await Task.sleep(nanoseconds: 5_000_000_000)
+        DispatchQueue.main.async {
+            appSettings.mergeDuplicatedSchoolYears()
+            appSettings.activeSchoolYearName = appSettings.activeSchoolYearName ///Trigger the didSet
+        }
+   }
 }
     
     //----------------------------Preview-------------------------------

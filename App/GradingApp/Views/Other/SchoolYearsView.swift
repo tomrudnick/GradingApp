@@ -25,13 +25,13 @@ struct SchoolYearsView: View {
             List {
                 ForEach(schoolYear, id: \.self) { schoolYear in
                     Button {
-                        appSettings.activeSchoolYearUD = schoolYear.id.uuidString
+                        appSettings.activeSchoolYearName = schoolYear.name
                     } label: {
                         HStack {
                             Text("Schuljahr \(schoolYear.name)")
                             
                             Spacer()
-                            if appSettings.activeSchoolYear?.name == schoolYear.name {
+                            if appSettings.activeSchoolYearName == schoolYear.name {
                                 Image(systemName: "checkmark")
                             }
                         }
@@ -44,6 +44,9 @@ struct SchoolYearsView: View {
                     }
                     
                 }
+            }
+            .onAppear {
+                appSettings.mergeDuplicatedSchoolYears()
             }
             .toolbar(content: {
                 ToolbarItemGroup(placement: .bottomBar) {
