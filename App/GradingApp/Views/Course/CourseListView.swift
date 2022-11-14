@@ -143,6 +143,7 @@ struct CourseListView: View {
                 Task {
                     await delayMerge()
                 }
+                
                 #if targetEnvironment(macCatalyst)
                 print("Removing all Pending Mac Notifications")
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
@@ -194,6 +195,9 @@ struct CourseListView: View {
         DispatchQueue.main.async {
             appSettings.mergeDuplicatedSchoolYears()
             appSettings.activeSchoolYearName = appSettings.activeSchoolYearName ///Trigger the didSet
+            guard let activeSchoolYear = appSettings.activeSchoolYear else { return }
+            ///To make sure there exist no nil courses
+            appSettings.addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: activeSchoolYear)
         }
    }
 }

@@ -86,7 +86,7 @@ class AppSettings : ObservableObject {
         
     }
     
-    private func addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: SchoolYear) {
+    func addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: SchoolYear) {
         let context = PersistenceController.shared.container.viewContext
         context.perform {
             let courses = try? context.fetch(Course.fetchAllNil())
