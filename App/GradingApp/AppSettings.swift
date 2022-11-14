@@ -62,6 +62,16 @@ class AppSettings : ObservableObject {
         
     }
     
+    private func addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: SchoolYear) {
+        let context = PersistenceController.shared.container.viewContext
+        context.perform {
+            let courses = try? context.fetch(Course.fetchAll())
+            guard let courses else { return }
+            courses.forEach { $0.schoolyear = schoolYear }
+            context.saveCustom()
+        }
+    }
+    
     private func createDefaultSchoolYear() {
         let context = PersistenceController.shared.container.viewContext
         let year = Calendar.current.component(.year, from: Date()) % 100
@@ -69,6 +79,8 @@ class AppSettings : ObservableObject {
         activeSchoolYear = SchoolYear(name: scholYearName, context: PersistenceController.shared.container.viewContext)
         activeSchoolYearUD = activeSchoolYear?.id.uuidString
         context.saveCustom()
+        guard let activeSchoolYear else { return }
+        addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: activeSchoolYear)
     }
     
 }
