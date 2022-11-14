@@ -133,6 +133,13 @@ extension Course {
         return request
     }
     
+    
+    static func fetchAllWithoutSchoolYear() -> NSFetchRequest<Course> {
+        let request = fetchAll()
+        request.predicate = NSPredicate(format: "schoolyear = nil")
+        return request
+    }
+    
     static func fetchAll() -> NSFetchRequest<Course> {
         let request = NSFetchRequest<Course>(entityName: "Course")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Course.name_, ascending: true)]

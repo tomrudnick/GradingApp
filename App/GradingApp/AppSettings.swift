@@ -9,6 +9,7 @@ import Foundation
 import CloudStorage
 import CoreData
 import Combine
+import CloudKit
 
 class AppSettings : ObservableObject {
     @CloudStorage(HalfYearDateKeys.selectedHalf)    var activeHalf            :     HalfType = .firstHalf {
@@ -42,10 +43,24 @@ class AppSettings : ObservableObject {
                 
                 if activeSchoolYear == nil { //In theory this should never happen but while developing this might happen and this will prevent that the app crashes
                     createDefaultSchoolYear()
+                    if let activeSchoolYear = self.activeSchoolYear {
+                        addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: activeSchoolYear)
+                    }
                 }
             }
         } else { //THIS means that probably no schoolYear exists
-            createDefaultSchoolYear()
+            context.perform { [self] in
+                let uuid = getDefaultUUID()
+                self.activeSchoolYear = try? context.fetch(SchoolYear.fetchSchoolYear(id: uuid)).first
+                if self.activeSchoolYear != nil {
+                    self.activeSchoolYearUD = uuid.uuidString
+                } else {
+                    self.createDefaultSchoolYear()
+                }
+                if let activeSchoolYear = self.activeSchoolYear {
+                    addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: activeSchoolYear)
+                }
+            }
         }
         
         correctHalf = (activeHalf == .firstHalf && Date() >= dateFirstHalf || activeHalf == .secondHalf && Date() >= dateSecondHalf)
@@ -65,22 +80,27 @@ class AppSettings : ObservableObject {
     private func addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: SchoolYear) {
         let context = PersistenceController.shared.container.viewContext
         context.perform {
-            let courses = try? context.fetch(Course.fetchAll())
+            let courses = try? context.fetch(Course.fetchAllWithoutSchoolYear())
             guard let courses else { return }
             courses.forEach { $0.schoolyear = schoolYear }
             context.saveCustom()
         }
     }
     
+    private func getDefaultUUID() -> UUID {
+        return UUID(uuidString: "52D267B3-32A0-4797-8888-2281937C976F")!
+    }
+    
     private func createDefaultSchoolYear() {
         let context = PersistenceController.shared.container.viewContext
         let year = Calendar.current.component(.year, from: Date()) % 100
         let scholYearName = String(format: "%02d", year)+"/"+String(format: "%02d", year+1)
-        activeSchoolYear = SchoolYear(name: scholYearName, context: PersistenceController.shared.container.viewContext)
+        let uuid = getDefaultUUID()
+        activeSchoolYear = SchoolYear(name: scholYearName, context: PersistenceController.shared.container.viewContext, uuid: uuid)
         activeSchoolYearUD = activeSchoolYear?.id.uuidString
         context.saveCustom()
-        guard let activeSchoolYear else { return }
-        addExistingCoursesToNewlyCreatedSchoolYear(schoolYear: activeSchoolYear)
     }
     
 }
+
+

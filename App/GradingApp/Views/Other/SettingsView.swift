@@ -93,16 +93,15 @@ struct SettingsView: View {
                     }
                 }
                 //This is only for development code
-                /*Section(header: Text("Temporary")) {
+                Section(header: Text("Temporary")) {
                     Button {
-                        onDelete()
-                        viewModel.deleteAllCourses(viewContext: viewContext)
+                        PersistenceController.resetAllCoreData()
                     } label: {
                         Text("Delete everything")
                             .fontWeight(.bold)
                             .foregroundColor(.red)
                     }
-                }*/
+                }
                 
                 Section(header: Text("Halbjahres Einstellung")) {
                     
