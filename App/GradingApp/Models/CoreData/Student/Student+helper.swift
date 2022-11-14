@@ -56,7 +56,8 @@ extension Student {
     static func compareStudents(_ s1: StudentName, _ s2: StudentName) -> Bool {
         let german = Locale(identifier: "de")
         return (s1.lastName.lowercased().compare(s2.lastName.lowercased(), locale: german) == .orderedAscending)
-        || (s1.lastName.lowercased() == s2.lastName.lowercased() && s1.firstName.lowercased().compare(s2.firstName.lowercased(), locale: german) == .orderedAscending)
+               || (s1.lastName.lowercased() == s2.lastName.lowercased() && s1.firstName.lowercased().compare(s2.firstName.lowercased(), locale: german) == .orderedAscending)
+
     }
     
     static func fetchAll() -> NSFetchRequest<Student> {
