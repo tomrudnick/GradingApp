@@ -10,10 +10,12 @@ import CSV
 
 struct AddSchoolYearsView: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     var body: some View {
-        //TODO: Pass the save Handler
-        //The Method should create a new Schoolyear and save it
-        ChangeSchoolYearsView(schoolYearName_: "", title: "Neues Schuljahr")
+        ChangeSchoolYearsView(schoolYearName_: "", title: "Neues Schuljahr") { schoolYearName in
+            SchoolYear.addSchoolYear(name: schoolYearName, context: viewContext)
+        }
     }
 }
 

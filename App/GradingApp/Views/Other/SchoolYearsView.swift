@@ -54,10 +54,12 @@ struct SchoolYearsView: View {
             .sheet(item: $selectedSchoolYear, content: { schoolYear in
                 EditSchoolYearsView(oldSchoolYear: schoolYear)
                     .environmentObject(appSettings)
+                    .environment(\.managedObjectContext, viewContext)
                     .presentationDetents([.medium])
             })
             .sheet(isPresented: $showAddSchoolYear) {
                 AddSchoolYearsView()
+                    .environment(\.managedObjectContext, viewContext)
                     .presentationDetents([.medium])
             }
             Spacer()
