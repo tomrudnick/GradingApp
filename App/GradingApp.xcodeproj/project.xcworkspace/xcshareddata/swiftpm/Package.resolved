@@ -29,12 +29,12 @@
         }
       },
       {
-        "package": "SwiftUICharts",
-        "repositoryURL": "https://github.com/AppPear/ChartView",
+        "package": "CloudStorage",
+        "repositoryURL": "https://github.com/tomlokhorst/CloudStorage",
         "state": {
-          "branch": null,
-          "revision": "3265d3e16b6480158b748095a227ea04c48f80ad",
-          "version": "2.0.0-beta.1"
+          "branch": "main",
+          "revision": "6e8de12950b63be0d732dfcab35f3ed3f72e1841",
+          "version": null
         }
       },
       {
