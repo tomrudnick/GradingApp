@@ -42,7 +42,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                     Button("Ok") {
                         self.emailViewModel.subject = ""
                         self.emailViewModel.emailText = ""
-                        self.presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }
                 }
                 .navigationBarTitle(Text("Mail an: \(title)"), displayMode: .inline)

@@ -68,6 +68,7 @@
 		E24AF9CD26D82DDF000F2313 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CC26D82DDF000F2313 /* SettingsView.swift */; };
 		E24AF9CF26D83306000F2313 /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CE26D83306000F2313 /* CSVFile.swift */; };
 		E24AF9D526D8DD62000F2313 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24AF9D426D8DD62000F2313 /* CloudKit.framework */; };
+		E24B95DF2924490F00A332A9 /* ExamParticipation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F699A0292448E10068BECB /* ExamParticipation+CoreDataClass.swift */; };
 		E2574C0526D9454400ED2CFD /* HalfYear+EnvironmentValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2574C0426D9454400ED2CFD /* HalfYear+EnvironmentValue.swift */; };
 		E2574C1626DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2574C1526DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift */; };
 		E25A7CDA26CA9BDA00508EEE /* EditStudentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */; };
@@ -292,6 +293,7 @@
 		E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesSelectionView.swift; sourceTree = "<group>"; };
 		E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesEditView.swift; sourceTree = "<group>"; };
 		E2E2D0E326D67EB500C62887 /* Student+GradeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+GradeHelper.swift"; sourceTree = "<group>"; };
+		E2E68F8E292445A300FAD319 /* GradingAppDataModel v4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v4.xcdatamodel"; sourceTree = "<group>"; };
 		E2EA7AA126BEF23C0036048E /* GradeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeDetailView.swift; sourceTree = "<group>"; };
 		E2EA7AA326BEF6260036048E /* SingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGradeView.swift; sourceTree = "<group>"; };
 		E2EA7AA526BEF9E50036048E /* EditSingleGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSingleGradeView.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 		E2F1D548291556820060A29B /* GraphViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		E2F1D54A291557200060A29B /* ExamGradingSchemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamGradingSchemeView.swift; sourceTree = "<group>"; };
 		E2F409F228EAEC74006BA662 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		E2F699A0292448E10068BECB /* ExamParticipation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExamParticipation+CoreDataClass.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +440,7 @@
 		E22AA10E2912F8DE00784EEF /* Exam */ = {
 			isa = PBXGroup;
 			children = (
+				E2F699A0292448E10068BECB /* ExamParticipation+CoreDataClass.swift */,
 				E2C7ABE12912FA2400DFC9BC /* ExamExercise+CoreDataClass.swift */,
 				E2C7ABE32912FA2400DFC9BC /* ExamParticipationExercise+CoreDataClass.swift */,
 				E2C7ABE52912FA2400DFC9BC /* Exam+CoreDataClass.swift */,
@@ -958,6 +962,7 @@
 				6DE3E8B526E5551C004212D3 /* EmailKeys.swift in Sources */,
 				E200846E26DEE4EF0098D981 /* TranscriptGradesViewModel.swift in Sources */,
 				E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */,
+				E24B95DF2924490F00A332A9 /* ExamParticipation+CoreDataClass.swift in Sources */,
 				E200846C26DED7D70098D981 /* TranscriptGrade+helper.swift in Sources */,
 				E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */,
 				39BCE45E26E4C7B900FB2680 /* Course+CoreDataClass.swift in Sources */,
@@ -1432,12 +1437,13 @@
 		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E2E68F8E292445A300FAD319 /* GradingAppDataModel v4.xcdatamodel */,
 				3986AEC528C8E53300F17E47 /* GradingAppDataModel v3.xcdatamodel */,
 				E232978E27D008BB007EC630 /* GradingAppDataModel v2.xcdatamodel */,
 				3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */,
 				E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */,
 			);
-			currentVersion = 3986AEC528C8E53300F17E47 /* GradingAppDataModel v3.xcdatamodel */;
+			currentVersion = E2E68F8E292445A300FAD319 /* GradingAppDataModel v4.xcdatamodel */;
 			path = GradingAppData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
