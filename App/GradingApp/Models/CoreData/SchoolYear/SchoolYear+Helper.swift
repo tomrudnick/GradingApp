@@ -50,6 +50,7 @@ extension SchoolYear{
         return request
     }
     
+    
     static func fetchSchoolYear(id: UUID) -> NSFetchRequest<SchoolYear> {
         let request = NSFetchRequest<SchoolYear>(entityName: "SchoolYear")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \SchoolYear.name_, ascending: true)]

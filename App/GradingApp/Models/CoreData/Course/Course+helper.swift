@@ -139,6 +139,12 @@ extension Course {
         return request
     }
     
+    static func fetchAllNil() -> NSFetchRequest<Course> {
+        let request = fetchAll()
+        request.predicate = NSPredicate(format: "schoolyear == nil")
+        return request
+    }
+    
     static func fetchAllNonHidden() -> NSFetchRequest<Course> {
         let request = fetchAll()
         request.predicate = NSPredicate(format: "hidden == NO")
@@ -152,10 +158,10 @@ extension Course {
         return request
     }
     
-    static func fetchHalfNonHiddenSchoolYear(half: HalfType, schoolYear: SchoolYear) -> NSFetchRequest<Course>{
+    static func fetchHalfNonHiddenSchoolYear(half: HalfType, schoolYearName: String) -> NSFetchRequest<Course>{
         let request = fetchAll()
         let courseType = half == .firstHalf ? CourseType.firstHalf : CourseType.secondHalf
-        request.predicate = NSPredicate(format: "schoolyear == %@ AND hidden == NO AND (type_ == %d OR type_ == %d)", schoolYear, courseType.rawValue, CourseType.holeYear.rawValue)
+        request.predicate = NSPredicate(format: "schoolyear.name_ == %@ AND hidden == NO AND (type_ == %d OR type_ == %d)", schoolYearName, courseType.rawValue, CourseType.holeYear.rawValue)
         return request
     }
     

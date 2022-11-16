@@ -19,8 +19,7 @@ struct ChangeSchoolYearsView: View {
     var schoolYearName_: String
     var title: String
     
-    //TODO: Add the decleration of the function it should probably have one argument and no return values
-    //This method should be called when the save button is pressed
+    let saveHandler: (String) -> ()
     
     var body: some View {
         VStack {
@@ -53,7 +52,7 @@ struct ChangeSchoolYearsView: View {
     }
     
     func saveButtonPressed() {
-        //TODO: Call Save handler
+        saveHandler(schoolYearName)
         dismiss()
     }
     
