@@ -13,38 +13,38 @@ import UIKit
 struct GraphViewControllerReprestable: UIViewControllerRepresentable {
     typealias UIViewControllerType = GraphViewController
     
-    @ObservedObject var examVM: ExamViewModel
+    @ObservedObject var exam: Exam
 
     func makeUIViewController(context: Context) -> GraphViewController {
         let vc = GraphViewController()
-        vc.setupData(data: examVM.gradeSchema, staticData: examVM.standardGradeScheme)
+        vc.setupData(data: exam.gradeSchemaGraphData, staticData: exam.standardGradeSchemeGraphData)
         vc.delegate = context.coordinator
         return vc
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(examVM: examVM)
+        return Coordinator(exam: exam)
     }
     
     func updateUIViewController(_ uiViewController: GraphViewController, context: Context) {
         print("update called")
-        uiViewController.setupData(data: examVM.gradeSchema, staticData: examVM.standardGradeScheme)
+        uiViewController.setupData(data: exam.gradeSchemaGraphData, staticData: exam.standardGradeSchemeGraphData)
         uiViewController.graphView?.setNeedsDisplay()
     }
     
     class Coordinator: NSObject, GraphViewControllerDelegate {
-        var examVM: ExamViewModel
+        var exam: Exam
         
-        init(examVM: ExamViewModel) {
-            self.examVM = examVM
+        init(exam: Exam) {
+            self.exam = exam
         }
         
         func valueChanged(label: String, data: [GraphData]) {
-            let index = self.examVM.gradeSchema.firstIndex { $0.label == label }
+            let index = self.exam.gradeSchemaGraphData.firstIndex { $0.label == label }
             guard let index else { return }
-            if self.examVM.gradeSchema[index].value == data[index].value { return }
+            if self.exam.gradeSchemaGraphData[index].value == data[index].value { return }
             withAnimation {
-                self.examVM.gradeSchema[index].value = data[index].value
+                self.exam.gradeSchemaGraphData[index].value = data[index].value
             }
             
             print("Updating Grade Schema")

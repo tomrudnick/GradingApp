@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExerciseParticipationView: View {
    
-    @ObservedObject var epvm: ExamViewModel.ExerciseParticipationVM
+    @ObservedObject var epvm: ExerciseParticipationViewModel
     @FocusState private var isTextFieldFocused: Bool
     
     var maxPoints: Double
@@ -17,7 +17,7 @@ struct ExerciseParticipationView: View {
     
     var body: some View {
         HStack {
-            Text("\(epvm.student.firstName) \(epvm.student.lastName)").bold()
+            Text(studentName).bold()
             Spacer()
             TextField("", text: $epvm.pointsText)
                 .bold()
@@ -28,5 +28,10 @@ struct ExerciseParticipationView: View {
                 }
                 .frame(width: 50.0)
         }
+    }
+    
+    var studentName: String {
+        guard let student = epvm.examExerciseParticipation.examParticipation?.student else { return "" }
+        return "\(student.firstName) \(student.lastName)"
     }
 }

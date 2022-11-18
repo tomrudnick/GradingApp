@@ -30,6 +30,23 @@ extension Exam {
         set { exercises_ = newValue as NSSet }
     }
     
+    var gradeSchemaGraphData: [GraphData] {
+        get {
+            gradeSchema.sorted { gradeSchemeSort(v1: $0.key, v2: $1.key) }
+                       .map { GraphData(grade: $0.key, value: $0.value )}
+        }
+        
+        set { gradeSchema = newValue.toDictionary {($0.grade,$0.value)} }
+    }
+    
+    var standardGradeSchemeGraphData: [GraphData] {
+        get {
+            (course?.ageGroup == .upper ? defaultGradeSchemeUpperCourse() : defaultGradeSchemeLowerCourse())
+                .sorted { gradeSchemeSort(v1: $0.key, v2: $1.key) }
+                .map { GraphData(grade: $0.key, value: $0.value )}
+        }
+    }
+    
     var examParticipations: Set<ExamParticipation> {
         get { examParticipations_ as? Set<ExamParticipation> ?? [] }
         set { examParticipations_ = newValue as NSSet }
@@ -40,7 +57,7 @@ extension Exam {
     }
     
     var participations: Array<ExamParticipation> {
-        examParticipations.sorted { p1, p2 in
+        (examParticipations_ as? Set<ExamParticipation> ?? []).sorted { p1, p2 in
             guard let s1 = p1.student, let s2 = p2.student else { return false } ///This Case should not occur
             return Student.compareStudents(s1, s2)
         }
@@ -60,25 +77,64 @@ extension Exam {
         return course.ageGroup == .upper ? [5,6,7,8,9,10,11,12,13,14,15] : [4,3,2,1]
     }
     
+    func setup(course: Course) {
+        guard let context = self.managedObjectContext else { return }
+        
+        self.course = PersistenceController.copyForEditing(of: course, in: context)
+        
+        self.course?.students.forEach { student in
+            print("Add: \(student.firstName)")
+            let newParticipation = ExamParticipation(context: context)
+            newParticipation.student = student
+            newParticipation.exam = self
+            newParticipation.participated = true
+        }
+        print(self.examParticipations.count)
+        resetToDefaultGradeSchema()
+    }
+    
     func addExercise(name: String? = nil, maxPoints: Double) {
         guard let context = self.managedObjectContext else { return }
         let name = name ?? getNextTitle()
         
-        var exercise = ExamExercise(context: context)
+        let exercise = ExamExercise(context: context)
         exercise.maxPoints = maxPoints
         exercise.name = name
         exercise.index = Int32(self.exercises.count)
         
         self.exercises.insert(exercise)
+        
+        self.course?.students.forEach { student in
+            guard let examP = student.examParticipations.first(where: { $0.exam == self }) else { return }
+            
+            let examParticipationExercise = ExamParticipationExercise(context: context)
+            examParticipationExercise.exercise = exercise
+            examParticipationExercise.examParticipation = examP
+        }
+        
     }
     
     // TODO: Implement those functions somehow
     func delete(at offsets: IndexSet) {
-        //exercises.remove(atOffsets: offsets)
+        offsets.forEach { index in
+            guard let exercise = exercises.first(where: { $0.index == Int32(index) }) else { return }
+            exercises.remove(exercise)
+            managedObjectContext?.delete(exercise)
+        }
+        let arr = exercisesArr
+        for (index, exercise) in arr.enumerated() {
+            exercise.index = Int32(index)
+        }
     }
     
     func move(from source: IndexSet, to destination: Int) {
-        //exercises.move(fromOffsets: source, toOffset: destination)
+        var arr = exercisesArr
+        arr.move(fromOffsets: source, toOffset: destination)
+        for (index, exercise) in arr.enumerated() {
+            if exercise.index != Int32(index) {
+                exercise.index = Int32(index)
+            }
+        }
     }
     
     func toggleParticipation(for student: Student) {
@@ -88,6 +144,7 @@ extension Exam {
     func getTotalPoints(for student: Student) -> Double {
         return exercises.flatMap { $0.participationExercises.filter { $0.examParticipation?.student == student } }
                         .compactMap { $0.points }
+                        .filter { $0 >= 0.0 }
                         .reduce(0.0) { $0 + $1 }
     }
     
@@ -109,7 +166,7 @@ extension Exam {
     func getPointsToGrade() -> [(grade: Int, range: RangeCustom<Double>)]  {
         var pointsToGrade: [(grade: Int, range: RangeCustom<Double>)] = []
         let maxPoints = getMaxPointsPossible()
-        let gradeSchema = gradeSchema.sorted { $0.key < $1.key }
+        let gradeSchema: [Dictionary<Int, Double>.Element] = gradeSchema.sorted { gradeSchemeSort(v1: $0.key, v2: $1.key) }
         for i in (0..<gradeSchema.count).reversed() {
             let minValue = round(Double(gradeSchema[i].value / 100.0) * maxPoints * 2.0) / 2.0
             if i < (gradeSchema.count - 1) {
@@ -161,8 +218,60 @@ extension Exam {
         getPercentageOfGrades(for: passedGrades)
     }
     
+    func getChartData() -> [GraphData] {
+        self.gradeSchemaGraphData.map { data in
+            GraphData(grade: data.grade, value: CGFloat(getNumberOfGrades(for: data.grade)))
+        }
+    }
+    
+    func resetToDefaultGradeSchema() {
+        guard let course else { return }
+        self.gradeSchema = course.ageGroup == .upper ? defaultGradeSchemeUpperCourse() : defaultGradeSchemeLowerCourse()
+    }
+    
     ///This private method returns the next title according to the standard scheme of matthias
     private func getNextTitle() -> String {
         "A\(self.exercises.count + 1)"
     }
+    
+    private func defaultGradeSchemeUpperCourse() -> Dictionary<Int, Double> {
+        return [15 : 95.0,
+                14 : 90.0,
+                13 : 85.0,
+                12 : 80.0,
+                11 : 75.0,
+                10 : 70.0,
+                9  : 65.0,
+                8  : 60.0,
+                7  : 55.0,
+                6  : 50.0,
+                5  : 45.0,
+                4  : 40.0,
+                3  : 33.0,
+                2  : 27.0,
+                1  : 20.0,
+                0  : 0.0
+                ]
+    }
+    
+    
+    private func defaultGradeSchemeLowerCourse() -> Dictionary<Int, Double>  {
+        return [1 : 87.5,
+                2 : 75.0,
+                3 : 62.5,
+                4 : 50.0,
+                5 : 20.0,
+                6 : 0.0
+                ]
+    }
+    
+    private func gradeSchemeSort(v1: Int, v2: Int) -> Bool {
+        if self.course?.ageGroup == .lower {
+            return v1 > v2
+        } else {
+            return v1 < v2
+        }
+    }
+    
+    
 }

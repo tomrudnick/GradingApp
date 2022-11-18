@@ -13,13 +13,14 @@ struct NewExam: View {
         case dashboard
         case participants
         case gradingScheme
-        case exercise(ExamViewModel.ExerciseVM)
+        case exercise(ExerciseViewModel)
     }
     
-    var course: Course
     @Environment(\.dismiss) var dismiss
-    @StateObject var examVM = ExamViewModel()
+    @ObservedObject var exam: Exam
     @State var selection: ExamRoute? = .dashboard
+    
+    let save: () -> ()
     
     var body: some View {
         NavigationSplitView {
@@ -28,41 +29,41 @@ struct NewExam: View {
                 NavigationLink(value: ExamRoute.participants) { Text("Teilnehmer") }
                 NavigationLink(value: ExamRoute.gradingScheme) { Text("Noten Schema") }
                 Section("Aufgaben") {
-                    ForEach(examVM.exercises, id: \.id) { exercise in
-                        NavigationLink(value: ExamRoute.exercise(exercise)) {
-                            HStack {
-                                Text(exercise.title)
-                                Spacer()
-                                Text(exercise.maxPointsText).foregroundColor(Color.gray)
-                            }
+                    ForEach(exam.exercisesArr) { exercise in
+                        let exerciseVM = ExerciseViewModel(exericse: exercise)
+                        NavigationLink(value: ExamRoute.exercise(exerciseVM)) {
+                           ExerciseRowView(exercise: exercise)
                         }
                     }
-                    .onDelete(perform: examVM.delete)
-                    .onMove(perform: examVM.move)
+                    .onDelete(perform: exam.delete)
+                    .onMove(perform: exam.move)
                 }
             }
-            .navigationTitle("Exam: \(examVM.title)")
+            .navigationTitle("Exam: \(exam.name)")
             .toolbar { toolbar }
         } detail: {
             switch selection ?? .dashboard {
-            case .dashboard: ExamDashboard(examVM: examVM)
-            case .gradingScheme: ExamGradingSchemeView(examVM: examVM)
-            case .participants: ExamParticipantsView(examVM: examVM)
-            case .exercise(let exerciseVM): ExerciseView(examVM: examVM, exercise: exerciseVM)
+            case .dashboard: ExamDashboard(exam: exam)
+            case .gradingScheme: ExamGradingSchemeView(exam: exam)
+            case .participants: ExamParticipantsView(exam: exam)
+            case .exercise(let exerciseVM): ExerciseView(exam: exam, exerciseVM: exerciseVM)
             }
         }
-        .onAppear {
-            examVM.initVM(course: course)
-        }
-
     }
     
     @ToolbarContentBuilder var toolbar: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Button {
-                examVM.addExercise(maxPoints: 0.0)
+                exam.addExercise(maxPoints: 0.0)
             } label: {
                 Image(systemName: "plus")
+            }
+        }
+        ToolbarItem(placement: .primaryAction) {
+            Button {
+                save()
+            } label: {
+                Image(systemName: "externaldrive")
             }
         }
         ToolbarItem(placement: .secondaryAction) { EditButton() }
@@ -72,6 +73,18 @@ struct NewExam: View {
             } label: {
                 Text("Abbrechen")
             }
+        }
+    }
+}
+
+struct ExerciseRowView: View {
+    @ObservedObject var exercise: ExamExercise
+    
+    var body: some View {
+        HStack {
+            Text(exercise.name)
+            Spacer()
+            Text(String(format: "%.2f", exercise.maxPoints))
         }
     }
 }

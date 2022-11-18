@@ -10,8 +10,8 @@ import Combine
 
 struct ExerciseView: View {
     
-    var examVM: ExamViewModel
-    @ObservedObject var exercise: ExamViewModel.ExerciseVM
+    var exam: Exam
+    @ObservedObject var exerciseVM: ExerciseViewModel
     
     var body: some View {
         
@@ -19,32 +19,40 @@ struct ExerciseView: View {
             Section("Exercise Settings") {
                 HStack {
                     Text("Exercise Name: ")
-                    TextField("Aufgabe...", text: $exercise.title)
-                        .onChange(of: exercise.title) { _ in
-                            examVM.objectWillChange.send()
+                    TextField("Aufgabe...", text: $exerciseVM.exericse.name)
+                        .onChange(of: exerciseVM.exericse.name) { _ in
+                            exam.objectWillChange.send()
                         }
+
                 }
                 HStack {
                     Text("Max Points: ")
-                    TextField("Max Punkte...", text: $exercise.maxPointsText)
+                    TextField("Max Punkte...", text: $exerciseVM.maxPointsText)
                 }
             }
             
             Section("Students Points for Exercise") {
                 List {
-                    ForEach(onlyParticpantsSorted(), id: \.student) { exerciseParticipation in
-                        ExerciseParticipationView(epvm: exerciseParticipation, maxPoints: exercise.maxPoints)
+                    ForEach(onlyParticpantsSorted()) { exerciseParticipation in
+                        let epvm = ExerciseParticipationViewModel(examExerciseParticipation: exerciseParticipation)
+                        ExerciseParticipationView(epvm: epvm, maxPoints: exerciseVM.exericse.maxPoints)
                     }
                 }
             }
         }
-        .navigationTitle("Exercise \(exercise.title)")
+        .navigationTitle("Exercise \(exerciseVM.exericse.name)")
     }
     
-    func onlyParticpantsSorted() -> [ExamViewModel.ExerciseParticipationVM] {
-        exercise.participations
-            .filter { examVM.participants[$0.student] == true }
-            .sorted { Student.compareStudents($0.student, $1.student) }
+    func onlyParticpantsSorted() -> [ExamParticipationExercise] {
+        exerciseVM.exericse.participationExercises
+            .filter {
+                guard let examParticipation = $0.examParticipation else { return false }
+                return exam.examParticipations.first { $0 == examParticipation }?.participated ?? false
+            }
+            .sorted { p1, p2 in
+                guard let s1 = p1.examParticipation?.student, let s2 = p2.examParticipation?.student else { return false }
+                return Student.compareStudents(s1, s2)
+            }
     }
 }
 

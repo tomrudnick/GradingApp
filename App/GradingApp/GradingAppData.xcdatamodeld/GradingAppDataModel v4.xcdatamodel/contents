@@ -30,12 +30,12 @@
     <entity name="ExamParticipation" representedClassName="ExamParticipation" syncable="YES" codeGenerationType="category">
         <attribute name="participated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="exam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exam" inverseName="examParticipations_" inverseEntity="Exam"/>
-        <relationship name="participatedExercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamParticipationExercise" inverseName="examParticipation" inverseEntity="ExamParticipationExercise"/>
+        <relationship name="participatedExercises_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamParticipationExercise" inverseName="examParticipation" inverseEntity="ExamParticipationExercise"/>
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="examParticipations_" inverseEntity="Student"/>
     </entity>
     <entity name="ExamParticipationExercise" representedClassName="ExamParticipationExercise" syncable="YES" codeGenerationType="category">
-        <attribute name="points" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="examParticipation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExamParticipation" inverseName="participatedExercises" inverseEntity="ExamParticipation"/>
+        <attribute name="points" optional="YES" attributeType="Double" defaultValueString="-1" usesScalarValueType="YES"/>
+        <relationship name="examParticipation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExamParticipation" inverseName="participatedExercises_" inverseEntity="ExamParticipation"/>
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExamExercise" inverseName="participationExercises_" inverseEntity="ExamExercise"/>
     </entity>
     <entity name="FullYearTranscriptGrade" representedClassName="FullYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">

@@ -10,7 +10,7 @@ import Combine
 
 struct ExamDashboard: View {
     
-    @ObservedObject var examVM: ExamViewModel
+    @ObservedObject var exam: Exam
     @State var showGradeToPoints = true
     
     var body: some View {
@@ -20,32 +20,32 @@ struct ExamDashboard: View {
                     HStack {
                         Text("Exam Title:")
                         Spacer()
-                        TextField("Title...", text: $examVM.title)
+                        TextField("Title...", text: $exam.name)
                             .frame(width: 100)
                     }
                     
                     HStack {
                         Text("Exam Date:")
-                        DatePicker("", selection: $examVM.date)
+                        DatePicker("", selection: $exam.date, displayedComponents: DatePickerComponents.date)
                     }
                     HStack {
                         Text("Maximal Erreichbare Punkte")
-                        Text(String(format: "%.2f", examVM.getMaxPointsPossible())).bold()
+                        Text(String(format: "%.2f", exam.getMaxPointsPossible())).bold()
                     }
                     
                     HStack {
                         Text("Durschnitt")
-                        Text(String(format: "%.2f", examVM.getAverage())).bold()
+                        Text(String(format: "%.2f", exam.getAverage())).bold()
                         Spacer()
                         Text("Bestanden: ")
-                        Text("\(Double(examVM.getNumberOfGrades(for: examVM.passedGrades)))")
-                        if examVM.participants.filter(\.value).count > 0 {
-                            Gauge(value: Double(examVM.getNumberOfGrades(for: examVM.passedGrades)),
-                                  in: 0...Double(examVM.participants.filter(\.value).count)
+                        Text("\(exam.getNumberOfGrades(for: exam.passedGrades))")
+                        if exam.examParticipations.filter(\.participated).count > 0 {
+                            Gauge(value: Double(exam.getNumberOfGrades(for: exam.passedGrades)),
+                                  in: 0...Double(exam.examParticipations.filter(\.participated).count)
                             ) {
                                 Text("")
                             } currentValueLabel: {
-                                Text(String(format: "%.2f", examVM.getPercentageOfPassed()))
+                                Text(String(format: "%.2f", exam.getPercentageOfPassed()))
                             }.gaugeStyle(.accessoryCircularCapacity)
                                 .tint(.purple)
                         }
@@ -54,7 +54,7 @@ struct ExamDashboard: View {
                 Section {
                     if showGradeToPoints {
                         List {
-                            ForEach(examVM.getPointsToGrade(), id: \.grade) { elem in
+                            ForEach(exam.getPointsToGrade(), id: \.grade) { elem in
                                 HStack {
                                     Text("\(elem.grade)")
                                     Spacer()
@@ -78,23 +78,20 @@ struct ExamDashboard: View {
 
                     }
                 }
-
+            
                 Section("Exam Aufgaben Übersicht") {
-                    Table(examVM.sortedParticipatingStudents) {
+                    Table(exam.sortedParticipatingStudents) {
                         TableColumn("Vorname", value: \.firstName)
                         TableColumn("Nachname", value: \.lastName)
                         TableColumn("Punkte") { student in
-                            Text(String(format: "%.2f", examVM.getTotalPoints(for: student)))
+                            Text(String(format: "%.2f", exam.getTotalPoints(for: student)))
                         }
                         TableColumn("Grade") { student in
-                            Text("\(examVM.getGrade(for: student))")
+                            Text("\(exam.getGrade(for: student))")
                         }
-                    }
-                    .frame(height: CGFloat(examVM.sortedParticipants.filter(\.participant).count) * 100)
+                    }.frame(height: CGFloat(exam.examParticipations.filter(\.participated).count) * 100)
                 }
             }
-            
-            
         }.navigationTitle("Exam Dashboard")
        
     }

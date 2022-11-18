@@ -9,23 +9,21 @@ import SwiftUI
 import Charts
 
 struct ExamGradingSchemeView: View {
-    @ObservedObject var examVM: ExamViewModel
+    @ObservedObject var exam: Exam
     
     var body: some View {
         VStack {
             Button("Reset to default") {
-                examVM.resetToDefaultGradeSchema()
+                exam.resetToDefaultGradeSchema()
             }
-            Text("Anzahl an Durchgefallenen: \(examVM.getNumberOfGrades(for: 5) + examVM.getNumberOfGrades(for: 6))")
-            Chart {
-                ForEach(examVM.getChartData()) { grade in
-                    BarMark(
-                        x: .value("Grade", grade.label),
-                        y: .value("Anzahl", Int(grade.value))
-                    )
-                }
+            Text("Anzahl an Durchgefallenen: \(exam.getNumberOfGrades(for: exam.failedGrades))")
+            Chart (exam.getChartData()){ grade in
+                BarMark(
+                    x: .value("Grade", grade.label),
+                    y: .value("Anzahl", Int(grade.value))
+                )
             }
-            GraphViewControllerReprestable(examVM: examVM)
+            GraphViewControllerReprestable(exam: exam)
         }.navigationTitle("Noten Schema")
     }
 }

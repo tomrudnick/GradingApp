@@ -19,6 +19,7 @@ struct CourseTabView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.openWindow) private var openWindow
     
+    @StateObject var examVM = ExamVM()
     @StateObject var sendEmailViewModel = SendMultipleEmailsCourseViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
@@ -140,11 +141,13 @@ struct CourseTabView: View {
                 UITabBar.appearance().scrollEdgeAppearance = apparence
                 
             }
-
+            self.examVM.setup(course: course, viewContext: viewContext)
             self.sendEmailViewModel.fetchData(course: course, half: halfYear)
         }
         .fullScreenCover(isPresented: $showNewExamSheet, content: {
-            NewExam(course: course)
+            NewExam(exam: examVM.exam) {
+                self.examVM.persist()
+            }
         })
         .sheet(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel)
