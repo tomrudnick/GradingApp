@@ -18,7 +18,7 @@ extension Student {
     
     func gradesExist (_ type: GradeType, half: HalfType) -> Bool {
         var gradesCount = grades.filter { $0.type == type && $0.half == half }.count
-        if type == .written { gradesCount += examParticipations.filter { $0.participated }.count  }
+        if type == .written { gradesCount += examParticipations.filter { $0.participated && $0.exam?.half == half }.count  }
         if gradesCount == 0 {
             return false
         }
@@ -29,7 +29,7 @@ extension Student {
     
     func gradesExist (half: HalfType) -> Bool {
         var gradesCount = grades.filter { $0.half == half }.count
-        gradesCount += examParticipations.filter { $0.participated }.count
+        gradesCount += examParticipations.filter { $0.participated && $0.exam?.half == half }.count
         return gradesCount != 0
     }
     
