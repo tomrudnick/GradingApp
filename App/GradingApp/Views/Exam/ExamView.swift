@@ -19,6 +19,7 @@ struct ExamView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var exam: Exam
     @State var selection: ExamRoute? = .dashboard
+    @State var showPDFExporter = false
     
     let save: () -> ()
     let delete: () -> ()
@@ -42,6 +43,14 @@ struct ExamView: View {
             }
             .navigationTitle("Exam: \(exam.name)")
             .toolbar { toolbar }
+            .fileExporter(isPresented: $showPDFExporter, document: PDFFile.generatePDFFromExam(exam: exam), contentType: .pdf) { result in
+                switch result {
+                case .success(let url):
+                    print("Saved to \(url)")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
         } detail: {
             switch selection ?? .dashboard {
             case .dashboard: ExamDashboard(exam: exam)
@@ -83,6 +92,11 @@ struct ExamView: View {
                 } label: {
                     Text("Löschen")
                     Image(systemName: "trash")
+                }
+                Button {
+                    self.showPDFExporter.toggle()
+                } label: {
+                    Text("Export")
                 }
             } label: {
                 Image(systemName: "ellipsis.circle")

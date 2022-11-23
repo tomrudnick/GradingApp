@@ -11,7 +11,7 @@ import UIKit
 class ExamSummaryComposer: NSObject {
     let pathToExamHTMLTemplate = Bundle.main.path(forResource: "exam", ofType: "html")!
     let pathToGradeSchemaHTMLTemplate = Bundle.main.path(forResource: "gradeSchema", ofType: "html")!
-    let pathToGradeHTMLTemplate = Bundle.main.path(forResource: "grade", ofType: "hmtl")!
+    let pathToGradeHTMLTemplate = Bundle.main.path(forResource: "grade", ofType: "html")!
     
     let exam: Exam
     
@@ -30,14 +30,14 @@ class ExamSummaryComposer: NSObject {
             let totalParticipants = exam.participationCount()
             HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_FAILED", with: String(failed))
             HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_PARTICIPANTS", with: String(totalParticipants))
-            HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_FAILED_PERCENTAGE", with: String(format: "%.2f", Double(failed) / Double(totalParticipants)))
+            HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_PERCENTAGE", with: String(format: "%.2f", (Double(failed) / Double(totalParticipants)) * 100.0))
             
             let gradeSchemaHTMLContent = try String(contentsOfFile: pathToGradeSchemaHTMLTemplate)
             
             let gradeSchema = exam.getPointsToGrade().reduce("") { result, elem in
                 var htmlContent = gradeSchemaHTMLContent
                 htmlContent = htmlContent.replacingOccurrences(of: "#GRADE", with: String(elem.grade))
-                htmlContent = htmlContent.replacingOccurrences(of: "#RANGE", with: elem.grade.description)
+                htmlContent = htmlContent.replacingOccurrences(of: "#RANGE", with: elem.range.description)
                 return result + htmlContent
             }
             
