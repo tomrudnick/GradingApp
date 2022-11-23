@@ -14,6 +14,7 @@ enum UndoManagerAction {
 }
 
 struct CourseTabView: View {
+    @EnvironmentObject var appSettings: AppSettings
     
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
@@ -32,6 +33,7 @@ struct CourseTabView: View {
     @State var showSendEmailSheet = false
     @State var showUndoRedoAlert = false
     @State var showCalculatedTranscriptSheet = false
+    @State var showNewExamSheet = false
     
     @State var studentGrade: [Student:Int] = [:]
     
@@ -66,6 +68,12 @@ struct CourseTabView: View {
             }
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 Menu {
+                    Button {
+                        self.showNewExamSheet.toggle()
+                    } label: {
+                        Text("Neue Klassenarbeit")
+                    }
+
                     Button(action: {
                         self.showSendEmailSheet.toggle()
                     }, label: {
@@ -133,9 +141,13 @@ struct CourseTabView: View {
                 UITabBar.appearance().scrollEdgeAppearance = apparence
                 
             }
-
             self.sendEmailViewModel.fetchData(course: course, half: halfYear)
         }
+        .fullScreenCover(isPresented: $showNewExamSheet, content: {
+            NewExamView(course: course)
+                .environmentObject(appSettings)
+                .environment(\.managedObjectContext, viewContext)
+        })
         .sheet(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel)
         })

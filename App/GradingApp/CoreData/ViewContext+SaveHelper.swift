@@ -24,4 +24,10 @@ extension NSManagedObjectContext {
             fatalError("Error saving database: \(error)")
         }
     }
+    
+    func childViewContext() -> NSManagedObjectContext {
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.parent = self
+        return context
+    }
 }

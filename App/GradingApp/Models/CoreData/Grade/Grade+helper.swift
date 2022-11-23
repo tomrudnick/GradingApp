@@ -54,6 +54,10 @@ extension Grade {
         return lowerSchoolGradesTranslate.first(where: {$1 == value})!.key
     }
     
+    static func convertLowerGradeToPoints(grade: Int) -> Int {
+        return lowerSchoolGradesTranslate[String(grade)] ?? -1
+    }
+    
     static func roundPoints(points: Double) -> Int {
         return Int(round(points))
     }
@@ -97,6 +101,24 @@ extension Grade {
             } else {
                 allDates[grade.date!] = [GradeStudent(student: grade.student!, grade: grade)]
             }
+        }
+        return allDates
+    }
+    
+    enum WrittenGradeType {
+        case normal([GradeStudent<Grade>])
+        case exam(Exam)
+    }
+    
+    static func getGradesPerDate(grades: FetchedResults<Grade>, exams: FetchedResults<Exam>) -> [Date: WrittenGradeType] {
+        let gradesPerDate = getGradesPerDate(grades: grades)
+        var allDates: [Date: WrittenGradeType] = Dictionary(uniqueKeysWithValues: gradesPerDate.map {key, value in
+            (key, WrittenGradeType.normal(value))
+        })
+        
+        for exam in exams {
+            guard allDates[exam.date] == nil else { continue }
+            allDates[exam.date] = WrittenGradeType.exam(exam)
         }
         return allDates
     }
