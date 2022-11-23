@@ -120,6 +120,7 @@ extension Exam {
         }
         print(self.examParticipations.count)
         self.multiplier = 1.0
+        self.half = half
         resetToDefaultGradeSchema()
     }
     

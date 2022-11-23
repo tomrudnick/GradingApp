@@ -16,7 +16,6 @@ enum UndoManagerAction {
 struct CourseTabView: View {
     @EnvironmentObject var appSettings: AppSettings
     
-    @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.openWindow) private var openWindow
     
@@ -43,17 +42,20 @@ struct CourseTabView: View {
         
         TabView(selection: $selectedTab) {
             StudentListView(course: course)
+                .environment(\.currentHalfYear, appSettings.activeHalf)
                 .tabItem {
                     Image(systemName:"person.3.fill")
                     Text("Kurs")
                 }.tag("StudentListView")
             StudentGradeListView(course: course)
+                .environment(\.currentHalfYear, appSettings.activeHalf)
                 .tabItem {
                     Image(systemName:"graduationcap")
                     Text("Leistungsübersicht")
                 }.tag("StudentGradeListView")
             
             GradeAtDatesSelectionView(course: course)
+                .environment(\.currentHalfYear, appSettings.activeHalf)
                 .tabItem{
                     Image(systemName:"calendar")
                     Text("Daten")
@@ -61,7 +63,7 @@ struct CourseTabView: View {
             
         }
         //.edgesIgnoringSafeArea(.top)
-        .navigationBarTitle("\(course.title) - \(halfYear == .firstHalf ? "1. HJ" : "2. HJ")", displayMode: .inline)
+        .navigationBarTitle("\(course.title) - \(appSettings.activeHalf == .firstHalf ? "1. HJ" : "2. HJ")", displayMode: .inline)
         .toolbar(content: {
             ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                 Text("")
@@ -80,7 +82,7 @@ struct CourseTabView: View {
                         Text("Email verschicken...")
                     }).disabled(!sendEmailViewModel.emailAccountViewModel.emailAccountUsed)
                     if course.type == .holeYear {
-                        if halfYear == .secondHalf {
+                        if appSettings.activeHalf == .secondHalf {
                             Button {
                                 self.showCalculatedTranscriptSheet.toggle()
                             } label: {
@@ -90,7 +92,7 @@ struct CourseTabView: View {
                         Button {
                             self.showTranscriptHalfYearSheet.toggle()
                         } label: {
-                            Text("Zeugnisnoten \(halfYear == .firstHalf ? "1. " : "2. ") HJ einstellen")
+                            Text("Zeugnisnoten \(appSettings.activeHalf == .firstHalf ? "1. " : "2. ") HJ einstellen")
                         }
                         Button {
                             self.showTranscriptSheet.toggle()
@@ -135,13 +137,14 @@ struct CourseTabView: View {
         
         
         .onAppear {
+            print("HALF: \(appSettings.activeHalf)")
             let apparence = UITabBarAppearance()
             apparence.configureWithOpaqueBackground()
             if #available(iOS 15.0, *) {
                 UITabBar.appearance().scrollEdgeAppearance = apparence
                 
             }
-            self.sendEmailViewModel.fetchData(course: course, half: halfYear)
+            self.sendEmailViewModel.fetchData(course: course, half: appSettings.activeHalf)
         }
         .fullScreenCover(isPresented: $showNewExamSheet, content: {
             NewExamView(course: course)
@@ -149,35 +152,35 @@ struct CourseTabView: View {
                 .environment(\.managedObjectContext, viewContext)
         })
         .sheet(isPresented: $showSendEmailSheet, content: {
-            SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel)
+            SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel).environment(\.currentHalfYear, appSettings.activeHalf)
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone) { view in
             view.fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {
-                StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
+                StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             })
             .fullScreenCover(isPresented: $showAddMultipleGrades, content: {
-                AddMultipleGradesView(course: course)
+                AddMultipleGradesView(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             })
             .fullScreenCover(isPresented: $showTranscriptSheet, content: {
-                StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
+                StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             })
             .fullScreenCover(isPresented: $showCalculatedTranscriptSheet) {
-                StudentCalculatedTranscriptGrades(course: course)
+                StudentCalculatedTranscriptGrades(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             }
     }
         
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .pad) { view in
             view.sheet(isPresented: $showAddMultipleGrades, content: {
-                AddMultipleGradesView(course: course)
+                AddMultipleGradesView(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             })
             .sheet(isPresented: $showTranscriptHalfYearSheet) {
-                StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, halfYear)
+                StudentTranscriptGradesHalfYear(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             }
             .sheet(isPresented: $showTranscriptSheet, content: {
-                StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, halfYear)
+                StudentTranscriptGradesFullYearView(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             })
             .sheet(isPresented: $showCalculatedTranscriptSheet) {
-                StudentCalculatedTranscriptGrades(course: course)
+                StudentCalculatedTranscriptGrades(course: course).environment(\.currentHalfYear, appSettings.activeHalf)
             }
         }
         

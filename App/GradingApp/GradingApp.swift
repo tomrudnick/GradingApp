@@ -44,6 +44,7 @@ struct GradingApp: App {
                let course = try? PersistenceController.shared.container.viewContext.fetch(Course.fetchRequest(forID: courseID)).first {
                 AddMultipleGradesView(course: course)
                     .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+                    .environment(\.currentHalfYear, appSettings.activeHalf)
             }
         }
     }
