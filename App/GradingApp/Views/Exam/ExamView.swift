@@ -21,6 +21,7 @@ struct ExamView: View {
     @State var selection: ExamRoute? = .dashboard
     
     let save: () -> ()
+    let delete: () -> ()
     
     var body: some View {
         NavigationSplitView {
@@ -59,19 +60,33 @@ struct ExamView: View {
                 Image(systemName: "plus")
             }
         }
-        ToolbarItem(placement: .primaryAction) {
-            Button {
-                save()
-            } label: {
-                Image(systemName: "externaldrive")
-            }
-        }
-        ToolbarItem(placement: .secondaryAction) { EditButton() }
+       
         ToolbarItem(placement: .cancellationAction) {
-            Button {
-                dismiss()
+            Menu {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Abbrechen")
+                }
+                Button {
+                    save()
+                    dismiss()
+                } label: {
+                    HStack {
+                        Text("Speichern")
+                        Image(systemName: "externaldrive")
+                    }
+                }
+                Button {
+                    delete()
+                    self.dismiss()
+                } label: {
+                    Text("Löschen")
+                    Image(systemName: "trash")
+                }
             } label: {
-                Text("Abbrechen")
+                Image(systemName: "ellipsis.circle")
+                    .imageScale(.large)
             }
         }
     }

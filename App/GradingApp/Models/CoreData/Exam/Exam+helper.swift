@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import CoreData
-
+import SwiftUI
 
 extension Exam {
     var date: Date {
@@ -77,10 +77,15 @@ extension Exam {
         return course.ageGroup == .upper ? [5,6,7,8,9,10,11,12,13,14,15] : [4,3,2,1]
     }
     
+    func participationCount() -> Int {
+        self.examParticipations.filter(\.participated).count
+    }
+    
     func setup(course: Course, half: HalfType) {
         guard let context = self.managedObjectContext else { return }
         
         self.course = PersistenceController.copyForEditing(of: course, in: context)
+        self.date = Date()
         
         self.course?.students.forEach { student in
             print("Add: \(student.firstName)")
@@ -190,6 +195,15 @@ extension Exam {
             sum += g.key * getNumberOfGrades(for: g.key)
         }
         return Double(sum) / Double(totalParticipants)
+    }
+    
+    func getAverage2() -> (Double,Color) {
+        let average = getAverage()
+        var roundedAverage = Int(round(average))
+        if course?.ageGroup == .lower {
+            roundedAverage = Grade.convertLowerGradeToPoints(grade: roundedAverage)
+        }
+        return (average, Grade.getColor(points: Double(roundedAverage)))
     }
     
     func getNumberOfGrades(for grade: Int) -> Int {

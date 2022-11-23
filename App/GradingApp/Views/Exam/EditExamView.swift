@@ -19,6 +19,9 @@ struct EditExamView: View {
             if let exam = examVM.exam {
                 ExamView(exam: exam) {
                     examVM.persist()
+                } delete: {
+                    viewContext.delete(self.exam)
+                    viewContext.saveCustom()
                 }
             } else {
                 Text("No Exam")

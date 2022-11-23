@@ -18,6 +18,8 @@ struct NewExamView: View {
             if let exam = examVM.exam {
                 ExamView(exam: exam) {
                     examVM.persist()
+                } delete: {
+                    
                 }
             } else {
                 Text("Something went wrong")

@@ -105,6 +105,24 @@ extension Grade {
         return allDates
     }
     
+    enum WrittenGradeType {
+        case normal([GradeStudent<Grade>])
+        case exam(Exam)
+    }
+    
+    static func getGradesPerDate(grades: FetchedResults<Grade>, exams: FetchedResults<Exam>) -> [Date: WrittenGradeType] {
+        let gradesPerDate = getGradesPerDate(grades: grades)
+        var allDates: [Date: WrittenGradeType] = Dictionary(uniqueKeysWithValues: gradesPerDate.map {key, value in
+            (key, WrittenGradeType.normal(value))
+        })
+        
+        for exam in exams {
+            guard allDates[exam.date] == nil else { continue }
+            allDates[exam.date] = WrittenGradeType.exam(exam)
+        }
+        return allDates
+    }
+    
     static func getGradesPerDatePerMonth(grades: FetchedResults<Grade>) -> [DateComponents: [Date: [GradeStudent<Grade>]]]{
         var allDatesPerMonth: [DateComponents: [Date : [GradeStudent<Grade>]]] = [:]
         for grade in grades {

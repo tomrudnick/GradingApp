@@ -58,7 +58,7 @@ extension Student {
                     result + Double(examPart.getGrade())
                 }
                 count += filteredExams.reduce(0) { result, examPart in
-                    result + (examPart.exam?.multiplier ?? 0.0)
+                    result + max((examPart.exam?.multiplier ?? 1.0),0.5)
                 }
                 gradexExists = true
             }
