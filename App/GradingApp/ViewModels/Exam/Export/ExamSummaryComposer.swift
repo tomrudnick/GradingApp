@@ -55,6 +55,15 @@ class ExamSummaryComposer: NSObject {
             
             HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADES", with: grades)
             
+            let gradeToCount = exam.mapGradesToNumberOfOccurences.reversed().reduce("") { result, elem in
+                var htmlContent = gradeSchemaHTMLContent
+                htmlContent = htmlContent.replacingOccurrences(of: "#GRADE", with: elem.grade)
+                htmlContent = htmlContent.replacingOccurrences(of: "#RANGE", with: elem.number)
+                return result + htmlContent
+            }
+            
+            HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADE_TO_COUNT", with: gradeToCount)
+            
             return HTMLContent
             
         } catch {

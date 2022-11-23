@@ -90,7 +90,23 @@ struct ExamDashboard: View {
 
                     }
                 }
-            
+                Section("Notenübersicht") {
+                    List {
+                        HStack {
+                            Text("Note").bold().foregroundColor(Color.accentColor)
+                            Spacer()
+                            Text("Vorkommen").bold().foregroundColor(Color.accentColor)
+                        }
+                        ForEach(exam.mapGradesToNumberOfOccurences.reversed(), id: \.id) { gradeNumber in
+                            HStack {
+                                Text(gradeNumber.grade)
+                                Spacer()
+                                Text(gradeNumber.number).padding(.trailing)
+                            }
+
+                        }
+                    }
+                }
                 Section("Exam Aufgaben Übersicht") {
                     Table(exam.sortedParticipatingStudents) {
                         TableColumn("Vorname", value: \.firstName)
@@ -103,6 +119,8 @@ struct ExamDashboard: View {
                         }
                     }.frame(height: CGFloat(exam.examParticipations.filter(\.participated).count) * 100)
                 }
+                
+                
             }
         }.navigationTitle("Exam Dashboard")
        

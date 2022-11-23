@@ -10,6 +10,23 @@ import UIKit
 import CoreData
 import SwiftUI
 
+struct GradeCount: Identifiable {
+    var id: Int {
+        return grade_
+    }
+    
+    var grade: String {
+        String(grade_)
+    }
+    
+    var number: String {
+        String(number_)
+    }
+    
+    let grade_: Int
+    let number_: Int
+}
+
 extension Exam {
     var date: Date {
         get { date_ ?? Date() }
@@ -45,6 +62,13 @@ extension Exam {
                 .sorted { gradeSchemeSort(v1: $0.key, v2: $1.key) }
                 .map { GraphData(grade: $0.key, value: $0.value )}
         }
+    }
+    
+    var mapGradesToNumberOfOccurences: [GradeCount] {
+        gradeSchema.keys.map { GradeCount(grade_: $0, number_: getNumberOfGrades(for: $0)) }
+            .sorted { g1, g2 in
+                gradeSchemeSort(v1: g1.grade_, v2: g2.grade_)
+            }
     }
     
     var examParticipations: Set<ExamParticipation> {
@@ -205,6 +229,7 @@ extension Exam {
         }
         return (average, Grade.getColor(points: Double(roundedAverage)))
     }
+    
     
     func getNumberOfGrades(for grade: Int) -> Int {
         return examParticipations.filter(\.participated)
