@@ -57,7 +57,7 @@ struct PersistenceController {
     
     static func copyForEditing<T: NSManagedObject>(of object: T,
                                                    in context: NSManagedObjectContext) -> T {
-        guard let object = (try? context.existingObject(with: object.objectID)) as? T else {
+        guard let object = context.object(with: object.objectID) as? T else {
             fatalError("Requested copy of managed object that doesn't exist")
         }
         return object

@@ -14,12 +14,12 @@ enum UndoManagerAction {
 }
 
 struct CourseTabView: View {
+    @EnvironmentObject var appSettings: AppSettings
     
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.openWindow) private var openWindow
     
-    @StateObject var examVM = ExamVM()
     @StateObject var sendEmailViewModel = SendMultipleEmailsCourseViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
@@ -141,13 +141,12 @@ struct CourseTabView: View {
                 UITabBar.appearance().scrollEdgeAppearance = apparence
                 
             }
-            self.examVM.setup(course: course, viewContext: viewContext)
             self.sendEmailViewModel.fetchData(course: course, half: halfYear)
         }
         .fullScreenCover(isPresented: $showNewExamSheet, content: {
-            NewExam(exam: examVM.exam) {
-                self.examVM.persist()
-            }
+            NewExamView(course: course)
+                .environmentObject(appSettings)
+                .environment(\.managedObjectContext, viewContext)
         })
         .sheet(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel)

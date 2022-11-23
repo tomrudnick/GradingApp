@@ -9,16 +9,19 @@ import SwiftUI
 
 
 struct GradeAtDatesView: View {
-
+    
+    @EnvironmentObject var appSettings: AppSettings
     // An alternative to the fetch Requst would be to make the course Observable
     // This however would complicate the logic of the getGradesPerDate function.
     // Furthermore the view would not update automatically if a new grades would be added
     @FetchRequest(fetchRequest: Grade.fetchRequest()) private var grades: FetchedResults<Grade>
+    @FetchRequest(fetchRequest: Exam.fetchRequest()) private var exams: FetchedResults<Exam>
     @StateObject var sendGradeEmailViewModel = SendMultipileEmailsSelectedGradeViewModel()
    
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @State var showEmailSheet = false
+    @State var exam: Exam?
     
     
     
@@ -31,6 +34,9 @@ struct GradeAtDatesView: View {
         let request = Grade.fetch(NSPredicate(format: "type = %d AND student.course = %@ AND half = %d AND student.hidden = NO", gradeType == .oral ? 0 : 1, course, half == .firstHalf ? 0 : 1))
         
         self._grades = FetchRequest(fetchRequest: request)
+        
+        let examRequest = Exam.fetch(NSPredicate(format: "student.course = %@ AND half = %d", course, half == .firstHalf ? 0 : 1))
+        self._exams = FetchRequest(fetchRequest: examRequest)
         
     }
     
@@ -81,9 +87,27 @@ struct GradeAtDatesView: View {
                     }
                 }.headerProminence(.increased)
             }
+            Section("Exams") {
+                ForEach(course.exams.sorted { $0.date < $1.date }, id: \.name) { exam in
+                    Button {
+                        self.exam = exam
+                    } label: {
+                        HStack {
+                            Text(exam.name)
+                            Spacer()
+                        }
+                    }
+                }
+            }
+            
         }.sheet(isPresented: $showEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendGradeEmailViewModel)
         })
+        .fullScreenCover(item: $exam) { exam in
+            EditExamView(exam: exam)
+                .environmentObject(appSettings)
+                .environment(\.managedObjectContext, viewContext)
+        }
     }
 }
 

@@ -40,12 +40,20 @@ extension Student {
         if filteredGrades.count == 0 {
             return -1
         }
-        let sum = filteredGrades.reduce(0) { result, grade in
+        var sum = filteredGrades.reduce(0) { result, grade in
             result + Double(grade.value) * grade.multiplier
         }
-        let count = filteredGrades.reduce(0) { result, grade in
+        var count = filteredGrades.reduce(0) { result, grade in
             result + grade.multiplier
         }
+        
+        if type == .written {
+            let filteredExams = examParticipations.filter { $0.exam?.half == half }
+            /*sum += filteredExams.reduce(0) { result, examPart in
+                result +
+            }*/
+        }
+        
         return Double(sum) / Double(count)
     }
     

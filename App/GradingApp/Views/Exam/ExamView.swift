@@ -1,5 +1,5 @@
 //
-//  NewExam.swift
+//  ExamView.swift
 //  GradingApp
 //
 //  Created by Tom Rudnick on 02.11.22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewExam: View {
+struct ExamView: View {
     
     enum ExamRoute: Hashable {
         case dashboard
@@ -91,6 +91,6 @@ struct ExerciseRowView: View {
 
 /*struct NewExam_Previews: PreviewProvider {
     static var previews: some View {
-        NewExam()
+        ExamView()
     }
 }*/

@@ -77,7 +77,7 @@ extension Exam {
         return course.ageGroup == .upper ? [5,6,7,8,9,10,11,12,13,14,15] : [4,3,2,1]
     }
     
-    func setup(course: Course) {
+    func setup(course: Course, half: HalfType) {
         guard let context = self.managedObjectContext else { return }
         
         self.course = PersistenceController.copyForEditing(of: course, in: context)
@@ -90,6 +90,7 @@ extension Exam {
             newParticipation.participated = true
         }
         print(self.examParticipations.count)
+        self.multiplier = 1.0
         resetToDefaultGradeSchema()
     }
     

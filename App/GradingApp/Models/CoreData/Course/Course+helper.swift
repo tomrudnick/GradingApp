@@ -67,6 +67,11 @@ extension Course {
         }
     }
     
+    var exams: Set<Exam> {
+        get { exams_ as? Set<Exam> ?? [] }
+        set { exams_ = newValue as NSSet }
+    }
+    
     var studentsCount: Int {
         get { students.filter { $0.hidden == false}.count }
     }

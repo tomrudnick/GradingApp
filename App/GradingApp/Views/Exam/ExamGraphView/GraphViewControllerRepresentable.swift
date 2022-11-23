@@ -27,7 +27,6 @@ struct GraphViewControllerReprestable: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: GraphViewController, context: Context) {
-        print("update called")
         uiViewController.setupData(data: exam.gradeSchemaGraphData, staticData: exam.standardGradeSchemeGraphData)
         uiViewController.graphView?.setNeedsDisplay()
     }
@@ -46,8 +45,6 @@ struct GraphViewControllerReprestable: UIViewControllerRepresentable {
             withAnimation {
                 self.exam.gradeSchemaGraphData[index].value = data[index].value
             }
-            
-            print("Updating Grade Schema")
         }
     }
 }

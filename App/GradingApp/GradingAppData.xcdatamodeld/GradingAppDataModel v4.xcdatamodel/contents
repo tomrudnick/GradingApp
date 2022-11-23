@@ -12,13 +12,15 @@
         <relationship name="schoolyear" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SchoolYear" inverseName="courses_" inverseEntity="SchoolYear"/>
         <relationship name="students_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
     </entity>
-    <entity name="Exam" representedClassName="Exam" syncable="YES" codeGenerationType="category">
+    <entity name="Exam" representedClassName="Exam" syncable="YES">
         <attribute name="date_" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="gradeSchema_" optional="YES" attributeType="Transformable"/>
+        <attribute name="half" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="multiplier" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name_" optional="YES" attributeType="String"/>
         <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="exams_" inverseEntity="Course"/>
-        <relationship name="examParticipations_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamParticipation" inverseName="exam" inverseEntity="ExamParticipation"/>
-        <relationship name="exercises_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamExercise" inverseName="exam" inverseEntity="ExamExercise"/>
+        <relationship name="examParticipations_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamParticipation" inverseName="exam" inverseEntity="ExamParticipation"/>
+        <relationship name="exercises_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamExercise" inverseName="exam" inverseEntity="ExamExercise"/>
     </entity>
     <entity name="ExamExercise" representedClassName="ExamExercise" syncable="YES" codeGenerationType="category">
         <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -30,7 +32,7 @@
     <entity name="ExamParticipation" representedClassName="ExamParticipation" syncable="YES" codeGenerationType="category">
         <attribute name="participated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="exam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exam" inverseName="examParticipations_" inverseEntity="Exam"/>
-        <relationship name="participatedExercises_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamParticipationExercise" inverseName="examParticipation" inverseEntity="ExamParticipationExercise"/>
+        <relationship name="participatedExercises_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamParticipationExercise" inverseName="examParticipation" inverseEntity="ExamParticipationExercise"/>
         <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="examParticipations_" inverseEntity="Student"/>
     </entity>
     <entity name="ExamParticipationExercise" representedClassName="ExamParticipationExercise" syncable="YES" codeGenerationType="category">
