@@ -20,6 +20,7 @@ struct ExamView: View {
     @ObservedObject var exam: Exam
     @State var selection: ExamRoute? = .dashboard
     @State var showPDFExporter = false
+    @State private var editMode: EditMode = .inactive
     
     let save: () -> ()
     let delete: () -> ()
@@ -40,7 +41,7 @@ struct ExamView: View {
                     .onDelete(perform: exam.delete)
                     .onMove(perform: exam.move)
                 }
-            }
+            }.environment(\.editMode, $editMode)
             .navigationTitle("Exam: \(exam.name)")
             .toolbar { toolbar }
             .fileExporter(isPresented: $showPDFExporter, document: PDFFile.generatePDFFromExam(exam: exam), contentType: .pdf) { result in
@@ -67,6 +68,18 @@ struct ExamView: View {
                 exam.addExercise(maxPoints: 0.0)
             } label: {
                 Image(systemName: "plus")
+            }
+        }
+        
+        ToolbarItem(placement: .primaryAction) {
+            Button {
+                if editMode == .inactive {
+                    editMode = .active
+                } else {
+                    editMode = .inactive
+                }
+            } label: {
+                Text(editMode == .inactive ? "Edit" : "Done")
             }
         }
        
