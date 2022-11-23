@@ -21,6 +21,7 @@ struct ExamView: View {
     @State var selection: ExamRoute? = .dashboard
     @State var showPDFExporter = false
     @State private var editMode: EditMode = .inactive
+    @State var showDeleteAlert = false
     
     let save: () -> ()
     let delete: () -> ()
@@ -51,6 +52,12 @@ struct ExamView: View {
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
+            }.alert(isPresented: $showDeleteAlert) {
+                Alert(title: Text("Achtung"),
+                      message: Text("Möchten sie diese Klausur wirklich löschen??"),
+                      primaryButton: Alert.Button.default(Text("Ja!"), action: { delete(); self.dismiss()}),
+                      secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { })
+                )
             }
         } detail: {
             switch selection ?? .dashboard {
@@ -88,11 +95,10 @@ struct ExamView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("Abbrechen")
+                    Text("Schließen")
                 }
                 Button {
                     save()
-                    dismiss()
                 } label: {
                     HStack {
                         Text("Speichern")
@@ -100,8 +106,7 @@ struct ExamView: View {
                     }
                 }
                 Button {
-                    delete()
-                    self.dismiss()
+                    self.showDeleteAlert.toggle()
                 } label: {
                     Text("Löschen")
                     Image(systemName: "trash")
