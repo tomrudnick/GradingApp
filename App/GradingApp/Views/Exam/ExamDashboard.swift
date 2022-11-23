@@ -25,18 +25,6 @@ struct ExamDashboard: View {
                     }
                     
                     HStack {
-                        Text("Gewichtung:")
-                        Spacer()
-                        Picker(selection: $exam.multiplier, label: Text(""), content: {
-                            ForEach(0..<Grade.gradeMultiplier.count, id: \.self) {index in
-                                Text(String(Grade.gradeMultiplier[index])).tag(Grade.gradeMultiplier[index])
-                            }
-                        }).pickerStyle(SegmentedPickerStyle())
-                            .padding(.leading)
-                            .frame(maxWidth: 300.0)
-                    }
-                    
-                    HStack {
                         Text("Exam Date:")
                         DatePicker("", selection: $exam.date, displayedComponents: DatePickerComponents.date)
                     }

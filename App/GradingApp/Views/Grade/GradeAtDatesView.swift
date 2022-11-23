@@ -86,7 +86,7 @@ struct GradeAtDatesView: View {
             SendEmailsView(title: course.title, emailViewModel: sendGradeEmailViewModel)
         })
         .fullScreenCover(item: $exam) { exam in
-            EditExamView(exam: exam)
+            EditExamView(exam: exam, course: course)
                 .environmentObject(appSettings)
                 .environment(\.managedObjectContext, viewContext)
         }

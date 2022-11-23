@@ -18,6 +18,8 @@ struct NewExamView: View {
             if let exam = examVM.exam {
                 ExamView(exam: exam) {
                     examVM.persist()
+                    course.students.forEach { $0.objectWillChange.send() }
+                    exam.objectWillChange.send()
                 } delete: {
                     
                 }

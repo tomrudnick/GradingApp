@@ -11,6 +11,7 @@ struct EditExamView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.managedObjectContext) var viewContext
     var exam: Exam
+    var course: Course
     @StateObject var examVM = ExamVM()
     
     
@@ -19,9 +20,12 @@ struct EditExamView: View {
             if let exam = examVM.exam {
                 ExamView(exam: exam) {
                     examVM.persist()
+                    course.students.forEach { $0.objectWillChange.send() }
+                    exam.objectWillChange.send()
                 } delete: {
                     viewContext.delete(self.exam)
                     viewContext.saveCustom()
+                    course.students.forEach { $0.objectWillChange.send() }
                 }
             } else {
                 Text("No Exam")
