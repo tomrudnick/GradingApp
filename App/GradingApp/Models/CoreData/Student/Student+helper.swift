@@ -32,6 +32,11 @@ extension Student {
     var gradesArr : Array<Grade> {
         get { grades.sorted {$0.date! < $1.date! } }
     }
+    
+    var examParticipations: Set<ExamParticipation> {
+        get { examParticipations_ as? Set<ExamParticipation> ?? [] }
+        set { examParticipations_ = newValue as NSSet }
+    }
 }
 
 

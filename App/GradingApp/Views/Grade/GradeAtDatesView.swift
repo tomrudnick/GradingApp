@@ -9,16 +9,19 @@ import SwiftUI
 
 
 struct GradeAtDatesView: View {
-
+    
+    @EnvironmentObject var appSettings: AppSettings
     // An alternative to the fetch Requst would be to make the course Observable
     // This however would complicate the logic of the getGradesPerDate function.
     // Furthermore the view would not update automatically if a new grades would be added
     @FetchRequest(fetchRequest: Grade.fetchRequest()) private var grades: FetchedResults<Grade>
+    @FetchRequest(fetchRequest: Exam.fetchRequest()) private var exams: FetchedResults<Exam>
     @StateObject var sendGradeEmailViewModel = SendMultipileEmailsSelectedGradeViewModel()
    
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @State var showEmailSheet = false
+    @State var exam: Exam?
     
     
     
@@ -32,58 +35,89 @@ struct GradeAtDatesView: View {
         
         self._grades = FetchRequest(fetchRequest: request)
         
+        let examRequest = Exam.fetch(NSPredicate(format: "course = %@ AND half = %d", course, half == .firstHalf ? 0 : 1))
+        self._exams = FetchRequest(fetchRequest: examRequest)
+        
     }
     
     
     var body: some View {
         List {
-            ForEach(Grade.getGradesPerDatePerMonth(grades: grades).sorted(by: {Calendar.current.date(from: $0.key)! < Calendar.current.date(from: $1.key)!}), id: \.key) { key, value in
-                
-                Section("\(Calendar.current.date(from: key)!.asString(format: "MMM yyyy"))") {
-                    ForEach(value.sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
-                        NavigationLink(value: Route.GradeAtDates(course, value)) {
-                            HStack {
-                                Text(key.asString(format: "dd MMM HH:mm"))
-                                Spacer()
-                                Text(Grade.getComment(studentGrades: value) ?? "ver. Kommentare")
-                                Spacer()
-                                
-                                if value.count == 1 {
-                          
-                                    Image(systemName: "person")
-                                    let student = value.first!.student
-                                    if let firstLetter = student.lastName.first {
-                                        Text("\(student.firstName) \(String(firstLetter))")
-                                    } else {
-                                        Text("\(student.firstName)")
-                                    }
-                                    
-                                } else {
-                                    Image(systemName: "person.3.sequence")
-                                    Text("\(value.count) / \(course.studentsCount)")
-                                }
-                                Image(systemName: "sum")
-                                GradeText(ageGroup: self.course.ageGroup, grade: GradeStudent<Grade>.getGradeAverage(studentGrades: value))
-                                    .frame(minWidth: 40)
-                                    .padding(5.0)
-                                    .background(.gray)
-                                    .cornerRadius(5.0)
+            if gradeType == .oral {
+                ForEach(Grade.getGradesPerDatePerMonth(grades: grades).sorted(by: {Calendar.current.date(from: $0.key)! < Calendar.current.date(from: $1.key)!}), id: \.key) { key, value in
+                    Section("\(Calendar.current.date(from: key)!.asString(format: "MMM yyyy"))") {
+                        ForEach(value.sorted(by: {$0.key < $1.key }), id: \.key) { key, value in
+                            NavigationLink(value: Route.GradeAtDates(course, value)) {
+                                getStandardGradeView(key: key, value: value)
                             }
                         }
-                        .contextMenu(menuItems: {
-                            Button(action: {
-                                sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
-                                self.showEmailSheet = true
-                            }, label: {
-                                Text("Ausgewählte Noten als E-Mail verschicken")
-                            }).disabled(!sendGradeEmailViewModel.emailAccountViewModel.emailAccountUsed)
-                        })
+                    }.headerProminence(.increased)
+                }
+            } else {
+                ForEach(Grade.getGradesPerDate(grades: grades, exams: exams).sorted(by: { $0.key < $1.key }), id: \.key) { date, grade in
+                    switch grade {
+                    case .normal(let grades):
+                        NavigationLink(value: Route.GradeAtDates(course, grades)) {
+                            getStandardGradeView(key: date, value: grades)
+                        }
+                    case .exam(let exam):
+                        Button {
+                            self.exam = exam
+                        } label: {
+                            let averageGradePair = exam.getAverage2()
+                            HStack {
+                                GradesAtDatesCellView(participantCount: exam.participationCount(),
+                                                      studentCount: course.students.count,
+                                                      onlyStudent: exam.participations.first?.student,
+                                                      date: date,
+                                                      averageGrade: String(format: "%.1f", averageGradePair.0),
+                                                      color: averageGradePair.1,
+                                                      ageGroup: course.ageGroup,
+                                                      comment: exam.name)
+                                Image(systemName: "chevron.forward")
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                        }.buttonStyle(.plain)
                     }
-                }.headerProminence(.increased)
+                }
             }
         }.sheet(isPresented: $showEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendGradeEmailViewModel)
         })
+        .fullScreenCover(item: $exam) { exam in
+            EditExamView(exam: exam, course: course)
+                .environmentObject(appSettings)
+                .environment(\.managedObjectContext, viewContext)
+        }
+    }
+    
+    func getStandardGradeView(key: Date, value: [GradeStudent<Grade>]) -> some View {
+        let averageGrade = GradeStudent<Grade>.getGradeAverage(studentGrades: value)
+        return GradesAtDatesCellView(participantCount: value.count,
+                              studentCount: course.students.count,
+                              onlyStudent: value.first?.student,
+                              date: key,
+                              averageGrade: getGradeText(grade: averageGrade),
+                              color: Grade.getColor(points: averageGrade),
+                              ageGroup: course.ageGroup,
+                              comment: Grade.getComment(studentGrades: value))
+        .contextMenu(menuItems: {
+            Button(action: {
+                sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
+                self.showEmailSheet = true
+            }, label: {
+                Text("Ausgewählte Noten als E-Mail verschicken")
+            }).disabled(!sendGradeEmailViewModel.emailAccountViewModel.emailAccountUsed)
+        })
+    }
+    
+    func getGradeText(grade: Double) -> String {
+        if course.ageGroup == .lower {
+            return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: grade))
+        } else {
+            return String(format: "%.1f", grade)
+        }
     }
 }
 
