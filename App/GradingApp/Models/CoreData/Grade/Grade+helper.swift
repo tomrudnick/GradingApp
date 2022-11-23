@@ -54,6 +54,10 @@ extension Grade {
         return lowerSchoolGradesTranslate.first(where: {$1 == value})!.key
     }
     
+    static func convertLowerGradeToPoints(grade: Int) -> Int {
+        return lowerSchoolGradesTranslate[String(grade)] ?? -1
+    }
+    
     static func roundPoints(points: Double) -> Int {
         return Int(round(points))
     }

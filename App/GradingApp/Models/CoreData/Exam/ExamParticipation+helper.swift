@@ -14,4 +14,13 @@ extension ExamParticipation {
         get { participatedExercises_ as? Set<ExamParticipationExercise> ?? [] }
         set { participatedExercises_  = newValue as NSSet }
     }
+    
+    func getGrade() -> Int {
+        guard let exam, let student else { return -1 }
+        var grade = exam.getGrade(for: student)
+        if exam.course?.ageGroup == .lower {
+            grade = Grade.convertLowerGradeToPoints(grade: grade)
+        }
+        return grade
+    }
 }

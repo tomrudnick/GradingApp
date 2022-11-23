@@ -35,7 +35,7 @@ struct GradeAtDatesView: View {
         
         self._grades = FetchRequest(fetchRequest: request)
         
-        let examRequest = Exam.fetch(NSPredicate(format: "student.course = %@ AND half = %d", course, half == .firstHalf ? 0 : 1))
+        let examRequest = Exam.fetch(NSPredicate(format: "course = %@ AND half = %d", course, half == .firstHalf ? 0 : 1))
         self._exams = FetchRequest(fetchRequest: examRequest)
         
     }
