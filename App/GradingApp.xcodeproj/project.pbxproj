@@ -92,6 +92,8 @@
 		E276A6DE26D7AB3900380C14 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DD26D7AB3900380C14 /* Date+toString.swift */; };
 		E276A6E026D7B97E00380C14 /* GradeStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DF26D7B97E00380C14 /* GradeStudent.swift */; };
 		E276A6E226D7BB4B00380C14 /* EditGradesPerDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */; };
+		E27EEC94292FC8C80025B8CF /* ExamToGradeCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27EEC93292FC8C80025B8CF /* ExamToGradeCountView.swift */; };
+		E27EEC96292FC95E0025B8CF /* ExamGradeToPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27EEC95292FC95E0025B8CF /* ExamGradeToPointsView.swift */; };
 		E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E282BE3028D7D2280014ACFE /* CloudStorage */; };
 		E295971B285FDEF0008FD8B5 /* GradeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295971A285FDEF0008FD8B5 /* GradeText.swift */; };
 		E298230B28EF327400B8BB23 /* SchoolYear+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E298230928EF326200B8BB23 /* SchoolYear+CoreDataClass.swift */; };
@@ -270,6 +272,8 @@
 		E276A6DD26D7AB3900380C14 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
 		E276A6DF26D7B97E00380C14 /* GradeStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeStudent.swift; sourceTree = "<group>"; };
 		E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGradesPerDateViewModel.swift; sourceTree = "<group>"; };
+		E27EEC93292FC8C80025B8CF /* ExamToGradeCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamToGradeCountView.swift; sourceTree = "<group>"; };
+		E27EEC95292FC95E0025B8CF /* ExamGradeToPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamGradeToPointsView.swift; sourceTree = "<group>"; };
 		E295971A285FDEF0008FD8B5 /* GradeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeText.swift; sourceTree = "<group>"; };
 		E298230928EF326200B8BB23 /* SchoolYear+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchoolYear+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E2A20B0526D41910005FA240 /* StudentGradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeListView.swift; sourceTree = "<group>"; };
@@ -478,6 +482,8 @@
 				E2C7ABFD2912FE0C00DFC9BC /* ExamExercise+helper.swift */,
 				E2E460C7292804CF00ECC0A5 /* ExamParticipation+helper.swift */,
 				E2D3844C292E315A007155F4 /* Exam+FetchRequests.swift */,
+				E27EEC93292FC8C80025B8CF /* ExamToGradeCountView.swift */,
+				E27EEC95292FC95E0025B8CF /* ExamGradeToPointsView.swift */,
 			);
 			path = Exam;
 			sourceTree = "<group>";
@@ -1027,6 +1033,7 @@
 				E2B7451526BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift in Sources */,
 				6DE3E8B526E5551C004212D3 /* EmailKeys.swift in Sources */,
 				E200846E26DEE4EF0098D981 /* TranscriptGradesViewModel.swift in Sources */,
+				E27EEC94292FC8C80025B8CF /* ExamToGradeCountView.swift in Sources */,
 				E25FBCA426BADAC6000BDD65 /* GradingApp.swift in Sources */,
 				E24B95DF2924490F00A332A9 /* ExamParticipation+CoreDataClass.swift in Sources */,
 				E200846C26DED7D70098D981 /* TranscriptGrade+helper.swift in Sources */,
@@ -1079,6 +1086,7 @@
 				6DE31A5B26EBE69800CB41C0 /* UndoRedoViewModel.swift in Sources */,
 				E2C7AC172914041800DFC9BC /* ExerciseView.swift in Sources */,
 				E2F1D549291556820060A29B /* GraphViewControllerRepresentable.swift in Sources */,
+				E27EEC96292FC95E0025B8CF /* ExamGradeToPointsView.swift in Sources */,
 				E2E2D0E226D5453400C62887 /* GradeAtDatesEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

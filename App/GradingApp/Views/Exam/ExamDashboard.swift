@@ -12,6 +12,7 @@ struct ExamDashboard: View {
     
     @ObservedObject var exam: Exam
     @State var showGradeToPoints = true
+    @State var showGradeToCount = true
     
     var body: some View {
         VStack {
@@ -37,64 +38,22 @@ struct ExamDashboard: View {
                         Text("Durschnitt")
                         Text(String(format: "%.2f", exam.getAverage())).bold()
                         Spacer()
-                        Text("Bestanden: ")
-                        Text("\(exam.getNumberOfGrades(for: exam.passedGrades))")
+                        Text("Durchgefallen: ")
+                        Text("\(exam.getNumberOfGrades(for: exam.failedGrades))")
                         if exam.examParticipations.filter(\.participated).count > 0 {
-                            Gauge(value: Double(exam.getNumberOfGrades(for: exam.passedGrades)),
+                            Gauge(value: Double(exam.getNumberOfGrades(for: exam.failedGrades)),
                                   in: 0...Double(exam.examParticipations.filter(\.participated).count)
                             ) {
                                 Text("")
                             } currentValueLabel: {
-                                Text(String(format: "%.2f", exam.getPercentageOfPassed()))
+                                Text(String(format: "%.2f", exam.getPercentageOfFailed()))
                             }.gaugeStyle(.accessoryCircularCapacity)
                                 .tint(.purple)
                         }
                     }
                 }
-                Section {
-                    if showGradeToPoints {
-                        List {
-                            ForEach(exam.getPointsToGrade(), id: \.grade) { elem in
-                                HStack {
-                                    Text("\(elem.grade)")
-                                    Spacer()
-                                    Text("\(elem.range.description)")
-                                }
-                            }
-                        }
-                    }
-                } header: {
-                    HStack {
-                        Text("Notenschlüssel")
-                        Spacer()
-                        Button {
-                            withAnimation {
-                                self.showGradeToPoints.toggle()
-                            }
-                        } label: {
-                            Image(systemName: "chevron.right")
-                                .rotationEffect(.degrees(showGradeToPoints ? 90 : 0))
-                        }
-
-                    }
-                }
-                Section("Notenübersicht") {
-                    List {
-                        HStack {
-                            Text("Note").bold().foregroundColor(Color.accentColor)
-                            Spacer()
-                            Text("Vorkommen").bold().foregroundColor(Color.accentColor)
-                        }
-                        ForEach(exam.mapGradesToNumberOfOccurences.reversed(), id: \.id) { gradeNumber in
-                            HStack {
-                                Text(gradeNumber.grade)
-                                Spacer()
-                                Text(gradeNumber.number).padding(.trailing)
-                            }
-
-                        }
-                    }
-                }
+                ExamGradeToPointsView(exam: exam, show: $showGradeToPoints)
+                ExamToGradeCountView(exam: exam, show: $showGradeToCount)
                 Section("Exam Aufgaben Übersicht") {
                     Table(exam.sortedParticipatingStudents) {
                         TableColumn("Vorname", value: \.firstName)

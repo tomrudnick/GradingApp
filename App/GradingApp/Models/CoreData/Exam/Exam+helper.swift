@@ -259,6 +259,10 @@ extension Exam {
         getPercentageOfGrades(for: passedGrades)
     }
     
+    func getPercentageOfFailed() -> Double {
+        getPercentageOfGrades(for: failedGrades)
+    }
+    
     func getChartData() -> [GraphData] {
         self.gradeSchemaGraphData.map { data in
             GraphData(grade: data.grade, value: CGFloat(getNumberOfGrades(for: data.grade)))
