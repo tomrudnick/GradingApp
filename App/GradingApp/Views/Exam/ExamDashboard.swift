@@ -22,7 +22,7 @@ struct ExamDashboard: View {
                         Text("Exam Title:")
                         Spacer()
                         TextField("Title...", text: $exam.name)
-                            .frame(width: 100)
+                            .frame(width: 150)
                     }
                     
                     HStack {
