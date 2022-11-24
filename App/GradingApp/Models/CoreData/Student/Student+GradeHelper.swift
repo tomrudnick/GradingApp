@@ -84,7 +84,7 @@ extension Student {
     }
     //This Method is only to display the grade and not for futher calculations
     func getRoundedGradeAverage(_ type: GradeType, half: HalfType) -> String {
-        if gradesExist(half: half) {
+        if gradesExist(type, half: half) {
             let average = Int(round(self.gradeAverage(type: type, half: half)))
             switch self.course?.ageGroup {
             case .lower:
