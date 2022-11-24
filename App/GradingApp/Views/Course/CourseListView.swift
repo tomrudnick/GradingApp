@@ -110,13 +110,13 @@ struct CourseListView: View {
                         .navigationDestination(for: Route.self) { route in
                             switch route {
                             case let .student(Student):
-                                StudentView(student: Student)
+                                StudentView(student: Student).environment(\.currentHalfYear, appSettings.activeHalf)
                             case let .GradeAtDates(course, GradeStudent):
-                                GradeAtDatesEditView(course: course, studentGrades: GradeStudent)
+                                GradeAtDatesEditView(course: course, studentGrades: GradeStudent).environment(\.currentHalfYear, appSettings.activeHalf)
                             case let .GradeDetail(student, type):
-                                GradeDetailView(student: student, gradeType: type)
+                                GradeDetailView(student: student, gradeType: type).environment(\.currentHalfYear, appSettings.activeHalf)
                             case let .editGrade(student, grade):
-                                EditSingleGradeView(student: student, grade: grade)
+                                EditSingleGradeView(student: student, grade: grade).environment(\.currentHalfYear, appSettings.activeHalf)
                             }
                         }
                 } else {
