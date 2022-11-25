@@ -1302,7 +1302,7 @@
 			repositoryURL = "https://github.com/Kitura/Swift-SMTP";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.200;
+				minimumVersion = 6.0.0;
 			};
 		};
 		6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */ = {
