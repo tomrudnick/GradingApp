@@ -62,6 +62,7 @@
 		E22EDB812930F1DA00CE780D /* GradingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EDB802930F1DA00CE780D /* GradingAppTests.swift */; };
 		E22EDB89293119D000CE780D /* Set+setMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EDB88293119D000CE780D /* Set+setMap.swift */; };
 		E22EDB8B29311B2000CE780D /* ExamParticipationExercise+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EDB8A29311B2000CE780D /* ExamParticipationExercise+helper.swift */; };
+		E22EDB8D29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EDB8C29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift */; };
 		E232979127D00AF6007EC630 /* Subject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E232978F27D00AF6007EC630 /* Subject+CoreDataClass.swift */; };
 		E232979527D01158007EC630 /* SubjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E232979427D01158007EC630 /* SubjectListView.swift */; };
 		E24AF9CD26D82DDF000F2313 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CC26D82DDF000F2313 /* SettingsView.swift */; };
@@ -219,6 +220,7 @@
 		E22EDB87293116EF00CE780D /* GradingAppDataModel v5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v5.xcdatamodel"; sourceTree = "<group>"; };
 		E22EDB88293119D000CE780D /* Set+setMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set+setMap.swift"; sourceTree = "<group>"; };
 		E22EDB8A29311B2000CE780D /* ExamParticipationExercise+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExamParticipationExercise+helper.swift"; sourceTree = "<group>"; };
+		E22EDB8C29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsExamViewModel.swift; sourceTree = "<group>"; };
 		E232978E27D008BB007EC630 /* GradingAppDataModel v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v2.xcdatamodel"; sourceTree = "<group>"; };
 		E232978F27D00AF6007EC630 /* Subject+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E232979427D01158007EC630 /* SubjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListView.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				6DE3E8B826E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift */,
 				6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */,
 				6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */,
+				E22EDB8C29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift */,
 			);
 			path = Email;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 				E2E460C8292804CF00ECC0A5 /* ExamParticipation+helper.swift in Sources */,
 				E2E2D0E426D67EB500C62887 /* Student+GradeHelper.swift in Sources */,
 				395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */,
+				E22EDB8D29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift in Sources */,
 				E2E460C42927A98F00ECC0A5 /* Sequence+toDictionary.swift in Sources */,
 				E2C7ABE72912FA2400DFC9BC /* ExamExercise+CoreDataClass.swift in Sources */,
 				E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */,
