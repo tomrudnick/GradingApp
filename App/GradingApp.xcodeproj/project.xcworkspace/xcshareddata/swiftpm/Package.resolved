@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Kitura/BlueCryptor.git",
         "state": {
           "branch": null,
-          "revision": "ee5880e031da4c609f372cf7472476ab51d5dd19",
-          "version": "1.0.200"
+          "revision": "cec97c24b111351e70e448972a7d3fe68a756d6d",
+          "version": "2.0.2"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Kitura/BlueSocket.git",
         "state": {
           "branch": null,
-          "revision": "c9894fd117457f1d006575fbfb2fdfd6f79eac03",
-          "version": "1.0.200"
+          "revision": "7b23a867008e0027bfd6f4d398d44720707bc8ca",
+          "version": "2.0.4"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/Kitura/BlueSSLService.git",
         "state": {
           "branch": null,
-          "revision": "ae5889d2a8b068d2d3ab91ec73aa8f557c03cd8a",
-          "version": "1.0.200"
+          "revision": "b27a94d063962dfa1bba9f79814c4ef202cf33a4",
+          "version": "2.0.2"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/Kitura/Swift-SMTP",
         "state": {
           "branch": null,
-          "revision": "d892f67ddbdde635787a1f2f96e654e91a2edbaa",
-          "version": "5.1.200"
+          "revision": "4b7666bb8cee33f0cb367786af17b9a2ebb63047",
+          "version": "6.0.0"
         }
       },
       {

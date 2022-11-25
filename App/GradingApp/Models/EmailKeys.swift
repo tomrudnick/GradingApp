@@ -17,4 +17,6 @@ struct EmailKeys {
     static let transcriptGrade = "$Gesamtjahresnote"
     static let selectedGrade = "$ausgewählte Note"
     static let selectedGradeDate = "$Datum der ausgewählten Note"
+    static let points = "$Punkte"
+    static let maxpoints = "$Max Punkte"
 }

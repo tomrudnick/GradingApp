@@ -17,10 +17,12 @@ struct GradeAtDatesView: View {
     @FetchRequest(fetchRequest: Grade.fetchRequest()) private var grades: FetchedResults<Grade>
     @FetchRequest(fetchRequest: Exam.fetchRequest()) private var exams: FetchedResults<Exam>
     @StateObject var sendGradeEmailViewModel = SendMultipileEmailsSelectedGradeViewModel()
+    @StateObject var sendExamEmailViewModel = SendMultipleEmailsExamViewModel()
    
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @State var showEmailSheet = false
+    @State var showExamEmailSheet = false
     @State var exam: Exam?
     
     
@@ -78,12 +80,24 @@ struct GradeAtDatesView: View {
                                     .foregroundColor(.secondary)
                             }
                             
-                        }.buttonStyle(.plain)
+                        }
+                        .buttonStyle(.plain)
+                        .contextMenu {
+                            Button {
+                                sendExamEmailViewModel.fetchData(half: halfYear, exam: exam)
+                                self.showExamEmailSheet.toggle()
+                            } label: {
+                                Text("Ausgewählte Noten per Email verschicken")
+                            }.disabled(!sendExamEmailViewModel.emailAccountViewModel.emailAccountUsed)
+                        }
                     }
                 }
             }
         }.sheet(isPresented: $showEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendGradeEmailViewModel)
+        })
+        .sheet(isPresented: $showExamEmailSheet, content: {
+            SendEmailsView(title: course.title, emailViewModel: sendExamEmailViewModel)
         })
         .fullScreenCover(item: $exam) { exam in
             EditExamView(exam: exam, course: course)
@@ -107,7 +121,7 @@ struct GradeAtDatesView: View {
                 sendGradeEmailViewModel.fetchData(half: halfYear, date: key, gradeStudents: value)
                 self.showEmailSheet = true
             }, label: {
-                Text("Ausgewählte Noten als E-Mail verschicken")
+                Text("Ausgewählte Noten per E-Mail verschicken")
             }).disabled(!sendGradeEmailViewModel.emailAccountViewModel.emailAccountUsed)
         })
     }
