@@ -12,7 +12,7 @@ import CoreData
 @objc(Student)
 public class Student: NSManagedObject, Codable, StudentName {
     
-    private enum CodingKeys: String, CodingKey { case  firstName, lastName, email, hidden, grades, transcriptGrade}
+    private enum CodingKeys: String, CodingKey { case  firstName, lastName, email, hidden, grades, transcriptGrade, examParticipations}
     
    
     
@@ -26,7 +26,7 @@ public class Student: NSManagedObject, Codable, StudentName {
         grades = try! container.decode(Set<Grade>.self, forKey: .grades)
         let transcriptGradeWrapper = try? container.decode(TranscriptGradeDecodeWrapper.self, forKey: .transcriptGrade)
         self.transcriptGrade = transcriptGradeWrapper?.transcriptGrade
-        //let transcriptGrade = try
+        self.examParticipations = try! container.decode(Set<ExamParticipation>.self, forKey: .examParticipations)
         
 
     }
@@ -42,6 +42,7 @@ public class Student: NSManagedObject, Codable, StudentName {
         if let transcriptGrade = transcriptGrade {
             try container.encode(TranscriptGradeDecodeWrapper(transcriptGrade: transcriptGrade),forKey: .transcriptGrade)
         }
+        try container.encode(examParticipations, forKey: .examParticipations)
     }
 
 }

@@ -113,10 +113,7 @@ extension Exam {
         
         self.course?.students.forEach { student in
             print("Add: \(student.firstName)")
-            let newParticipation = ExamParticipation(context: context)
-            newParticipation.student = student
-            newParticipation.exam = self
-            newParticipation.participated = true
+            _ = ExamParticipation(context: context, student: student, exam: self)
         }
         print(self.examParticipations.count)
         self.multiplier = 1.0
@@ -138,9 +135,8 @@ extension Exam {
         self.course?.students.forEach { student in
             guard let examP = student.examParticipations.first(where: { $0.exam == self }) else { return }
             
-            let examParticipationExercise = ExamParticipationExercise(context: context)
-            examParticipationExercise.exercise = exercise
-            examParticipationExercise.examParticipation = examP
+            _ = ExamParticipationExercise(exercise: exercise, examParticipation: examP, context: context)
+
         }
         
     }
