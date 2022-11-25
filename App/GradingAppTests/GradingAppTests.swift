@@ -57,7 +57,7 @@ final class GradingAppTests: XCTestCase {
         XCTAssert(fetchedCourse!.students.contains(where: {$0.firstName == "Matthias"}))
     }
     
-    func testWrittenGradeCorrect() {
+    func testWrittenGradeCorrect() {        
         let course = createStandardCourse()
         createStandardStudents(course: course)
         context.saveCustom()

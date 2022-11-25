@@ -12,7 +12,7 @@ import CoreData
 @objc(Course)
 public class Course: NSManagedObject, Codable {
     
-    private enum CodingKeys: String, CodingKey { case  subject, name, ageGroup, weight, type, hidden,students}
+    private enum CodingKeys: String, CodingKey { case  subject, name, ageGroup, weight, type, hidden, students, exams}
     
     
     
@@ -26,6 +26,23 @@ public class Course: NSManagedObject, Codable {
         type = try! container.decode(CourseType.self, forKey: .type)
         hidden = try! container.decode(Bool.self, forKey: .hidden)
         students = try! container.decode(Set<Student>.self, forKey: .students)
+        exams = try! container.decode(Set<Exam>.self, forKey: .exams)
+        
+        for student in students {
+            for examP in student.examParticipations {
+                let exam = self.exams.first { $0.examParticipations.contains { $0.id == examP.id } }
+                guard let exam else { continue }
+                PersistenceController.shared.container.viewContext.delete(exam.examParticipations.first{ $0.id == examP.id }!)
+                examP.exam = exam
+                
+                for exercise in examP.participatedExercises {
+                    let examExercise = exam.exercises.first { $0.participationExercises.contains { $0.id == exercise.id } }
+                    guard let examExercise else { continue }
+                    PersistenceController.shared.container.viewContext.delete(examExercise.participationExercises.first { $0.id == exercise.id }!)
+                    exercise.exercise = examExercise
+                }
+            }
+        }
 
     }
 
@@ -39,6 +56,7 @@ public class Course: NSManagedObject, Codable {
         try container.encode(type.rawValue, forKey: .type)
         try container.encode(hidden, forKey: .hidden)
         try container.encode(students, forKey: .students)
+        try container.encode(exams, forKey: .exams)
     }
 
 }
