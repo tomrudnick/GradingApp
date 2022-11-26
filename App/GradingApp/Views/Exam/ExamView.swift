@@ -22,6 +22,7 @@ struct ExamView: View {
     @State var showPDFExporter = false
     @State private var editMode: EditMode = .inactive
     @State var showDeleteAlert = false
+    @State var showCloseAlert = false
     
     let save: () -> ()
     let delete: () -> ()
@@ -56,6 +57,12 @@ struct ExamView: View {
                 Alert(title: Text("Achtung"),
                       message: Text("Möchten sie diese Klausur wirklich löschen??"),
                       primaryButton: Alert.Button.default(Text("Ja!"), action: { delete(); self.dismiss()}),
+                      secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { })
+                )
+            }.alert(isPresented: $showCloseAlert) {
+                Alert(title: Text("Achtung"),
+                      message: Text("Möchten sie wirklich schließen? Alle nicht gespeicherten Änderungen gehen verloren!"),
+                      primaryButton: Alert.Button.default(Text("Ja!"), action: { self.dismiss()}),
                       secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { })
                 )
             }
@@ -93,7 +100,7 @@ struct ExamView: View {
         ToolbarItem(placement: .cancellationAction) {
             Menu {
                 Button {
-                    dismiss()
+                    self.showCloseAlert.toggle()
                 } label: {
                     Text("Schließen")
                 }

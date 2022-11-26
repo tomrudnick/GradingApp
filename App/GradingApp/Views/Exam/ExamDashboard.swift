@@ -17,16 +17,17 @@ struct ExamDashboard: View {
     var body: some View {
         VStack {
             Form {
-                Section("Exam Settings") {
+                Section("Klassenarbeits Daten") {
                     HStack {
-                        Text("Exam Title:")
+                        Text("Klassenarbeits Name:")
                         Spacer()
-                        TextField("Title...", text: $exam.name)
+                        TextField("Name...", text: $exam.name)
+                            .multilineTextAlignment(TextAlignment.trailing)
                             .frame(width: 150)
                     }
                     
                     HStack {
-                        Text("Exam Date:")
+                        Text("Klassenarbeits Datum:")
                         DatePicker("", selection: $exam.date, displayedComponents: DatePickerComponents.date)
                     }
                     HStack {
@@ -35,7 +36,7 @@ struct ExamDashboard: View {
                     }
                     
                     HStack {
-                        Text("Durschnitt")
+                        Text("Durchschnitt")
                         Text(String(format: "%.2f", exam.getAverage())).bold()
                         Spacer()
                         Text("Durchgefallen: ")
@@ -61,7 +62,7 @@ struct ExamDashboard: View {
                         TableColumn("Punkte") { student in
                             Text(String(format: "%.2f", exam.getTotalPoints(for: student)))
                         }
-                        TableColumn("Grade") { student in
+                        TableColumn("Note") { student in
                             Text("\(exam.getGrade(for: student))")
                         }
                     }.frame(height: CGFloat(exam.examParticipations.filter(\.participated).count) * 100)
@@ -69,7 +70,7 @@ struct ExamDashboard: View {
                 
                 
             }
-        }.navigationTitle("Exam Dashboard")
+        }.navigationTitle("Klassenarbeit Dashboard")
        
     }
 }

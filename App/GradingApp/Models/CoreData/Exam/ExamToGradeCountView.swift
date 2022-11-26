@@ -17,7 +17,7 @@ struct ExamToGradeCountView: View {
                     HStack {
                         Text("Note").bold().foregroundColor(Color.accentColor)
                         Spacer()
-                        Text("Vorkommen").bold().foregroundColor(Color.accentColor)
+                        Text("Anzahl").bold().foregroundColor(Color.accentColor)
                     }
                     ForEach(exam.mapGradesToNumberOfOccurences.reversed(), id: \.id) { gradeNumber in
                         HStack {
