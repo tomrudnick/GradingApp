@@ -17,12 +17,37 @@ struct ExamGradingSchemeView: View {
                 exam.resetToDefaultGradeSchema()
             }
             Text("Anzahl an Durchgefallenen: \(exam.getNumberOfGrades(for: exam.failedGrades))")
-            Chart (exam.getChartData()){ grade in
-                BarMark(
-                    x: .value("Grade", grade.label),
-                    y: .value("Anzahl", Int(grade.value))
-                )
-            }
+            HStack {
+                VStack {
+                    Chart (exam.getChartData()){ grade in
+                        BarMark(
+                            x: .value("Grade", grade.label),
+                            y: .value("Anzahl", Int(grade.value))
+                        )
+                    }
+                }
+                .padding([.leading, .top, .bottom])
+                
+                VStack {
+                    List {
+                        HStack {
+                            Text("Note").bold().foregroundColor(Color.accentColor)
+                            Spacer()
+                            Text("Anzahl").bold().foregroundColor(Color.accentColor)
+                        }
+                        ForEach(exam.mapGradesToNumberOfOccurences.reversed(), id: \.id) { gradeNumber in
+                            HStack {
+                                Text(gradeNumber.grade)
+                                Spacer()
+                                Text(gradeNumber.number).padding(.trailing)
+                            }
+                        }
+                    }
+                }.frame(minHeight: 400)
+               
+            }.fixedSize(horizontal: false, vertical: true)
+                
+            
             GraphViewControllerReprestable(exam: exam)
         }.navigationTitle("Noten Schema")
     }
