@@ -70,7 +70,7 @@ struct GradeAtDatesView: View {
                             HStack {
                                 GradesAtDatesCellView(participantCount: exam.participationCount(),
                                                       studentCount: course.students.count,
-                                                      onlyStudent: exam.participations.first?.student,
+                                                      onlyStudent: exam.participations.first { $0.participated }?.student,
                                                       date: date,
                                                       averageGrade: String(format: "%.1f", averageGradePair.0),
                                                       color: averageGradePair.1,
