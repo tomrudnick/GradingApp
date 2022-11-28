@@ -194,15 +194,15 @@ extension Exam {
         var pointsToGrade: [(grade: Int, range: RangeCustom<Double>)] = []
         let maxPoints = getMaxPointsPossible()
         let gradeSchema: [Dictionary<Int, Double>.Element] = gradeSchema.sorted { gradeSchemeSort(v1: $0.key, v2: $1.key) }
+        
         for i in (0..<gradeSchema.count).reversed() {
-            let minValue = round(Double(gradeSchema[i].value / 100.0) * maxPoints * 2.0) / 2.0
+            let minValue = round(Double(gradeSchema[i].value / 100.0) * maxPoints * 4.0) / 4.0
             if i < (gradeSchema.count - 1) {
-                let maxValue = round(Double(gradeSchema[i + 1].value / 100.0) * maxPoints * 2.0) / 2.0
-                let leftBoundType: RangeCustom<Double>.BoundType = i == 0 ? .closed : .half
-                let range = RangeCustom(leftBound: minValue, leftType: leftBoundType, rightBound: maxValue, rightType: .closed)
+                let maxValue = round(Double(gradeSchema[i + 1].value / 100.0) * maxPoints * 4.0) / 4.0
+                let range = RangeCustom(leftBound: minValue, leftType: .closed, rightBound: maxValue, rightType: .half)
                 pointsToGrade.append((grade: gradeSchema[i].key, range: range))
             } else {
-                let range = RangeCustom(leftBound: minValue, leftType: .half, rightBound: maxPoints, rightType: .closed)
+                let range = RangeCustom(leftBound: minValue, leftType: .closed, rightBound: maxPoints, rightType: .closed)
                 pointsToGrade.append((grade: gradeSchema[i].key, range: range))
             }
         }
