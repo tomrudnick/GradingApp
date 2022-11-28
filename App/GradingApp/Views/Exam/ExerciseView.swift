@@ -40,7 +40,7 @@ struct ExerciseView: View {
                 }
             }
         }
-        .navigationTitle("Exercise \(exerciseVM.exericse.name)")
+        .navigationTitle("Aufgabe \(exerciseVM.exericse.name)")
     }
     
     func onlyParticpantsSorted() -> [ExamParticipationExercise] {
