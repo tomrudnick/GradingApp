@@ -19,7 +19,7 @@ struct ExamGradingSchemeView: View {
             Text("Anzahl an Durchgefallenen: \(exam.getNumberOfGrades(for: exam.failedGrades))")
             HStack {
                 VStack {
-                    Chart (exam.getChartData()){ grade in
+                    Chart (exam.getChartData().reversed()){ grade in
                         BarMark(
                             x: .value("Grade", grade.label),
                             y: .value("Anzahl", Int(grade.value))
