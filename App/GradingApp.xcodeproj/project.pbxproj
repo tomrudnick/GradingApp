@@ -87,6 +87,7 @@
 		E25FBCC326BAF6E6000BDD65 /* AddStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */; };
 		E25FBCC526BAF781000BDD65 /* Student+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC426BAF781000BDD65 /* Student+helper.swift */; };
 		E25FBCC726BB0216000BDD65 /* EditCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */; };
+		E26583ED29375F72000CF091 /* exam2.html in Resources */ = {isa = PBXBuildFile; fileRef = E26583EC29375F72000CF091 /* exam2.html */; };
 		E26ACC9926CE70F2004468AB /* Course+StudentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */; };
 		E276A6DC26D79D2E00380C14 /* GradeAtDatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DB26D79D2E00380C14 /* GradeAtDatesView.swift */; };
 		E276A6DE26D7AB3900380C14 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6DD26D7AB3900380C14 /* Date+toString.swift */; };
@@ -248,6 +249,7 @@
 		E25FBCC226BAF6E6000BDD65 /* AddStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudent.swift; sourceTree = "<group>"; };
 		E25FBCC426BAF781000BDD65 /* Student+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+helper.swift"; sourceTree = "<group>"; };
 		E25FBCC626BB0216000BDD65 /* EditCoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoursesView.swift; sourceTree = "<group>"; };
+		E26583EC29375F72000CF091 /* exam2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = exam2.html; sourceTree = "<group>"; };
 		E26ACC9826CE70F2004468AB /* Course+StudentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+StudentHelper.swift"; sourceTree = "<group>"; };
 		E276A6DB26D79D2E00380C14 /* GradeAtDatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesView.swift; sourceTree = "<group>"; };
 		E276A6DD26D7AB3900380C14 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
@@ -436,18 +438,12 @@
 		E22AA10E2912F8DE00784EEF /* Exam */ = {
 			isa = PBXGroup;
 			children = (
-				E2F699A0292448E10068BECB /* ExamParticipation+CoreDataClass.swift */,
-				E2C7ABE12912FA2400DFC9BC /* ExamExercise+CoreDataClass.swift */,
-				E2C7ABE32912FA2400DFC9BC /* ExamParticipationExercise+CoreDataClass.swift */,
+				E26583EB29375D99000CF091 /* ExamExercise */,
+				E26583EA29375D8D000CF091 /* ExamParticipation */,
 				E2C7ABE52912FA2400DFC9BC /* Exam+CoreDataClass.swift */,
 				E2C7ABF92912FA5100DFC9BC /* Exam+helper.swift */,
 				E2D3844A292E2B17007155F4 /* Exam+CoreDataProperties.swift */,
-				E2C7ABFD2912FE0C00DFC9BC /* ExamExercise+helper.swift */,
-				E2E460C7292804CF00ECC0A5 /* ExamParticipation+helper.swift */,
 				E2D3844C292E315A007155F4 /* Exam+FetchRequests.swift */,
-				E27EEC93292FC8C80025B8CF /* ExamToGradeCountView.swift */,
-				E27EEC95292FC95E0025B8CF /* ExamGradeToPointsView.swift */,
-				E22EDB8A29311B2000CE780D /* ExamParticipationExercise+helper.swift */,
 			);
 			path = Exam;
 			sourceTree = "<group>";
@@ -608,6 +604,26 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		E26583EA29375D8D000CF091 /* ExamParticipation */ = {
+			isa = PBXGroup;
+			children = (
+				E2F699A0292448E10068BECB /* ExamParticipation+CoreDataClass.swift */,
+				E2C7ABE32912FA2400DFC9BC /* ExamParticipationExercise+CoreDataClass.swift */,
+				E2E460C7292804CF00ECC0A5 /* ExamParticipation+helper.swift */,
+			);
+			path = ExamParticipation;
+			sourceTree = "<group>";
+		};
+		E26583EB29375D99000CF091 /* ExamExercise */ = {
+			isa = PBXGroup;
+			children = (
+				E2C7ABE12912FA2400DFC9BC /* ExamExercise+CoreDataClass.swift */,
+				E2C7ABFD2912FE0C00DFC9BC /* ExamExercise+helper.swift */,
+				E22EDB8A29311B2000CE780D /* ExamParticipationExercise+helper.swift */,
+			);
+			path = ExamExercise;
+			sourceTree = "<group>";
+		};
 		E2B055E326BD585D004F0087 /* Course */ = {
 			isa = PBXGroup;
 			children = (
@@ -718,6 +734,8 @@
 				E2F1D54A291557200060A29B /* ExamGradingSchemeView.swift */,
 				E2E460E02929772B00ECC0A5 /* EditExamView.swift */,
 				E2D38448292E28A1007155F4 /* NewExamView.swift */,
+				E27EEC93292FC8C80025B8CF /* ExamToGradeCountView.swift */,
+				E27EEC95292FC95E0025B8CF /* ExamGradeToPointsView.swift */,
 			);
 			path = Exam;
 			sourceTree = "<group>";
@@ -726,6 +744,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D38455292EAE28007155F4 /* grade.html */,
+				E26583EC29375F72000CF091 /* exam2.html */,
 				E2D38454292EAE28007155F4 /* gradeSchema.html */,
 				E2D38452292EADF1007155F4 /* exam.html */,
 			);
@@ -855,6 +874,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E26583ED29375F72000CF091 /* exam2.html in Resources */,
 				E2D38457292EAE28007155F4 /* grade.html in Resources */,
 				E25FBCAB26BADAC8000BDD65 /* Preview Assets.xcassets in Resources */,
 				E2D38453292EADF1007155F4 /* exam.html in Resources */,

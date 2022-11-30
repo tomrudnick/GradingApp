@@ -10,6 +10,7 @@ import UIKit
 
 class ExamSummaryComposer: NSObject {
     let pathToExamHTMLTemplate = Bundle.main.path(forResource: "exam", ofType: "html")!
+    let pathToExam2HTMLTemplate = Bundle.main.path(forResource: "exam2", ofType: "html")!
     let pathToGradeSchemaHTMLTemplate = Bundle.main.path(forResource: "gradeSchema", ofType: "html")!
     let pathToGradeHTMLTemplate = Bundle.main.path(forResource: "grade", ofType: "html")!
     
@@ -19,9 +20,10 @@ class ExamSummaryComposer: NSObject {
         self.exam = exam
     }
     
-    private func generateHTMLFile() -> String {
+    private func generateHTMLExamFile() -> String {
         do {
             var HTMLContent = try String(contentsOfFile: pathToExamHTMLTemplate)
+            HTMLContent = HTMLContent.replacingOccurrences(of: "#COURSE", with: exam.course?.title ?? "")
             HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_NAME", with: exam.name)
             HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_DATE", with: exam.date.asString(format: "dd.MM.yyyy"))
             HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_MAX_POINTS", with: String(format: "%.2f", exam.getMaxPointsPossible()))
@@ -37,23 +39,11 @@ class ExamSummaryComposer: NSObject {
             let gradeSchema = exam.getPointsToGrade().reduce("") { result, elem in
                 var htmlContent = gradeSchemaHTMLContent
                 htmlContent = htmlContent.replacingOccurrences(of: "#GRADE", with: String(elem.grade))
-                htmlContent = htmlContent.replacingOccurrences(of: "#RANGE", with: elem.range.description)
+                htmlContent = htmlContent.replacingOccurrences(of: "#RANGE", with: elem.range.studentDescription)
                 return result + htmlContent
             }
             
             HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADE_SCHEMA", with: gradeSchema)
-            
-            let gradeHTMLContent = try String(contentsOfFile: pathToGradeHTMLTemplate)
-            let grades = exam.sortedParticipatingStudents.reduce("") { result, student in
-                var htmlContent = gradeHTMLContent
-                htmlContent = htmlContent.replacingOccurrences(of: "#FIRSTNAME", with: student.firstName)
-                htmlContent = htmlContent.replacingOccurrences(of: "#LASTNAME", with: student.lastName)
-                htmlContent = htmlContent.replacingOccurrences(of: "#POINTS", with: String(format: "%.2f", exam.getTotalPoints(for: student)))
-                htmlContent = htmlContent.replacingOccurrences(of: "#GRADE", with: String(exam.getGrade(for: student)))
-                return result + htmlContent
-            }
-            
-            HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADES", with: grades)
             
             let gradeToCount = exam.mapGradesToNumberOfOccurences.reversed().reduce("") { result, elem in
                 var htmlContent = gradeSchemaHTMLContent
@@ -72,11 +62,36 @@ class ExamSummaryComposer: NSObject {
         }
     }
     
+    private func generateHTMLExam2File() -> String {
+        do {
+            var HTMLContent = try String(contentsOfFile: pathToExam2HTMLTemplate)
+            let gradeHTMLContent = try String(contentsOfFile: pathToGradeHTMLTemplate)
+            let grades = exam.sortedParticipatingStudents.reduce("") { result, student in
+                var htmlContent = gradeHTMLContent
+                htmlContent = htmlContent.replacingOccurrences(of: "#FIRSTNAME", with: student.firstName)
+                htmlContent = htmlContent.replacingOccurrences(of: "#LASTNAME", with: student.lastName)
+                htmlContent = htmlContent.replacingOccurrences(of: "#POINTS", with: String(format: "%.2f", exam.getTotalPoints(for: student)))
+                htmlContent = htmlContent.replacingOccurrences(of: "#GRADE", with: String(exam.getGrade(for: student)))
+                return result + htmlContent
+            }
+            HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADES", with: grades)
+            return HTMLContent
+            
+        } catch {
+            print("Something went wrong opening the file")
+            return ""
+        }
+    }
+    
     func renderToPDF() -> NSData {
-        let htmlContent = generateHTMLFile()
+        let htmlContentExam = generateHTMLExamFile()
+        let htmlContentExam2 = generateHTMLExam2File()
         let printPageRenderer = ExamPrintPageRenderer()
-        let printFormatter = UIMarkupTextPrintFormatter(markupText: htmlContent)
+        let printFormatter = UIMarkupTextPrintFormatter(markupText: htmlContentExam)
+        let printFormatter2 = UIMarkupTextPrintFormatter(markupText: htmlContentExam2)
+        
         printPageRenderer.addPrintFormatter(printFormatter, startingAtPageAt: 0)
+        printPageRenderer.addPrintFormatter(printFormatter2, startingAtPageAt: 1)
         let pdfData = drawPDFUsingPrintPageRenderer(printPageRenderer: printPageRenderer)
         return pdfData
     }
