@@ -27,6 +27,10 @@ struct RangeCustom<T: Comparable>: CustomStringConvertible {
         return "\(left)\(leftBound), \(rightBound)\(right)"
     }
     
+    var studentDescription: String {
+        return "\(rightBound) bis \(leftBound)"
+    }
+    
     func contains(value: T) -> Bool {
         let leftSide = leftType == .closed ? leftBound <= value : leftBound < value
         let rightSide = rightType == .closed ? value <= rightBound : value < rightBound

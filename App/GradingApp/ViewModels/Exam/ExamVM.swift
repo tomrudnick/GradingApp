@@ -29,12 +29,4 @@ class ExamVM: ObservableObject {
         guard let exam else { return }
         PersistenceController.persist(exam)
     }
-    
-    /*func setup(viewContext: NSManagedObjectContext, exam: Exam? = nil) {
-        self.context = viewContext.childViewContext()
-        if let exam {
-            self.exam =
-        }
-        self.exam = Exam(context: viewContext)
-    }*/
 }

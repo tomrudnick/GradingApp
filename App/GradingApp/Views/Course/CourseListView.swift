@@ -43,27 +43,21 @@ struct CourseListView: View {
     private var courses: FetchedResults<Course>
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     
-    @State var showEditCourses = false
-    @State var showMoreActions = false
-    @State var activeLink: ObjectIdentifier? = nil
-    @State var showAlert = false
     @StateObject var editCourseViewModel = CourseEditViewModel()
     @StateObject var undoRedoVM = UndoRedoViewModel()
-    
-    
     @ObservedObject var externalScreenHideViewModel: ExternalScreenHideViewModel
     
-    internal var didAppear: ((Self) -> Void)? // Test Reasons
-    
+    @State var showEditCourses = false
+    @State var showMoreActions = false
+    @State var showAlert = false
     @State private var showNewAlert = false
     @State private var firstAppear = true
     @State private var selectedCourse: Course?
-    
-    @CloudStorage(HalfYearDateKeys.firstHalf) var dateFirstHalf: Date = Date()
-    @CloudStorage(HalfYearDateKeys.secondHalf) var dateSecondHalf: Date = Date()
-    
+ 
     @State private var path: [Route] = []
     @State private var selectedTab: String = "StudentListView"
+    
+    internal var didAppear: ((Self) -> Void)? // Test Reasons
 
     init(externalScreenHideViewModel: ExternalScreenHideViewModel, fetchRequest: NSFetchRequest<Course>) {
         self.externalScreenHideViewModel = externalScreenHideViewModel
