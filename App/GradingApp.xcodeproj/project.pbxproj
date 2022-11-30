@@ -101,6 +101,8 @@
 		E2A20B0626D41910005FA240 /* StudentGradeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A20B0526D41910005FA240 /* StudentGradeListView.swift */; };
 		E2A3211E280C522E00EDBF89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211D280C522E00EDBF89 /* AppDelegate.swift */; };
 		E2A32120280D769700EDBF89 /* BackupRestoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */; };
+		E2A60B202937D1C50041F6F4 /* studentExam.html in Resources */ = {isa = PBXBuildFile; fileRef = E2A60B1F2937D1C50041F6F4 /* studentExam.html */; };
+		E2A60B222937D2AB0041F6F4 /* ExamStudentSummaryComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A60B212937D2AB0041F6F4 /* ExamStudentSummaryComposer.swift */; };
 		E2ABCDB226CBCBC700D35719 /* Student+DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */; };
 		E2ABCDB426CD0C6A00D35719 /* AddMultipleGradesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */; };
 		E2B055E026BD5029004F0087 /* Grade+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B055DF26BD5029004F0087 /* Grade+helper.swift */; };
@@ -262,6 +264,8 @@
 		E2A20B0526D41910005FA240 /* StudentGradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeListView.swift; sourceTree = "<group>"; };
 		E2A3211D280C522E00EDBF89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRestoreView.swift; sourceTree = "<group>"; };
+		E2A60B1F2937D1C50041F6F4 /* studentExam.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = studentExam.html; sourceTree = "<group>"; };
+		E2A60B212937D2AB0041F6F4 /* ExamStudentSummaryComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamStudentSummaryComposer.swift; sourceTree = "<group>"; };
 		E2ABCDB126CBCBC700D35719 /* Student+DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+DataModel.swift"; sourceTree = "<group>"; };
 		E2ABCDB326CD0C6A00D35719 /* AddMultipleGradesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMultipleGradesView.swift; sourceTree = "<group>"; };
 		E2B055DF26BD5029004F0087 /* Grade+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grade+helper.swift"; sourceTree = "<group>"; };
@@ -747,6 +751,7 @@
 				E26583EC29375F72000CF091 /* exam2.html */,
 				E2D38454292EAE28007155F4 /* gradeSchema.html */,
 				E2D38452292EADF1007155F4 /* exam.html */,
+				E2A60B1F2937D1C50041F6F4 /* studentExam.html */,
 			);
 			path = HTMLTemplates;
 			sourceTree = "<group>";
@@ -755,6 +760,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D38458292EAE78007155F4 /* ExamSummaryComposer.swift */,
+				E2A60B212937D2AB0041F6F4 /* ExamStudentSummaryComposer.swift */,
 				E2D3845A292EB4F1007155F4 /* ExamPrintPageRenderer.swift */,
 				E2D3845C292EB5F0007155F4 /* PDFFile.swift */,
 				E2D38451292EADB0007155F4 /* HTMLTemplates */,
@@ -874,6 +880,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A60B202937D1C50041F6F4 /* studentExam.html in Resources */,
 				E26583ED29375F72000CF091 /* exam2.html in Resources */,
 				E2D38457292EAE28007155F4 /* grade.html in Resources */,
 				E25FBCAB26BADAC8000BDD65 /* Preview Assets.xcassets in Resources */,
@@ -940,6 +947,7 @@
 				E2D3845D292EB5F0007155F4 /* PDFFile.swift in Sources */,
 				39A3D84928B4E6AC00A65EC8 /* CSVImportExampleView.swift in Sources */,
 				6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */,
+				E2A60B222937D2AB0041F6F4 /* ExamStudentSummaryComposer.swift in Sources */,
 				E2EA7AA226BEF23C0036048E /* GradeDetailView.swift in Sources */,
 				E276A6E226D7BB4B00380C14 /* EditGradesPerDateViewModel.swift in Sources */,
 				E2F1D5452915563B0060A29B /* GraphData.swift in Sources */,
