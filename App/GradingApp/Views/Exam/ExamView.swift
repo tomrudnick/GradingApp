@@ -20,6 +20,7 @@ struct ExamView: View {
     @ObservedObject var exam: Exam
     @State var selection: ExamRoute? = .dashboard
     @State var showPDFExporter = false
+    @State var showStudentPDFsExporter = false
     @State private var editMode: EditMode = .inactive
     @State var showDeleteAlert = false
     @State var showCloseAlert = false
@@ -46,14 +47,27 @@ struct ExamView: View {
             }.environment(\.editMode, $editMode)
             .navigationTitle("Exam: \(exam.name)")
             .toolbar { toolbar }
-            .fileExporter(isPresented: $showPDFExporter, document: PDFFile.generatePDFFromExam(exam: exam), contentType: .pdf) { result in
-                switch result {
-                case .success(let url):
-                    print("Saved to \(url)")
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }.alert(isPresented: $showDeleteAlert) {
+            .if(showStudentPDFsExporter, transform: { view in
+                view.fileExporter(isPresented: $showStudentPDFsExporter, documents: PDFFile.generatePDFsFromExam(exam: exam), contentType: .pdf, onCompletion: { result in
+                    switch result {
+                    case .success(let url):
+                        print("Saved to \(url)")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                })
+            })
+            .if(showPDFExporter, transform: { view in
+                view.fileExporter(isPresented: $showPDFExporter, document: PDFFile.generatePDFFromExam(exam: exam), contentType: .pdf, onCompletion: { result in
+                    switch result {
+                    case .success(let url):
+                        print("Saved to \(url)")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                })
+            })
+            .alert(isPresented: $showDeleteAlert) {
                 Alert(title: Text("Achtung"),
                       message: Text("Möchten sie diese Klausur wirklich löschen??"),
                       primaryButton: Alert.Button.default(Text("Ja!"), action: { delete(); self.dismiss()}),
@@ -122,6 +136,12 @@ struct ExamView: View {
                     self.showPDFExporter.toggle()
                 } label: {
                     Text("Export")
+                }
+                
+                Button {
+                    self.showStudentPDFsExporter.toggle()
+                } label: {
+                    Text("Notendeckblätter generieren")
                 }
             } label: {
                 Image(systemName: "ellipsis.circle")

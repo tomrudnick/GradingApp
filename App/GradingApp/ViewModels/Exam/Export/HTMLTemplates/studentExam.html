@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="content-type">
+            <title>Template for Exam Summary</title>
+            <style>
+                :root {
+                    font-family: "Open-Sans", sans-serif
+                }
+
+                table, td, th {
+                    border: 1px solid;
+                }
+                table {
+                    width: 30%;
+                    border-collapse: collapse;
+                }
+                td {
+                    text-align: center;
+                }
+
+                .exam-main {
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                .exam-student table {
+                    width: 80%
+                }
+                
+                .container {
+                    display: flex;
+                }
+                
+                .exam-gradeschema {
+                    width: 40%;
+                }
+                
+                .exam-gradeschema table {
+                    width: 80%;
+                }
+                
+                .exam-grades {
+                    margin-left: 15%;
+                }
+                
+                .exam-grades table {
+                    width: 50%
+                }
+                    
+            </style>
+    </head>
+    <body>
+        <div class="exam-main">
+           <p>#COURSE</p>
+           <p>#EXAM_NAME</p>
+           <p>#EXAM_DATE</p>
+        </div>
+        <div class="exam-student">
+            <p><b>Vorname: </b>#FIRSTNAME <b>Nachname: </b> #LASTNAME</p>
+            <table>
+                <tr>
+                    <th>Aufgabe</th>
+                    #EXAM_EXERCISE_NAMES
+                    <th>Summe</th>
+                </tr>
+                <tr>
+                    <td>max. Punktzahl</td>
+                    #EXAM_EXERCISE_MAX_POINTS
+                    <td>#EXAM_MAX_POINTS</td>
+                </tr>
+                <tr>
+                    <td>erreichte Punktzahl</td>
+                    #EXAM_EXERCISE_POINTS
+                    <td>#EXAM_SUM_POINTS</td>
+                </tr>
+            </table>
+            <br>
+            <b>Note: #GRADE</b>
+            <br>
+            Matthias Rudnick, #DATE
+        </div>
+        <br><br>
+        <div class="container">
+            <div class="exam-gradeschema">
+                <b>Notenschlüssel</b>
+                <table>
+                    <tr>
+                        <th>Note</th>
+                        <th>Schlüssel</th>
+                    </tr>
+                    #GRADE_SCHEMA
+                </table>
+            </div>
+            <br>
+            <div class="exam-gradeToPoints">
+                <b>Notenspiegel</b>
+                <table>
+                    <tr>
+                        <th>Note</th>
+                        <th>Anzahl</th>
+                    </tr>
+                    #GRADE_TO_COUNT
+                </table>
+            </div>
+        </div>
+        <p>Durchschnitt: #EXAM_AVERAGE</p>
+        
+    </body>
+</html>
