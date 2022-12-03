@@ -233,6 +233,7 @@
 		E24AF9D426D8DD62000F2313 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E2574C0426D9454400ED2CFD /* HalfYear+EnvironmentValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HalfYear+EnvironmentValue.swift"; sourceTree = "<group>"; };
 		E2574C1526DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTranscriptGradesHalfYear.swift; sourceTree = "<group>"; };
+		E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v6.xcdatamodel"; sourceTree = "<group>"; };
 		E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentsView.swift; sourceTree = "<group>"; };
 		E25A7CDB26CA9D0A00508EEE /* EditStudentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentDetailView.swift; sourceTree = "<group>"; };
 		E25FBCA026BADAC6000BDD65 /* GradingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1383,6 +1384,7 @@
 		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */,
 				E22EDB87293116EF00CE780D /* GradingAppDataModel v5.xcdatamodel */,
 				E2E68F8E292445A300FAD319 /* GradingAppDataModel v4.xcdatamodel */,
 				3986AEC528C8E53300F17E47 /* GradingAppDataModel v3.xcdatamodel */,
@@ -1390,7 +1392,7 @@
 				3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */,
 				E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */,
 			);
-			currentVersion = E22EDB87293116EF00CE780D /* GradingAppDataModel v5.xcdatamodel */;
+			currentVersion = E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */;
 			path = GradingAppData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

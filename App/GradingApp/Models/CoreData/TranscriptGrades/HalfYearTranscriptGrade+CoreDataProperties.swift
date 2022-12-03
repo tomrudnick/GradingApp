@@ -17,6 +17,7 @@ extension HalfYearTranscriptGrade {
     }
 
     @NSManaged public var half_: Int16
+    @NSManaged public var eduValue: Int32
 
 }
 

@@ -18,5 +18,7 @@ extension FullYearTranscriptGrade {
 
     @NSManaged public var firstValue: Int32
     @NSManaged public var secondValue: Int32
+    @NSManaged public var firstEduValue: Int32
+    @NSManaged public var secondEduValue: Int32
 
 }

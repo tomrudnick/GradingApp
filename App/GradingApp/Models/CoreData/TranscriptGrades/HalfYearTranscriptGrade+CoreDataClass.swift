@@ -24,6 +24,15 @@ public class HalfYearTranscriptGrade: TranscriptGrade {
         self.value = Int32(value)
     }
     
+    override func getEduValue(half: HalfType) -> Int? {
+        return self.half == half ? Int(value) : nil
+    }
+    
+    override func setEduValue(half: HalfType, value: Int) throws {
+        guard self.half == half else { throw HalfError.wrongHalf }
+        self.eduValue = Int32(value)
+    }
+    
     override func getCalculatedValue() -> Double {
         return Double(self.value)
     }
