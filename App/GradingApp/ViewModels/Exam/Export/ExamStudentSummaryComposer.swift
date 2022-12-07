@@ -64,7 +64,7 @@ class ExamStudentSummaryComposer: NSObject {
             
             HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADE_TO_COUNT", with: gradeToCount)
             
-            HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADE", with: String(exam.getGrade(for: student)))
+            HTMLContent = HTMLContent.replacingOccurrences(of: "#GRADE", with: generateGradeString())
             HTMLContent = HTMLContent.replacingOccurrences(of: "#DATE", with: Date().asString(format: "dd.MM.yyyy"))
             HTMLContent = HTMLContent.replacingOccurrences(of: "#EXAM_AVERAGE", with: String(format: "%.2f", exam.getAverage()))
             
@@ -76,6 +76,16 @@ class ExamStudentSummaryComposer: NSObject {
         }
     }
     
+    private func generateGradeString() -> String {
+        let grade = exam.getGrade(for: student)
+        if exam.course?.ageGroup == .lower { return String(grade)}
+        else {
+            switch grade {
+            case 1: return String(format: "%02d Punkt", grade)
+            default: return String(format:" %02d Punkte", grade)
+            }
+        }
+    }
 
     
     func renderToPDF() -> NSData {

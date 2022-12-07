@@ -23,7 +23,6 @@ struct ExamDashboard: View {
                         Spacer()
                         TextField("Name...", text: $exam.name)
                             .multilineTextAlignment(TextAlignment.trailing)
-                            .frame(width: 150)
                     }
                     
                     HStack {
