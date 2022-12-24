@@ -15,14 +15,29 @@ class SendMultipleEmails {
         self.emailAccountViewModel = emailAccountViewModel
     }
     
-    func sendEmails(subject: String, emailText: String, students: [Student], emailTextReplaceHandler: (_ emailText: String, _ student: Student) -> (String) , progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
-        let smtp = SMTP(hostname: emailAccountViewModel.hostname, email: emailAccountViewModel.username, password: emailAccountViewModel.password, port: Int32(emailAccountViewModel.portInt), tlsMode: .requireTLS, tlsConfiguration: nil, authMethods: [], domainName: "localhost", timeout: 10)
+    var smtp: SMTP {
+        SMTP(hostname: emailAccountViewModel.hostname,
+             email: emailAccountViewModel.username,
+             password: emailAccountViewModel.password,
+             port: Int32(emailAccountViewModel.portInt),
+             tlsMode: .requireTLS,
+             tlsConfiguration: nil,
+             authMethods: [],
+             domainName: "localhost",
+             timeout: 10)
+    }
+    
+    func sendEmails(subject: String,
+                    emailText: String,
+                    students: [Student],
+                    emailTextReplaceHandler: (_ emailText: String, _ student: Student) -> (String),
+                    progressHandler: @escaping (_ progress: Double) -> (),
+                    completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
         var mails: [Mail] = []
         let sender = Mail.User(email: emailAccountViewModel.email)
         for student in students {
             let receiverStudent = Mail.User(name: "\(student.firstName) \(student.lastName)", email: student.email)
             let emailString = emailTextReplaceHandler(emailText, student)
-            print(emailString) //Debug
             mails.append(Mail(from: sender,
                                to: [receiverStudent],
                                subject: subject,
@@ -30,6 +45,33 @@ class SendMultipleEmails {
                          )
             )
         }
+        _sendEmails(smtp: smtp, mails: mails, progressHandler: progressHandler, completionHandler: completionHandler)
+    }
+    
+    
+    func sendEmailsWithAttachments(subject: String,
+                                   emailText: String,
+                                   students: [Student : [Attachment]],
+                                   emailTextReplaceHandler: (_ emailText: String, _ student: Student) -> (String),
+                                   progressHandler: @escaping (_ progress: Double) -> (),
+                                   completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
+        var mails: [Mail] = []
+        let sender = Mail.User(email: emailAccountViewModel.email)
+        for (student, attachments) in students {
+            let receiverStudent = Mail.User(name: "\(student.firstName) \(student.lastName)", email: student.email)
+            let emailString = emailTextReplaceHandler(emailText, student)
+            mails.append(Mail(from: sender,
+                               to: [receiverStudent],
+                               subject: subject,
+                               text: emailString,
+                               attachments: attachments
+                         )
+            )
+            _sendEmails(smtp: smtp, mails: mails, progressHandler: progressHandler, completionHandler: completionHandler)
+        }
+    }
+    
+    private func _sendEmails(smtp: SMTP, mails: [Mail], progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ()) {
         smtp.send(mails,
             progress: { (mail, error) in
                 let index = mails.firstIndex(where: {mail.id == $0.id}) ?? 0
