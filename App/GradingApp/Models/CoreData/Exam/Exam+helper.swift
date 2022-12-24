@@ -190,6 +190,7 @@ extension Exam {
         return gradeToPoints.last?.grade ?? -1
     }
     
+    
     func getPointsToGrade() -> [(grade: Int, range: RangeCustom<Double>)]  {
         var pointsToGrade: [(grade: Int, range: RangeCustom<Double>)] = []
         let maxPoints = getMaxPointsPossible()

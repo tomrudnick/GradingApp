@@ -293,6 +293,8 @@ struct ExerciseRowView: View {
         HStack {
             Text(exercise.name)
             Spacer()
+            Text(String(format: "%.2f", exercise.averagePoints())+"%")
+            Spacer()
             Text(String(format: "%.2f", exercise.maxPoints))
         }
     }
