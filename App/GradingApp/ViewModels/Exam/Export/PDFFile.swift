@@ -49,7 +49,8 @@ struct PDFFile: FileDocument {
     }
     
     static func generatePDFsFromExam(exam: Exam) -> [PDFFile] {
-        exam.participations.filter(\.participated)
+        exam.participations
+            .filter(\.participated)
             .compactMap(\.student)
             .map {
                 let examComposer = ExamStudentSummaryComposer(exam: exam, student: $0)

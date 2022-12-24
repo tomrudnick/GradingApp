@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 struct ExamView: View {
     
@@ -21,6 +22,7 @@ struct ExamView: View {
     @State var selection: ExamRoute? = .dashboard
     @State var showPDFExporter = false
     @State var showStudentPDFsExporter = false
+    @State var showStudentExamFileImporter = false
     @State private var editMode: EditMode = .inactive
     @State var showDeleteAlert = false
     @State var showCloseAlert = false
@@ -66,6 +68,16 @@ struct ExamView: View {
                         print(error.localizedDescription)
                     }
                 })
+            })
+            .fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
+                do {
+                    let selectedFiles = try result.get()
+                    for file in selectedFiles {
+                        print(file.lastPathComponent)
+                    }
+                } catch (let error) {
+                    print(error.localizedDescription)
+                }
             })
             .alert(isPresented: $showDeleteAlert) {
                 Alert(title: Text("Achtung"),
@@ -143,11 +155,40 @@ struct ExamView: View {
                 } label: {
                     Text("Notendeckblätter generieren")
                 }
+                Button {
+                    self.showStudentExamFileImporter.toggle()
+                } label: {
+                    Text("Notendeckblätter an Klausur anhängen")
+                }
             } label: {
                 Image(systemName: "ellipsis.circle")
                     .imageScale(.large)
             }
         }
+    }
+    
+    func mergePdf(data: Data, otherPdfDocumentData: Data) -> PDFDocument {
+        // get the pdfData
+        let pdfDocument = PDFDocument(data: data)!
+        let otherPdfDocument = PDFDocument(data: otherPdfDocumentData)!
+        
+        // create new PDFDocument
+        let newPdfDocument = PDFDocument()
+
+        // insert all pages of first document
+        for p in 0..<pdfDocument.pageCount {
+            let page = pdfDocument.page(at: p)!
+            let copiedPage = page.copy() as! PDFPage // from docs
+            newPdfDocument.insert(copiedPage, at: newPdfDocument.pageCount)
+        }
+
+        // insert all pages of other document
+        for q in 0..<otherPdfDocument.pageCount {
+            let page = pdfDocument.page(at: q)!
+            let copiedPage = page.copy() as! PDFPage
+            newPdfDocument.insert(copiedPage, at: newPdfDocument.pageCount)
+        }
+        return newPdfDocument
     }
 }
 
