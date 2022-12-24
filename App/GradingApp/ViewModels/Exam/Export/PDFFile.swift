@@ -59,4 +59,10 @@ struct PDFFile: FileDocument {
             }
     }
     
+    static func generatePDFFromExam(exam: Exam, student: Student) -> PDFFile {
+        let examComposer = ExamStudentSummaryComposer(exam: exam, student: student)
+        let pdfData = examComposer.renderToPDF()
+        return PDFFile(fileName: "\(student.lastName)_\(student.firstName)_\(exam.name)", pdfData: pdfData)
+    }
+    
 }

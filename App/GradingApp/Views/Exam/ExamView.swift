@@ -17,15 +17,28 @@ struct ExamView: View {
         case exercise(ExerciseViewModel)
     }
     
+    enum AlertType {
+        case delete
+        case close
+        case countMismatch
+        case export
+    }
+    
     @Environment(\.dismiss) var dismiss
     @ObservedObject var exam: Exam
     @State var selection: ExamRoute? = .dashboard
     @State var showPDFExporter = false
     @State var showStudentPDFsExporter = false
+    @State var showStudentExamPDFsExporter = false
     @State var showStudentExamFileImporter = false
     @State private var editMode: EditMode = .inactive
-    @State var showDeleteAlert = false
-    @State var showCloseAlert = false
+    @State var showAlert = false
+    @State var alertType: AlertType = .delete
+
+    
+    @State var exportAlertText = ""
+    
+    @State var exportedExams: [PDFFile] = []
     
     let save: () -> ()
     let delete: () -> ()
@@ -69,29 +82,83 @@ struct ExamView: View {
                     }
                 })
             })
+            .if(showStudentExamPDFsExporter, transform: { view in
+                view.fileExporter(isPresented: $showStudentExamPDFsExporter, documents: exportedExams, contentType: .pdf, onCompletion: { result in
+                    switch result {
+                    case .success(let url):
+                        print("Saved to \(url)")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                })
+            })
             .fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
                 do {
                     let selectedFiles = try result.get()
-                    for file in selectedFiles {
-                        print(file.lastPathComponent)
+                    let students = exam.participations.filter(\.participated).compactMap(\.student)
+                    if selectedFiles.count != students.count {
+                        self.alertType = .countMismatch
+                        self.showAlert.toggle()
+                        return
                     }
+                    
+                    let fileNames = selectedFiles.map(\.lastPathComponent)
+                    exportedExams = []
+                    var possibleMissmatches: [(student: Student, fileName: String, score: Double)] = []
+                    for student in students {
+                        let studentName = " \(student.lastName)_\(student.firstName)"
+                        let scores = fileNames.map { (fileName: $0, score: $0.fuzzyMatchPattern(studentName)) }
+                            .compactMap { $0.score != nil ? (fileName: $0.fileName, score: $0.score!) : nil }
+                        
+                        let confidenceLevels = scores.map { (fileName: $0.fileName, score: $0.fileName.confidenceScore(studentName) ?? Double.greatestFiniteMagnitude) }
+                        let minScore = confidenceLevels.reduce((fileName: "", score: Double.greatestFiniteMagnitude), {
+                            return $0.score < $1.score ? $0 : $1
+                        })
+                        
+                        let examSummary = PDFFile.generatePDFFromExam(exam: exam, student: student)
+                        guard let file = selectedFiles.first(where: { $0.lastPathComponent ==  minScore.fileName }) else { continue }
+                        guard file.startAccessingSecurityScopedResource() else { continue }
+                        
+                        guard let examPDFDocument = PDFDocument(url: file) else { continue }
+                        let fileName = "\(studentName)_\(exam.name)_\(exam.course?.name ?? "")_benotet"
+                        let mergedFile = mergePdf(data: examSummary.data, otherPdfDocument: examPDFDocument, fileName: fileName)
+                        exportedExams.append(mergedFile)
+                        
+                        file.stopAccessingSecurityScopedResource()
+                        
+                        if minScore.score >= 0.5 {
+                            possibleMissmatches.append((student: student, fileName: minScore.fileName, score: minScore.score))
+                        }
+                    
+                    }
+                    if possibleMissmatches.count > 0 {
+                        for missmatch in possibleMissmatches {
+                            exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
+                        }
+                        alertType = .export
+                        showAlert.toggle()
+                        return
+                    }
+                    self.showStudentExamPDFsExporter.toggle()
                 } catch (let error) {
                     print(error.localizedDescription)
                 }
             })
-            .alert(isPresented: $showDeleteAlert) {
-                Alert(title: Text("Achtung"),
-                      message: Text("Möchten sie diese Klausur wirklich löschen??"),
-                      primaryButton: Alert.Button.default(Text("Ja!"), action: { delete(); self.dismiss()}),
-                      secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { })
-                )
-            }.alert(isPresented: $showCloseAlert) {
-                Alert(title: Text("Achtung"),
-                      message: Text("Möchten sie wirklich schließen? Alle nicht gespeicherten Änderungen gehen verloren!"),
-                      primaryButton: Alert.Button.default(Text("Ja!"), action: { self.dismiss()}),
-                      secondaryButton: Alert.Button.cancel(Text("Abbrechen"), action: { })
-                )
-            }
+            .alert("Achtung", isPresented: $showAlert, actions: {
+                switch alertType {
+                case .delete: deleteAlertActions
+                case .close: closeAlertActions
+                case .countMismatch: countMismatchAlertActions
+                case .export : exportAlertActions
+                }
+            }, message: {
+                switch alertType {
+                case .delete: Text("Möchten sie diese Klausur wirklich löschen??")
+                case .close: Text("Möchten sie wirklich schließen? Alle nicht gespeicherten Änderungen gehen verloren!")
+                case .export: Text(exportAlertText)
+                case .countMismatch: Text("Schüler Anzahl und Anzahl Klassenarbeiten stimmt nicht überein")
+                }
+            })
         } detail: {
             switch selection ?? .dashboard {
             case .dashboard: ExamDashboard(exam: exam)
@@ -99,6 +166,31 @@ struct ExamView: View {
             case .participants: ExamParticipantsView(exam: exam)
             case .exercise(let exerciseVM): ExerciseView(exam: exam, exerciseVM: exerciseVM)
             }
+        }
+    }
+    
+    var deleteAlertActions: some View {
+        Group {
+            Button("Ja!") { delete(); self.dismiss() }
+            Button("Abbrechen") { }
+        }
+    }
+    
+    var closeAlertActions: some View {
+        Group {
+            Button("Ja!") { self.dismiss() }
+            Button("Abbrechen") { }
+        }
+    }
+    
+    var countMismatchAlertActions: some View {
+        Button("Ok") { }
+    }
+    
+    var exportAlertActions: some View {
+        Group {
+            Button("Fortfahren") { self.showStudentExamPDFsExporter.toggle() }
+            Button("Abbrechen") { self.exportedExams = [] }
         }
     }
     
@@ -126,7 +218,8 @@ struct ExamView: View {
         ToolbarItem(placement: .cancellationAction) {
             Menu {
                 Button {
-                    self.showCloseAlert.toggle()
+                    self.alertType = .close
+                    self.showAlert.toggle()
                 } label: {
                     Text("Schließen")
                 }
@@ -139,7 +232,8 @@ struct ExamView: View {
                     }
                 }
                 Button {
-                    self.showDeleteAlert.toggle()
+                    self.alertType = .delete
+                    self.showAlert.toggle()
                 } label: {
                     Text("Löschen")
                     Image(systemName: "trash")
@@ -147,7 +241,7 @@ struct ExamView: View {
                 Button {
                     self.showPDFExporter.toggle()
                 } label: {
-                    Text("Export")
+                    Text("Export Ergebnisse für Schulleitung")
                 }
                 
                 Button {
@@ -167,11 +261,10 @@ struct ExamView: View {
         }
     }
     
-    func mergePdf(data: Data, otherPdfDocumentData: Data) -> PDFDocument {
+    func mergePdf(data: Data, otherPdfDocument: PDFDocument, fileName: String) -> PDFFile {
         // get the pdfData
         let pdfDocument = PDFDocument(data: data)!
-        let otherPdfDocument = PDFDocument(data: otherPdfDocumentData)!
-        
+     
         // create new PDFDocument
         let newPdfDocument = PDFDocument()
 
@@ -184,11 +277,12 @@ struct ExamView: View {
 
         // insert all pages of other document
         for q in 0..<otherPdfDocument.pageCount {
-            let page = pdfDocument.page(at: q)!
+            let page = otherPdfDocument.page(at: q)!
             let copiedPage = page.copy() as! PDFPage
             newPdfDocument.insert(copiedPage, at: newPdfDocument.pageCount)
         }
-        return newPdfDocument
+        guard let pdfData = newPdfDocument.dataRepresentation() as? NSData else { fatalError("Data Represenation not available") }
+        return PDFFile(fileName: fileName, pdfData: pdfData)
     }
 }
 
