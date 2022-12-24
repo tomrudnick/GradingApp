@@ -25,6 +25,7 @@
 		39DD579928CA5FE4006AD259 /* AddSchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DD579828CA5FE4006AD259 /* AddSchoolYearsView.swift */; };
 		39DEAD6B28EF3B500031CB2F /* ChangeSchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DEAD6A28EF3B500031CB2F /* ChangeSchoolYearsView.swift */; };
 		39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F09BB426D00801007B6E8A /* CostumGradeView.swift */; };
+		39FCA0C529571F7B0076FC7B /* FuzzyMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCA0C429571F7B0076FC7B /* FuzzyMatching.swift */; };
 		6D3BD29926E7CBD70060DB0D /* TextAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3BD29826E7CBD70060DB0D /* TextAlert.swift */; };
 		6D3EECD626E3D29B00E9D290 /* EmailAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECD526E3D29B00E9D290 /* EmailAccountViewModel.swift */; };
 		6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECD826E3D2CC00E9D290 /* KeychainAccess */; };
@@ -187,6 +188,7 @@
 		39DD579828CA5FE4006AD259 /* AddSchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSchoolYearsView.swift; sourceTree = "<group>"; };
 		39DEAD6A28EF3B500031CB2F /* ChangeSchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSchoolYearsView.swift; sourceTree = "<group>"; };
 		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
+		39FCA0C429571F7B0076FC7B /* FuzzyMatching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyMatching.swift; sourceTree = "<group>"; };
 		6D3BD29826E7CBD70060DB0D /* TextAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlert.swift; sourceTree = "<group>"; };
 		6D3EECD526E3D29B00E9D290 /* EmailAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAccountViewModel.swift; sourceTree = "<group>"; };
 		6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmailsView.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		E24AF9D426D8DD62000F2313 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		E2574C0426D9454400ED2CFD /* HalfYear+EnvironmentValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HalfYear+EnvironmentValue.swift"; sourceTree = "<group>"; };
 		E2574C1526DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTranscriptGradesHalfYear.swift; sourceTree = "<group>"; };
+		E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v6.xcdatamodel"; sourceTree = "<group>"; };
 		E25A7CD926CA9BDA00508EEE /* EditStudentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentsView.swift; sourceTree = "<group>"; };
 		E25A7CDB26CA9D0A00508EEE /* EditStudentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudentDetailView.swift; sourceTree = "<group>"; };
 		E25FBCA026BADAC6000BDD65 /* GradingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -367,6 +370,14 @@
 				39185ADF28CD09D700BC6E33 /* SchoolYear+Helper.swift */,
 			);
 			path = SchoolYear;
+			sourceTree = "<group>";
+		};
+		39FCA0C329571F580076FC7B /* FuzzySearch */ = {
+			isa = PBXGroup;
+			children = (
+				39FCA0C429571F7B0076FC7B /* FuzzyMatching.swift */,
+			);
+			path = FuzzySearch;
 			sourceTree = "<group>";
 		};
 		39FFC8A726CC1C8500CE433A /* Edit */ = {
@@ -575,6 +586,7 @@
 				E2A3211D280C522E00EDBF89 /* AppDelegate.swift */,
 				E2F409F228EAEC74006BA662 /* AppSettings.swift */,
 				E20C5E3626CD4B2B00F860C6 /* Extensions */,
+				39FCA0C329571F580076FC7B /* FuzzySearch */,
 				E2C5138826BBE10D0069D340 /* Models */,
 				E2C5138726BBE0FA0069D340 /* CoreData */,
 				E25FBCBD26BAE951000BDD65 /* Views */,
@@ -992,6 +1004,7 @@
 				E2F1D54B291557200060A29B /* ExamGradingSchemeView.swift in Sources */,
 				39185AE028CD09D700BC6E33 /* SchoolYear+Helper.swift in Sources */,
 				E2234A4526E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift in Sources */,
+				39FCA0C529571F7B0076FC7B /* FuzzyMatching.swift in Sources */,
 				E2C7ABED2912FA2400DFC9BC /* ExamParticipationExercise+CoreDataClass.swift in Sources */,
 				E232979127D00AF6007EC630 /* Subject+CoreDataClass.swift in Sources */,
 				E200846326DE99330098D981 /* FullYearTranscriptGrade+CoreDataProperties.swift in Sources */,
@@ -1383,6 +1396,7 @@
 		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */,
 				E22EDB87293116EF00CE780D /* GradingAppDataModel v5.xcdatamodel */,
 				E2E68F8E292445A300FAD319 /* GradingAppDataModel v4.xcdatamodel */,
 				3986AEC528C8E53300F17E47 /* GradingAppDataModel v3.xcdatamodel */,
@@ -1390,7 +1404,7 @@
 				3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */,
 				E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */,
 			);
-			currentVersion = E22EDB87293116EF00CE780D /* GradingAppDataModel v5.xcdatamodel */;
+			currentVersion = E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */;
 			path = GradingAppData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -25,6 +25,19 @@ public class FullYearTranscriptGrade: TranscriptGrade {
         }
     }
     
+    override func getEduValue(half: HalfType) -> Int? {
+        return half == .firstHalf ? Int(firstEduValue) : Int(secondEduValue)
+    }
+    
+    override func setEduValue(half: HalfType, value: Int) {
+        if half == .firstHalf {
+            firstEduValue = Int32(value)
+        } else {
+            secondEduValue = Int32(value)
+        }
+    }
+    
+    
     override func getCalculatedValue() -> Double {
         if firstValue == -1 && secondValue == -1{
             return -1.0

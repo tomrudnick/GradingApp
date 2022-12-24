@@ -28,6 +28,34 @@ public class TranscriptGrade: NSManagedObject, Codable {
         preconditionFailure("Only use the overriden function")
     }
     
+    func getEduValue(half: HalfType) -> Int? {
+        preconditionFailure("Only use the overriden function")
+    }
+    
+    func setEduValue(half: HalfType, value: Int) throws {
+        preconditionFailure("Only use the overriden function")
+    }
+    
+    func getEduString(half: HalfType) -> String {
+        let value = getEduValue(half: half)
+        if let value = value {
+            if value == -1 {
+                return "-"
+            }
+            switch self.student?.course?.ageGroup {
+            case .lower:
+                return Grade.convertGradePointsToGrades(value: value)
+            case .upper:
+                return String(value)
+            case .none:
+                return "-"
+            }
+        } else {
+            return "-"
+        }
+    }
+    
+    
     func getTranscriptGradeHalfValueString(half: HalfType) -> String {
         let value = getTranscriptGradeHalfValue(half: half)
         if let value = value {
