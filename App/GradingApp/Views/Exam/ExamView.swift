@@ -94,55 +94,22 @@ struct ExamView: View {
             })
             .fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
                 do {
-                    let selectedFiles = try result.get()
-                    let students = exam.participations.filter(\.participated).compactMap(\.student)
-                    if selectedFiles.count != students.count {
-                        self.alertType = .countMismatch
-                        self.showAlert.toggle()
-                        return
+                    exportedExams =  try PDFFile.pdfFileExamImporter(exam: exam, result: result).map(\.value)
+                } catch ImportError.countMissmatch {
+                    self.alertType = .countMismatch
+                    self.showAlert.toggle()
+                } catch ImportError.matchInsecurity(let possibleMissmatches, let exportedExams){
+                    exportAlertText = ""
+                    for missmatch in possibleMissmatches {
+                        exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
                     }
-                    
-                    let fileNames = selectedFiles.map(\.lastPathComponent)
-                    exportedExams = []
-                    var possibleMissmatches: [(student: Student, fileName: String, score: Double)] = []
-                    for student in students {
-                        let studentName = " \(student.lastName)_\(student.firstName)"
-                        let scores = fileNames.map { (fileName: $0, score: $0.fuzzyMatchPattern(studentName)) }
-                            .compactMap { $0.score != nil ? (fileName: $0.fileName, score: $0.score!) : nil }
-                        
-                        let confidenceLevels = scores.map { (fileName: $0.fileName, score: $0.fileName.confidenceScore(studentName) ?? Double.greatestFiniteMagnitude) }
-                        let minScore = confidenceLevels.reduce((fileName: "", score: Double.greatestFiniteMagnitude), {
-                            return $0.score < $1.score ? $0 : $1
-                        })
-                        
-                        let examSummary = PDFFile.generatePDFFromExam(exam: exam, student: student)
-                        guard let file = selectedFiles.first(where: { $0.lastPathComponent ==  minScore.fileName }) else { continue }
-                        guard file.startAccessingSecurityScopedResource() else { continue }
-                        
-                        guard let examPDFDocument = PDFDocument(url: file) else { continue }
-                        let fileName = "\(studentName)_\(exam.name)_\(exam.course?.name ?? "")_benotet"
-                        let mergedFile = mergePdf(data: examSummary.data, otherPdfDocument: examPDFDocument, fileName: fileName)
-                        exportedExams.append(mergedFile)
-                        
-                        file.stopAccessingSecurityScopedResource()
-                        
-                        if minScore.score >= 0.5 {
-                            possibleMissmatches.append((student: student, fileName: minScore.fileName, score: minScore.score))
-                        }
-                    
-                    }
-                    if possibleMissmatches.count > 0 {
-                        for missmatch in possibleMissmatches {
-                            exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
-                        }
-                        alertType = .export
-                        showAlert.toggle()
-                        return
-                    }
-                    self.showStudentExamPDFsExporter.toggle()
+                    alertType = .export
+                    showAlert.toggle()
+                    self.exportedExams = exportedExams.map(\.value)
                 } catch (let error) {
                     print(error.localizedDescription)
                 }
+                            
             })
             .alert("Achtung", isPresented: $showAlert, actions: {
                 switch alertType {
@@ -261,29 +228,7 @@ struct ExamView: View {
         }
     }
     
-    func mergePdf(data: Data, otherPdfDocument: PDFDocument, fileName: String) -> PDFFile {
-        // get the pdfData
-        let pdfDocument = PDFDocument(data: data)!
-     
-        // create new PDFDocument
-        let newPdfDocument = PDFDocument()
-
-        // insert all pages of first document
-        for p in 0..<pdfDocument.pageCount {
-            let page = pdfDocument.page(at: p)!
-            let copiedPage = page.copy() as! PDFPage // from docs
-            newPdfDocument.insert(copiedPage, at: newPdfDocument.pageCount)
-        }
-
-        // insert all pages of other document
-        for q in 0..<otherPdfDocument.pageCount {
-            let page = otherPdfDocument.page(at: q)!
-            let copiedPage = page.copy() as! PDFPage
-            newPdfDocument.insert(copiedPage, at: newPdfDocument.pageCount)
-        }
-        guard let pdfData = newPdfDocument.dataRepresentation() as? NSData else { fatalError("Data Represenation not available") }
-        return PDFFile(fileName: fileName, pdfData: pdfData)
-    }
+    
 }
 
 struct ExerciseRowView: View {

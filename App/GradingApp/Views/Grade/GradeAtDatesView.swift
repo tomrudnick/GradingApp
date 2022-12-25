@@ -10,6 +10,11 @@ import SwiftUI
 
 struct GradeAtDatesView: View {
     
+    enum AlertType {
+        case countMismatch
+        case export
+    }
+    
     @EnvironmentObject var appSettings: AppSettings
     // An alternative to the fetch Requst would be to make the course Observable
     // This however would complicate the logic of the getGradesPerDate function.
@@ -18,14 +23,19 @@ struct GradeAtDatesView: View {
     @FetchRequest(fetchRequest: Exam.fetchRequest()) private var exams: FetchedResults<Exam>
     @StateObject var sendGradeEmailViewModel = SendMultipileEmailsSelectedGradeViewModel()
     @StateObject var sendExamEmailViewModel = SendMultipleEmailsExamViewModel()
+    @StateObject var sendExamEmailAttachmentsViewModel = SendMultipleEmailsExamAttachmentViewModel()
    
     @Environment(\.currentHalfYear) var halfYear
     @Environment(\.managedObjectContext) private var viewContext
     @State var showEmailSheet = false
     @State var showExamEmailSheet = false
+    @State var importExamFiles = false
+    @State var showExamAttachmentEmailSheet = false
     @State var exam: Exam?
     
-    
+    @State var showAlert = false
+    @State var alertType: AlertType = .countMismatch
+    @State var exportAlertText = ""
     
     let gradeType: GradeType
     let course: Course
@@ -89,6 +99,12 @@ struct GradeAtDatesView: View {
                             } label: {
                                 Text("Ausgewählte Noten per Email verschicken")
                             }.disabled(!sendExamEmailViewModel.emailAccountViewModel.emailAccountUsed)
+                            Button {
+                                self.sendExamEmailAttachmentsViewModel.fetchData(half: halfYear, exam: exam)
+                                self.importExamFiles.toggle()
+                            } label: {
+                                Text("Ausgewählte Noten per Email zusammen mit Klassenarbeit verschicken")
+                            }.disabled(!sendExamEmailViewModel.emailAccountViewModel.emailAccountUsed)
                         }
                     }
                 }
@@ -99,10 +115,56 @@ struct GradeAtDatesView: View {
         .sheet(isPresented: $showExamEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendExamEmailViewModel)
         })
+        .sheet(isPresented: $showExamAttachmentEmailSheet, content: {
+            SendEmailsView(title: "\(course.title) - Anhänge", emailViewModel: sendExamEmailAttachmentsViewModel)
+        })
         .fullScreenCover(item: $exam) { exam in
             EditExamView(exam: exam, course: course)
                 .environmentObject(appSettings)
                 .environment(\.managedObjectContext, viewContext)
+        }
+        .fileImporter(isPresented: $importExamFiles, allowedContentTypes: [.pdf], allowsMultipleSelection: true) { result in
+            guard let exam = sendExamEmailAttachmentsViewModel.exam else { return }
+            do {
+                let exportedExams =  try PDFFile.pdfFileExamImporter(exam: exam, result: result)
+                sendExamEmailAttachmentsViewModel.fetchAttachments(exportedExams)
+                self.showExamAttachmentEmailSheet.toggle()
+            } catch ImportError.countMissmatch {
+                self.alertType = .countMismatch
+                self.showAlert.toggle()
+            } catch ImportError.matchInsecurity(let possibleMissmatches, let exportedExams){
+                exportAlertText = ""
+                for missmatch in possibleMissmatches {
+                    exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
+                }
+                sendExamEmailAttachmentsViewModel.fetchAttachments(exportedExams)
+                alertType = .export
+                showAlert.toggle()
+            } catch (let error) {
+                print(error.localizedDescription)
+            }
+        }
+        .alert("Achtung", isPresented: $showAlert, actions: {
+            switch alertType {
+            case .countMismatch: countMismatchAlertActions
+            case .export : exportAlertActions
+            }
+        }, message: {
+            switch alertType {
+            case .export: Text(exportAlertText)
+            case .countMismatch: Text("Schüler Anzahl und Anzahl Klassenarbeiten stimmt nicht überein")
+            }
+        })
+    }
+    
+    var countMismatchAlertActions: some View {
+        Button("Ok") { }
+    }
+    
+    var exportAlertActions: some View {
+        Group {
+            Button("Fortfahren") { self.showExamAttachmentEmailSheet.toggle() }
+            Button("Abbrechen") { }
         }
     }
     

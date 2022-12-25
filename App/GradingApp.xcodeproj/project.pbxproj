@@ -25,6 +25,7 @@
 		39DD579928CA5FE4006AD259 /* AddSchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DD579828CA5FE4006AD259 /* AddSchoolYearsView.swift */; };
 		39DEAD6B28EF3B500031CB2F /* ChangeSchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DEAD6A28EF3B500031CB2F /* ChangeSchoolYearsView.swift */; };
 		39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F09BB426D00801007B6E8A /* CostumGradeView.swift */; };
+		39F42914295871B3001D2CED /* SendMultipleEmailsExamAttachmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F42913295871B3001D2CED /* SendMultipleEmailsExamAttachmentViewModel.swift */; };
 		39FCA0C529571F7B0076FC7B /* FuzzyMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FCA0C429571F7B0076FC7B /* FuzzyMatching.swift */; };
 		6D3BD29926E7CBD70060DB0D /* TextAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3BD29826E7CBD70060DB0D /* TextAlert.swift */; };
 		6D3EECD626E3D29B00E9D290 /* EmailAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECD526E3D29B00E9D290 /* EmailAccountViewModel.swift */; };
@@ -188,6 +189,7 @@
 		39DD579828CA5FE4006AD259 /* AddSchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSchoolYearsView.swift; sourceTree = "<group>"; };
 		39DEAD6A28EF3B500031CB2F /* ChangeSchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSchoolYearsView.swift; sourceTree = "<group>"; };
 		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
+		39F42913295871B3001D2CED /* SendMultipleEmailsExamAttachmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMultipleEmailsExamAttachmentViewModel.swift; sourceTree = "<group>"; };
 		39FCA0C429571F7B0076FC7B /* FuzzyMatching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyMatching.swift; sourceTree = "<group>"; };
 		6D3BD29826E7CBD70060DB0D /* TextAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlert.swift; sourceTree = "<group>"; };
 		6D3EECD526E3D29B00E9D290 /* EmailAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAccountViewModel.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				6DE3E8BC26E56865004212D3 /* SendSingleEmailViewModel.swift */,
 				6DE3E8B026E554B9004212D3 /* SendMultipleEmails.swift */,
 				E22EDB8C29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift */,
+				39F42913295871B3001D2CED /* SendMultipleEmailsExamAttachmentViewModel.swift */,
 			);
 			path = Email;
 			sourceTree = "<group>";
@@ -985,6 +988,7 @@
 				3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */,
 				E200846726DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift in Sources */,
 				E2CE907327A065D800366DB1 /* BindingNot.swift in Sources */,
+				39F42914295871B3001D2CED /* SendMultipleEmailsExamAttachmentViewModel.swift in Sources */,
 				E22EDB89293119D000CE780D /* Set+setMap.swift in Sources */,
 				E25FBCAD26BADAC8000BDD65 /* Persistence.swift in Sources */,
 				6DE3E8B326E554FF004212D3 /* SendMultipleEmailsViewModel.swift in Sources */,
