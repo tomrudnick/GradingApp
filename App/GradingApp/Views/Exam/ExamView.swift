@@ -31,6 +31,7 @@ struct ExamView: View {
     @State var showStudentPDFsExporter = false
     @State var showStudentExamPDFsExporter = false
     @State var showStudentExamFileImporter = false
+    @State var showStudentCSVExporter = false
     @State private var editMode: EditMode = .inactive
     @State var showAlert = false
     @State var alertType: AlertType = .delete
@@ -91,6 +92,16 @@ struct ExamView: View {
                         print(error.localizedDescription)
                     }
                 })
+            })
+            .if(showStudentCSVExporter, transform: { view in
+                view.fileExporter(isPresented: $showStudentCSVExporter, document: CSVFile.generateStudentsListCSVFromExam(exam: exam), contentType: .commaSeparatedText) { result in
+                    switch result {
+                    case .success(let url):
+                        print("Saved to \(url)")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
             })
             .fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
                 do {
@@ -220,6 +231,11 @@ struct ExamView: View {
                     self.showStudentExamFileImporter.toggle()
                 } label: {
                     Text("Notendeckblätter an Klausur anhängen")
+                }
+                Button {
+                    self.showStudentCSVExporter.toggle()
+                } label: {
+                    Text("Klassenarbeitsteilnehmer als csv-Datei exportieren")
                 }
             } label: {
                 Image(systemName: "ellipsis.circle")

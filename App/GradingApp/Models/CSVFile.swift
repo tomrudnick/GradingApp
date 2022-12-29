@@ -176,4 +176,16 @@ struct CSVFile: FileDocument {
         let data = String(data: csv.stream.property(forKey: .dataWrittenToMemoryStreamKey) as! Data, encoding: .utf8)!
         return CSVFile(data: data, fileName: "Backup_" + fileDate)
     }
+    
+    static func generateStudentsListCSVFromExam(exam: Exam) -> CSVFile {
+        let csv = try! CSVWriter(stream: OutputStream.toMemory())
+        for student in exam.sortedParticipatingStudents {
+            csv.beginNewRow()
+            try! csv.write(field: student.lastName)
+            try! csv.write(field: student.firstName)
+        }
+        let data = String(data: csv.stream.property(forKey: .dataWrittenToMemoryStreamKey) as! Data, encoding: .utf8)!
+        csv.stream.close()
+        return CSVFile(data: data, fileName: exam.name + "_" + "Teilnehmerliste")
+    }
 }
