@@ -106,6 +106,7 @@ struct ExamView: View {
             .fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
                 do {
                     exportedExams =  try PDFFile.pdfFileExamImporter(exam: exam, result: result).map(\.value)
+                    self.showStudentExamPDFsExporter.toggle()
                 } catch ImportError.countMissmatch {
                     self.alertType = .countMismatch
                     self.showAlert.toggle()
