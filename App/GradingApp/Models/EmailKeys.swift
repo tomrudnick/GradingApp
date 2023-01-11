@@ -12,7 +12,7 @@ struct EmailKeys {
     static let lastName = "$Nachname"
     static let oralGrade = "$ø mündliche Note"
     static let writtenGrade = "$ø schriftliche Note"
-    static let grade = "$aktuelle Note"
+    static let grade = "$aktueller Leistungsstand gesamt"
     static let transcriptGradeHalf = "$Zeugnisnote aktuelles Halbjahr"
     static let transcriptGrade = "$Gesamtjahresnote"
     static let selectedGrade = "$ausgewählte Note"

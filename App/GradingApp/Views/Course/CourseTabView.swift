@@ -58,7 +58,7 @@ struct CourseTabView: View {
                 .environment(\.currentHalfYear, appSettings.activeHalf)
                 .tabItem{
                     Image(systemName:"calendar")
-                    Text("Daten")
+                    Text("Noten")
                 }.tag("GradeAtDatesSelectionView")
             
         }
