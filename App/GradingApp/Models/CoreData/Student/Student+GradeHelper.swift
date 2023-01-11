@@ -52,7 +52,7 @@ extension Student {
        
         
         if type == .written {
-            let filteredExams = examParticipations.filter { $0.exam?.half == half }
+            let filteredExams = examParticipations.filter { $0.exam?.half == half && $0.participated }
             if filteredExams.count > 0 {
                 sum += filteredExams.reduce(0) { result, examPart in
                     result + Double(examPart.getGrade())
