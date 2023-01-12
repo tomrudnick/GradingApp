@@ -88,6 +88,10 @@ class EditGradesPerDateViewModel : ObservableObject {
                 Grade.addGrade(value: studentGrade.value, date: date, half: halfYear, type: gradeType, comment: comment ?? "", multiplier: gradeMultiplier ?? 1.0, student: studentGrade.student, context: viewContext)
             }
         }
+        
+        studentGrades.forEach {
+            $0.student.objectWillChange.send()
+        }
     }
     
     func delete(viewContext: NSManagedObjectContext) {

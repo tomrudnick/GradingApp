@@ -49,5 +49,9 @@ class TranscriptGradesViewModel : TranscriptGradesViewModelProtocol {
             }
             viewContext.saveCustom()
         }
+        
+        studentGrades.forEach {
+            $0.student.objectWillChange.send()
+        }
     }
 }

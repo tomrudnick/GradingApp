@@ -49,5 +49,9 @@ class TranscriptGradesHalfYearViewModel : TranscriptGradesViewModelProtocol {
                 print("Added Transcript Grade")
             }
         }
+        
+        studentGrades.forEach {
+            $0.student.objectWillChange.send()
+        }
     }
 }
