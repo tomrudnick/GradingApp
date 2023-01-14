@@ -77,6 +77,7 @@ struct CourseTabView: View {
                     }
 
                     Button(action: {
+                        self.sendEmailViewModel.fetchData(course: course, half: appSettings.activeHalf)
                         self.showSendEmailSheet.toggle()
                     }, label: {
                         Text("Email verschicken...")
@@ -144,7 +145,6 @@ struct CourseTabView: View {
                 UITabBar.appearance().scrollEdgeAppearance = apparence
                 
             }
-            self.sendEmailViewModel.fetchData(course: course, half: appSettings.activeHalf)
         }
         .fullScreenCover(isPresented: $showNewExamSheet, content: {
             NewExamView(course: course)
