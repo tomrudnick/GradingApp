@@ -76,36 +76,10 @@ struct GradeAtDatesView: View {
                         Button {
                             self.exam = exam
                         } label: {
-                            let averageGradePair = exam.getAverage2()
-                            HStack {
-                                GradesAtDatesCellView(participantCount: exam.participationCount(),
-                                                      studentCount: course.students.count,
-                                                      onlyStudent: exam.participations.first { $0.participated }?.student,
-                                                      date: date,
-                                                      averageGrade: String(format: "%.1f", averageGradePair.0),
-                                                      color: averageGradePair.1,
-                                                      ageGroup: course.ageGroup,
-                                                      comment: exam.name)
-                                Image(systemName: "chevron.forward")
-                                    .foregroundColor(.secondary)
-                            }
-                            
+                            getExamGradeView(key: date, value: exam)
+                                .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
-                        .contextMenu {
-                            Button {
-                                sendExamEmailViewModel.fetchData(half: halfYear, exam: exam)
-                                self.showExamEmailSheet.toggle()
-                            } label: {
-                                Text("Ausgewählte Noten per Email verschicken")
-                            }.disabled(!sendExamEmailViewModel.emailAccountViewModel.emailAccountUsed)
-                            Button {
-                                self.sendExamEmailAttachmentsViewModel.fetchData(half: halfYear, exam: exam)
-                                self.importExamFiles.toggle()
-                            } label: {
-                                Text("Ausgewählte Noten per Email zusammen mit Klassenarbeit verschicken")
-                            }.disabled(!sendExamEmailViewModel.emailAccountViewModel.emailAccountUsed)
-                        }
                     }
                 }
             }
@@ -188,6 +162,38 @@ struct GradeAtDatesView: View {
         })
     }
     
+    @ViewBuilder func getExamGradeView(key: Date, value: Exam) -> some View {
+        let averageGradePair = value.getAverage2()
+        HStack{
+            GradesAtDatesCellView(participantCount: value.participationCount(),
+                                  studentCount: course.students.count,
+                                  onlyStudent: value.participations.first { $0.participated }?.student,
+                                  date: key,
+                                  averageGrade: String(format: "%.1f", averageGradePair.0),
+                                  color: averageGradePair.1,
+                                  ageGroup: course.ageGroup,
+                                  comment: value.name)
+            Image(systemName: "chevron.forward")
+                .foregroundColor(.secondary)
+        }
+        .contextMenu {
+            Button {
+                sendExamEmailViewModel.fetchData(half: halfYear, exam: value)
+                self.showExamEmailSheet.toggle()
+            } label: {
+                Text("Ausgewählte Noten per Email verschicken")
+            }.disabled(!sendExamEmailViewModel.emailAccountViewModel.emailAccountUsed)
+            Button {
+                self.sendExamEmailAttachmentsViewModel.fetchData(half: halfYear, exam: value)
+                self.importExamFiles.toggle()
+            } label: {
+                Text("Ausgewählte Noten per Email zusammen mit Klassenarbeit verschicken")
+            }.disabled(!sendExamEmailViewModel.emailAccountViewModel.emailAccountUsed)
+        }
+    }
+           
+    
+
     func getGradeText(grade: Double) -> String {
         if course.ageGroup == .lower {
             return String(format: "%.1f", Grade.convertDecimalGradesToGradePoints(points: grade))
