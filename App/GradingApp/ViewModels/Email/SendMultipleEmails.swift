@@ -40,6 +40,7 @@ class SendMultipleEmails {
             let emailString = emailTextReplaceHandler(emailText, student)
             mails.append(Mail(from: sender,
                                to: [receiverStudent],
+                               bcc: [sender],
                                subject: subject,
                                text: emailString
                          )
@@ -62,6 +63,7 @@ class SendMultipleEmails {
             let emailString = emailTextReplaceHandler(emailText, student)
             mails.append(Mail(from: sender,
                                to: [receiverStudent],
+                               bcc: [sender],
                                subject: subject,
                                text: emailString,
                                attachments: attachments

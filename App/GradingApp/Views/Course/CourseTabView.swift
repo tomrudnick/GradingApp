@@ -135,8 +135,6 @@ struct CourseTabView: View {
             return undoRedoVM.getAlert(viewContext: viewContext)
             
         }
-        
-        
         .onAppear {
             print("HALF: \(appSettings.activeHalf)")
             let apparence = UITabBarAppearance()
