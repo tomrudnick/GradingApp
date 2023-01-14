@@ -305,6 +305,7 @@
 		E2D38458292EAE78007155F4 /* ExamSummaryComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamSummaryComposer.swift; sourceTree = "<group>"; };
 		E2D3845A292EB4F1007155F4 /* ExamPrintPageRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamPrintPageRenderer.swift; sourceTree = "<group>"; };
 		E2D3845C292EB5F0007155F4 /* PDFFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFFile.swift; sourceTree = "<group>"; };
+		E2D8AEA62972E51E005287C3 /* GradingAppDataModel v7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v7.xcdatamodel"; sourceTree = "<group>"; };
 		E2D99F2B280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCalculatedTranscriptGrades.swift; sourceTree = "<group>"; };
 		E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesSelectionView.swift; sourceTree = "<group>"; };
 		E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeAtDatesEditView.swift; sourceTree = "<group>"; };
@@ -1400,6 +1401,7 @@
 		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E2D8AEA62972E51E005287C3 /* GradingAppDataModel v7.xcdatamodel */,
 				E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */,
 				E22EDB87293116EF00CE780D /* GradingAppDataModel v5.xcdatamodel */,
 				E2E68F8E292445A300FAD319 /* GradingAppDataModel v4.xcdatamodel */,
@@ -1408,7 +1410,7 @@
 				3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */,
 				E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */,
 			);
-			currentVersion = E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */;
+			currentVersion = E2D8AEA62972E51E005287C3 /* GradingAppDataModel v7.xcdatamodel */;
 			path = GradingAppData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
