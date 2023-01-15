@@ -56,6 +56,7 @@ struct CourseListView: View {
  
     @State private var path: [Route] = []
     @State private var selectedTab: String = "StudentListView"
+    @State private var goesToDetail: Bool = false
     
     internal var didAppear: ((Self) -> Void)? // Test Reasons
 
@@ -70,6 +71,11 @@ struct CourseListView: View {
                 NavigationLink(value: course) {
                     Text(course.title).font(.title2)
                     Text("(" + String(course.studentsCount) + ")").font(.footnote)
+                    Spacer()
+                    Image(systemName: "pencil.circle").onTapGesture {
+                        editCourseViewModel.fetchCourses(schoolYear: appSettings.activeSchoolYear!, context: viewContext)
+                        showEditCourses = true
+                    }
                 }
             }.onChange(of: selectedCourse, perform: { _ in
                 selectedTab = "StudentListView"
@@ -82,12 +88,12 @@ struct CourseListView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     moreActionsButton
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    undoButton
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    redoButton
-                }
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    undoButton
+//                }
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    redoButton
+//                }
                 
             }
             .alert(isPresented: $showAlert, content: {
@@ -166,23 +172,23 @@ struct CourseListView: View {
         }
     }
     
-    var undoButton: some View {
-        Button {
-            self.undoRedoVM.undoManagerAction = .undo
-            self.showAlert = true
-        } label: {
-            Image(systemName: "arrow.uturn.backward")
-        }
-    }
-    
-    var redoButton: some View {
-        Button {
-            self.undoRedoVM.undoManagerAction = .redo
-            self.showAlert = true
-        } label: {
-            Image(systemName: "arrow.uturn.forward")
-        }
-    }
+//    var undoButton: some View {
+//        Button {
+//            self.undoRedoVM.undoManagerAction = .undo
+//            self.showAlert = true
+//        } label: {
+//            Image(systemName: "arrow.uturn.backward")
+//        }
+//    }
+//
+//    var redoButton: some View {
+//        Button {
+//            self.undoRedoVM.undoManagerAction = .redo
+//            self.showAlert = true
+//        } label: {
+//            Image(systemName: "arrow.uturn.forward")
+//        }
+//    }
     
     private func delayMerge() async {
         try? await Task.sleep(nanoseconds: 5_000_000_000)
