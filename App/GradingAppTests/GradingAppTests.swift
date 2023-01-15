@@ -57,6 +57,57 @@ final class GradingAppTests: XCTestCase {
         XCTAssert(fetchedCourse!.students.contains(where: {$0.firstName == "Matthias"}))
     }
     
+    func testExamNotWrittenShouldNotChangeWrittenGrade(){
+        let course = createStandardCourse()
+        createStandardStudents(course: course)
+        let tom = course.students.first { student in
+            student.firstName == "Tom"
+        }
+        let matthias = course.students.first { student in
+            student.firstName == "Matthias"
+        }
+        context.saveCustom()
+        _ = addGrades(student: tom!, type: .written, half: .firstHalf, grades: [15,15,15])
+        _ = addGrades(student: matthias!, type: .written, half: .firstHalf, grades: [3,3,3])
+
+        let tomWrittenGradeBeforeExam = tom?.gradeAverage(type: .written, half: .firstHalf)
+        let matthiasWrittenGradeBeforeExam = matthias?.gradeAverage(type: .written, half: .firstHalf)
+        let exam = createExam(course: course)
+        exam.addExercise(name: "A1", maxPoints: 4.0)
+        exam.addExercise(name: "A2", maxPoints: 2.0)
+        exam.addExercise(name: "A3", maxPoints: 6.0)
+        let MatthiasExcercise = exam.examParticipations.first { examParticipation in
+            examParticipation.student?.firstName == "Matthias"
+        }
+        let TomExcercise = exam.examParticipations.first { examParticipation in
+            examParticipation.student?.firstName == "Tom"
+        }
+        MatthiasExcercise?.participatedExercises.first(where: { examParticipationExercise in
+            examParticipationExercise.exercise?.name == "A1"
+        })?.points = 4.0
+        MatthiasExcercise?.participatedExercises.first(where: { examParticipationExercise in
+            examParticipationExercise.exercise?.name == "A2"
+        })?.points = 2.0
+        MatthiasExcercise?.participatedExercises.first(where: { examParticipationExercise in
+            examParticipationExercise.exercise?.name == "A3"
+        })?.points = 5.0
+        TomExcercise?.participatedExercises.first(where: { examParticipationExercise in
+            examParticipationExercise.exercise?.name == "A1"
+        })?.points = 0.0
+        TomExcercise?.participatedExercises.first(where: { examParticipationExercise in
+            examParticipationExercise.exercise?.name == "A2"
+        })?.points = 1.0
+        TomExcercise?.participatedExercises.first(where: { examParticipationExercise in
+            examParticipationExercise.exercise?.name == "A3"
+        })?.points = 2.0
+        exam.toggleParticipation(for: tom! )
+        let tomWrittenGradeAfterExam = tom?.gradeAverage(type: .written, half: .firstHalf)
+        let matthiasWrittenGradeAfterExam = matthias?.gradeAverage(type: .written, half: .firstHalf)
+        XCTAssertEqual(tomWrittenGradeBeforeExam, tomWrittenGradeAfterExam)
+        XCTAssertNotEqual(matthiasWrittenGradeBeforeExam, matthiasWrittenGradeAfterExam)
+    }
+    
+    
     func testWrittenGradeCorrect() {        
         let course = createStandardCourse()
         createStandardStudents(course: course)
@@ -109,20 +160,30 @@ final class GradingAppTests: XCTestCase {
         let _ = addRandomGrades(student: student, type: .oral, half: .secondHalf)
         XCTAssertEqual(currentAverage, student.totalGradeAverage(half: .firstHalf), accuracy: 0.001)
     }
-    
-   
-    
-    func addRandomGrades(student: Student, type: GradeType, half: HalfType) -> [Grade] {
+
+    func addRandomGrades(student: Student, type: GradeType, half: HalfType, count: Int = 1000) -> [Grade] {
         var grades: [Grade] = []
         
-        for i in 0..<1000 {
+        for i in 0..<count {
             let grade = Grade(value: randomGrade(), date: Date(), half: half, type: type, comment: "Grade \(i)", multiplier: 1.0, student: student, context: context)
             grades.append(grade)
         }
         context.saveCustom()
         return grades
     }
-
+    
+    func addGrades(student: Student, type: GradeType, half: HalfType, grades: [Int]) -> [Grade] {
+        var gradesArray: [Grade] = []
+        
+        
+        for grade in grades {
+            let grade = Grade(value: grade, date: Date(), half: half, type: type, comment: "Grade \(grade)", multiplier: 1.0, student: student, context: context)
+            gradesArray.append(grade)
+        }
+        context.saveCustom()
+        return gradesArray
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         measure {
@@ -150,5 +211,12 @@ final class GradingAppTests: XCTestCase {
     func randomGrade() -> Int {
         Int.random(in: 0...15)
     }
-
+    
+    func createExam(course: Course) -> Exam {
+        let exam = Exam(context: context)
+        exam.setup(course: course, half: .firstHalf)
+        exam.name = "Testarbeit"
+        
+        return exam
+    }
 }
