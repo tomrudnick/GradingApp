@@ -28,7 +28,7 @@ final class GradingAppTests: XCTestCase {
         controller = nil
     }
     
-
+    //Test checks if you can add many students to a course
     func testAddManyStudents() throws {
         let course = Course(name: "TestKurs", subject: "TestSubject", context: context)
         context.saveCustom()
@@ -46,6 +46,7 @@ final class GradingAppTests: XCTestCase {
         }
     }
     
+    //Test checks if you can add two students to a course
     func testAddTwoStudents() {
         let course = createStandardCourse()
         createStandardStudents(course: course)
@@ -56,58 +57,8 @@ final class GradingAppTests: XCTestCase {
         XCTAssert(fetchedCourse!.students.contains(where: {$0.firstName == "Tom"}))
         XCTAssert(fetchedCourse!.students.contains(where: {$0.firstName == "Matthias"}))
     }
-    
-    func testExamNotWrittenShouldNotChangeWrittenGrade(){
-        let course = createStandardCourse()
-        createStandardStudents(course: course)
-        let tom = course.students.first { student in
-            student.firstName == "Tom"
-        }
-        let matthias = course.students.first { student in
-            student.firstName == "Matthias"
-        }
-        context.saveCustom()
-        _ = addGrades(student: tom!, type: .written, half: .firstHalf, grades: [15,15,15])
-        _ = addGrades(student: matthias!, type: .written, half: .firstHalf, grades: [3,3,3])
 
-        let tomWrittenGradeBeforeExam = tom?.gradeAverage(type: .written, half: .firstHalf)
-        let matthiasWrittenGradeBeforeExam = matthias?.gradeAverage(type: .written, half: .firstHalf)
-        let exam = createExam(course: course)
-        exam.addExercise(name: "A1", maxPoints: 4.0)
-        exam.addExercise(name: "A2", maxPoints: 2.0)
-        exam.addExercise(name: "A3", maxPoints: 6.0)
-        let MatthiasExcercise = exam.examParticipations.first { examParticipation in
-            examParticipation.student?.firstName == "Matthias"
-        }
-        let TomExcercise = exam.examParticipations.first { examParticipation in
-            examParticipation.student?.firstName == "Tom"
-        }
-        MatthiasExcercise?.participatedExercises.first(where: { examParticipationExercise in
-            examParticipationExercise.exercise?.name == "A1"
-        })?.points = 4.0
-        MatthiasExcercise?.participatedExercises.first(where: { examParticipationExercise in
-            examParticipationExercise.exercise?.name == "A2"
-        })?.points = 2.0
-        MatthiasExcercise?.participatedExercises.first(where: { examParticipationExercise in
-            examParticipationExercise.exercise?.name == "A3"
-        })?.points = 5.0
-        TomExcercise?.participatedExercises.first(where: { examParticipationExercise in
-            examParticipationExercise.exercise?.name == "A1"
-        })?.points = 0.0
-        TomExcercise?.participatedExercises.first(where: { examParticipationExercise in
-            examParticipationExercise.exercise?.name == "A2"
-        })?.points = 1.0
-        TomExcercise?.participatedExercises.first(where: { examParticipationExercise in
-            examParticipationExercise.exercise?.name == "A3"
-        })?.points = 2.0
-        exam.toggleParticipation(for: tom! )
-        let tomWrittenGradeAfterExam = tom?.gradeAverage(type: .written, half: .firstHalf)
-        let matthiasWrittenGradeAfterExam = matthias?.gradeAverage(type: .written, half: .firstHalf)
-        XCTAssertEqual(tomWrittenGradeBeforeExam, tomWrittenGradeAfterExam)
-        XCTAssertNotEqual(matthiasWrittenGradeBeforeExam, matthiasWrittenGradeAfterExam)
-    }
-    
-    
+    //Test checks if written avarage grade is calculated probably
     func testWrittenGradeCorrect() {        
         let course = createStandardCourse()
         createStandardStudents(course: course)
@@ -123,6 +74,8 @@ final class GradingAppTests: XCTestCase {
         
     }
     
+    
+    //Test checks if avarage grade is calculated probably
     func testGradeCorrect() {
         let course = createStandardCourse()
         createStandardStudents(course: course)
