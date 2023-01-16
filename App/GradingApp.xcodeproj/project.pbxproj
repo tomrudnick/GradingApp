@@ -98,6 +98,8 @@
 		E276A6E226D7BB4B00380C14 /* EditGradesPerDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */; };
 		E27EEC94292FC8C80025B8CF /* ExamToGradeCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27EEC93292FC8C80025B8CF /* ExamToGradeCountView.swift */; };
 		E27EEC96292FC95E0025B8CF /* ExamGradeToPointsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27EEC95292FC95E0025B8CF /* ExamGradeToPointsView.swift */; };
+		E27FC4372975C6640041D80F /* GradingAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27FC4362975C6640041D80F /* GradingAppUITests.swift */; };
+		E27FC4392975C6640041D80F /* GradingAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27FC4382975C6640041D80F /* GradingAppUITestsLaunchTests.swift */; };
 		E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E282BE3028D7D2280014ACFE /* CloudStorage */; };
 		E295971B285FDEF0008FD8B5 /* GradeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295971A285FDEF0008FD8B5 /* GradeText.swift */; };
 		E298230B28EF327400B8BB23 /* SchoolYear+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E298230928EF326200B8BB23 /* SchoolYear+CoreDataClass.swift */; };
@@ -161,6 +163,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		E22EDB822930F1DA00CE780D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E25FBC9826BADAC6000BDD65 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E25FBC9F26BADAC6000BDD65;
+			remoteInfo = GradingApp;
+		};
+		E27FC43A2975C6640041D80F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E25FBC9826BADAC6000BDD65 /* Project object */;
 			proxyType = 1;
@@ -266,6 +275,9 @@
 		E276A6E126D7BB4B00380C14 /* EditGradesPerDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGradesPerDateViewModel.swift; sourceTree = "<group>"; };
 		E27EEC93292FC8C80025B8CF /* ExamToGradeCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamToGradeCountView.swift; sourceTree = "<group>"; };
 		E27EEC95292FC95E0025B8CF /* ExamGradeToPointsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamGradeToPointsView.swift; sourceTree = "<group>"; };
+		E27FC4342975C6640041D80F /* GradingAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GradingAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E27FC4362975C6640041D80F /* GradingAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingAppUITests.swift; sourceTree = "<group>"; };
+		E27FC4382975C6640041D80F /* GradingAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E295971A285FDEF0008FD8B5 /* GradeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeText.swift; sourceTree = "<group>"; };
 		E298230928EF326200B8BB23 /* SchoolYear+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchoolYear+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E2A20B0526D41910005FA240 /* StudentGradeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentGradeListView.swift; sourceTree = "<group>"; };
@@ -347,6 +359,13 @@
 				E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */,
 				6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */,
 				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E27FC4312975C6640041D80F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +590,7 @@
 				396182542774B1B7009596F3 /* HighlightedTextEditor */,
 				E25FBCA226BADAC6000BDD65 /* GradingApp */,
 				E22EDB7F2930F1DA00CE780D /* GradingAppTests */,
+				E27FC4352975C6640041D80F /* GradingAppUITests */,
 				E25FBCA126BADAC6000BDD65 /* Products */,
 				E24AF9D326D8DD62000F2313 /* Frameworks */,
 			);
@@ -581,6 +601,7 @@
 			children = (
 				E25FBCA026BADAC6000BDD65 /* GradingApp.app */,
 				E22EDB7E2930F1DA00CE780D /* GradingAppTests.xctest */,
+				E27FC4342975C6640041D80F /* GradingAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -645,6 +666,15 @@
 				E22EDB8A29311B2000CE780D /* ExamParticipationExercise+helper.swift */,
 			);
 			path = ExamExercise;
+			sourceTree = "<group>";
+		};
+		E27FC4352975C6640041D80F /* GradingAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E27FC4362975C6640041D80F /* GradingAppUITests.swift */,
+				E27FC4382975C6640041D80F /* GradingAppUITestsLaunchTests.swift */,
+			);
+			path = GradingAppUITests;
 			sourceTree = "<group>";
 		};
 		E2B055E326BD585D004F0087 /* Course */ = {
@@ -842,13 +872,31 @@
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		E27FC4332975C6640041D80F /* GradingAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E27FC43E2975C6640041D80F /* Build configuration list for PBXNativeTarget "GradingAppUITests" */;
+			buildPhases = (
+				E27FC4302975C6640041D80F /* Sources */,
+				E27FC4312975C6640041D80F /* Frameworks */,
+				E27FC4322975C6640041D80F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E27FC43B2975C6640041D80F /* PBXTargetDependency */,
+			);
+			name = GradingAppUITests;
+			productName = GradingAppUITests;
+			productReference = E27FC4342975C6640041D80F /* GradingAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		E25FBC9826BADAC6000BDD65 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					E22EDB7D2930F1DA00CE780D = {
@@ -857,6 +905,10 @@
 					};
 					E25FBC9F26BADAC6000BDD65 = {
 						CreatedOnToolsVersion = 12.5.1;
+					};
+					E27FC4332975C6640041D80F = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = E25FBC9F26BADAC6000BDD65;
 					};
 				};
 			};
@@ -883,6 +935,7 @@
 			targets = (
 				E25FBC9F26BADAC6000BDD65 /* GradingApp */,
 				E22EDB7D2930F1DA00CE780D /* GradingAppTests */,
+				E27FC4332975C6640041D80F /* GradingAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -906,6 +959,13 @@
 				E2D38453292EADF1007155F4 /* exam.html in Resources */,
 				E25FBCA826BADAC8000BDD65 /* Assets.xcassets in Resources */,
 				E2D38456292EAE28007155F4 /* gradeSchema.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E27FC4322975C6640041D80F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1063,6 +1123,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E27FC4302975C6640041D80F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E27FC4372975C6640041D80F /* GradingAppUITests.swift in Sources */,
+				E27FC4392975C6640041D80F /* GradingAppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1070,6 +1139,11 @@
 			isa = PBXTargetDependency;
 			target = E25FBC9F26BADAC6000BDD65 /* GradingApp */;
 			targetProxy = E22EDB822930F1DA00CE780D /* PBXContainerItemProxy */;
+		};
+		E27FC43B2975C6640041D80F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E25FBC9F26BADAC6000BDD65 /* GradingApp */;
+			targetProxy = E27FC43A2975C6640041D80F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1290,6 +1364,44 @@
 			};
 			name = Release;
 		};
+		E27FC43C2975C6640041D80F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = rudnick.GradingAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GradingApp;
+			};
+			name = Debug;
+		};
+		E27FC43D2975C6640041D80F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6U2TY3RPNB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = rudnick.GradingAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GradingApp;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1316,6 +1428,15 @@
 			buildConfigurations = (
 				E25FBCB526BADAC8000BDD65 /* Debug */,
 				E25FBCB626BADAC8000BDD65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E27FC43E2975C6640041D80F /* Build configuration list for PBXNativeTarget "GradingAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E27FC43C2975C6640041D80F /* Debug */,
+				E27FC43D2975C6640041D80F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
