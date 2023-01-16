@@ -19,7 +19,7 @@ struct GradeAtDatesSelectionView: View {
     var body: some View {
         VStack {
             Picker(selection: $selectedGradeType, label: Text("")) {
-                Text("Mündlich").tag(0)
+                Text("Mündliches").tag(0)
                 Text("Schriftlich").tag(1)
             }.pickerStyle(SegmentedPickerStyle())
             GradeAtDatesView(course: course, gradeType: gradeType, half: halfYear)

@@ -47,15 +47,3 @@ struct GradeDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-struct GradeDetailView_Previews: PreviewProvider {
-    
-
-    static var previews: some View {
-        let student = (previewData(context: PersistenceController.preview.container.viewContext).first(where: {$0.name == "Mathe 10FLS"})?.studentsArr.first!)!
-        
-        NavigationView {
-            GradeDetailView(student: student , gradeType: .oral).environment(\.currentHalfYear, .firstHalf)
-        }
-    }
-}
