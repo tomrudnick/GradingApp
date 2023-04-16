@@ -130,7 +130,7 @@ struct StudentTranscriptGradeDetailView: View {
     var body: some View {
         VStack {
             if halfYear == .firstHalf {
-                if let transcriptGrade = transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf), transcriptGrade != "-" {
+                if let transcriptGrade = Optional(transcriptGrade.getTranscriptGradeHalfValueString(half: .firstHalf)), transcriptGrade != "-" {
                     HStack {
                         
                         Text("Zeugnis: ")
@@ -138,7 +138,7 @@ struct StudentTranscriptGradeDetailView: View {
                     }
                 }
             } else if halfYear == .secondHalf {
-                if let secondTranscriptGrade = transcriptGrade.getTranscriptGradeHalfValueString(half: .secondHalf), secondTranscriptGrade != "-" {
+                if let secondTranscriptGrade = Optional(transcriptGrade.getTranscriptGradeHalfValueString(half: .secondHalf)), secondTranscriptGrade != "-" {
                     if transcriptGrade.student!.course!.type == CourseType.secondHalf {
                         HStack {
                             

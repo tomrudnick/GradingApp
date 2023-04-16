@@ -5,8 +5,6 @@
 //  Created by Tom Rudnick on 04.08.21.
 //
 
-// Dummy commit
-
 import SwiftUI
 import Combine
 import CloudStorage
