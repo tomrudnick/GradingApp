@@ -106,7 +106,7 @@ struct PDFFile: FileDocument {
         var exportedExams: [Student: PDFFile] = [:]
         var possibleMissmatches: [(student: Student, fileName: String, score: Double)] = []
         for student in students {
-            let studentName = " \(student.lastName)_\(student.firstName)"
+            let studentName = "\(student.lastName)_\(student.firstName)"
             let scores = fileNames.map { (fileName: $0, score: $0.fuzzyMatchPattern(studentName)) }
                 .compactMap { $0.score != nil ? (fileName: $0.fileName, score: $0.score!) : nil }
             
