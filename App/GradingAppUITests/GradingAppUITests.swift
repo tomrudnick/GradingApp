@@ -22,29 +22,6 @@ final class GradingAppUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        
-        let app = XCUIApplication()
-        app.launch()
-        app.navigationBars["Kurse 1.  HJ, 23/24"]/*@START_MENU_TOKEN@*/.buttons["Bearbeiten"]/*[[".otherElements[\"Bearbeiten\"].buttons[\"Bearbeiten\"]",".buttons[\"Bearbeiten\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.toolbars["Toolbar"]/*@START_MENU_TOKEN@*/.buttons["Hinzufügen"]/*[[".otherElements[\"Hinzufügen\"].buttons[\"Hinzufügen\"]",".buttons[\"Hinzufügen\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        
-        let collectionViewsQuery = app.collectionViews
-        collectionViewsQuery/*@START_MENU_TOKEN@*/.buttons["Fach"]/*[[".cells.buttons[\"Fach\"]",".buttons[\"Fach\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        
-        app.navigationBars["Fach auswählen"]/*@START_MENU_TOKEN@*/.buttons["Hinzufügen"]/*[[".otherElements[\"Hinzufügen\"].buttons[\"Hinzufügen\"]",".buttons[\"Hinzufügen\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        let collectionViewsQuery2 = app.collectionViews
-        app.textFields["Z.B. Mathe"].tap()
-        app.textFields["Z.B. Mathe"].typeText("Informatik")
-        
-        //app.buttons["Hinnzufügen"].tap()
-        let buttons = app.buttons.matching(identifier: "Hinzufügen")
-        buttons.element(boundBy: 0).tap()
-        app.buttons["Informatik"].tap()
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
 
 
     
