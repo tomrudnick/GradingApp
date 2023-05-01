@@ -111,7 +111,7 @@ extension Exam {
         self.course = PersistenceController.copyForEditing(of: course, in: context)
         self.date = Date()
         
-        self.course?.students.forEach { student in
+        self.course?.students.filter{ !$0.hidden }.forEach { student in
             print("Add: \(student.firstName)")
             _ = ExamParticipation(context: context, student: student, exam: self)
         }

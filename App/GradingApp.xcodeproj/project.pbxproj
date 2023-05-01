@@ -23,6 +23,7 @@
 		39BCE45C26E4C7B900FB2680 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */; };
 		39BCE45E26E4C7B900FB2680 /* Course+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */; };
 		39D6197928D777D7006CF9F1 /* SchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D6197828D777D7006CF9F1 /* SchoolYearsView.swift */; };
+		39DB989629FFDEE600F79E72 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DB989529FFDEE600F79E72 /* PopupView.swift */; };
 		39DD579928CA5FE4006AD259 /* AddSchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DD579828CA5FE4006AD259 /* AddSchoolYearsView.swift */; };
 		39DEAD6B28EF3B500031CB2F /* ChangeSchoolYearsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DEAD6A28EF3B500031CB2F /* ChangeSchoolYearsView.swift */; };
 		39F09BB526D00801007B6E8A /* CostumGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F09BB426D00801007B6E8A /* CostumGradeView.swift */; };
@@ -197,6 +198,7 @@
 		39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass.swift"; sourceTree = "<group>"; };
 		39BCE45A26E4C7B900FB2680 /* Course+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Course+CoreDataClass.swift"; sourceTree = "<group>"; };
 		39D6197828D777D7006CF9F1 /* SchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolYearsView.swift; sourceTree = "<group>"; };
+		39DB989529FFDEE600F79E72 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		39DD579828CA5FE4006AD259 /* AddSchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSchoolYearsView.swift; sourceTree = "<group>"; };
 		39DEAD6A28EF3B500031CB2F /* ChangeSchoolYearsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeSchoolYearsView.swift; sourceTree = "<group>"; };
 		39F09BB426D00801007B6E8A /* CostumGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CostumGradeView.swift; path = GradingApp/Views/Student/CostumGradeView.swift; sourceTree = SOURCE_ROOT; };
@@ -383,6 +385,7 @@
 				6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */,
 				6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */,
 				E295971A285FDEF0008FD8B5 /* GradeText.swift */,
+				39DB989529FFDEE600F79E72 /* PopupView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 			files = (
 				E2A3211E280C522E00EDBF89 /* AppDelegate.swift in Sources */,
 				E20BBE0A26BEC6A700ED7BEF /* Grade+CoreDataClass.swift in Sources */,
+				39DB989629FFDEE600F79E72 /* PopupView.swift in Sources */,
 				6DE3E8B926E5555A004212D3 /* SendMultileEmailsSelectedGradeViewModel.swift in Sources */,
 				E25A7CDC26CA9D0A00508EEE /* EditStudentDetailView.swift in Sources */,
 				E2C5138626BBD3FF0069D340 /* EditCourseViewModel.swift in Sources */,

@@ -32,14 +32,16 @@ struct ExamView: View {
     @State var showStudentExamPDFsExporter = false
     @State var showStudentExamFileImporter = false
     @State var showStudentCSVExporter = false
+    @State var showPDFImport = false
+    @State var showExportSchoolOfficial = false
     @State private var editMode: EditMode = .inactive
     @State var showAlert = false
     @State var alertType: AlertType = .delete
-
     
     @State var exportAlertText = ""
     
     @State var exportedExams: [PDFFile] = []
+    @State var examResult: PDFFile?
     
     let save: () -> ()
     let delete: () -> ()
@@ -74,7 +76,7 @@ struct ExamView: View {
                 })
             })
             .if(showPDFExporter, transform: { view in
-                view.fileExporter(isPresented: $showPDFExporter, document: PDFFile.generatePDFFromExam(exam: exam), contentType: .pdf, onCompletion: { result in
+                view.fileExporter(isPresented: $showPDFExporter, document: examResult, contentType: .pdf, onCompletion: { result in
                     switch result {
                     case .success(let url):
                         print("Saved to \(url)")
@@ -103,25 +105,44 @@ struct ExamView: View {
                     }
                 }
             })
-            .fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
-                do {
-                    exportedExams =  try PDFFile.pdfFileExamImporter(exam: exam, result: result).map(\.value)
-                    self.showStudentExamPDFsExporter.toggle()
-                } catch ImportError.countMissmatch {
-                    self.alertType = .countMismatch
-                    self.showAlert.toggle()
-                } catch ImportError.matchInsecurity(let possibleMissmatches, let exportedExams){
-                    exportAlertText = ""
-                    for missmatch in possibleMissmatches {
-                        exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
+            .if(showPDFImport, transform: { view in
+                view.fileImporter(isPresented: $showPDFImport, allowedContentTypes: [.pdf]) { result in
+                    do {
+                        let selectedFile = try result.get() //get file URL
+                        guard selectedFile.startAccessingSecurityScopedResource() else { return} //open file with file URL
+                        guard let PDFDocument = PDFDocument(url: selectedFile) else { return} //make pdf file from file
+                        selectedFile.stopAccessingSecurityScopedResource()
+                        let officialResult = PDFFile.generatePDFFromExam(exam: exam)
+                        let mergedFile = PDFFile.mergePdf(data: officialResult.data, otherPdfDocument: PDFDocument, fileName: "\(exam.name)_\(exam.course?.name ?? "")_Rudnick_Schulleitung")
+                        self.examResult = mergedFile
+                        self.showPDFExporter.toggle()
                     }
-                    alertType = .export
-                    showAlert.toggle()
-                    self.exportedExams = exportedExams.map(\.value)
-                } catch (let error) {
-                    print(error.localizedDescription)
+                    catch {
+                        print("Error exporting Schulleitungsergebnis")
+                    }
                 }
-                            
+            })
+            .if(showStudentExamFileImporter, transform:  { view in
+                view.fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
+                    do {
+                        exportedExams =  try PDFFile.pdfFileExamImporter(exam: exam, result: result).map(\.value)
+                        self.showStudentExamPDFsExporter.toggle()
+                    } catch ImportError.countMissmatch {
+                        self.alertType = .countMismatch
+                        self.showAlert.toggle()
+                    } catch ImportError.matchInsecurity(let possibleMissmatches, let exportedExams){
+                        exportAlertText = ""
+                        for missmatch in possibleMissmatches {
+                            exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
+                        }
+                        alertType = .export
+                        showAlert.toggle()
+                        self.exportedExams = exportedExams.map(\.value)
+                    } catch (let error) {
+                        print(error.localizedDescription)
+                    }
+                                
+                })
             })
             .alert("Achtung", isPresented: $showAlert, actions: {
                 switch alertType {
@@ -145,9 +166,42 @@ struct ExamView: View {
             case .participants: ExamParticipantsView(exam: exam)
             case .exercise(let exerciseVM): ExerciseView(exam: exam, exerciseVM: exerciseVM)
             }
-        }
+        }.popup(isPresented: $showExportSchoolOfficial, darkBackground: true, view: {
+            ZStack {
+                Color(red: 0.45, green: 0.45, blue: 0.45)
+                VStack{
+                    HStack{
+                        Button {
+                            self.showExportSchoolOfficial = false
+                        } label: {
+                            Text("Abbrechen").padding()
+                        }
+                        .foregroundColor(.white)
+                        .background(.blue)
+                        .cornerRadius(10)
+                        .padding()
+                        Spacer()
+                    }
+                    Spacer()
+                    List{
+                        Button("Arbeit importieren und anhängen"){
+                            self.showPDFImport.toggle()
+                            self.showExportSchoolOfficial = false
+                        }
+                        Button("Arbeit nicht anghängen"){
+                            self.examResult = PDFFile.generatePDFFromExam(exam: exam)
+                            self.showPDFExporter.toggle()
+                            self.showExportSchoolOfficial = false
+                        }
+                    }
+                    .cornerRadius(10)
+                    .padding()
+                }
+            }.frame(width: 500, height: 300)
+                .cornerRadius(10)
+        })
     }
-    
+
     var deleteAlertActions: some View {
         Group {
             Button("Ja!") { delete(); self.dismiss() }
@@ -181,7 +235,6 @@ struct ExamView: View {
                 Image(systemName: "plus")
             }
         }
-        
         ToolbarItem(placement: .primaryAction) {
             Button {
                 if editMode == .inactive {
@@ -193,7 +246,6 @@ struct ExamView: View {
                 Text(editMode == .inactive ? "Edit" : "Done")
             }
         }
-       
         ToolbarItem(placement: .cancellationAction) {
             Menu {
                 Button {
@@ -217,8 +269,16 @@ struct ExamView: View {
                     Text("Löschen")
                     Image(systemName: "trash")
                 }
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .imageScale(.large)
+            }
+        }
+        ToolbarItem(placement: .cancellationAction) {
+            Menu {
+        
                 Button {
-                    self.showPDFExporter.toggle()
+                    self.showExportSchoolOfficial.toggle()
                 } label: {
                     Text("Export Ergebnisse für Schulleitung")
                 }
@@ -239,13 +299,11 @@ struct ExamView: View {
                     Text("Klassenarbeitsteilnehmer als csv-Datei exportieren")
                 }
             } label: {
-                Image(systemName: "ellipsis.circle")
+                Image(systemName: "square.and.arrow.up")
                     .imageScale(.large)
             }
         }
     }
-    
-    
 }
 
 struct ExerciseRowView: View {

@@ -86,7 +86,7 @@ struct AddMultipleGradesView: View {
                         
                         Section(header: Text("Noten")) {
                             ForEach(course.studentsArr) { student in
-                                if let student = studentGrade.first { (key: Student, value: Int) in key == student }{
+                                if let student = studentGrade.first(where: { (key: Student, value: Int) in key == student }){
                                     HStack {
                                         Text("\(student.key.firstName) \(student.key.lastName)")
                                         Text("(\(student.key.gradeCount(selectedGradeType == 0 ? GradeType.oral : GradeType.written, half: halfYear)))")

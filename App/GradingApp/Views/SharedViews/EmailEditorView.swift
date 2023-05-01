@@ -110,7 +110,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
         Button {
            toggleAllRecipients()
         } label: {
-            if !self.emailViewModel.recipients.contains { $0.value == false } {
+            if !self.emailViewModel.recipients.contains(where: { $0.value == false }) {
                 Text("Alle abwählen")
             } else {
                 Text("Alle auswählen")
