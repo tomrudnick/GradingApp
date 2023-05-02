@@ -27,7 +27,6 @@ struct ExamView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var exam: Exam
     @State var selection: ExamRoute? = .dashboard
-    @State var showPDFExporter = false
     @State var showStudentPDFsExporter = false
     @State var showStudentExamPDFsExporter = false
     @State var showStudentExamFileImporter = false
@@ -41,7 +40,7 @@ struct ExamView: View {
     @State var exportAlertText = ""
     
     @State var exportedExams: [PDFFile] = []
-    @State var examResult: PDFFile?
+
     
     let save: () -> ()
     let delete: () -> ()
@@ -75,16 +74,6 @@ struct ExamView: View {
                     }
                 })
             })
-            .if(showPDFExporter, transform: { view in
-                view.fileExporter(isPresented: $showPDFExporter, document: examResult, contentType: .pdf, onCompletion: { result in
-                    switch result {
-                    case .success(let url):
-                        print("Saved to \(url)")
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                })
-            })
             .if(showStudentExamPDFsExporter, transform: { view in
                 view.fileExporter(isPresented: $showStudentExamPDFsExporter, documents: exportedExams, contentType: .pdf, onCompletion: { result in
                     switch result {
@@ -105,44 +94,25 @@ struct ExamView: View {
                     }
                 }
             })
-            .if(showPDFImport, transform: { view in
-                view.fileImporter(isPresented: $showPDFImport, allowedContentTypes: [.pdf]) { result in
-                    do {
-                        let selectedFile = try result.get() //get file URL
-                        guard selectedFile.startAccessingSecurityScopedResource() else { return} //open file with file URL
-                        guard let PDFDocument = PDFDocument(url: selectedFile) else { return} //make pdf file from file
-                        selectedFile.stopAccessingSecurityScopedResource()
-                        let officialResult = PDFFile.generatePDFFromExam(exam: exam)
-                        let mergedFile = PDFFile.mergePdf(data: officialResult.data, otherPdfDocument: PDFDocument, fileName: "\(exam.name)_\(exam.course?.name ?? "")_Rudnick_Schulleitung")
-                        self.examResult = mergedFile
-                        self.showPDFExporter.toggle()
+            .fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
+                do {
+                    exportedExams =  try PDFFile.pdfFileExamImporter(exam: exam, result: result).map(\.value)
+                    self.showStudentExamPDFsExporter.toggle()
+                } catch ImportError.countMissmatch {
+                    self.alertType = .countMismatch
+                    self.showAlert.toggle()
+                } catch ImportError.matchInsecurity(let possibleMissmatches, let exportedExams){
+                    exportAlertText = ""
+                    for missmatch in possibleMissmatches {
+                        exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
                     }
-                    catch {
-                        print("Error exporting Schulleitungsergebnis")
-                    }
+                    alertType = .export
+                    showAlert.toggle()
+                    self.exportedExams = exportedExams.map(\.value)
+                } catch (let error) {
+                    print(error.localizedDescription)
                 }
-            })
-            .if(showStudentExamFileImporter, transform:  { view in
-                view.fileImporter(isPresented: $showStudentExamFileImporter, allowedContentTypes: [.pdf], allowsMultipleSelection: true, onCompletion: { result in
-                    do {
-                        exportedExams =  try PDFFile.pdfFileExamImporter(exam: exam, result: result).map(\.value)
-                        self.showStudentExamPDFsExporter.toggle()
-                    } catch ImportError.countMissmatch {
-                        self.alertType = .countMismatch
-                        self.showAlert.toggle()
-                    } catch ImportError.matchInsecurity(let possibleMissmatches, let exportedExams){
-                        exportAlertText = ""
-                        for missmatch in possibleMissmatches {
-                            exportAlertText += "Student: \(missmatch.student.firstName) \(missmatch.student.lastName) FileName: \(missmatch.fileName) Score: \(missmatch.score)\n"
-                        }
-                        alertType = .export
-                        showAlert.toggle()
-                        self.exportedExams = exportedExams.map(\.value)
-                    } catch (let error) {
-                        print(error.localizedDescription)
-                    }
-                                
-                })
+                            
             })
             .alert("Achtung", isPresented: $showAlert, actions: {
                 switch alertType {
@@ -167,38 +137,7 @@ struct ExamView: View {
             case .exercise(let exerciseVM): ExerciseView(exam: exam, exerciseVM: exerciseVM)
             }
         }.popup(isPresented: $showExportSchoolOfficial, darkBackground: true, view: {
-            ZStack {
-                Color(red: 0.45, green: 0.45, blue: 0.45)
-                VStack{
-                    HStack{
-                        Button {
-                            self.showExportSchoolOfficial = false
-                        } label: {
-                            Text("Abbrechen").padding()
-                        }
-                        .foregroundColor(.white)
-                        .background(.blue)
-                        .cornerRadius(10)
-                        .padding()
-                        Spacer()
-                    }
-                    Spacer()
-                    List{
-                        Button("Arbeit importieren und anhängen"){
-                            self.showPDFImport.toggle()
-                            self.showExportSchoolOfficial = false
-                        }
-                        Button("Arbeit nicht anghängen"){
-                            self.examResult = PDFFile.generatePDFFromExam(exam: exam)
-                            self.showPDFExporter.toggle()
-                            self.showExportSchoolOfficial = false
-                        }
-                    }
-                    .cornerRadius(10)
-                    .padding()
-                }
-            }.frame(width: 500, height: 300)
-                .cornerRadius(10)
+            ExamSchoolReportExportPopup(exam: exam, dismiss: $showExportSchoolOfficial.not)
         })
     }
 

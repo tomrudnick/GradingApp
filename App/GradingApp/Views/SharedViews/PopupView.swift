@@ -29,6 +29,9 @@ enum FlyIn {
 
 public struct Popup<PopupContent>: ViewModifier where PopupContent: View {
     
+    
+    @Environment(\.colorScheme) var colorScheme
+    
     @Binding var isPresented: Bool
     
    
@@ -106,12 +109,20 @@ public struct Popup<PopupContent>: ViewModifier where PopupContent: View {
         UIScreen.main.bounds.size.height
     }
     
+    private var backgroundColor: Color {
+        if colorScheme == .light {
+            return Color(red: 0.41, green: 0.41, blue: 0.41)
+        } else {
+            return Color(red: 0.1, green: 0.1, blue: 0.1)
+        }
+    }
+    
     public func body(content: Content) -> some View {
         ZStack {
             content
                 .frameGetter($presenterContentRect)
             if isPresented {
-                Color(red: 0.41, green: 0.41, blue: 0.41, opacity: backgroundOpacity)
+                Color(color: backgroundColor, opacity: backgroundOpacity)
                     .edgesIgnoringSafeArea(.all)
                     .animation(Animation.easeInOut(duration: animationSpeed), value: backgroundOpacity)
             }
