@@ -146,6 +146,7 @@
 		E2D99F2C280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D99F2B280F2100009B4281 /* StudentCalculatedTranscriptGrades.swift */; };
 		E2DBF7D12A01777900C55F14 /* ExamSchoolReportExportPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBF7D02A01777900C55F14 /* ExamSchoolReportExportPopup.swift */; };
 		E2DBF7D32A0185E900C55F14 /* Color+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DBF7D22A0185E900C55F14 /* Color+init.swift */; };
+		E2DBF7D62A01AFD300C55F14 /* EmailComposer in Frameworks */ = {isa = PBXBuildFile; productRef = E2DBF7D52A01AFD300C55F14 /* EmailComposer */; };
 		E2E2D0E026D4EC5B00C62887 /* GradeAtDatesSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0DF26D4EC5B00C62887 /* GradeAtDatesSelectionView.swift */; };
 		E2E2D0E226D5453400C62887 /* GradeAtDatesEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0E126D5453400C62887 /* GradeAtDatesEditView.swift */; };
 		E2E2D0E426D67EB500C62887 /* Student+GradeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E2D0E326D67EB500C62887 /* Student+GradeHelper.swift */; };
@@ -365,6 +366,7 @@
 				E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */,
 				6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */,
 				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
+				E2DBF7D62A01AFD300C55F14 /* EmailComposer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,6 +878,7 @@
 				6D3EECDB26E3D32100E9D290 /* SwiftSMTP */,
 				6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */,
 				E282BE3028D7D2280014ACFE /* CloudStorage */,
+				E2DBF7D52A01AFD300C55F14 /* EmailComposer */,
 			);
 			productName = CoreDataTest;
 			productReference = E25FBCA026BADAC6000BDD65 /* GradingApp.app */;
@@ -938,6 +941,7 @@
 				6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 				6D26BBA026EB7CF10077AC73 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 				E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */,
+				E2DBF7D42A01AFD300C55F14 /* XCRemoteSwiftPackageReference "EmailComposer" */,
 			);
 			productRefGroup = E25FBCA126BADAC6000BDD65 /* Products */;
 			projectDirPath = "";
@@ -1505,6 +1509,14 @@
 				kind = branch;
 			};
 		};
+		E2DBF7D42A01AFD300C55F14 /* XCRemoteSwiftPackageReference "EmailComposer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gabrieltheodoropoulos/EmailComposer";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1532,6 +1544,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */;
 			productName = CloudStorage;
+		};
+		E2DBF7D52A01AFD300C55F14 /* EmailComposer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2DBF7D42A01AFD300C55F14 /* XCRemoteSwiftPackageReference "EmailComposer" */;
+			productName = EmailComposer;
 		};
 /* End XCSwiftPackageProductDependency section */
 

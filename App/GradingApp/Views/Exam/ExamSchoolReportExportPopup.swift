@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PDFKit
+import EmailComposer
 
 struct ExamSchoolReportExportPopup: View {
     
@@ -16,9 +17,13 @@ struct ExamSchoolReportExportPopup: View {
     
     @State var showImportDialog = false
     @State var showExportDialog = false
+    @State var showEmailDialog = false
     
     @State var generatingExportFile = false
+    @State var generatingExportFileForEmail = false
+    
     @State var exportedFile: PDFFile?
+    @State var emailData: EmailData?
     
     @State var importedFile: PDFDocument?
     @State var importedFileName: String?
@@ -33,6 +38,7 @@ struct ExamSchoolReportExportPopup: View {
     
     @State var showErrorAlert = false
     @State var errorMessage = ""
+    
     
 
     
@@ -55,6 +61,7 @@ struct ExamSchoolReportExportPopup: View {
                         .fontWeight(.light)
                     Spacer()
                 }.padding(.leading)
+                Divider()
                 HStack {
                     Button("Importieren") {
                         self.showImportDialog.toggle()
@@ -75,9 +82,26 @@ struct ExamSchoolReportExportPopup: View {
                 }.padding()
                 HStack {
                     Button("Exportieren") {
-                        self.generateExportFile()
+                        self.generatingExportFile = true
+                        self.generateExportFile {
+                            self.generatingExportFile = false
+                            self.showExportDialog = true
+                        }
                     }.buttonStyle(.bordered)
                     if generatingExportFile {
+                        ProgressView().padding(.leading)
+                    }
+                }.padding()
+                HStack {
+                    Button("Als Email versenden") {
+                        self.generatingExportFileForEmail = true
+                        self.generateExportFile {
+                            self.emailData = generateEmailData()
+                            self.generatingExportFileForEmail = false
+                            self.showEmailDialog = true
+                        }
+                    }.buttonStyle(.bordered)
+                    if generatingExportFileForEmail {
                         ProgressView().padding(.leading)
                     }
                 }.padding()
@@ -86,6 +110,7 @@ struct ExamSchoolReportExportPopup: View {
         }
         .cornerRadius(10)
         .frame(width: 500, height: 500)
+        .emailComposer(isPresented: $showEmailDialog, emailData: emailData)
         .fileImporter(isPresented: $showImportDialog, allowedContentTypes: [.pdf]) { result in
             fileImportCompletionHandler(result: result)
         }
@@ -105,9 +130,8 @@ struct ExamSchoolReportExportPopup: View {
         return PDFFile.generatePDFFromExam(exam: exam)
     }
     
-    func generateExportFile() {
+    func generateExportFile(completionHandler: @escaping () -> ()) {
         Task {
-            self.generatingExportFile = true
             let officalResult = await generatePDFFromExam()
             let exportFile: PDFFile
             if let importedFile {
@@ -117,10 +141,12 @@ struct ExamSchoolReportExportPopup: View {
                 exportFile = officalResult
             }
             self.exportedFile = exportFile
-            self.generatingExportFile = false
-            self.showExportDialog = true
+            completionHandler()
         }
     }
+    
+    
+    
     
     func fileExportCompletionHandler(result: Result<URL, Error>) {
         switch result {
@@ -164,6 +190,13 @@ struct ExamSchoolReportExportPopup: View {
         self.showErrorAlert = true
     }
     
+    
+    func generateEmailData() -> EmailData? {
+        guard let exportedFile else { return nil }
+        let attachement = EmailData.AttachmentData(data: exportedFile.data, mimeType: "application/pdf", fileName: exportedFile.fileName)
+        let body = "Im Anhang die Ergebnisse der letzten Klassenarbeit.... blabla Viele Grüße Matthias"
+        return EmailData(subject: "\(exam.name) Report", body: body, attachments: [attachement])
+    }
     
 }
 

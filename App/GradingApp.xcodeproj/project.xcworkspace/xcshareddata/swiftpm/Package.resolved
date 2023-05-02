@@ -47,6 +47,15 @@
         }
       },
       {
+        "package": "EmailComposer",
+        "repositoryURL": "https://github.com/gabrieltheodoropoulos/EmailComposer",
+        "state": {
+          "branch": "main",
+          "revision": "6c35d94b4abd760c3d1eb513ea59baabaecad607",
+          "version": null
+        }
+      },
+      {
         "package": "KeychainAccess",
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
         "state": {
