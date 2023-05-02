@@ -26,7 +26,7 @@ struct ExamSchoolReportExportPopup: View {
     var shortFileName: String {
         guard let importedFileName else { return "" }
         if importedFileName.count >= 60 {
-            return String(importedFileName.prefix(60))
+            return "\(importedFileName.prefix(60))..."
         }
         return importedFileName
     }
