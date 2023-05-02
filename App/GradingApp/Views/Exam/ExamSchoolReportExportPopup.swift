@@ -110,7 +110,13 @@ struct ExamSchoolReportExportPopup: View {
         }
         .cornerRadius(10)
         .frame(width: 500, height: 500)
-        .emailComposer(isPresented: $showEmailDialog, emailData: emailData)
+        .emailComposer(isPresented: $showEmailDialog, emailData: emailData, result: { result in
+            ///TODO : Verhalten implementieren bei fehler bzw. erfolg
+            switch result {
+            case .success(let emailComposerResult): print("Success")
+            case .failure(let error): print("Error")
+            }
+        })
         .fileImporter(isPresented: $showImportDialog, allowedContentTypes: [.pdf]) { result in
             fileImportCompletionHandler(result: result)
         }
@@ -190,7 +196,7 @@ struct ExamSchoolReportExportPopup: View {
         self.showErrorAlert = true
     }
     
-    
+    ///TODO  EmailData Objekt anpassen
     func generateEmailData() -> EmailData? {
         guard let exportedFile else { return nil }
         let attachement = EmailData.AttachmentData(data: exportedFile.data, mimeType: "application/pdf", fileName: exportedFile.fileName)
