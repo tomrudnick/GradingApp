@@ -131,12 +131,13 @@ struct ExamSchoolReportExportPopup: View {
 
     }
     
-    @MainActor
+    @MainActor ///generating the PDF From an Exam uses Core Data to access the underlying Data, it needs to happen on the Main - Thread
     func generatePDFFromExam() async -> PDFFile {
         return PDFFile.generatePDFFromExam(exam: exam)
     }
     
     func generateExportFile(completionHandler: @escaping () -> ()) {
+        //New Thread in order to not block UI updates
         Task {
             let officalResult = await generatePDFFromExam()
             let exportFile: PDFFile
@@ -199,7 +200,7 @@ struct ExamSchoolReportExportPopup: View {
     ///TODO  EmailData Objekt anpassen
     func generateEmailData() -> EmailData? {
         guard let exportedFile else { return nil }
-        let attachement = EmailData.AttachmentData(data: exportedFile.data, mimeType: "application/pdf", fileName: exportedFile.fileName)
+        let attachement = EmailData.AttachmentData(data: exportedFile.data, mimeType: "application/pdf", fileName: "\(exportedFile.fileName).pdf")
         let body = "Im Anhang die Ergebnisse der letzten Klassenarbeit.... blabla Viele Grüße Matthias"
         return EmailData(subject: "\(exam.name) Report", body: body, attachments: [attachement])
     }
