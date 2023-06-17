@@ -13,6 +13,7 @@ struct EmailKeys {
     static let oralGrade = "$ø mündliche Note"
     static let writtenGrade = "$ø schriftliche Note"
     static let grade = "$aktueller Leistungsstand gesamt"
+    static let transcriptGradeFirstHalf = "Zeungisnote 1. Halbjahr" //Darf nur erscheinen, wenn man im zweiten Halbjahr ist, ansonsten ist es transcriptGradeHalf
     static let transcriptGradeHalf = "$Zeugnisnote aktuelles Halbjahr"
     static let transcriptGrade = "$Gesamtjahresnote"
     static let selectedGrade = "$ausgewählte Note"

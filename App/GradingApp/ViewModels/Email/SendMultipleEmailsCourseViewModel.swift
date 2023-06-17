@@ -15,14 +15,27 @@ class SendMultipleEmailsCourseViewModel : SendMultipleEmailsViewModel {
     
     override var emailKeys: [String] {
         get {
-            ["\\\(EmailKeys.firstName)",
-             "\\\(EmailKeys.lastName)",
-             "\\\(EmailKeys.oralGrade)",
-             "\\\(EmailKeys.writtenGrade)",
-             "\\\(EmailKeys.grade)",
-             "\\\(EmailKeys.transcriptGradeHalf)",
-             "\\\(EmailKeys.transcriptGrade)"
-            ]
+            if half == HalfType.firstHalf {
+                return ["\\\(EmailKeys.firstName)",
+                 "\\\(EmailKeys.lastName)",
+                 "\\\(EmailKeys.oralGrade)",
+                 "\\\(EmailKeys.writtenGrade)",
+                 "\\\(EmailKeys.grade)",
+                 "\\\(EmailKeys.transcriptGradeHalf)",
+                 "\\\(EmailKeys.transcriptGrade)"
+                ]
+            }
+            else {
+                return ["\\\(EmailKeys.firstName)",
+                 "\\\(EmailKeys.lastName)",
+                 "\\\(EmailKeys.oralGrade)",
+                 "\\\(EmailKeys.writtenGrade)",
+                 "\\\(EmailKeys.grade)",
+                 "\\\(EmailKeys.transcriptGradeHalf)",
+                 "\\\(EmailKeys.transcriptGradeFirstHalf)",
+                 "\\\(EmailKeys.transcriptGrade)"
+                ]
+            }
         }
     }
     
