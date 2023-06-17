@@ -133,15 +133,16 @@ struct ExamSchoolReportExportPopup: View {
     
     @MainActor ///generating the PDF From an Exam uses Core Data to access the underlying Data, it needs to happen on the Main - Thread
     func generatePDFFromExam() async -> PDFFile {
-        return PDFFile.generatePDFFromExam(exam: exam)
+        return PDFFile.generatePDFFromExam(exam: exam) //Returns the exam results
     }
     
-    func generateExportFile(completionHandler: @escaping () -> ()) {
+    func generateExportFile(completionHandler: @escaping () -> ()) { //escaping because of threat handling
+        //completionHandler
         //New Thread in order to not block UI updates
         Task {
             let officalResult = await generatePDFFromExam()
             let exportFile: PDFFile
-            if let importedFile {
+            if let importedFile { //importedFile is the exam file
                 exportFile = PDFFile.mergePdf(data: officalResult.data, otherPdfDocument: importedFile,
                                               fileName: "\(exam.name)_\(exam.course?.name ?? "")_Rudnick_Schulleitung")
             } else {
@@ -149,6 +150,13 @@ struct ExamSchoolReportExportPopup: View {
             }
             self.exportedFile = exportFile
             completionHandler()
+            //The completion handle does the following, see line 87
+            //self.generatingExportFile = false
+            //self.showExportDialog = true
+            //or
+            //self.emailData = generateEmailData()
+            //self.generatingExportFileForEmail = false
+            //self.showEmailDialog = true
         }
     }
     
@@ -202,8 +210,18 @@ struct ExamSchoolReportExportPopup: View {
         guard let exportedFile else { return nil }
         let attachement = EmailData.AttachmentData(data: exportedFile.data, mimeType: "application/pdf", fileName: "\(exportedFile.fileName).pdf")
         let body = "Im Anhang die Ergebnisse der letzten Klassenarbeit.... blabla Viele Grüße Matthias"
-        return EmailData(subject: "\(exam.name) Report", body: body, attachments: [attachement])
+        return EmailData(subject: "Ergebnisse \(exam.name) Kurs \(exam.course?.name ?? "" )", body: body, attachments: [attachement])
     }
     
 }
 
+//Hallo Tjark-Fokken(Mathe)/Eva(Physik),
+
+//im Anhang findest Du die Ergebnisse der Klausur der
+
+//\(exam.name) Kurs \(exam.course?.name)
+
+//Liebe Grüße
+//Matthias
+
+//Einstellungsmenu: Eva, Tjark-Fokken inkl. E-Mail Adresse
