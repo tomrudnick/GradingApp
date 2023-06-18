@@ -10,13 +10,16 @@ import Charts
 
 struct ExamGradingSchemeView: View {
     @ObservedObject var exam: Exam
+    var percentageOfFailed: String {
+        String(format: "%.2f", exam.getPercentageOfFailed()) + " %"
+    }
     
     var body: some View {
         VStack {
             Button("Reset to default") {
                 exam.resetToDefaultGradeSchema()
             }
-            Text("Anzahl an Durchgefallenen: \(exam.getNumberOfGrades(for: exam.failedGrades)) (\(exam.getPercentageOfFailed()))")
+            Text("Anzahl an Durchgefallenen: \(exam.getNumberOfGrades(for: exam.failedGrades)) (\(percentageOfFailed))"  )
             HStack {
                 VStack {
                     Chart (exam.getChartData().reversed()){ grade in
