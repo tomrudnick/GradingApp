@@ -16,7 +16,7 @@ struct ExamGradingSchemeView: View {
             Button("Reset to default") {
                 exam.resetToDefaultGradeSchema()
             }
-            Text("Anzahl an Durchgefallenen: \(exam.getNumberOfGrades(for: exam.failedGrades))")
+            Text("Anzahl an Durchgefallenen: \(exam.getNumberOfGrades(for: exam.failedGrades)) (\(exam.getPercentageOfFailed()))")
             HStack {
                 VStack {
                     Chart (exam.getChartData().reversed()){ grade in
