@@ -66,20 +66,9 @@ struct GradeAtDatesView: View {
                     }.headerProminence(.increased)
                 }
             } else {
-                ForEach(Grade.getGradesPerDate(grades: grades, exams: exams).sorted(by: { $0.key < $1.key }), id: \.key) { date, grade in
-                    switch grade {
-                    case .normal(let grades):
-                        NavigationLink(value: Route.GradeAtDates(course, grades)) {
-                            getStandardGradeView(key: date, value: grades)
-                        }
-                    case .exam(let exam):
-                        Button {
-                            self.exam = exam
-                        } label: {
-                            getExamGradeView(key: date, value: exam)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
+                ForEach(Grade.getGradesPerDate(grades: grades, exams: exams).sorted(by: { $0.key < $1.key }), id: \.key) { date, grades in
+                    HStack {
+                        getWrittenGradeView(date: date, writtenGrades: grades)
                     }
                 }
             }
@@ -139,6 +128,24 @@ struct GradeAtDatesView: View {
         Group {
             Button("Fortfahren") { self.showExamAttachmentEmailSheet.toggle() }
             Button("Abbrechen") { }
+        }
+    }
+    
+    
+    @ViewBuilder func getWrittenGradeView(date: Date, writtenGrades: Grade.WrittenGradeType) -> some View {
+        switch writtenGrades {
+        case .normal(let grades):
+            NavigationLink(value: Route.GradeAtDates(course, grades)) {
+                getStandardGradeView(key: date, value: grades)
+            }
+        case .exam(let exam):
+            Button {
+                self.exam = exam
+            } label: {
+                getExamGradeView(key: date, value: exam)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
         }
     }
     
