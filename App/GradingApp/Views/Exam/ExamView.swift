@@ -8,6 +8,7 @@
 import SwiftUI
 import PDFKit
 import Combine
+import CoreData
 
 struct ExamView: View {
     
