@@ -8,13 +8,28 @@
 import Foundation
 
 class ExerciseViewModel: ObservableObject, Hashable {
+    
+    @Published var exerciseName: String {
+        didSet {
+            if self.exericse.name != exerciseName {
+                self.exericse.name = exerciseName
+                self.exericse.exam?.objectWillChange.send()
+            }
+        }
+    }
+    
     @Published var maxPointsText: String {
         didSet {
             let filtered = maxPointsText.filter { "0123456789.".contains($0) }
             if filtered != maxPointsText {
                 self.maxPointsText = filtered
             }
-            self.exericse.maxPoints = Double(maxPointsText) ?? self.exericse.maxPoints
+            
+            let newMaxPoints = Double(maxPointsText) ?? self.exericse.maxPoints
+            
+            if self.exericse.maxPoints != newMaxPoints {
+                self.exericse.maxPoints = newMaxPoints
+            }
         }
     }
     @Published var exericse: ExamExercise
@@ -22,6 +37,7 @@ class ExerciseViewModel: ObservableObject, Hashable {
     init(exericse: ExamExercise) {
         self.exericse = exericse
         self.maxPointsText = String(format: "%.2f", exericse.maxPoints)
+        self.exerciseName = exericse.name
     }
     
     func hash(into hasher: inout Hasher) {

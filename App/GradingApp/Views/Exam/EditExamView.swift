@@ -18,7 +18,7 @@ struct EditExamView: View {
     var body: some View {
         Group {
             if let exam = examVM.exam {
-                ExamView(exam: exam) {
+                ExamView(exam: exam, childContext: examVM.context) {
                     examVM.persist()
                     course.students.forEach { $0.objectWillChange.send() }
                     exam.objectWillChange.send()

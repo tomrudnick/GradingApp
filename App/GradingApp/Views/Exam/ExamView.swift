@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PDFKit
+import Combine
 
 struct ExamView: View {
     
@@ -24,8 +25,13 @@ struct ExamView: View {
         case export
     }
     
+    
     @Environment(\.dismiss) var dismiss
     @ObservedObject var exam: Exam
+    @StateObject var dbChangesVM = DBChangesViewModel()
+    
+    var childContext: NSManagedObjectContext
+    
     @State var selection: ExamRoute? = .dashboard
     @State var showStudentPDFsExporter = false
     @State var showStudentExamPDFsExporter = false
@@ -36,6 +42,7 @@ struct ExamView: View {
     @State private var editMode: EditMode = .inactive
     @State var showAlert = false
     @State var alertType: AlertType = .delete
+    @State var hasChanges = false
     
     @State var exportAlertText = ""
     
@@ -64,6 +71,7 @@ struct ExamView: View {
             }.environment(\.editMode, $editMode)
             .navigationTitle("Exam: \(exam.name)")
             .toolbar { toolbar }
+            .onAppear { dbChangesVM.setup(viewContext: childContext) }
             .if(showStudentPDFsExporter, transform: { view in
                 view.fileExporter(isPresented: $showStudentPDFsExporter, documents: PDFFile.generatePDFsFromExam(exam: exam), contentType: .pdf, onCompletion: { result in
                     switch result {
@@ -185,11 +193,34 @@ struct ExamView: View {
                 Text(editMode == .inactive ? "Edit" : "Done")
             }
         }
+        
+   
+        
+        ToolbarItem(placement: .bottomBar) {
+            if dbChangesVM.hasChanges {
+                Image(systemName: "pencil")
+                    .imageScale(.large)
+                    .foregroundColor(.red)
+            } else {
+                Image(systemName: "pencil.slash")
+                    .imageScale(.large)
+                    .foregroundColor(.gray)
+            }
+        }
+        
+        ToolbarItem(placement: .bottomBar) {
+            Spacer()
+        }
+        
         ToolbarItem(placement: .cancellationAction) {
             Menu {
                 Button {
-                    self.alertType = .close
-                    self.showAlert.toggle()
+                    if childContext.hasChanges {
+                        self.alertType = .close
+                        self.showAlert.toggle()
+                    } else {
+                        self.dismiss()
+                    }
                 } label: {
                     Text("Schließen")
                 }

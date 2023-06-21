@@ -14,7 +14,10 @@ class ExerciseParticipationViewModel: ObservableObject {
             if filtered != pointsText {
                 self.pointsText = filtered
             }
-            self.examExerciseParticipation.points = Double(self.pointsText) ?? -1.0
+            let points = Double(self.pointsText) ?? -1.0
+            if points != self.examExerciseParticipation.points {
+                self.examExerciseParticipation.points = points
+            }
         }
     }
     @Published var examExerciseParticipation: ExamParticipationExercise

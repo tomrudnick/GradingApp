@@ -12,18 +12,14 @@ struct ExerciseView: View {
     
     var exam: Exam
     @ObservedObject var exerciseVM: ExerciseViewModel
-    
+
     var body: some View {
         
         Form {
             Section("Exercise Settings") {
                 HStack {
                     Text("Exercise Name: ")
-                    TextField("Aufgabe...", text: $exerciseVM.exericse.name)
-                        .onChange(of: exerciseVM.exericse.name) { _ in
-                            exam.objectWillChange.send()
-                        }
-
+                    TextField("Aufgabe...", text: $exerciseVM.exerciseName)
                 }
                 HStack {
                     Text("Max Points: ")

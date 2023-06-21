@@ -69,6 +69,7 @@
 		E22EDB8D29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22EDB8C29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift */; };
 		E232979127D00AF6007EC630 /* Subject+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E232978F27D00AF6007EC630 /* Subject+CoreDataClass.swift */; };
 		E232979527D01158007EC630 /* SubjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E232979427D01158007EC630 /* SubjectListView.swift */; };
+		E2458F792A42FDFB001A8F28 /* DBChangesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2458F782A42FDFB001A8F28 /* DBChangesViewModel.swift */; };
 		E24AF9CD26D82DDF000F2313 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CC26D82DDF000F2313 /* SettingsView.swift */; };
 		E24AF9CF26D83306000F2313 /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24AF9CE26D83306000F2313 /* CSVFile.swift */; };
 		E24AF9D526D8DD62000F2313 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24AF9D426D8DD62000F2313 /* CloudKit.framework */; };
@@ -247,6 +248,7 @@
 		E232978E27D008BB007EC630 /* GradingAppDataModel v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v2.xcdatamodel"; sourceTree = "<group>"; };
 		E232978F27D00AF6007EC630 /* Subject+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E232979427D01158007EC630 /* SubjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListView.swift; sourceTree = "<group>"; };
+		E2458F782A42FDFB001A8F28 /* DBChangesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBChangesViewModel.swift; sourceTree = "<group>"; };
 		E24AF9CC26D82DDF000F2313 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E24AF9CE26D83306000F2313 /* CSVFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVFile.swift; sourceTree = "<group>"; };
 		E24AF9D226D8DD3E000F2313 /* GradingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GradingApp.entitlements; sourceTree = "<group>"; };
@@ -745,6 +747,7 @@
 				6DE31A5A26EBE69800CB41C0 /* UndoRedoViewModel.swift */,
 				3915188727772441003C11E4 /* BackupViewModel.swift */,
 				E2CE907027A05AD900366DB1 /* ExternalScreenHideViewModel.swift */,
+				E2458F782A42FDFB001A8F28 /* DBChangesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1119,6 +1122,7 @@
 				395CD6DD26C01A8E00ECA4DD /* PreviewGenerator.swift in Sources */,
 				E22EDB8D29315A3000CE780D /* SendMultipleEmailsExamViewModel.swift in Sources */,
 				E2E460C42927A98F00ECC0A5 /* Sequence+toDictionary.swift in Sources */,
+				E2458F792A42FDFB001A8F28 /* DBChangesViewModel.swift in Sources */,
 				E2C7ABE72912FA2400DFC9BC /* ExamExercise+CoreDataClass.swift in Sources */,
 				E2EA7AA426BEF6260036048E /* SingleGradeView.swift in Sources */,
 				E295971B285FDEF0008FD8B5 /* GradeText.swift in Sources */,
