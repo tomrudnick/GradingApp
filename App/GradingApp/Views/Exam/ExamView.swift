@@ -196,7 +196,7 @@ struct ExamView: View {
         }
         
    
-        
+        //Bottom Bar for DB has changes
         ToolbarItem(placement: .bottomBar) {
             if dbChangesVM.hasChanges {
                 Image(systemName: "pencil")
