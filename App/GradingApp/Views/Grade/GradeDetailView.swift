@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+//TODO: Split this View into two views (Written Grade and Oral Grade)
+//TODO: This View cool look a little bit better
 struct GradeDetailView: View {
     
     enum WrittenGrade {
