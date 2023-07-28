@@ -149,7 +149,7 @@ struct CourseTabView: View {
                 .environmentObject(appSettings)
                 .environment(\.managedObjectContext, viewContext)
         })
-        .sheet(isPresented: $showSendEmailSheet, content: {
+        .fullScreenCover(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel).environment(\.currentHalfYear, appSettings.activeHalf)
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone) { view in

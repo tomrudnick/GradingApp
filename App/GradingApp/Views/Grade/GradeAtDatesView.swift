@@ -72,13 +72,13 @@ struct GradeAtDatesView: View {
                     }
                 }
             }
-        }.sheet(isPresented: $showEmailSheet, content: {
+        }.fullScreenCover(isPresented: $showEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendGradeEmailViewModel)
         })
-        .sheet(isPresented: $showExamEmailSheet, content: {
+        .fullScreenCover(isPresented: $showExamEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendExamEmailViewModel)
         })
-        .sheet(isPresented: $showExamAttachmentEmailSheet, content: {
+        .fullScreenCover(isPresented: $showExamAttachmentEmailSheet, content: {
             SendEmailsView(title: "\(course.title) - Anhänge", emailViewModel: sendExamEmailAttachmentsViewModel)
         })
         .fullScreenCover(item: $exam) { exam in

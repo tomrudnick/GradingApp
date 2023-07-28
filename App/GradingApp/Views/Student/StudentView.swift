@@ -72,7 +72,7 @@ struct StudentView: View {
                 addGradeButton
             }
         })
-        .sheet(isPresented: $showSendEmailSheet, content: {
+        .fullScreenCover(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: "\(student.firstName) \(student.lastName)", emailViewModel: sendEmailViewModel)
         })
         .sheet(isPresented: $showAddGradeSheet, content: {
