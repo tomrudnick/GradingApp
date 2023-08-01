@@ -28,6 +28,10 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     @State private var templateName = ""
     @State private var editTemplates = false
     
+    private var editMode: EditMode {
+        editTemplates ? .active : .inactive
+    }
+    
     
     
     
@@ -52,9 +56,13 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                             editTemplates.toggle()
                         }
                     }
-                }){ if editTemplates {
-                    TemplateEditView(emailTemplates: emailTemplates)
-                        .environment(\.editMode, Binding.constant(EditMode.active))
+                }){
+                if editTemplates {
+                    ForEach(emailTemplates){ template in
+                        Text(template.templateName ?? "")
+                    }
+                    .onDelete(perform: {_ in })
+                    .onMove(perform: {_,_ in })
                 } else {
                     ScrollView(.horizontal){
                         HStack(spacing: 20) {
@@ -129,7 +137,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                         } .disabled(templateName.isEmpty)
                     }
                 }
-            }
+            }.environment(\.editMode, Binding.constant(editMode))
         }
     }
 
