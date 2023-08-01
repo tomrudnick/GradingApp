@@ -13,7 +13,7 @@ struct TemplateEditView: View {
     
     var body: some View {
         ForEach(emailTemplates){ template in
-            Text(template.templateName ?? "")
+            Text(template.templateName)
         }
         .onDelete(perform: {_ in })
         .onMove(perform: {_,_ in })
