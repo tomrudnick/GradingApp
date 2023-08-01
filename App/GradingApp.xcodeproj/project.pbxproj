@@ -167,6 +167,8 @@
 		E2F1D549291556820060A29B /* GraphViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1D548291556820060A29B /* GraphViewControllerRepresentable.swift */; };
 		E2F1D54B291557200060A29B /* ExamGradingSchemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F1D54A291557200060A29B /* ExamGradingSchemeView.swift */; };
 		E2F409F328EAEC74006BA662 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F409F228EAEC74006BA662 /* AppSettings.swift */; };
+		E2F7FE632A795DF000A2804D /* TagScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F7FE622A795DF000A2804D /* TagScrollView.swift */; };
+		E2F7FE662A795ECE00A2804D /* EmailRecipientToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F7FE652A795ECE00A2804D /* EmailRecipientToggleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -355,6 +357,8 @@
 		E2F1D54A291557200060A29B /* ExamGradingSchemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamGradingSchemeView.swift; sourceTree = "<group>"; };
 		E2F409F228EAEC74006BA662 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		E2F699A0292448E10068BECB /* ExamParticipation+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExamParticipation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E2F7FE622A795DF000A2804D /* TagScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagScrollView.swift; sourceTree = "<group>"; };
+		E2F7FE652A795ECE00A2804D /* EmailRecipientToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailRecipientToggleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -392,14 +396,13 @@
 		3936EA8126BEA7BC00A37B95 /* SharedViews */ = {
 			isa = PBXGroup;
 			children = (
+				E2F7FE642A795E9A00A2804D /* EmailViews */,
 				3936EA8826BEB4CB00A37B95 /* CustomButtonView.swift */,
 				E20BBE0626BE779800ED7BEF /* BottomsheetView.swift */,
 				3936EA8226BEA83000A37B95 /* CustomTextfieldView.swift */,
 				E2B7451426BFDFC9002D0B4C /* BottomSheetMultipleGradesPicker.swift */,
 				E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */,
 				6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */,
-				6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */,
-				390CBA462A79384800446EB7 /* TemplateEditView.swift */,
 				399222F82A7433D300386574 /* TextEditor.swift */,
 				E295971A285FDEF0008FD8B5 /* GradeText.swift */,
 				39DB989529FFDEE600F79E72 /* PopupView.swift */,
@@ -538,7 +541,6 @@
 			isa = PBXGroup;
 			children = (
 				E24AF9CC26D82DDF000F2313 /* SettingsView.swift */,
-				6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */,
 				391518892777248E003C11E4 /* BackupTimeIntervalView.swift */,
 				E2A3211F280D769700EDBF89 /* BackupRestoreView.swift */,
 				39D6197828D777D7006CF9F1 /* SchoolYearsView.swift */,
@@ -859,6 +861,18 @@
 			path = ExamGraphView;
 			sourceTree = "<group>";
 		};
+		E2F7FE642A795E9A00A2804D /* EmailViews */ = {
+			isa = PBXGroup;
+			children = (
+				6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */,
+				E2F7FE622A795DF000A2804D /* TagScrollView.swift */,
+				390CBA462A79384800446EB7 /* TemplateEditView.swift */,
+				6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */,
+				E2F7FE652A795ECE00A2804D /* EmailRecipientToggleView.swift */,
+			);
+			path = EmailViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1053,6 +1067,7 @@
 				3936EA8026BE931A00A37B95 /* EditCourseDetailView.swift in Sources */,
 				E25FBCB026BADAC8000BDD65 /* GradingAppData.xcdatamodeld in Sources */,
 				E25FBCB826BAE1AB000BDD65 /* CourseTabView.swift in Sources */,
+				E2F7FE662A795ECE00A2804D /* EmailRecipientToggleView.swift in Sources */,
 				E2F409F328EAEC74006BA662 /* AppSettings.swift in Sources */,
 				E2574C0526D9454400ED2CFD /* HalfYear+EnvironmentValue.swift in Sources */,
 				E2BBEBDF28D8902C0094D0E9 /* CloudStorage+Ext.swift in Sources */,
@@ -1086,6 +1101,7 @@
 				6D3EECD626E3D29B00E9D290 /* EmailAccountViewModel.swift in Sources */,
 				6DE3E8B726E55533004212D3 /* SendMultipleEmailsCourseViewModel.swift in Sources */,
 				E200846426DE99330098D981 /* HalfYearTranscriptGrade+CoreDataClass.swift in Sources */,
+				E2F7FE632A795DF000A2804D /* TagScrollView.swift in Sources */,
 				E2C7AC072913020400DFC9BC /* ExamView.swift in Sources */,
 				3936EA8926BEB4CB00A37B95 /* CustomButtonView.swift in Sources */,
 				E200846726DE99330098D981 /* TranscriptGrade+CoreDataProperties.swift in Sources */,

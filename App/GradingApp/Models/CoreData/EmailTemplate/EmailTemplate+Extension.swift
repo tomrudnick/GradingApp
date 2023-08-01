@@ -9,6 +9,35 @@ import Foundation
 import CoreData
 
 extension EmailTemplate{
+    
+    var templateName: String {
+        get {
+            return templateName_ ?? ""
+        }
+        set {
+            templateName_ = newValue
+        }
+    }
+    
+    var emailSubject: String {
+        get {
+            return emailSubject_ ?? ""
+        }
+        set {
+            emailSubject_ = newValue
+        }
+    }
+    
+    var emailText: String {
+        get {
+            return emailText_ ?? ""
+        }
+        set {
+            emailText_ = newValue
+        }
+    }
+    
+    
     convenience init(index: Int, templateName: String, emailText: String, emailSubject: String, context: NSManagedObjectContext) {
         self.init(context: context)
         self.index = Int16(index)

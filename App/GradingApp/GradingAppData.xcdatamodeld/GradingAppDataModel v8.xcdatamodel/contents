@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F63" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Course" representedClassName="Course" syncable="YES" codeGenerationType="category">
         <attribute name="ageGroup_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -13,10 +13,10 @@
         <relationship name="students_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
     </entity>
     <entity name="EmailTemplate" representedClassName="EmailTemplate" syncable="YES" codeGenerationType="class">
-        <attribute name="emailSubject" optional="YES" attributeType="String"/>
-        <attribute name="emailText" optional="YES" attributeType="String"/>
+        <attribute name="emailSubject_" optional="YES" attributeType="String"/>
+        <attribute name="emailText_" optional="YES" attributeType="String"/>
         <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="templateName" optional="YES" attributeType="String"/>
+        <attribute name="templateName_" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Exam" representedClassName="Exam" syncable="YES">
         <attribute name="date_" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

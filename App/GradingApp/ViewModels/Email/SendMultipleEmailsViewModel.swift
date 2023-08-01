@@ -18,6 +18,32 @@ protocol SendEmailProtocol: ObservableObject {
     func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
 }
 
+extension SendEmailProtocol {
+    func atLeastOneRecipientActive() -> Bool {
+        return recipients.contains(where: { $0.value == false })
+    }
+    
+    var recipientsSorted: [Dictionary<Student, Bool>.Element] {
+        return recipients.sorted(by: {$0.0.lastName < $1.0.lastName})
+    }
+    
+    var selectedRecipients: Int {
+        return recipients.filter{$0.value}.count
+    }
+    
+    func toggleAllRecipients() {
+        if !atLeastOneRecipientActive() {
+            for key in recipients.keys {
+                recipients[key] = false
+            }
+        } else {
+            for key in recipients.keys {
+                recipients[key] = true
+            }
+        }
+    }
+}
+
 
 class SendMultipleEmailsViewModel : SendEmailProtocol {
     let emailAccountViewModel: EmailAccountViewModel
