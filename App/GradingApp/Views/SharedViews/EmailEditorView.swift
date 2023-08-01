@@ -10,11 +10,25 @@ import HighlightedTextEditor
 
 struct EmailEditorView<Model: SendEmailProtocol>: View {
     
+    @Environment (\.managedObjectContext) var viewContext
+
+    @FetchRequest(fetchRequest: EmailTemplate.fetchAll(), animation: .default)
+    private var emailTemplates: FetchedResults<EmailTemplate>
+    
+    
     
     @ObservedObject var emailViewModel: Model
     
+    
     @State var selectionRange = NSMakeRange(0, 0)
     @State var senderMenuExpanded: Bool = false
+    
+    @State private var emailsubject = ""
+    @State private var emailText = ""
+    @State private var templateName = ""
+    @State private var editTemplates = false
+    
+    
     
     
     private let tags: NSRegularExpression
@@ -30,58 +44,63 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("Templates")){
+                Section(header: HStack{
+                    Text("Vorlagen")
+                    Spacer()
+                    Button(editTemplates ? "Done" : "Edit"){
+                        withAnimation {
+                            editTemplates.toggle()
+                        }
+                    }
+                }){ if editTemplates {
+                    TemplateEditView(emailTemplates: emailTemplates)
+                        .environment(\.editMode, Binding.constant(EditMode.active))
+                } else {
                     ScrollView(.horizontal){
-                        HStack (spacing: 20){
-                            Button {
-                                self.emailViewModel.emailText = "Hallo <Vorname>"
-                            }label:
-                            {
-                                Text("Leistungsstand")
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(Color.blue)
-                                    .cornerRadius(10.0)
+                        HStack(spacing: 20) {
+                            ForEach(emailTemplates){ template in
+                                Button {
+                                    emailViewModel.subject = template.emailSubject ?? ""
+                                    emailViewModel.emailText = template.emailText ?? ""
+                                } label: {
+                                    Text(template.templateName ?? "Error")
+                                        .padding(10)
+                                        .foregroundColor(.white)
+                                        .background(Color.blue)
+                                        .cornerRadius(10.0)
+                                }
                             }
-                            Button {
-                                
-                            }label:
-                            {
-                                Text("Zeugnisnote")
-                                    .padding()
-                                    .foregroundColor(.white)
-                                    .background(Color.blue)
-                                    .cornerRadius(10.0)
-                            }
-                            
-                            
                         }
                     }
                 }
-                Section(header: Text("Empfänger")) {
-                    
-                    if self.emailViewModel.recipients.count == 1 {
-                        Text("\(self.emailViewModel.recipients.first!.key.firstName) \(self.emailViewModel.recipients.first!.key.lastName)")
-                    } else {
-                        VStack{
-                            HStack{
-                                Text(!self.emailViewModel.recipients.contains(where: { (key: Student, value: Bool) in
-                                    value == false
-                                }) ? "Alle Schüler" : "\(self.emailViewModel.recipients.filter{$0.1}.count) Schüler")
-                                Spacer()
+                }
+                
+                if editTemplates == false {
+                    Section(header: Text("Empfänger")) {
+                        
+                        if self.emailViewModel.recipients.count == 1 {
+                            Text("\(self.emailViewModel.recipients.first!.key.firstName) \(self.emailViewModel.recipients.first!.key.lastName)")
+                        } else {
+                            VStack{
+                                HStack{
+                                    Text(!self.emailViewModel.recipients.contains(where: { (key: Student, value: Bool) in
+                                        value == false
+                                    }) ? "Alle Schüler" : "\(self.emailViewModel.recipients.filter{$0.1}.count) Schüler")
+                                    Spacer()
+                                    if senderMenuExpanded {
+                                        toggleAllRecpientsButton
+                                            .foregroundColor(Color.black)
+                                            .buttonStyle(.bordered)
+                                    }
+                                    Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down").onTapGesture {
+                                        senderMenuExpanded.toggle()
+                                    }
+                                }.padding([.bottom, .top])
+                                
                                 if senderMenuExpanded {
-                                    toggleAllRecpientsButton
-                                        .foregroundColor(Color.black)
-                                        .buttonStyle(.bordered)
-                                }
-                                Image(systemName: senderMenuExpanded ? "chevron.up" : "chevron.down").onTapGesture {
-                                    senderMenuExpanded.toggle()
-                                }
-                            }.padding([.bottom, .top])
-                            
-                            if senderMenuExpanded {
-                                List {
-                                    allRecipientsList
+                                    List {
+                                        allRecipientsList
+                                    }
                                 }
                             }
                         }
@@ -90,23 +109,30 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                 Section(header: Text("Betreff")) {
                     TextField("Subject....", text: $emailViewModel.subject)
                 }
-                Section(header: Text("Variablen")) {
-                    tagScrollView
+                if editTemplates == false {
+                    Section(header: Text("Variablen")) {
+                        tagScrollView
+                    }
                 }
-                
                 Section(header: Text("Email Text")) {
                     textEditor
                 }
-                Section(header: Text("Vorlage erstellen")){
-                    Text("bla")
+                Section(header: Text("Als Vorlage speichern")){
+                    HStack{
+                        TextField("Name der Vorlage", text: $templateName)
+                        Spacer()
+                        Button {
+                            _ = EmailTemplate(index: emailTemplates.count + 1, templateName: templateName, emailText: emailViewModel.emailText, emailSubject: emailViewModel.subject, context: viewContext)
+                            try? viewContext.save()
+                        } label: {
+                            Text("Add")
+                        } .disabled(templateName.isEmpty)
+                    }
                 }
-                
             }
-            
-            
         }
     }
-    
+
     func toggleAllRecipients() {
         if !self.emailViewModel.recipients.contains(where: { $0.value == false }) {
             for key in self.emailViewModel.recipients.keys {

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Course" representedClassName="Course" syncable="YES" codeGenerationType="category">
+        <attribute name="ageGroup_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
+        <attribute name="subject_" optional="YES" attributeType="String"/>
+        <attribute name="type_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weight_" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="exams_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exam" inverseName="course" inverseEntity="Exam"/>
+        <relationship name="schoolyear" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SchoolYear" inverseName="courses_" inverseEntity="SchoolYear"/>
+        <relationship name="students_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Student" inverseName="course" inverseEntity="Student"/>
+    </entity>
+    <entity name="EmailTemplate" representedClassName="EmailTemplate" syncable="YES" codeGenerationType="class">
+        <attribute name="emailSubject" optional="YES" attributeType="String"/>
+        <attribute name="emailText" optional="YES" attributeType="String"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="templateName" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Exam" representedClassName="Exam" syncable="YES">
+        <attribute name="date_" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="gradeSchema_" optional="YES" attributeType="Transformable"/>
+        <attribute name="half" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="multiplier" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="exams_" inverseEntity="Course"/>
+        <relationship name="examParticipations_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamParticipation" inverseName="exam" inverseEntity="ExamParticipation"/>
+        <relationship name="exercises_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamExercise" inverseName="exam" inverseEntity="ExamExercise"/>
+    </entity>
+    <entity name="ExamExercise" representedClassName="ExamExercise" syncable="YES" codeGenerationType="category">
+        <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="maxPoints" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
+        <relationship name="exam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exam" inverseName="exercises_" inverseEntity="Exam"/>
+        <relationship name="participationExercises_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamParticipationExercise" inverseName="exercise" inverseEntity="ExamParticipationExercise"/>
+    </entity>
+    <entity name="ExamParticipation" representedClassName="ExamParticipation" syncable="YES" codeGenerationType="category">
+        <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="participated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="exam" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exam" inverseName="examParticipations_" inverseEntity="Exam"/>
+        <relationship name="participatedExercises_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExamParticipationExercise" inverseName="examParticipation" inverseEntity="ExamParticipationExercise"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="examParticipations_" inverseEntity="Student"/>
+    </entity>
+    <entity name="ExamParticipationExercise" representedClassName="ExamParticipationExercise" syncable="YES" codeGenerationType="category">
+        <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="points" optional="YES" attributeType="Double" defaultValueString="-1" usesScalarValueType="YES"/>
+        <relationship name="examParticipation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExamParticipation" inverseName="participatedExercises_" inverseEntity="ExamParticipation"/>
+        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ExamExercise" inverseName="participationExercises_" inverseEntity="ExamExercise"/>
+    </entity>
+    <entity name="FullYearTranscriptGrade" representedClassName="FullYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">
+        <attribute name="firstValue" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="secondValue" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Grade" representedClassName="Grade" syncable="YES">
+        <attribute name="comment" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="half" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="multiplier" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="value" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="grades_" inverseEntity="Student"/>
+    </entity>
+    <entity name="HalfYearTranscriptGrade" representedClassName="HalfYearTranscriptGrade" parentEntity="TranscriptGrade" syncable="YES">
+        <attribute name="half_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="SchoolYear" representedClassName="SchoolYear" syncable="YES" codeGenerationType="category">
+        <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
+        <relationship name="courses_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Course" inverseName="schoolyear" inverseEntity="Course"/>
+    </entity>
+    <entity name="Student" representedClassName="Student" syncable="YES" codeGenerationType="category">
+        <attribute name="email_" optional="YES" attributeType="String"/>
+        <attribute name="firstName_" optional="YES" attributeType="String"/>
+        <attribute name="hidden" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="lastName_" optional="YES" attributeType="String"/>
+        <relationship name="course" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Course" inverseName="students_" inverseEntity="Course"/>
+        <relationship name="examParticipations_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExamParticipation" inverseName="student" inverseEntity="ExamParticipation"/>
+        <relationship name="grades_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Grade" inverseName="student" inverseEntity="Grade"/>
+        <relationship name="transcriptGrade" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TranscriptGrade" inverseName="student" inverseEntity="TranscriptGrade"/>
+    </entity>
+    <entity name="Subject" representedClassName="Subject" syncable="YES" codeGenerationType="category">
+        <attribute name="name_" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="TranscriptGrade" representedClassName="TranscriptGrade" isAbstract="YES" syncable="YES">
+        <attribute name="value" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <relationship name="student" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Student" inverseName="transcriptGrade" inverseEntity="Student"/>
+    </entity>
+</model>

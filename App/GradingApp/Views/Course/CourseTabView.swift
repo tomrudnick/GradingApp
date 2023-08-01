@@ -151,6 +151,7 @@ struct CourseTabView: View {
         })
         .fullScreenCover(isPresented: $showSendEmailSheet, content: {
             SendEmailsView(title: course.title, emailViewModel: sendEmailViewModel).environment(\.currentHalfYear, appSettings.activeHalf)
+                .environment(\.managedObjectContext, viewContext)
         })
         .if(UIScreen.main.traitCollection.userInterfaceIdiom == .phone) { view in
             view.fullScreenCover(isPresented: $showTranscriptHalfYearSheet, content: {

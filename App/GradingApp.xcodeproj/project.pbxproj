@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		390CBA472A79384800446EB7 /* TemplateEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390CBA462A79384800446EB7 /* TemplateEditView.swift */; };
 		3915188827772441003C11E4 /* BackupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915188727772441003C11E4 /* BackupViewModel.swift */; };
 		3915188A2777248E003C11E4 /* BackupTimeIntervalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391518892777248E003C11E4 /* BackupTimeIntervalView.swift */; };
 		39185AE028CD09D700BC6E33 /* SchoolYear+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39185ADF28CD09D700BC6E33 /* SchoolYear+Helper.swift */; };
@@ -19,6 +20,7 @@
 		39607B5126CD0A9D007DFD63 /* SingleStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39607B5026CD0A9D007DFD63 /* SingleStudent.swift */; };
 		397BECA729748FCB00D7FBD7 /* GradingAppExamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397BECA629748FCB00D7FBD7 /* GradingAppExamTests.swift */; };
 		399222F92A7433D300386574 /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399222F82A7433D300386574 /* TextEditor.swift */; };
+		399222FD2A7436B800386574 /* EmailTemplate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399222FC2A7436B800386574 /* EmailTemplate+Extension.swift */; };
 		39A3D84928B4E6AC00A65EC8 /* CSVImportExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A3D84828B4E6AC00A65EC8 /* CSVImportExampleView.swift */; };
 		39B3775126E3F14B0005A390 /* JSONFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B3775026E3F14B0005A390 /* JSONFile.swift */; };
 		39BCE45C26E4C7B900FB2680 /* Student+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */; };
@@ -185,6 +187,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		390CBA462A79384800446EB7 /* TemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateEditView.swift; sourceTree = "<group>"; };
 		3915188727772441003C11E4 /* BackupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewModel.swift; sourceTree = "<group>"; };
 		391518892777248E003C11E4 /* BackupTimeIntervalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupTimeIntervalView.swift; sourceTree = "<group>"; };
 		39185ADF28CD09D700BC6E33 /* SchoolYear+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchoolYear+Helper.swift"; sourceTree = "<group>"; };
@@ -199,6 +202,8 @@
 		397BECA629748FCB00D7FBD7 /* GradingAppExamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingAppExamTests.swift; sourceTree = "<group>"; };
 		3986AEC528C8E53300F17E47 /* GradingAppDataModel v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v3.xcdatamodel"; sourceTree = "<group>"; };
 		399222F82A7433D300386574 /* TextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
+		399222FA2A74344400386574 /* GradingAppDataModel v8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v8.xcdatamodel"; sourceTree = "<group>"; };
+		399222FC2A7436B800386574 /* EmailTemplate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmailTemplate+Extension.swift"; sourceTree = "<group>"; };
 		39A3D84828B4E6AC00A65EC8 /* CSVImportExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVImportExampleView.swift; sourceTree = "<group>"; };
 		39B3775026E3F14B0005A390 /* JSONFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFile.swift; sourceTree = "<group>"; };
 		39BCE45826E4C7B900FB2680 /* Student+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Student+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -394,6 +399,7 @@
 				E2234A4626E02F65002CCC07 /* StudentGradeDetailView.swift */,
 				6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */,
 				6DE3E8BA26E55623004212D3 /* EmailEditorView.swift */,
+				390CBA462A79384800446EB7 /* TemplateEditView.swift */,
 				399222F82A7433D300386574 /* TextEditor.swift */,
 				E295971A285FDEF0008FD8B5 /* GradeText.swift */,
 				39DB989529FFDEE600F79E72 /* PopupView.swift */,
@@ -408,6 +414,14 @@
 				39185ADF28CD09D700BC6E33 /* SchoolYear+Helper.swift */,
 			);
 			path = SchoolYear;
+			sourceTree = "<group>";
+		};
+		399222FB2A74369400386574 /* EmailTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				399222FC2A7436B800386574 /* EmailTemplate+Extension.swift */,
+			);
+			path = EmailTemplate;
 			sourceTree = "<group>";
 		};
 		39FCA0C329571F580076FC7B /* FuzzySearch */ = {
@@ -546,6 +560,7 @@
 		E2574C0626DA636100ED2CFD /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				399222FB2A74369400386574 /* EmailTemplate */,
 				E22AA10E2912F8DE00784EEF /* Exam */,
 				3986AEC628C8E67100F17E47 /* SchoolYear */,
 				E232979327D00B0A007EC630 /* Subject */,
@@ -1094,6 +1109,7 @@
 				39BCE45E26E4C7B900FB2680 /* Course+CoreDataClass.swift in Sources */,
 				E2574C1626DA759900ED2CFD /* StudentTranscriptGradesHalfYear.swift in Sources */,
 				E2F1D54B291557200060A29B /* ExamGradingSchemeView.swift in Sources */,
+				399222FD2A7436B800386574 /* EmailTemplate+Extension.swift in Sources */,
 				39185AE028CD09D700BC6E33 /* SchoolYear+Helper.swift in Sources */,
 				E2234A4526E02C78002CCC07 /* StudentTranscriptGradesFullYearView.swift in Sources */,
 				39FCA0C529571F7B0076FC7B /* FuzzyMatching.swift in Sources */,
@@ -1136,6 +1152,7 @@
 				E200846226DE99330098D981 /* FullYearTranscriptGrade+CoreDataClass.swift in Sources */,
 				E2B055E226BD5842004F0087 /* AddSingleGradeView.swift in Sources */,
 				E2D38449292E28A1007155F4 /* NewExamView.swift in Sources */,
+				390CBA472A79384800446EB7 /* TemplateEditView.swift in Sources */,
 				39DD579928CA5FE4006AD259 /* AddSchoolYearsView.swift in Sources */,
 				E25FBCBC26BAE7FF000BDD65 /* AddCourse.swift in Sources */,
 				E2D3844B292E2B17007155F4 /* Exam+CoreDataProperties.swift in Sources */,
@@ -1564,6 +1581,7 @@
 		E25FBCAE26BADAC8000BDD65 /* GradingAppData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				399222FA2A74344400386574 /* GradingAppDataModel v8.xcdatamodel */,
 				E2D8AEA62972E51E005287C3 /* GradingAppDataModel v7.xcdatamodel */,
 				E2588475293A637000B51AA7 /* GradingAppDataModel v6.xcdatamodel */,
 				E22EDB87293116EF00CE780D /* GradingAppDataModel v5.xcdatamodel */,
@@ -1573,7 +1591,7 @@
 				3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */,
 				E25FBCAF26BADAC8000BDD65 /* CoreDataTest.xcdatamodel */,
 			);
-			currentVersion = E2D8AEA62972E51E005287C3 /* GradingAppDataModel v7.xcdatamodel */;
+			currentVersion = 399222FA2A74344400386574 /* GradingAppDataModel v8.xcdatamodel */;
 			path = GradingAppData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
