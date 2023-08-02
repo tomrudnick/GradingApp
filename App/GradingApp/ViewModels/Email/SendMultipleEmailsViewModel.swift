@@ -19,8 +19,12 @@ protocol SendEmailProtocol: ObservableObject {
 }
 
 extension SendEmailProtocol {
+    func atLeastOneRecipientInActive() -> Bool {
+        return recipients.contains { !$0.value }
+    }
+    
     func atLeastOneRecipientActive() -> Bool {
-        return recipients.contains(where: { $0.value == false })
+        return recipients.contains { $0.value }
     }
     
     var recipientsSorted: [Dictionary<Student, Bool>.Element] {
@@ -32,7 +36,7 @@ extension SendEmailProtocol {
     }
     
     func toggleAllRecipients() {
-        if !atLeastOneRecipientActive() {
+        if !atLeastOneRecipientInActive() {
             for key in recipients.keys {
                 recipients[key] = false
             }

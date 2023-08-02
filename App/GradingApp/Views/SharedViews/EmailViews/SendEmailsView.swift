@@ -47,7 +47,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                 }
                 .navigationBarTitle(Text("Mail an: \(title)"), displayMode: .inline)
                 .toolbar(content: {
-                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             dismiss()
                         }, label: {
@@ -55,36 +55,12 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                         })
                     }
                     
-                    //let failed: [(Mail, Error)]
-                    
-                    
-                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
-                            self.showProgressbar = true
-                            emailViewModel.send { progress in
-                                doubleValue = progress
-                            } completionHandler: { failed in
-                                self.showProgressbar = false
-                                if failed.count == 0 {
-                                    self.showSuccessAlert.toggle()
-                                } else {
-                                    self.showErrorAlert.toggle()
-                                    if failed.count == 1 {
-                                        errorMessage = "Folgende Email konnte nicht versendet werden:"
-                                    } else {
-                                        errorMessage = "Die \(failed.count) folgenden Emails konnten nicht versendet werden:"
-                                    }
-                                    for failedMail in failed {
-                                        if let failedUser = failedMail.0.to.first {
-                                            errorMessage += "\n\(failedUser.name ?? "-"): \(failedUser.email)"
-                                        }
-                                    }
-                                    
-                                }
-                            }
+                            sendEmails()
                         }, label: {
                             Text("Send...")
-                        }).disabled(self.emailViewModel.recipients.filter{$0.1}.count == 0)
+                        }).disabled(!self.emailViewModel.atLeastOneRecipientActive())
                     }
                 })
                 if showProgressbar {
@@ -95,6 +71,31 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                         .cornerRadius(10.0)
                         .padding()
                 }
+            }
+        }
+    }
+    
+    func sendEmails() {
+        self.showProgressbar = true
+        emailViewModel.send { progress in
+            doubleValue = progress
+        } completionHandler: { failed in
+            self.showProgressbar = false
+            if failed.count == 0 {
+                self.showSuccessAlert.toggle()
+            } else {
+                self.showErrorAlert.toggle()
+                if failed.count == 1 {
+                    errorMessage = "Folgende Email konnte nicht versendet werden:"
+                } else {
+                    errorMessage = "Die \(failed.count) folgenden Emails konnten nicht versendet werden:"
+                }
+                for failedMail in failed {
+                    if let failedUser = failedMail.0.to.first {
+                        errorMessage += "\n\(failedUser.name ?? "-"): \(failedUser.email)"
+                    }
+                }
+                
             }
         }
     }

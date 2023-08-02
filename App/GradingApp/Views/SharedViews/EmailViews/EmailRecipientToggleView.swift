@@ -38,7 +38,7 @@ struct EmailRecipientToggleView<Model: SendEmailProtocol>: View {
     @ViewBuilder
     var multipleRecipientSelectMenu: some View {
         HStack{
-            Text(!self.emailVM.atLeastOneRecipientActive() ? "Alle Schüler" :
+            Text(!self.emailVM.atLeastOneRecipientInActive() ? "Alle Schüler" :
                 "\(self.emailVM.selectedRecipients) Schüler")
             Spacer()
             if senderMenuExpanded {
@@ -73,7 +73,7 @@ struct EmailRecipientToggleView<Model: SendEmailProtocol>: View {
         Button {
             self.emailVM.toggleAllRecipients()
         } label: {
-            if !self.emailVM.atLeastOneRecipientActive() {
+            if !self.emailVM.atLeastOneRecipientInActive() {
                 Text("Alle abwählen")
             } else {
                 Text("Alle auswählen")
