@@ -15,6 +15,8 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     @FetchRequest(fetchRequest: EmailTemplate.fetchAll(), animation: .default)
     private var emailTemplates: FetchedResults<EmailTemplate>
     
+
+    
     @ObservedObject var emailVM: Model
     
     @State var selectionRange = NSMakeRange(0, 0)
@@ -39,13 +41,13 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     
     var body: some View {
         Form {
-            Section {
+            Section(content: {
                 if editTemplates {
                     ForEach(emailTemplates){ template in
                         Text(template.templateName)
                     }
-                    .onDelete(perform: {_ in })
-                    .onMove(perform: {_,_ in })
+                    .onDelete(perform: removeTemplate)
+                    .onMove(perform: move)
                 } else {
                     ScrollView(.horizontal){
                         HStack(spacing: 20) {
@@ -64,8 +66,20 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                         }
                     }
                 }
-            }
-            
+            }, header: {
+                HStack{
+                    Text("Vorlage")
+                    Spacer()
+                    Button {
+                        withAnimation {
+                            editTemplates.toggle()
+                        }
+                    } label: {
+                        Text(editTemplates ? "Done" : "Edit")
+                    }
+    
+                }
+            })
             if editTemplates == false {
                 Section("Empfänger") {
                     EmailRecipientToggleView(emailVM: emailVM)
@@ -103,6 +117,26 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     func addTemplate() {
         _ = EmailTemplate(index: emailTemplates.count + 1, templateName: templateName, emailText: emailVM.emailText, emailSubject: emailVM.subject, context: viewContext)
         templateName = ""
+        viewContext.perform {
+            try? viewContext.save()
+        }
+    }
+    func removeTemplate(at offsets: IndexSet) {
+        for index in offsets {
+            viewContext.delete(emailTemplates[index])
+        }
+        viewContext.perform {
+            try? viewContext.save()
+        }
+    }
+    func move(from source: IndexSet, to destination: Int) {
+        var arrayOfTemplates: [EmailTemplate] = Array(emailTemplates)
+        arrayOfTemplates.move(fromOffsets: source, toOffset: destination)
+        for (index, template) in arrayOfTemplates.enumerated() {
+            if template.index != Int16(index) {
+                template.index = Int16(index)
+            }
+        }
         viewContext.perform {
             try? viewContext.save()
         }

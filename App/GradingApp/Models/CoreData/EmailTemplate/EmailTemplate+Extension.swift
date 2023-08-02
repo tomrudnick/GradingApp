@@ -37,7 +37,6 @@ extension EmailTemplate{
         }
     }
     
-    
     convenience init(index: Int, templateName: String, emailText: String, emailSubject: String, context: NSManagedObjectContext) {
         self.init(context: context)
         self.index = Int16(index)
@@ -48,7 +47,8 @@ extension EmailTemplate{
     
     static func fetchAll() -> NSFetchRequest<EmailTemplate> {
         let request = NSFetchRequest<EmailTemplate>(entityName: "EmailTemplate")
-        request.sortDescriptors = []
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \EmailTemplate.index, ascending: true)]
         return request
     }
+    
 }
