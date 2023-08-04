@@ -13,7 +13,7 @@ struct TemplateEditView<Model: SendEmailProtocol>: View {
     
     @ObservedObject var emailVM: Model
     var editTemplates: Bool
-    @State var isSelected = -1
+    @Binding var selectedTemplate: Int?
     
     
     @FetchRequest(fetchRequest: EmailTemplate.fetchAll(), animation: .default)
@@ -24,13 +24,15 @@ struct TemplateEditView<Model: SendEmailProtocol>: View {
         if editTemplates {
             ForEach(emailTemplates){ template in
                 Button {
+                    updateTemplate()
                     emailVM.subject = template.emailSubject
                     emailVM.emailText = template.emailText
+                    selectedTemplate = Int(template.index)
                 } label: {
                     Text(template.templateName)
                         .padding(10)
                         .foregroundColor(.white)
-                        .background(Color.blue)
+                        .background(selectedTemplate == Int(template.index) ? Color.yellow : Color.blue)
                         .cornerRadius(10.0)
                 }
             }
@@ -71,6 +73,17 @@ struct TemplateEditView<Model: SendEmailProtocol>: View {
                 template.index = Int16(index)
             }
         }
+        viewContext.perform {
+            try? viewContext.save()
+        }
+    }
+    
+    func updateTemplate() {
+        guard let selectedTemplate else { return }
+        guard let template = emailTemplates.first(where: { $0.index == Int16(selectedTemplate) }) else { return }
+        
+        template.emailText = emailVM.emailText
+        template.emailSubject = emailVM.subject
         viewContext.perform {
             try? viewContext.save()
         }

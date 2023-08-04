@@ -23,6 +23,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     @State private var emailText = ""
     @State private var templateName = ""
     @State private var editTemplates = false
+    @State private var selectedTemplate: Int? = nil
     @State var fontSize = UIFontMetrics(forTextStyle: .body)
                             .scaledValue(for: UIFont.preferredFont(forTextStyle: .body).pointSize)
     @Binding var showHeadlines: Bool
@@ -43,12 +44,16 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     var body: some View {
         Form {
             Section(content: {
-                TemplateEditView(emailVM: emailVM, editTemplates: editTemplates)
+                TemplateEditView(emailVM: emailVM, editTemplates: editTemplates, selectedTemplate: $selectedTemplate)
             }, header: {
                 HStack{
                     Text("Vorlage")
                     Spacer()
                     Button {
+                        if editTemplates {
+                            updateTemplate()
+                        }
+                        selectedTemplate = nil
                         withAnimation {
                             editTemplates.toggle()
                         }
@@ -96,6 +101,17 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     func addTemplate() {
         _ = EmailTemplate(index: emailTemplates.count + 1, templateName: templateName, emailText: emailVM.emailText, emailSubject: emailVM.subject, context: viewContext)
         templateName = ""
+        viewContext.perform {
+            try? viewContext.save()
+        }
+    }
+    
+    func updateTemplate() {
+        guard let selectedTemplate else { return }
+        guard let template = emailTemplates.first(where: { $0.index == Int16(selectedTemplate) }) else { return }
+        
+        template.emailText = emailVM.emailText
+        template.emailSubject = emailVM.subject
         viewContext.perform {
             try? viewContext.save()
         }
