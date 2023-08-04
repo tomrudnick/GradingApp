@@ -1,5 +1,0 @@
-disabled_rules:
-  - force_cast
-  - type_name
-  - force_try
-  - opening_brace

@@ -20,6 +20,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
     @State var showErrorAlert = false
     @State var showSuccessAlert = false
     @State var errorMessage = ""
+    @State var showHeadlines = true
     
     private let title: String
 
@@ -33,7 +34,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
         NavigationView {
             ZStack {
                 VStack {
-                    EmailEditorView(emailViewModel: emailViewModel)
+                    EmailEditorView(emailViewModel: emailViewModel, showHeadlines: $showHeadlines)
                 }
                 .alert(isPresented: $showErrorAlert, content: {
                     Alert(title: Text("Fehler"), message: Text(errorMessage), dismissButton: .default(Text("Ok!")))
@@ -51,7 +52,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                         Button(action: {
                             dismiss()
                         }, label: {
-                            Text("Abbrechen")
+                            Text(showHeadlines ? "Abbrechen": "")
                         })
                     }
                     
@@ -59,7 +60,7 @@ struct SendEmailsView<Model: SendEmailProtocol>: View {
                         Button(action: {
                             sendEmails()
                         }, label: {
-                            Text("Send...")
+                            Text(showHeadlines ? "Send...": "")
                         }).disabled(!self.emailViewModel.atLeastOneRecipientActive())
                     }
                 })

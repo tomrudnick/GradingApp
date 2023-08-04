@@ -37,7 +37,6 @@
 		6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECD826E3D2CC00E9D290 /* KeychainAccess */; };
 		6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3EECDB26E3D32100E9D290 /* SwiftSMTP */; };
 		6D3EECDE26E3E0CE00E9D290 /* SendEmailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3EECDD26E3E0CE00E9D290 /* SendEmailsView.swift */; };
-		6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */; };
 		6DBCF24126E372C1009F4167 /* GradePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24026E372C1009F4167 /* GradePickerViewModel.swift */; };
 		6DBCF24326E37C9C009F4167 /* BottomSheetSingleGradePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBCF24226E37C9C009F4167 /* BottomSheetSingleGradePicker.swift */; };
 		6DE31A5B26EBE69800CB41C0 /* UndoRedoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE31A5A26EBE69800CB41C0 /* UndoRedoViewModel.swift */; };
@@ -200,7 +199,6 @@
 		3953BD4427774A8800378C37 /* GradingAppDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GradingAppDataModel.xcdatamodel; sourceTree = "<group>"; };
 		395CD6DC26C01A8E00ECA4DD /* PreviewGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewGenerator.swift; sourceTree = "<group>"; };
 		39607B5026CD0A9D007DFD63 /* SingleStudent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleStudent.swift; sourceTree = "<group>"; };
-		396182542774B1B7009596F3 /* HighlightedTextEditor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HighlightedTextEditor; sourceTree = "<group>"; };
 		397BECA629748FCB00D7FBD7 /* GradingAppExamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradingAppExamTests.swift; sourceTree = "<group>"; };
 		3986AEC528C8E53300F17E47 /* GradingAppDataModel v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GradingAppDataModel v3.xcdatamodel"; sourceTree = "<group>"; };
 		399222F82A7433D300386574 /* TextEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditor.swift; sourceTree = "<group>"; };
@@ -377,7 +375,6 @@
 				394D7C5026BDC7DB00892BD4 /* CSV in Frameworks */,
 				6D3EECDC26E3D32100E9D290 /* SwiftSMTP in Frameworks */,
 				E282BE3128D7D2280014ACFE /* CloudStorage in Frameworks */,
-				6D78609426E4F22F0090D7F4 /* HighlightedTextEditor in Frameworks */,
 				6D3EECD926E3D2CC00E9D290 /* KeychainAccess in Frameworks */,
 				E2DBF7D62A01AFD300C55F14 /* EmailComposer in Frameworks */,
 			);
@@ -619,7 +616,6 @@
 		E25FBC9726BADAC6000BDD65 = {
 			isa = PBXGroup;
 			children = (
-				396182542774B1B7009596F3 /* HighlightedTextEditor */,
 				E25FBCA226BADAC6000BDD65 /* GradingApp */,
 				E22EDB7F2930F1DA00CE780D /* GradingAppTests */,
 				E27FC4352975C6640041D80F /* GradingAppUITests */,
@@ -911,7 +907,6 @@
 				394D7C4F26BDC7DB00892BD4 /* CSV */,
 				6D3EECD826E3D2CC00E9D290 /* KeychainAccess */,
 				6D3EECDB26E3D32100E9D290 /* SwiftSMTP */,
-				6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */,
 				E282BE3028D7D2280014ACFE /* CloudStorage */,
 				E2DBF7D52A01AFD300C55F14 /* EmailComposer */,
 			);
@@ -973,7 +968,6 @@
 				394D7C4E26BDC7DB00892BD4 /* XCRemoteSwiftPackageReference "CSV.swift" */,
 				6D3EECD726E3D2CC00E9D290 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */,
-				6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 				6D26BBA026EB7CF10077AC73 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 				E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */,
 				E2DBF7D42A01AFD300C55F14 /* XCRemoteSwiftPackageReference "EmailComposer" */,
@@ -1534,14 +1528,6 @@
 				minimumVersion = 6.0.0;
 			};
 		};
-		6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kyle-n/HighlightedTextEditor";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
-			};
-		};
 		E282BE2F28D7D2280014ACFE /* XCRemoteSwiftPackageReference "CloudStorage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tomlokhorst/CloudStorage";
@@ -1575,11 +1561,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6D3EECDA26E3D32100E9D290 /* XCRemoteSwiftPackageReference "Swift-SMTP" */;
 			productName = SwiftSMTP;
-		};
-		6D78609326E4F22F0090D7F4 /* HighlightedTextEditor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6D78609226E4F22F0090D7F4 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */;
-			productName = HighlightedTextEditor;
 		};
 		E282BE3028D7D2280014ACFE /* CloudStorage */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import HighlightedTextEditor
 
 struct EmailEditorView<Model: SendEmailProtocol>: View {
     
     @Environment (\.managedObjectContext) var viewContext
 
     @FetchRequest(fetchRequest: EmailTemplate.fetchAll(), animation: .default)
-    private var emailTemplates: FetchedResults<EmailTemplate>
+    var emailTemplates: FetchedResults<EmailTemplate>
     
 
     
@@ -26,6 +25,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     @State private var editTemplates = false
     @State var fontSize = UIFontMetrics(forTextStyle: .body)
                             .scaledValue(for: UIFont.preferredFont(forTextStyle: .body).pointSize)
+    @Binding var showHeadlines: Bool
     
     private let tags: NSRegularExpression
     
@@ -33,39 +33,17 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
         editTemplates ? .active : .inactive
     }
     
-    init(emailViewModel: Model) {
+    init(emailViewModel: Model, showHeadlines: Binding<Bool>) {
         self.emailVM = emailViewModel
         let tags = try! NSRegularExpression(pattern: emailViewModel.regexString, options: [])
         self.tags = tags
+        self._showHeadlines = showHeadlines
     }
     
     var body: some View {
         Form {
             Section(content: {
-                if editTemplates {
-                    ForEach(emailTemplates){ template in
-                        Text(template.templateName)
-                    }
-                    .onDelete(perform: removeTemplate)
-                    .onMove(perform: move)
-                } else {
-                    ScrollView(.horizontal){
-                        HStack(spacing: 20) {
-                            ForEach(emailTemplates){ template in
-                                Button {
-                                    emailVM.subject = template.emailSubject
-                                    emailVM.emailText = template.emailText
-                                } label: {
-                                    Text(template.templateName)
-                                        .padding(10)
-                                        .foregroundColor(.white)
-                                        .background(Color.blue)
-                                        .cornerRadius(10.0)
-                                }
-                            }
-                        }
-                    }
-                }
+                TemplateEditView(emailVM: emailVM, editTemplates: editTemplates)
             }, header: {
                 HStack{
                     Text("Vorlage")
@@ -74,6 +52,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                         withAnimation {
                             editTemplates.toggle()
                         }
+                        showHeadlines.toggle()
                     } label: {
                         Text(editTemplates ? "Done" : "Edit")
                     }
@@ -117,26 +96,6 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
     func addTemplate() {
         _ = EmailTemplate(index: emailTemplates.count + 1, templateName: templateName, emailText: emailVM.emailText, emailSubject: emailVM.subject, context: viewContext)
         templateName = ""
-        viewContext.perform {
-            try? viewContext.save()
-        }
-    }
-    func removeTemplate(at offsets: IndexSet) {
-        for index in offsets {
-            viewContext.delete(emailTemplates[index])
-        }
-        viewContext.perform {
-            try? viewContext.save()
-        }
-    }
-    func move(from source: IndexSet, to destination: Int) {
-        var arrayOfTemplates: [EmailTemplate] = Array(emailTemplates)
-        arrayOfTemplates.move(fromOffsets: source, toOffset: destination)
-        for (index, template) in arrayOfTemplates.enumerated() {
-            if template.index != Int16(index) {
-                template.index = Int16(index)
-            }
-        }
         viewContext.perform {
             try? viewContext.save()
         }
