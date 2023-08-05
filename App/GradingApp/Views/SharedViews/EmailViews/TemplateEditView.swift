@@ -47,11 +47,8 @@ struct TemplateEditView<Model: SendEmailProtocol>: View {
                             emailVM.emailText = template.emailText
                         } label: {
                             Text(template.templateName)
-                                .padding(10)
-                                .foregroundColor(.white)
-                                .background(Color.blue)
-                                .cornerRadius(10.0)
                         }
+                        .buttonStyle(.bordered)
                     }
                 }
             }
