@@ -49,6 +49,6 @@ extension EmailTemplate{
         let request = NSFetchRequest<EmailTemplate>(entityName: "EmailTemplate")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \EmailTemplate.index, ascending: true)]
         return request
-    }
+    }    
     
 }

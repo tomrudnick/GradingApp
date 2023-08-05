@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import HighlightedTextEditor
 
 
 struct SendEmailsView<Model: SendEmailProtocol>: View {

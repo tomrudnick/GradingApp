@@ -61,7 +61,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
                     } label: {
                         Text(editTemplates ? "Done" : "Edit")
                     }
-    
+                    
                 }
             })
             if editTemplates == false {
@@ -80,26 +80,42 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
             Section(header: Text("Email Text")) {
                 textEditor
             }
-            Section(header: Text("Als Vorlage speichern")){
+            Section {
                 HStack{
                     TextField("Name der Vorlage", text: $templateName)
                     Spacer()
                     Button("Add", action: addTemplate)
                         .disabled(templateName.isEmpty)
+                        .disabled(emailTemplateNames.contains(templateName.trimmingCharacters(in: .whitespaces)))
+                }
+            } header: {
+                Text("Als Vorlage speichern")
+            } footer: {
+                if emailTemplateNames.contains(templateName){
+                    HStack{
+                        Image(systemName: "exclamationmark.triangle")
+                        Text("Vorlagenname exisitert bereits")
+                    }.foregroundColor(Color.red)
                 }
             }
-        }.environment(\.editMode, Binding.constant(editMode))
+        }
+        .environment(\.editMode, Binding.constant(editMode))
     }
-   
-
     
     var textEditor: some View {
         TextEditor(fontSize: $fontSize, message: $emailVM.emailText, selectionRange: $selectionRange, regex: tags).frame(height: 500)
     }
     
+    var emailTemplateNames: [String]{
+        var emailTemplateNames: [String] = []
+        for template in emailTemplates {
+            emailTemplateNames.append(template.templateName)
+        }
+        return emailTemplateNames
+    }
     
     func addTemplate() {
-        _ = EmailTemplate(index: emailTemplates.count + 1, templateName: templateName, emailText: emailVM.emailText, emailSubject: emailVM.subject, context: viewContext)
+        _ = EmailTemplate(index: emailTemplates.count + 1, templateName: templateName.trimmingCharacters(in: .whitespaces), emailText: emailVM.emailText, emailSubject: emailVM.subject, context: viewContext)
         templateName = ""
         viewContext.perform {
             try? viewContext.save()
@@ -116,5 +132,7 @@ struct EmailEditorView<Model: SendEmailProtocol>: View {
             try? viewContext.save()
         }
     }
+    
+    
 }
 
