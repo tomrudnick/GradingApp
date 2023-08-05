@@ -16,8 +16,9 @@ struct TagScrollView<Model: SendEmailProtocol>: View {
                 ForEach(emailVM.emailKeys, id: \.self) { key in
                     Button(action: {
                         replaceSelection(with: key)
+                        print(emailVM.emailKeys)
                     }, label: {
-                        Text(key)
+                        Text(emailVM.clean(key))
                             .padding()
                             .foregroundColor(.white)
                             .background(Color.blue)
@@ -31,10 +32,9 @@ struct TagScrollView<Model: SendEmailProtocol>: View {
     
     func replaceSelection(with tag: String) {
         let selectionRange = selectionRange
-        print("From: \(selectionRange.lowerBound) to \(selectionRange.upperBound)")
         let lowerIndex = emailVM.emailText.index(emailVM.emailText.startIndex, offsetBy: selectionRange.lowerBound)
         let upperIndex = emailVM.emailText.index(emailVM.emailText.startIndex, offsetBy: selectionRange.upperBound)
-        emailVM.emailText.replaceSubrange(lowerIndex..<upperIndex, with: "<\(tag)>")
+        emailVM.emailText.replaceSubrange(lowerIndex..<upperIndex, with: tag)
         self.selectionRange = NSMakeRange(selectionRange.lowerBound + tag.count + 1, selectionRange.upperBound - selectionRange.lowerBound)
     }
 }

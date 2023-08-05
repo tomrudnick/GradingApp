@@ -46,6 +46,13 @@ extension SendEmailProtocol {
             }
         }
     }
+    
+    func clean(_ emailkey: String) -> String {
+        var cleanedKey = emailkey
+        cleanedKey.removeLast()
+        cleanedKey.removeFirst()
+        return cleanedKey
+    }
 }
 
 

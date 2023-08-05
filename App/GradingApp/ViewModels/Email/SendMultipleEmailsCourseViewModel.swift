@@ -16,24 +16,24 @@ class SendMultipleEmailsCourseViewModel : SendMultipleEmailsViewModel {
     override var emailKeys: [String] {
         get {
             if half == HalfType.firstHalf {
-                return ["\\\(EmailKeys.firstName)",
-                 "\\\(EmailKeys.lastName)",
-                 "\\\(EmailKeys.oralGrade)",
-                 "\\\(EmailKeys.writtenGrade)",
-                 "\\\(EmailKeys.grade)",
-                 "\\\(EmailKeys.transcriptGradeHalf)",
-                 "\\\(EmailKeys.transcriptGrade)"
+                return ["\(EmailKeys.firstName)",
+                 "\(EmailKeys.lastName)",
+                 "\(EmailKeys.oralGrade)",
+                 "\(EmailKeys.writtenGrade)",
+                 "\(EmailKeys.grade)",
+                 "\(EmailKeys.transcriptGradeHalf)",
+                 "\(EmailKeys.transcriptGrade)"
                 ]
             }
             else {
-                return ["\\\(EmailKeys.firstName)",
-                 "\\\(EmailKeys.lastName)",
-                 "\\\(EmailKeys.oralGrade)",
-                 "\\\(EmailKeys.writtenGrade)",
-                 "\\\(EmailKeys.grade)",
-                 "\\\(EmailKeys.transcriptGradeHalf)",
-                 "\\\(EmailKeys.transcriptGradeFirstHalf)",
-                 "\\\(EmailKeys.transcriptGrade)"
+                return ["\(EmailKeys.firstName)",
+                 "\(EmailKeys.lastName)",
+                 "\(EmailKeys.oralGrade)",
+                 "\(EmailKeys.writtenGrade)",
+                 "\(EmailKeys.grade)",
+                 "\(EmailKeys.transcriptGradeHalf)",
+                 "\(EmailKeys.transcriptGradeFirstHalf)",
+                 "\(EmailKeys.transcriptGrade)"
                 ]
             }
         }
@@ -46,6 +46,7 @@ class SendMultipleEmailsCourseViewModel : SendMultipleEmailsViewModel {
     }
     
     override func send(progressHandler: @escaping (_ progress: Double) -> (), completionHandler : @escaping (_ failed: [(Mail, Error)]) -> ())
+
     {
         if let half = half {
             let multipleEmailSender = SendMultipleEmails(emailAccountViewModel: emailAccountViewModel)

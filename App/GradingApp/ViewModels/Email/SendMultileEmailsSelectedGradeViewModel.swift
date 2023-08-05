@@ -16,15 +16,15 @@ class SendMultipileEmailsSelectedGradeViewModel: SendMultipleEmailsViewModel {
     
     override var emailKeys: [String] {
         get {
-            ["\\\(EmailKeys.firstName)",
-             "\\\(EmailKeys.lastName)",
-             "\\\(EmailKeys.selectedGradeDate)",
-             "\\\(EmailKeys.selectedGrade)",
-             "\\\(EmailKeys.oralGrade)",
-             "\\\(EmailKeys.writtenGrade)",
-             "\\\(EmailKeys.grade)",
-             "\\\(EmailKeys.transcriptGradeHalf)",
-             "\\\(EmailKeys.transcriptGrade)"
+            ["\(EmailKeys.firstName)",
+             "\(EmailKeys.lastName)",
+             "\(EmailKeys.selectedGradeDate)",
+             "\(EmailKeys.selectedGrade)",
+             "\(EmailKeys.oralGrade)",
+             "\(EmailKeys.writtenGrade)",
+             "\(EmailKeys.grade)",
+             "\(EmailKeys.transcriptGradeHalf)",
+             "\(EmailKeys.transcriptGrade)"
             ]
         }
     }

@@ -19,17 +19,17 @@ class SendSingleEmailViewModel: SendEmailProtocol {
     //we assume O(1) beacuse gradeNumber should in practice be very small (< 10)
     var emailKeys: [String] {
         get {
-            var keys = ["\\\(EmailKeys.firstName)",
-             "\\\(EmailKeys.lastName)",
-             "\\\(EmailKeys.oralGrade)",
-             "\\\(EmailKeys.grade)",
-             "\\\(EmailKeys.transcriptGradeHalf)",
-             "\\\(EmailKeys.transcriptGrade)"
+            var keys = ["\(EmailKeys.firstName)",
+             "\(EmailKeys.lastName)",
+             "\(EmailKeys.oralGrade)",
+             "\(EmailKeys.grade)",
+             "\(EmailKeys.transcriptGradeHalf)",
+             "\(EmailKeys.transcriptGrade)"
             ]
             for i in 0..<gradeNumber {
-                keys.append("\\$schriftliche Note \(i + 1)")
+                keys.append("schriftliche Note \(i + 1)")
             }
-            keys.append("\\\(EmailKeys.writtenGrade)")
+            keys.append("\(EmailKeys.writtenGrade)")
             return keys
         }
     }
