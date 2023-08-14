@@ -22,7 +22,8 @@ struct AddCourse: View {
                     hidden: false,
                     ageGroup: ageGroup,
                     oralWeight: weight,
-                    type: type, deleted: false,
+                    type: type,
+                    deleted: false,
                     fetchedStudents:[:],
                     schoolYear: activeSchoolYear))
             }

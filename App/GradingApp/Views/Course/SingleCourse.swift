@@ -18,8 +18,6 @@ struct SingleCourse: View {
     @State var selectedWeight: Float
     @State var selectedType: CourseType
     
-    
-    let subjects = ["Mathe", "Physik", "Chemie", "Informatik", "Seminarfach"]
     let viewTitle: String
     let saveHandler: (_ name: String, _ subject: String, _ oralWeight: Float, _ ageGroup: AgeGroup, _ type: CourseType) -> ()
     
@@ -28,6 +26,7 @@ struct SingleCourse: View {
     {
         self.viewTitle = viewTitle
         self.saveHandler = saveHandler
+    
         self._courseName = State(initialValue: courseName)
         self._courseSubject = State(initialValue: courseSubject)
         self._selectedAgeGroup = State(initialValue: courseAgeGroup)
@@ -36,7 +35,7 @@ struct SingleCourse: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section{
                     HStack{
@@ -52,7 +51,7 @@ struct SingleCourse: View {
                         }
                         
                         TextField("Kurs z.B. 11D", text: $courseName)
-                            .frame(width: 100)
+                            .frame(width: 200)
                     }
                     
                     Picker(selection: $selectedAgeGroup.animation(), label: Text(""), content: {
